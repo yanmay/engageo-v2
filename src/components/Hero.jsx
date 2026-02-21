@@ -1,7 +1,275 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, PhoneMissed, PhoneCall } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useModal } from '../context/ModalContext';
+
+/* ─── Live 2-Phase Dashboard ─────────────────────────────────── */
+const BLEED_CALLS = [
+  { time: '9:12 AM', name: 'Priya S.', procedure: 'Dental Implant', value: 28000 },
+  { time: '10:34 AM', name: 'Rahul K.', procedure: 'IVF Consultation', value: 85000 },
+  { time: '11:07 AM', name: 'Anjali M.', procedure: 'Laser Correction', value: 22000 },
+];
+
+const RECOVERY_CALLS = [
+  { time: '12:45 PM', name: 'Vikram D.', procedure: 'Rhinoplasty', value: 120000, secs: 6 },
+  { time: '2:18 PM', name: 'Sonal R.', procedure: 'Full Mouth Rehab', value: 65000, secs: 8 },
+  { time: '3:44 PM', name: 'Meera T.', procedure: 'IVF Consultation', value: 85000, secs: 7 },
+];
+
+// PHASE 1 = bleeding (without Engageo), PHASE 2 = recovery (with Engageo)
+function LiveBleedDashboard() {
+  const [phase, setPhase] = useState(1); // 1 = bleed, 2 = recover
+  const [activating, setActivating] = useState(false);
+  // Phase 1 state
+  const [missedList, setMissedList] = useState([]);
+  const [totalLost, setTotalLost] = useState(0);
+  const [incomingBleed, setIncomingBleed] = useState(null);
+  // Phase 2 state
+  const [recoveredList, setRecoveredList] = useState([]);
+  const [totalRecovered, setTotalRecovered] = useState(0);
+  const [incomingRecover, setIncomingRecover] = useState(null);
+
+  const stepRef = useRef(0);
+  const timerRef = useRef(null);
+
+  const runPhase1 = () => {
+    let step = 0;
+    const run = () => {
+      if (step >= BLEED_CALLS.length) {
+        // Phase 1 done → activate Engageo
+        setActivating(true);
+        timerRef.current = setTimeout(() => {
+          setActivating(false);
+          setPhase(2);
+          setMissedList([]);
+          setTotalLost(0);
+          setIncomingBleed(null);
+          runPhase2();
+        }, 2000);
+        return;
+      }
+      const call = BLEED_CALLS[step];
+      setIncomingBleed(call);
+      timerRef.current = setTimeout(() => {
+        setIncomingBleed(null);
+        setMissedList(prev => [call, ...prev]);
+        setTotalLost(prev => prev + call.value);
+        step++;
+        timerRef.current = setTimeout(run, 1000);
+      }, 1600);
+    };
+    timerRef.current = setTimeout(run, 800);
+  };
+
+  const runPhase2 = () => {
+    let step = 0;
+    const run = () => {
+      if (step >= RECOVERY_CALLS.length) {
+        // Phase 2 done → reset back to phase 1
+        timerRef.current = setTimeout(() => {
+          setPhase(1);
+          setRecoveredList([]);
+          setTotalRecovered(0);
+          setIncomingRecover(null);
+          runPhase1();
+        }, 2500);
+        return;
+      }
+      const call = RECOVERY_CALLS[step];
+      setIncomingRecover(call);
+      timerRef.current = setTimeout(() => {
+        setIncomingRecover(null);
+        setRecoveredList(prev => [call, ...prev]);
+        setTotalRecovered(prev => prev + call.value);
+        step++;
+        timerRef.current = setTimeout(run, 1000);
+      }, 1800);
+    };
+    timerRef.current = setTimeout(run, 600);
+  };
+
+  useEffect(() => {
+    runPhase1();
+    return () => clearTimeout(timerRef.current);
+  }, []);
+
+  /* ── Phase 1 UI — Bleed ── */
+  if (activating) {
+    return (
+      <div className="premium-card w-full rounded-2xl overflow-hidden relative flex flex-col items-center justify-center" style={{ minHeight: '380px' }}>
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand via-brand/60 to-transparent" />
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="flex flex-col items-center gap-4 px-8 text-center"
+        >
+          <div className="w-14 h-14 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center relative">
+            <div className="absolute inset-0 rounded-full border border-brand/40 animate-ping" />
+            <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <div>
+            <p className="font-mono text-[10px] text-brand uppercase tracking-widest mb-1">Engageo Activating</p>
+            <p className="font-sans text-sm font-bold text-obsidian">Intercepting your missed calls</p>
+            <p className="font-mono text-[9px] text-subtle mt-1">Every future call gets answered in &lt;8 sec</p>
+          </div>
+          <div className="w-48 h-1 bg-border rounded-full overflow-hidden mt-2">
+            <motion.div
+              className="h-full bg-brand rounded-full"
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 1.8, ease: 'easeInOut' }}
+            />
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (phase === 1) {
+    return (
+      <div className="premium-card w-full rounded-2xl overflow-hidden relative flex flex-col" style={{ minHeight: '380px' }}>
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-red-400 to-transparent" />
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-border/50">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 pulse-dot" />
+            <span className="font-mono text-[10px] font-bold text-red-500 uppercase tracking-widest">Without Engageo</span>
+          </div>
+          <span className="font-mono text-[9px] text-muted bg-red-50 border border-red-100 px-2 py-0.5 rounded">TODAY</span>
+        </div>
+
+        {/* Incoming alert */}
+        <div className="mx-4 mt-3 overflow-hidden transition-all duration-300" style={{ maxHeight: incomingBleed ? '72px' : '0px', opacity: incomingBleed ? 1 : 0 }}>
+          <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 flex items-center gap-3">
+            <div className="w-7 h-7 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+              <PhoneCall size={12} className="text-red-500 animate-bounce" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-sans text-[11px] font-bold text-red-700 truncate">{incomingBleed?.name} — {incomingBleed?.procedure}</p>
+              <p className="font-mono text-[9px] text-red-400">Ringing… no answer</p>
+            </div>
+            <span className="font-sans text-xs font-bold text-red-600 shrink-0">₹{incomingBleed?.value?.toLocaleString('en-IN')}</span>
+          </div>
+        </div>
+
+        {/* Missed log */}
+        <div className="flex-1 px-4 py-3 flex flex-col gap-2">
+          {missedList.length === 0 && !incomingBleed && (
+            <div className="flex-1 flex items-center justify-center">
+              <p className="font-mono text-[10px] text-muted uppercase tracking-widest">Calls incoming…</p>
+            </div>
+          )}
+          {missedList.map((call, i) => (
+            <motion.div key={`${call.time}-${i}`} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1 - i * 0.2, x: 0 }} transition={{ duration: 0.3 }}
+              className="flex items-center gap-3 px-3 py-2 rounded-xl bg-red-50/70 border border-red-100">
+              <div className="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                <PhoneMissed size={10} className="text-red-500" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-sans text-[11px] font-semibold text-obsidian truncate">{call.name}</p>
+                <p className="font-mono text-[9px] text-subtle truncate">{call.procedure}</p>
+              </div>
+              <span className="font-sans text-xs font-bold text-red-500 shrink-0">−₹{call.value.toLocaleString('en-IN')}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Footer counter */}
+        <div className="px-4 pb-4 pt-2 border-t border-border/50">
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-mono text-[9px] text-muted uppercase tracking-widest">Lost today</span>
+            <motion.span key={totalLost} initial={{ scale: 1.2 }} animate={{ scale: 1 }} className="font-sans text-lg font-bold text-red-500">
+              −₹{totalLost.toLocaleString('en-IN')}
+            </motion.span>
+          </div>
+          <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
+            <motion.div className="h-full bg-gradient-to-r from-red-400 to-red-500 rounded-full"
+              animate={{ width: `${Math.min((totalLost / 135000) * 100, 98)}%` }}
+              transition={{ duration: 0.5 }} />
+          </div>
+          <p className="font-mono text-[9px] text-red-400/70 mt-1">And it's not even noon yet.</p>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Phase 2 UI — Recovery ── */
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="premium-card w-full rounded-2xl overflow-hidden relative flex flex-col"
+      style={{ minHeight: '380px' }}
+    >
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-500 via-emerald-400 to-transparent" />
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-border/50">
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot" />
+          <span className="font-mono text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Engageo Active</span>
+        </div>
+        <span className="font-mono text-[9px] bg-emerald-50 border border-emerald-200 text-emerald-600 px-2 py-0.5 rounded">LIVE</span>
+      </div>
+
+      {/* Incoming intercept alert */}
+      <div className="mx-4 mt-3 overflow-hidden transition-all duration-300" style={{ maxHeight: incomingRecover ? '72px' : '0px', opacity: incomingRecover ? 1 : 0 }}>
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5 flex items-center gap-3">
+          <div className="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+            <PhoneCall size={12} className="text-emerald-600 animate-bounce" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-sans text-[11px] font-bold text-emerald-700 truncate">Intercepting: {incomingRecover?.name} — {incomingRecover?.procedure}</p>
+            <p className="font-mono text-[9px] text-emerald-500">AI answering in &lt;{incomingRecover?.secs} sec · booking slot…</p>
+          </div>
+          <span className="font-sans text-xs font-bold text-emerald-600 shrink-0">₹{incomingRecover?.value?.toLocaleString('en-IN')}</span>
+        </div>
+      </div>
+
+      {/* Recovery log */}
+      <div className="flex-1 px-4 py-3 flex flex-col gap-2">
+        {recoveredList.length === 0 && !incomingRecover && (
+          <div className="flex-1 flex items-center justify-center">
+            <p className="font-mono text-[10px] text-muted uppercase tracking-widest">Awaiting calls…</p>
+          </div>
+        )}
+        {recoveredList.map((call, i) => (
+          <motion.div key={`${call.time}-${i}`} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1 - i * 0.2, x: 0 }} transition={{ duration: 0.3 }}
+            className="flex items-center gap-3 px-3 py-2 rounded-xl bg-emerald-50/70 border border-emerald-100">
+            <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+              <svg className="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-sans text-[11px] font-semibold text-obsidian truncate">{call.name} · Booked ✓</p>
+              <p className="font-mono text-[9px] text-subtle truncate">{call.procedure} · answered in {call.secs}s</p>
+            </div>
+            <span className="font-sans text-xs font-bold text-emerald-600 shrink-0">+₹{call.value.toLocaleString('en-IN')}</span>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Footer counter */}
+      <div className="px-4 pb-4 pt-2 border-t border-border/50">
+        <div className="flex items-center justify-between mb-2">
+          <span className="font-mono text-[9px] text-muted uppercase tracking-widest">Recovered today</span>
+          <motion.span key={totalRecovered} initial={{ scale: 1.2 }} animate={{ scale: 1 }} className="font-sans text-lg font-bold text-emerald-600">
+            +₹{totalRecovered.toLocaleString('en-IN')}
+          </motion.span>
+        </div>
+        <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
+          <motion.div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full"
+            animate={{ width: `${Math.min((totalRecovered / 270000) * 100, 98)}%` }}
+            transition={{ duration: 0.5 }} />
+        </div>
+        <p className="font-mono text-[9px] text-emerald-500/80 mt-1">Revenue that would've been lost. Secured.</p>
+      </div>
+    </motion.div>
+  );
+}
 
 const metrics = [
   { label: 'Avg Recovery', value: '₹24,000' },
@@ -92,100 +360,14 @@ export default function Hero() {
 
       {/* Visual card */}
       <motion.div
-        className="relative w-full max-w-lg aspect-square lg:aspect-[4/3] flex items-center justify-center"
+        className="relative w-full max-w-lg flex items-center justify-center"
         initial={{ opacity: 0, scale: 0.93 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.4, ease: [0.25, 1, 0.5, 1] }}
       >
-        <div className="absolute inset-0 bg-gradient-to-tr from-brand/5 via-white/20 to-transparent blur-3xl rounded-3xl" />
-        <div className="premium-card w-full h-full p-6 relative overflow-hidden rounded-2xl">
-          {/* Brand accent top bar */}
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand via-brand/60 to-transparent" />
-
-          <div className="h-full w-full flex flex-col">
-            <div className="flex justify-between items-center mb-6 border-b border-border/40 pb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-brand pulse-dot" />
-                <span className="text-[10px] uppercase tracking-widest font-bold text-subtle">LIVE RECOVERY TRACE</span>
-              </div>
-              <span className="font-mono text-[9px] text-muted bg-canvas px-2 py-1 rounded">LIVE</span>
-            </div>
-
-            <div className="flex-1 relative">
-              <svg className="w-full h-full overflow-visible" viewBox="0 0 440 300">
-                {/* Base paths */}
-                <g opacity="0.25">
-                  <path d="M40,150 C 90,150 90,80 140,80" fill="none" stroke="#3D5AFE" strokeWidth="2" />
-                  <path d="M240,80 C 260,80 260,120 280,120" fill="none" stroke="#3D5AFE" strokeWidth="2" />
-                  <path d="M360,120 C 370,120 370,150 390,150" fill="none" stroke="#3D5AFE" strokeWidth="2" />
-                  <path d="M40,150 C 90,150 90,220 140,220" fill="none" stroke="#E2E8F0" strokeWidth="2" />
-                  <path d="M220,220 C 250,220 250,180 280,180" fill="none" stroke="#E2E8F0" strokeWidth="2" />
-                  <path d="M340,180 C 370,180 370,150 390,150" fill="none" stroke="#E2E8F0" strokeWidth="2" />
-                </g>
-
-                {/* Animated active path */}
-                <motion.path
-                  d="M40,150 C 90,150 90,80 140,80 M240,80 C 260,80 260,120 280,120 M360,120 C 370,120 370,150 390,150"
-                  fill="none" stroke="#3D5AFE" strokeWidth="2.5" strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, repeatType: "loop", repeatDelay: 1 }}
-                />
-
-                {/* Start node */}
-                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "40px 150px" }}>
-                  <circle cx="40" cy="150" r="7" fill="#0B1221" />
-                  <text x="40" y="177" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="9" fontWeight="700" fill="#64748B">₹0 — Call Missed</text>
-                </motion.g>
-
-                {/* AI Calls Back node */}
-                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.0, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "190px 80px" }}>
-                  <rect x="140" y="66" width="100" height="26" rx="5" fill="white" stroke="#3D5AFE" strokeWidth="1.5" />
-                  <text x="190" y="82" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="9" fontWeight="700" fill="#3D5AFE" dy="1">AI Calls Back</text>
-                </motion.g>
-
-                {/* Inactive lower branch */}
-                <g opacity="0.3">
-                  <rect x="140" y="208" width="80" height="24" rx="4" fill="white" stroke="#E2E8F0" />
-                  <text x="180" y="223" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="8" fontWeight="500" fill="#94A3B8" dy="1">Patient searching</text>
-                  <rect x="280" y="168" width="80" height="24" rx="4" fill="#F8FAFC" stroke="#E2E8F0" />
-                  <text x="320" y="183" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="8" fontWeight="500" fill="#94A3B8" dy="1">Booking lost</text>
-                </g>
-
-                {/* Recovery pill */}
-                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.2, type: "spring", bounce: 0.5 }} style={{ transformOrigin: "210px 150px" }}>
-                  <rect x="128" y="136" width="164" height="28" rx="7" fill="#3D5AFE" />
-                  <rect x="128" y="136" width="164" height="28" rx="7" fill="url(#pill-gradient)" />
-                  <defs>
-                    <linearGradient id="pill-gradient" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#3D5AFE" />
-                      <stop offset="100%" stopColor="#2541E0" />
-                    </linearGradient>
-                  </defs>
-                  <text x="210" y="153" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="10" fontWeight="600" fill="white" dy="1">Recovered in 8 sec — ₹24,000</text>
-                </motion.g>
-
-                {/* Patient confirms */}
-                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.4, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "320px 120px" }}>
-                  <rect x="280" y="108" width="80" height="24" rx="4" fill="white" stroke="#0B1221" strokeWidth="1.5" />
-                  <text x="320" y="123" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="9" fontWeight="700" fill="#0B1221" dy="1">Patient Confirms</text>
-                </motion.g>
-
-                {/* End node */}
-                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.8, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "400px 150px" }}>
-                  <circle cx="400" cy="150" r="18" fill="#0B1221" />
-                  <motion.path
-                    d="M392 150l4 4 6-8"
-                    stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ delay: 2.1, duration: 0.4 }}
-                  />
-                  <text x="400" y="184" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="11" fontWeight="800" fill="#0B1221">Revenue Secured</text>
-                </motion.g>
-              </svg>
-            </div>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-red-500/5 via-white/20 to-transparent blur-3xl rounded-3xl" />
+        <div className="w-full relative">
+          <LiveBleedDashboard />
         </div>
       </motion.div>
     </section>

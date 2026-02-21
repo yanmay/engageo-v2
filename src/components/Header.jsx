@@ -1,118 +1,150 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
 
-const navLinks = [
-  { label: 'How It Works', href: '#workflow' },
-  { label: "Who It's For", href: '#who' },
-  { label: 'Proof', href: '#proof' },
+const SECTIONS = [
+  { id: 'home',         label: 'Hero'          },
+  { id: 'who',          label: "Who It's For"   },
+  { id: 'lifecycle',    label: 'How It Works'   },
+  { id: 'features',     label: 'Features'       },
+  { id: 'workflow',     label: 'Workflow'        },
+  { id: 'calculator',   label: 'Calculator'     },
+  { id: 'proof',        label: 'Proof'          },
+  { id: 'testimonials', label: 'Testimonials'   },
+  { id: 'pricing',      label: 'Pricing'        },
+  { id: 'faq',          label: 'FAQ'            },
 ];
 
-function scrollTo(id) {
-  const el = document.querySelector(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function jumpTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled,    setScrolled]   = useState(false);
+  const [mobileOpen,  setMobileOpen] = useState(false);
+  const [activeId,    setActiveId]   = useState('home');
+  const [scrollPct,   setScrollPct]  = useState(0);
+  const chipsRef  = useRef(null);
+  const activeRef = useRef(null);
   const { openModal } = useModal();
 
+  /* ── Track scroll: progress + active section ── */
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handle = () => {
+      const y    = window.scrollY;
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      setScrolled(y > 60);
+      setScrollPct(docH > 0 ? y / docH : 0);
+
+      const mid = y + window.innerHeight * 0.35;
+      let cur = SECTIONS[0].id;
+      SECTIONS.forEach(({ id }) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= mid) cur = id;
+      });
+      setActiveId(cur);
+    };
+    window.addEventListener('scroll', handle, { passive: true });
+    handle();
+    return () => window.removeEventListener('scroll', handle);
   }, []);
 
-  // Close mobile nav on resize to desktop
+  /* ── Auto-scroll active chip into view ── */
+  useEffect(() => {
+    if (activeRef.current && chipsRef.current) {
+      const c = chipsRef.current;
+      const chip = activeRef.current;
+      c.scrollTo({ left: chip.offsetLeft - c.offsetWidth / 2 + chip.offsetWidth / 2, behavior: 'smooth' });
+    }
+  }, [activeId]);
+
+  /* ── Mobile helpers ── */
   useEffect(() => {
     const close = () => window.innerWidth >= 768 && setMobileOpen(false);
     window.addEventListener('resize', close);
     return () => window.removeEventListener('resize', close);
   }, []);
 
-  // Trap scroll when mobile nav is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    scrollTo(href);
-    setMobileOpen(false);
-  };
-
-  const handleWatchClick = (e) => {
-    e.preventDefault();
-    scrollTo('#lifecycle');
-  };
+  const handleNavClick = (e, id) => { e.preventDefault(); jumpTo(id); setMobileOpen(false); };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full px-6 py-4 md:px-12 flex justify-between items-center transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ${
           scrolled
-            ? 'bg-white/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06),0_4px_16px_-4px_rgba(0,0,0,0.08)]'
+            ? 'bg-white/85 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06),0_4px_16px_-4px_rgba(0,0,0,0.08)]'
             : 'bg-transparent'
         }`}
       >
-        {/* Brand */}
-        <a
-          href="#home"
-          onClick={(e) => handleNavClick(e, '#home')}
-          className="flex items-center gap-2"
-        >
-          <span className="font-sans text-xl font-bold tracking-tighter text-obsidian">
-            Engageo
-          </span>
-          <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
-        </a>
+        {/* ── Single unified row ── */}
+        <div className="flex items-center gap-4 px-5 md:px-10 h-14">
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="link-underline font-sans text-xs font-medium text-subtle hover:text-obsidian transition-colors duration-200"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-5">
-          <a
-            href="#lifecycle"
-            onClick={handleWatchClick}
-            className="link-underline font-sans text-xs font-medium text-subtle hover:text-obsidian transition-colors"
-          >
-            Watch a Live Recovery
+          {/* Brand — always visible */}
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center gap-2 shrink-0">
+            <span className="font-sans text-base font-bold tracking-tighter text-obsidian">Engageo</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
           </a>
 
+          {/* Section chips — centered, scrollable */}
+          <div
+            ref={chipsRef}
+            className="flex-1 flex items-center justify-center gap-0.5 overflow-x-auto"
+            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
+            {SECTIONS.map((s) => {
+              const active = activeId === s.id;
+              return (
+                <button
+                  key={s.id}
+                  ref={active ? activeRef : null}
+                  onClick={() => jumpTo(s.id)}
+                  className="shrink-0 px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-all duration-200"
+                  style={{
+                    background:  active ? '#3D5AFE' : 'transparent',
+                    color:       active ? '#fff'     : '#94A3B8',
+                    fontWeight:  active ? 600        : 500,
+                  }}
+                >
+                  {s.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* CTA — desktop only */}
           <button
             onClick={openModal}
-            className="group relative isolate overflow-hidden bg-brand text-white text-xs font-semibold px-5 py-2.5 rounded-lg glow-brand-sm ring-1 ring-brand/30 transition-all duration-400 hover:scale-[1.05] hover:glow-brand active:scale-[0.97] focus:outline-none"
+            className="hidden md:flex shrink-0 relative isolate overflow-hidden bg-brand text-white text-[11px] font-semibold px-4 py-2 rounded-lg glow-brand-sm ring-1 ring-brand/30 transition-all duration-300 hover:scale-[1.05] active:scale-[0.97]"
           >
             <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 pointer-events-none" />
-            <span className="relative z-20">Claim Your Free Audit →</span>
+            <span className="relative z-20">Free Audit →</span>
+          </button>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            className="md:hidden shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-canvas border border-border text-obsidian hover:border-brand/30 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={14} /> : <Menu size={14} />}
           </button>
         </div>
 
-        {/* Mobile Hamburger */}
-        <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl bg-canvas border border-border text-obsidian hover:border-brand/30 transition-colors"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={16} /> : <Menu size={16} />}
-        </button>
+        {/* ── Scroll progress bar — flush at bottom of header ── */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-border/30">
+          <div
+            className="h-full bg-gradient-to-r from-brand to-brand/50 transition-none"
+            style={{ width: `${scrollPct * 100}%` }}
+          />
+        </div>
       </header>
 
-      {/* Mobile Nav Overlay */}
+      {/* ── Mobile Nav Overlay ── */}
       {mobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-obsidian/40 backdrop-blur-sm md:hidden"
@@ -124,35 +156,25 @@ export default function Header() {
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Mobile brand */}
         <div className="flex items-center justify-between">
           <span className="font-sans text-xl font-bold tracking-tighter text-obsidian">Engageo</span>
           <button onClick={() => setMobileOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-canvas border border-border">
             <X size={14} className="text-subtle" />
           </button>
         </div>
-
-        {/* Mobile links */}
         <nav className="flex flex-col gap-1 mt-2">
-          {navLinks.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="font-sans text-sm font-medium text-obsidian py-3 px-4 rounded-xl hover:bg-canvas transition-colors"
+          {SECTIONS.map((s) => (
+            <button
+              key={s.id}
+              onClick={(e) => { handleNavClick(e, s.id); }}
+              className={`text-left font-sans text-sm font-medium py-3 px-4 rounded-xl transition-colors ${
+                activeId === s.id ? 'bg-brand/10 text-brand' : 'text-obsidian hover:bg-canvas'
+              }`}
             >
-              {item.label}
-            </a>
+              {s.label}
+            </button>
           ))}
-          <a
-            href="#lifecycle"
-            onClick={handleWatchClick}
-            className="font-sans text-sm font-medium text-subtle py-3 px-4 rounded-xl hover:bg-canvas transition-colors"
-          >
-            Watch a Live Recovery
-          </a>
         </nav>
-
         <div className="mt-auto">
           <button
             onClick={() => { setMobileOpen(false); openModal(); }}

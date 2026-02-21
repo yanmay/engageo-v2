@@ -15,7 +15,7 @@ import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import DefensibleDecision from './components/DefensibleDecision';
 import Footer from './components/Footer';
-import ScrollSpine from './components/ScrollSpine';
+
 import FloatingCTA from './components/FloatingCTA';
 
 function App() {
@@ -28,8 +28,6 @@ function App() {
         {/* Modal */}
         <AuditModal />
 
-        {/* Navigation aids */}
-        <ScrollSpine />
         <FloatingCTA />
 
         <Header />
