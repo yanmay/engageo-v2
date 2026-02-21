@@ -1,0 +1,193 @@
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useModal } from '../context/ModalContext';
+
+const metrics = [
+  { label: 'Avg Recovery', value: '₹24,000' },
+  { label: 'Response Time', value: '< 8 sec' },
+  { label: 'Clinics Live', value: '47+' },
+];
+
+export default function Hero() {
+  const { openModal } = useModal();
+
+  const scrollToCalculator = () => {
+    document.querySelector('#calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToLifecycle = () => {
+    document.querySelector('#lifecycle')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  return (
+    <section className="relative min-h-[92vh] flex flex-col lg:flex-row items-center justify-between px-6 md:px-12 lg:px-20 pt-32 pb-20 gap-16">
+      {/* Content */}
+      <div className="max-w-2xl space-y-10 relative z-10">
+        <motion.div
+          className="space-y-7"
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+        >
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-border shadow-card">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot" />
+            <span className="font-sans text-[11px] font-semibold text-subtle tracking-tight">
+              Live in 47 Indian Clinics
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="font-sans text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-obsidian leading-[0.92]">
+            Your Clinic Is Losing
+            <br />
+            <span className="gradient-text">₹3L Every Month.</span>
+          </h1>
+
+          {/* Sub */}
+          <p className="max-w-md font-sans text-base text-subtle leading-relaxed">
+            Every call your receptionist misses is a patient your competitor books. Engageo
+            intercepts that call in 8 seconds — qualifies the patient, books the slot, sends
+            the WhatsApp confirmation. While you're with your next patient.
+          </p>
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div
+          className="flex flex-wrap items-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <button
+            onClick={openModal}
+            className="group relative isolate overflow-hidden bg-brand text-white text-sm font-semibold px-7 py-3.5 rounded-xl glow-brand-sm ring-1 ring-brand/20 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.04] hover:shadow-brand-lg hover:ring-brand/30 active:scale-[0.97] focus:outline-none flex items-center gap-2">
+            <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none" />
+            <span className="relative z-10">See What You're Losing — Free Audit</span>
+            <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
+
+          <button
+            onClick={scrollToLifecycle}
+            className="px-7 py-3.5 glass-card text-obsidian border border-border text-sm font-medium rounded-xl transition-all duration-300 hover:border-brand/30 hover:text-brand">
+            Watch a Real Recovery Call
+          </button>
+        </motion.div>
+
+        {/* Metric pills */}
+        <motion.div
+          className="flex flex-wrap gap-3 pt-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.45 }}
+        >
+          {metrics.map((m) => (
+            <div key={m.label} className="glass-card flex items-center gap-3 px-4 py-2.5 rounded-xl">
+              <span className="font-sans text-lg font-bold text-obsidian tracking-tight">{m.value}</span>
+              <span className="font-mono text-[10px] text-subtle uppercase tracking-widest">{m.label}</span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Visual card */}
+      <motion.div
+        className="relative w-full max-w-lg aspect-square lg:aspect-[4/3] flex items-center justify-center"
+        initial={{ opacity: 0, scale: 0.93 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.4, ease: [0.25, 1, 0.5, 1] }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-tr from-brand/5 via-white/20 to-transparent blur-3xl rounded-3xl" />
+        <div className="premium-card w-full h-full p-6 relative overflow-hidden rounded-2xl">
+          {/* Brand accent top bar */}
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand via-brand/60 to-transparent" />
+
+          <div className="h-full w-full flex flex-col">
+            <div className="flex justify-between items-center mb-6 border-b border-border/40 pb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-brand pulse-dot" />
+                <span className="text-[10px] uppercase tracking-widest font-bold text-subtle">LIVE RECOVERY TRACE</span>
+              </div>
+              <span className="font-mono text-[9px] text-muted bg-canvas px-2 py-1 rounded">LIVE</span>
+            </div>
+
+            <div className="flex-1 relative">
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 440 300">
+                {/* Base paths */}
+                <g opacity="0.25">
+                  <path d="M40,150 C 90,150 90,80 140,80" fill="none" stroke="#3D5AFE" strokeWidth="2" />
+                  <path d="M240,80 C 260,80 260,120 280,120" fill="none" stroke="#3D5AFE" strokeWidth="2" />
+                  <path d="M360,120 C 370,120 370,150 390,150" fill="none" stroke="#3D5AFE" strokeWidth="2" />
+                  <path d="M40,150 C 90,150 90,220 140,220" fill="none" stroke="#E2E8F0" strokeWidth="2" />
+                  <path d="M220,220 C 250,220 250,180 280,180" fill="none" stroke="#E2E8F0" strokeWidth="2" />
+                  <path d="M340,180 C 370,180 370,150 390,150" fill="none" stroke="#E2E8F0" strokeWidth="2" />
+                </g>
+
+                {/* Animated active path */}
+                <motion.path
+                  d="M40,150 C 90,150 90,80 140,80 M240,80 C 260,80 260,120 280,120 M360,120 C 370,120 370,150 390,150"
+                  fill="none" stroke="#3D5AFE" strokeWidth="2.5" strokeLinecap="round"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity, repeatType: "loop", repeatDelay: 1 }}
+                />
+
+                {/* Start node */}
+                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "40px 150px" }}>
+                  <circle cx="40" cy="150" r="7" fill="#0B1221" />
+                  <text x="40" y="177" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="9" fontWeight="700" fill="#64748B">₹0 — Call Missed</text>
+                </motion.g>
+
+                {/* AI Calls Back node */}
+                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.0, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "190px 80px" }}>
+                  <rect x="140" y="66" width="100" height="26" rx="5" fill="white" stroke="#3D5AFE" strokeWidth="1.5" />
+                  <text x="190" y="82" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="9" fontWeight="700" fill="#3D5AFE" dy="1">AI Calls Back</text>
+                </motion.g>
+
+                {/* Inactive lower branch */}
+                <g opacity="0.3">
+                  <rect x="140" y="208" width="80" height="24" rx="4" fill="white" stroke="#E2E8F0" />
+                  <text x="180" y="223" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="8" fontWeight="500" fill="#94A3B8" dy="1">Patient searching</text>
+                  <rect x="280" y="168" width="80" height="24" rx="4" fill="#F8FAFC" stroke="#E2E8F0" />
+                  <text x="320" y="183" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="8" fontWeight="500" fill="#94A3B8" dy="1">Booking lost</text>
+                </g>
+
+                {/* Recovery pill */}
+                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.2, type: "spring", bounce: 0.5 }} style={{ transformOrigin: "210px 150px" }}>
+                  <rect x="128" y="136" width="164" height="28" rx="7" fill="#3D5AFE" />
+                  <rect x="128" y="136" width="164" height="28" rx="7" fill="url(#pill-gradient)" />
+                  <defs>
+                    <linearGradient id="pill-gradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#3D5AFE" />
+                      <stop offset="100%" stopColor="#2541E0" />
+                    </linearGradient>
+                  </defs>
+                  <text x="210" y="153" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="10" fontWeight="600" fill="white" dy="1">Recovered in 8 sec — ₹24,000</text>
+                </motion.g>
+
+                {/* Patient confirms */}
+                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.4, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "320px 120px" }}>
+                  <rect x="280" y="108" width="80" height="24" rx="4" fill="white" stroke="#0B1221" strokeWidth="1.5" />
+                  <text x="320" y="123" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="9" fontWeight="700" fill="#0B1221" dy="1">Patient Confirms</text>
+                </motion.g>
+
+                {/* End node */}
+                <motion.g initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.8, type: "spring", bounce: 0.4 }} style={{ transformOrigin: "400px 150px" }}>
+                  <circle cx="400" cy="150" r="18" fill="#0B1221" />
+                  <motion.path
+                    d="M392 150l4 4 6-8"
+                    stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ delay: 2.1, duration: 0.4 }}
+                  />
+                  <text x="400" y="184" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="11" fontWeight="800" fill="#0B1221">Revenue Secured</text>
+                </motion.g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
