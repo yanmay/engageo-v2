@@ -4,16 +4,19 @@ import AuditModal from './components/AuditModal';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Logos from './components/Logos';
+import WhoItsFor from './components/WhoItsFor';
 import DecisionLifecycle from './components/DecisionLifecycle';
 import Features from './components/Features';
 import WorkflowSlider from './components/WorkflowSlider';
-import ComparisonTable from './components/ComparisonTable';
 import ROICalculator from './components/ROICalculator';
+import ComparisonTable from './components/ComparisonTable';
 import Testimonials from './components/Testimonials';
 import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import DefensibleDecision from './components/DefensibleDecision';
 import Footer from './components/Footer';
+import ScrollSpine from './components/ScrollSpine';
+import FloatingCTA from './components/FloatingCTA';
 
 function App() {
   return (
@@ -22,23 +25,49 @@ function App() {
         {/* Fixed Backgrounds */}
         <div className="fixed inset-0 z-0 technical-grid pointer-events-none" />
 
-        {/* Modal — lives outside content flow */}
+        {/* Modal */}
         <AuditModal />
+
+        {/* Navigation aids */}
+        <ScrollSpine />
+        <FloatingCTA />
 
         <Header />
 
-        {/* Content Wrapper */}
+        {/* Content — Narrative Arc Order */}
         <div className="z-10 flex flex-col w-full relative">
+          {/* 1. Hook */}
           <div id="home"><Hero /></div>
+
+          {/* 2. Instant social proof */}
           <Logos />
+
+          {/* 3. "Is this for me?" — audience qualification */}
+          <div id="who"><WhoItsFor /></div>
+
+          {/* 4. "How does it work?" — now they care */}
           <div id="lifecycle"><DecisionLifecycle /></div>
-          <div id="features"><Features /></div>
+
+          {/* 5. Platform depth */}
+          <div id="features" className="bg-white"><Features /></div>
+
+          {/* 6. Workflow clarity */}
           <div id="workflow"><WorkflowSlider /></div>
+
+          {/* 7. Make it personal — addictive calculator */}
+          <div id="calculator" className="bg-white"><ROICalculator /></div>
+
+          {/* 8. Objection handling */}
           <div id="proof"><ComparisonTable /></div>
-          <div id="calculator"><ROICalculator /></div>
-          <div id="testimonials"><Testimonials /></div>
+
+          {/* 9. Social proof */}
+          <div id="testimonials" className="bg-white"><Testimonials /></div>
+
+          {/* 10. Commitment */}
           <div id="pricing"><Pricing /></div>
-          <div id="faq"><FAQ /></div>
+
+          {/* 11. Tail — FAQ + guarantee + footer */}
+          <div id="faq" className="bg-white"><FAQ /></div>
           <DefensibleDecision />
           <Footer />
         </div>

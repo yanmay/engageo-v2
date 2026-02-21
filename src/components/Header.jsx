@@ -4,7 +4,7 @@ import { useModal } from '../context/ModalContext';
 
 const navLinks = [
   { label: 'How It Works', href: '#workflow' },
-  { label: "Who It's For", href: '#features' },
+  { label: "Who It's For", href: '#who' },
   { label: 'Proof', href: '#proof' },
 ];
 

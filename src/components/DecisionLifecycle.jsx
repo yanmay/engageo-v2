@@ -85,7 +85,7 @@ export default function DecisionLifecycle() {
       ref={sectionRef}
       id="decision-lifecycle"
       className="relative w-full bg-canvas border-b border-border/60 z-10"
-      style={{ height: '500vh' }}
+      style={{ height: '320vh' }}
     >
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
         <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
