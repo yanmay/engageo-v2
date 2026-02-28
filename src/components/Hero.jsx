@@ -64,38 +64,72 @@ const HERO_WORDS = [
   "patients to rivals."
 ];
 
+// ← The longest phrase determines container height. Update if you add a longer one.
+const LONGEST_WORD = "70% of missed calls.";
+
 function TypewriterText({ words }) {
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
+  const [text, setText] = useState(words[0]);
+  const [phase, setPhase] = useState('pause');
+  const [wordIdx, setWordIdx] = useState(0);
 
   useEffect(() => {
     let timer;
-    const currentWord = words[loopNum % words.length];
-    
-    if (isDeleting) {
-      timer = setTimeout(() => setText(currentWord.substring(0, text.length - 1)), 35);
-    } else {
-      timer = setTimeout(() => setText(currentWord.substring(0, text.length + 1)), 65);
-    }
+    const currentWord = words[wordIdx % words.length];
 
-    if (!isDeleting && text === currentWord) {
-      timer = setTimeout(() => setIsDeleting(true), 2400);
-    } else if (isDeleting && text === '') {
-      setIsDeleting(false);
-      setLoopNum(prev => prev + 1);
+    if (phase === 'typing') {
+      if (text.length < currentWord.length) {
+        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), 90);
+      } else {
+        timer = setTimeout(() => setPhase('pause'), 3000);
+      }
+    } else if (phase === 'pause') {
+      timer = setTimeout(() => setPhase('deleting'), 200);
+    } else if (phase === 'deleting') {
+      if (text.length > 0) {
+        timer = setTimeout(() => setText(text.slice(0, -1)), 50);
+      } else {
+        const next = (wordIdx + 1) % words.length;
+        setWordIdx(next);
+        setPhase('typing');
+      }
     }
 
     return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, words]);
+  }, [text, phase, wordIdx, words]);
 
   return (
-    <span className="inline">
-      <span>{text}</span>
-      <span 
-        className="inline-block bg-brand animate-pulse ml-1" 
-        style={{ width: '0.06em', height: '0.9em', verticalAlign: 'baseline', transform: 'translateY(0.1em)', animationDuration: '0.8s' }} 
-      />
+    /*
+     * PHANTOM SPACER TECHNIQUE
+     * ─────────────────────────
+     * The outer span is `position: relative`. Inside:
+     *   1. An invisible copy of the LONGEST phrase — this is what determines height.
+     *      `aria-hidden` + `select-none` + `opacity-0` keeps it invisible.
+     *   2. The actual animated text, `position: absolute, inset-0`, so it sits
+     *      on top of the phantom but NEVER contributes to layout flow.
+     * Result: container height is ALWAYS = height of longest phrase. Zero shift.
+     */
+    <span className="relative block">
+      {/* 1. Phantom — sets the height */}
+      <span
+        className="invisible select-none pointer-events-none"
+        aria-hidden="true"
+      >
+        {LONGEST_WORD}
+      </span>
+
+      {/* 2. Actual animated text — floats above phantom */}
+      <span className="absolute top-0 left-0">
+        {text}
+        <span
+          className="inline-block bg-brand ml-1"
+          style={{
+            width: '3px',
+            height: '0.85em',
+            verticalAlign: 'text-bottom',
+            animation: 'caretBlink 1s step-end infinite',
+          }}
+        />
+      </span>
     </span>
   );
 }
@@ -360,13 +394,19 @@ export default function Hero() {
         >
           <div className="section-label mb-6 text-xs md:text-sm">Live in 47 Indian Clinics</div>
 
-          <h1 className="tracking-tighter leading-[1]">
-            <span className="font-sans text-4xl md:text-6xl lg:text-[5.5rem] font-bold text-obsidian block mb-1 md:mb-2 leading-[1.1]">
+          <h1 className="tracking-tighter">
+            <span className="font-sans text-4xl md:text-6xl lg:text-[5rem] font-bold text-obsidian block mb-2 leading-[1.05]">
               Your clinic is losing
             </span>
+            {/* Typewriter line — controlled size so all phrases stay on 1 line,
+                preventing the phantom-spacer from leaving visible blank space */}
             <span
-              className="font-sans font-bold block tracking-tight text-brand leading-[1.1] min-h-[1.2em]"
-              style={{ fontSize: 'clamp(2.75rem, 8vw, 7.5rem)' }}
+              className="font-sans font-bold text-brand tracking-tight"
+              style={{
+                fontSize: 'clamp(1.75rem, 5vw, 3rem)',
+                display: 'block',
+                lineHeight: 1.15,
+              }}
             >
               <TypewriterText words={HERO_WORDS} />
             </span>

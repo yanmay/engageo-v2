@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Typewriter caret blink ─────────────────────────────────── */
+@keyframes caretBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 /* ─── Google Fonts ────────────────────────────────────────────── */
 /* Instrument Serif loaded in index.html */
 
