@@ -36,7 +36,7 @@ export default function Features() {
               <div className="flex justify-between items-start">
                 <div className="max-w-md">
                   {/* Numeral anchor */}
-                  <div className="card-numeral mb-2 -ml-1">01</div>
+                  <div className="card-numeral mb-2">01</div>
                   <h3 className="text-2xl font-bold text-obsidian mb-3 tracking-tight">
                     Revenue from Day 1
                   </h3>
@@ -82,7 +82,7 @@ export default function Features() {
             style={{ color: '#E8552A' /* rust left-border */ }}
           >
             <div className="p-6 md:p-10 relative z-10 flex flex-col h-full">
-              <div className="card-numeral mb-2 -ml-1" style={{ color: 'rgba(232,85,42,0.1)' }}>02</div>
+              <div className="card-numeral mb-2" style={{ color: 'rgba(232,85,42,0.1)' }}>02</div>
               <h3 className="text-xl font-bold text-obsidian mb-3 tracking-tight">
                 Lowest Risk Entry
               </h3>
@@ -116,7 +116,7 @@ export default function Features() {
           >
             <div className="p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
               <div className="flex-1 max-w-lg">
-                <div className="card-numeral mb-2 -ml-1" style={{ color: 'rgba(30,26,22,0.07)' }}>03</div>
+                <div className="card-numeral mb-2" style={{ color: 'rgba(30,26,22,0.07)' }}>03</div>
                 <h3 className="text-xl font-bold text-obsidian mb-3 tracking-tight">
                   Proven Infrastructure
                 </h3>

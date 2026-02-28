@@ -394,10 +394,10 @@ export default function Hero() {
         >
           <div className="section-label mb-6 text-xs md:text-sm">Live in 47 Indian Clinics</div>
 
-          <h1 className="tracking-tighter">
-            <span className="font-sans text-4xl md:text-6xl lg:text-[5rem] font-bold text-obsidian block mb-2 leading-[1.05]">
-              Your clinic is losing
-            </span>
+          <h1 className="tracking-tighter text-left">
+            <div className="font-sans text-[2.5rem] md:text-6xl lg:text-[5rem] font-bold text-obsidian mb-2 leading-[1.05] w-full">
+              Your clinic is<br />losing
+            </div>
             {/* Typewriter line — controlled size so all phrases stay on 1 line,
                 preventing the phantom-spacer from leaving visible blank space */}
             <span
