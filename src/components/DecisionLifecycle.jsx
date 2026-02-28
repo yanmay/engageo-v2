@@ -1,6 +1,60 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CircleDashed, Check } from 'lucide-react';
 
+const STEPS = [
+  {
+    num: "01",
+    label: "Detection",
+    title: "The Silent Loss Begins",
+    desc: "A patient called. Your receptionist was busy. That patient is now searching for another clinic.",
+    type: "card",
+    text: "Revenue alert: +91 9876XXXXXX dropped at 14:32. Estimated value: ₹22,000. Recovery initiated.",
+  },
+  {
+    num: "02",
+    label: "Routing",
+    title: "Intent Identified",
+    desc: "We know why they called. Specialty matched. Priority assigned. No human needed.",
+    type: "text",
+    cardLabel: "Action",
+    text: "High-intent implant patient. Callback queued. Est. case value: ₹85,000.",
+  },
+  {
+    num: "03",
+    label: "Engagement",
+    title: "AI Calls Them Back First",
+    desc: "Not a message. A voice call — in 8 seconds. Before they open Google and find your competitor.",
+    type: "metric",
+    cardLabel: "Response Time",
+    metric: "< 8 sec",
+  },
+  {
+    num: "04",
+    label: "Qualification",
+    title: "The Patient Doesn't Know It's AI",
+    desc: "Natural voice. Real questions. Specialty-specific answers. Your clinic's name, your doctor's schedule, your slot.",
+    type: "dots",
+    text: "Patient confirmed: Saturday 11 AM. Dr. Mehta. Implant consultation. Deposit intent: Yes.",
+  },
+  {
+    num: "05",
+    label: "Conversion",
+    title: "The Slot Is Filled",
+    desc: "Google Calendar updated. Patient receives WhatsApp confirmation. Receptionist notified. You just recovered ₹22,000 without lifting a finger.",
+    type: "approved",
+    text: "Slot Confirmed",
+    cardLabel: "Booking locked. No manual action required.",
+  },
+  {
+    num: "06",
+    label: "Archive",
+    title: "Your Weekly Revenue Report",
+    desc: "Every recovery logged. Every rupee tracked. Friday report lands in your WhatsApp.",
+    type: "hash",
+    text: "This week: 11 recoveries. ₹2,64,000 secured. 3 no-shows prevented.",
+  },
+];
+
 export default function DecisionLifecycle() {
   const sectionRef = useRef(null);
   const [progress, setProgress] = useState(0);
@@ -35,160 +89,145 @@ export default function DecisionLifecycle() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const steps = [
-    {
-      threshold: 0.05,
-      num: "01 Detection",
-      title: "The Silent Loss Begins",
-      desc: "A patient called. Your receptionist was busy. That patient is now searching for another clinic.",
-      type: "card",
-      text: "Revenue alert: +91 9876XXXXXX dropped at 14:32. Estimated value: ₹22,000. Recovery initiated.",
-    },
-    {
-      threshold: 0.22,
-      num: "02 Routing",
-      title: "Intent Identified",
-      desc: "We know why they called. Specialty matched. Priority assigned. No human needed.",
-      type: "text",
-      label: "Action",
-      text: "High-intent implant patient. Callback queued. Est. case value: ₹85,000.",
-    },
-    {
-      threshold: 0.39,
-      num: "03 Engagement",
-      title: "AI Calls Them Back First",
-      desc: "Not a message. A voice call — in 8 seconds. Before they open Google and find your competitor.",
-      type: "metric",
-      label: "Response Time",
-      metric: "< 8 sec",
-    },
-    {
-      threshold: 0.56,
-      num: "04 Qualification",
-      title: "The Patient Doesn't Know It's AI",
-      desc: "Natural voice. Real questions. Specialty-specific answers. Your clinic's name, your doctor's schedule, your slot.",
-      type: "dots",
-      text: "Patient confirmed: Saturday 11 AM. Dr. Mehta. Implant consultation. Deposit intent: Yes.",
-    },
-    {
-      threshold: 0.73,
-      num: "05 Conversion",
-      title: "The Slot Is Filled",
-      desc: "Google Calendar updated. Patient receives WhatsApp confirmation. Receptionist notified. You just recovered ₹22,000 without lifting a finger.",
-      type: "approved",
-      text: "Slot Confirmed",
-      label: "Booking locked. No manual action required.",
-    },
-    {
-      threshold: 0.88,
-      num: "06 Archive",
-      title: "Your Weekly Revenue Report",
-      desc: "Every recovery logged. Every rupee tracked. Friday report lands in your WhatsApp.",
-      type: "hash",
-      text: "This week: 11 recoveries. ₹2,64,000 secured. 3 no-shows prevented.",
-    },
-  ];
-
-  // Determine which step is currently active
-  const activeIdx = steps.reduce((acc, step, idx) =>
-    progress >= step.threshold ? idx : acc, 0);
-  const activeStep = steps[activeIdx];
+  // Determine which step is currently active based on scroll progress
+  const activeIdx = STEPS.reduce((acc, step, idx) => {
+    const stepThreshold = idx / STEPS.length;
+    return progress >= stepThreshold ? idx : acc;
+  }, 0);
 
   return (
     <section
       ref={sectionRef}
       id="decision-lifecycle"
       className="relative w-full z-10"
-      style={{ height: '320vh', background: '#1E1A16' }}
+      style={{ background: '#1E1A16' }}
     >
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
-        {/* Subtle dot grid on dark bg */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none" />
-        {/* Soft radial glow centre */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-brand/5 rounded-full blur-3xl pointer-events-none" />
+      {/* ── Section Header ── */}
+      <div className="py-16 md:py-24 text-center px-4">
+        <span className="section-label" style={{ color: '#3D5AFE' }}>Live Demo</span>
+        <h2 className="font-sans text-2xl md:text-4xl font-bold text-white tracking-tight mt-4 mb-3 px-4">
+          Watch a Real Recovery in 8 Seconds
+        </h2>
+        <p className="text-white/40 text-sm md:text-base text-center max-w-md mx-auto leading-relaxed">
+          From revenue lost to revenue secured — automatically.
+        </p>
+      </div>
 
-        {/* ── Scroll hint — visible only before any scroll ── */}
+      {/* ── Adaptive Timeline ── */}
+      <div className="relative max-w-4xl mx-auto px-4 md:px-8 pb-16 md:pb-32">
+
+        {/* ── Central vertical line ── */}
+        {/* Mobile: left-6 | Desktop: centered */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-6 pointer-events-none z-20"
-          style={{ opacity: progress < 0.02 ? 1 : 0, transition: 'opacity 0.5s' }}
+          className="absolute top-0 bottom-0 left-6 md:left-1/2 md:-translate-x-1/2 w-px"
+          style={{ background: 'rgba(255,255,255,0.08)' }}
         >
-          <div className="flex flex-col items-center gap-3">
-            <span className="section-label" style={{ color: '#3D5AFE' }}>Live Demo</span>
-            <h2 className="font-sans text-3xl md:text-4xl font-bold text-white tracking-tight text-center px-6">
-              Watch a Real Recovery in 8 Seconds
-            </h2>
-            <p className="text-white/40 text-sm text-center max-w-xs">
-              Scroll slowly to see exactly what happens after a missed call.
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-1 mt-2">
-            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Scroll down</span>
-            <div style={{ animation: 'bounceArrow 1.4s ease-in-out infinite' }}>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 4v12M5 11l5 5 5-5" stroke="#3D5AFE" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </div>
+          {/* Progress fill */}
+          <div
+            className="w-full bg-brand transition-all duration-300 ease-out origin-top"
+            style={{ height: `${progress * 100}%` }}
+          />
         </div>
 
-        <div
-          className="max-w-2xl w-full px-6 md:px-12 relative z-10 flex flex-col items-center text-center gap-10"
-          style={{ opacity: progress > 0.01 ? 1 : 0, transition: 'opacity 0.7s' }}
-        >
-          {/* Section header */}
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mb-3">What Happens in 8 Seconds</p>
-            <h2 className="font-sans text-2xl md:text-3xl font-semibold text-white tracking-tight mb-2">
-              From revenue lost to revenue secured — automatically.
-            </h2>
-          </div>
+        {/* ── Timeline Steps ── */}
+        <div className="space-y-12 md:space-y-24 relative z-10">
+          {STEPS.map((step, idx) => {
+            const isActive = idx <= activeIdx;
+            const isLeft = idx % 2 === 0; // Desktop zig-zag: even = left, odd = right
 
-          {/* Active step — re-mounts on step change for animation */}
-          <div
-            key={activeIdx}
-            className="flex flex-col items-center gap-5 w-full lifecycle-step-anim"
-          >
-            <span className="font-mono text-[10px] text-brand uppercase tracking-widest bg-brand/10 px-3 py-1 border border-brand/20">
-              {activeStep.num}
-            </span>
-            <h3 className="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-              {activeStep.title}
-            </h3>
-            <p className="text-white/50 text-sm max-w-md leading-relaxed">
-              {activeStep.desc}
-            </p>
-
-            {/* Visual widget */}
-            <div className="mt-4 w-full max-w-md">
-              <StepVisual
-                type={activeStep.type}
-                label={activeStep.label}
-                text={activeStep.text}
-                metric={activeStep.metric}
-              />
-            </div>
-          </div>
-
-          {/* Progress dots */}
-          <div className="flex items-center gap-2">
-            {steps.map((_, i) => (
+            return (
               <div
-                key={i}
-                className="rounded-full transition-all duration-400"
+                key={idx}
+                className={`
+                  relative
+                  /* Mobile: all items flow to the right of the left-aligned line */
+                  pl-14 md:pl-0
+                  /* Desktop: alternating layout */
+                  md:flex md:items-start
+                  ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'}
+                `}
                 style={{
-                  width: i === activeIdx ? '28px' : '6px',
-                  height: '6px',
-                  backgroundColor: i <= activeIdx ? '#3D5AFE' : 'rgba(255,255,255,0.15)',
+                  opacity: isActive ? 1 : 0.3,
+                  transition: 'opacity 0.5s ease',
                 }}
-              />
-            ))}
-          </div>
+              >
+                {/* ── Node dot on the line ── */}
+                {/* Mobile: positioned on the left line (left-6 → center at left-[18px]) */}
+                {/* Desktop: centered on the md:left-1/2 line */}
+                <div
+                  className={`
+                    absolute
+                    left-[14px] md:left-1/2
+                    -translate-x-1/2
+                    top-0
+                    w-10 h-10
+                    flex items-center justify-center
+                    border-2 transition-all duration-300 z-10
+                    ${isActive
+                      ? 'bg-brand border-brand text-white shadow-[0_0_16px_rgba(61,90,254,0.4)]'
+                      : 'bg-[#1E1A16] border-white/20 text-white/30'
+                    }
+                  `}
+                >
+                  <span className="font-mono text-xs font-bold">{step.num}</span>
+                </div>
 
-          {activeIdx < steps.length - 1 && (
-            <p className="text-[10px] text-white/20 uppercase tracking-widest animate-pulse">
-              Scroll to continue
-            </p>
-          )}
+                {/* ── Content card ── */}
+                {/* Mobile: full width to the right of the line (already via pl-14) */}
+                {/* Desktop: takes up ~45% width on alternating sides */}
+                <div
+                  className={`
+                    w-full
+                    md:w-[calc(50%-2.5rem)]
+                    ${isLeft ? 'md:mr-auto md:text-right md:pr-6' : 'md:ml-auto md:text-left md:pl-6'}
+                    text-left
+                  `}
+                >
+                  {/* Step label */}
+                  <span
+                    className={`
+                      inline-block font-mono text-[10px] uppercase tracking-widest mb-2
+                      ${isActive ? 'text-brand' : 'text-white/20'}
+                    `}
+                  >
+                    {step.num} {step.label}
+                  </span>
+
+                  {/* Title */}
+                  <h3
+                    className={`
+                      font-sans text-base md:text-xl font-bold tracking-tight mb-2 leading-snug
+                      ${isActive ? 'text-white' : 'text-white/30'}
+                    `}
+                  >
+                    {step.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p
+                    className={`
+                      text-sm md:text-base leading-relaxed mb-4
+                      ${isActive ? 'text-white/60' : 'text-white/15'}
+                    `}
+                  >
+                    {step.desc}
+                  </p>
+
+                  {/* Visual widget — only show for active step */}
+                  {isActive && (
+                    <div className={`mt-2 ${isLeft ? 'md:ml-auto' : ''}`}>
+                      <StepVisual
+                        type={step.type}
+                        label={step.cardLabel}
+                        text={step.text}
+                        metric={step.metric}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -201,67 +240,68 @@ function StepVisual({ type, label, text, metric }) {
     border: '2px solid #1E1A16',
     boxShadow: '4px 4px 0px 0px rgba(61,90,254,0.35)',
   };
+
   if (type === 'card') {
     return (
-      <div className="p-5 text-left w-full" style={cardBase}>
+      <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
         <div className="flex items-start gap-3">
           <CircleDashed size={15} className="text-brand mt-0.5 shrink-0" />
-          <span className="text-sm font-medium text-obsidian leading-relaxed">{text}</span>
+          <span className="text-xs md:text-sm font-medium text-obsidian leading-relaxed">{text}</span>
         </div>
       </div>
     );
   }
   if (type === 'text') {
     return (
-      <div className="p-5 text-left w-full" style={cardBase}>
+      <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
         {label && <span className="text-[10px] text-brand uppercase tracking-wider block mb-2 font-bold">{label}</span>}
-        <span className="text-sm font-medium text-obsidian">{text}</span>
+        <span className="text-xs md:text-sm font-medium text-obsidian">{text}</span>
       </div>
     );
   }
   if (type === 'metric') {
     return (
-      <div className="p-5 inline-flex items-center gap-5" style={cardBase}>
-        <div className="w-12 h-12 bg-brand/10 flex items-center justify-center border border-brand/20">
+      <div className="p-4 md:p-5 inline-flex items-center gap-4 md:gap-5" style={cardBase}>
+        <div className="w-10 h-10 md:w-12 md:h-12 bg-brand/10 flex items-center justify-center border border-brand/20">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3D5AFE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
         </div>
         <div className="text-left">
           <div className="text-[10px] text-subtle uppercase tracking-wider mb-1">{label}</div>
-          <div className="text-3xl font-bold text-obsidian tracking-tight">{metric}</div>
+          <div className="text-2xl md:text-3xl font-bold text-obsidian tracking-tight">{metric}</div>
         </div>
       </div>
     );
   }
   if (type === 'dots') {
     return (
-      <div className="p-5 text-left w-full" style={cardBase}>
+      <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
         <div className="flex gap-2 mb-3">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
           <div className="w-2.5 h-2.5 rounded-full bg-white/30 border border-white/20" />
         </div>
-        <span className="text-sm font-medium text-obsidian leading-relaxed">{text}</span>
+        <span className="text-xs md:text-sm font-medium text-obsidian leading-relaxed">{text}</span>
       </div>
     );
   }
   if (type === 'approved') {
     return (
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-start md:items-center gap-3">
         <span
-          className="inline-flex items-center gap-2 px-6 py-3 bg-brand text-white text-sm font-bold border-2 border-obsidian"
+          className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-brand text-white text-xs md:text-sm font-bold border-2 border-obsidian"
           style={{ boxShadow: '4px 4px 0px 0px #3D5AFE' }}
         >
           <span>{text}</span>
           <Check size={14} strokeWidth={3} />
         </span>
-        {label && <span className="text-[11px] text-white/40 font-mono uppercase tracking-widest">{label}</span>}
+        {label && <span className="text-[10px] md:text-[11px] text-white/40 font-mono uppercase tracking-widest">{label}</span>}
       </div>
     );
   }
   if (type === 'hash') {
     return (
-      <div className="p-5 text-left w-full" style={cardBase}>
-        <span className="font-mono text-sm text-obsidian">{text}</span>
+      <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
+        <span className="font-mono text-xs md:text-sm text-obsidian">{text}</span>
       </div>
     );
   }
