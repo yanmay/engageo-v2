@@ -74,10 +74,18 @@ export default function Header() {
 
   return (
     <>
+      {/* ── Decorative top stripe (Importism-style) ── */}
+      <div className="fixed top-0 left-0 right-0 z-[51] flex flex-col pointer-events-none">
+        <div style={{ height: 3, background: '#3D5AFE' }} />
+        <div style={{ height: 3, background: '#E8552A' }} />
+        <div style={{ height: 3, background: '#C97B2A' }} />
+        <div style={{ height: 3, background: '#1E1A16' }} />
+      </div>
+
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ${
+        className={`fixed top-3 left-0 right-0 z-50 w-full transition-all duration-500 ${
           scrolled
-            ? 'bg-white/85 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06),0_4px_16px_-4px_rgba(0,0,0,0.08)]'
+            ? 'bg-[#FBF9F6]/90 backdrop-blur-xl shadow-[0_1px_0_rgba(15,13,11,0.06),0_4px_16px_-4px_rgba(15,13,11,0.07)]'
             : 'bg-transparent'
         }`}
       >
@@ -85,9 +93,9 @@ export default function Header() {
         <div className="flex items-center gap-4 px-5 md:px-10 h-14">
 
           {/* Brand — always visible */}
-          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center gap-2 shrink-0">
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center gap-1.5 shrink-0">
             <span className="font-sans text-base font-bold tracking-tighter text-obsidian">Engageo</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
+            <span className="w-1.5 h-1.5 rounded-sm bg-brand rotate-45 inline-block" />
           </a>
 
           {/* Section chips — centered, scrollable */}
@@ -103,14 +111,17 @@ export default function Header() {
                   key={s.id}
                   ref={active ? activeRef : null}
                   onClick={() => jumpTo(s.id)}
-                  className="shrink-0 px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-all duration-200"
+                  className="shrink-0 px-3 py-1.5 text-[12.5px] whitespace-nowrap transition-all duration-200 relative"
                   style={{
-                    background:  active ? '#3D5AFE' : 'transparent',
-                    color:       active ? '#fff'     : '#94A3B8',
-                    fontWeight:  active ? 600        : 500,
+                    color:      active ? '#0F0D0B' : '#A09890',
+                    fontWeight: active ? 700       : 500,
+                    letterSpacing: '-0.01em',
                   }}
                 >
                   {s.label}
+                  {active && (
+                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-brand rounded-full" />
+                  )}
                 </button>
               );
             })}
@@ -119,10 +130,9 @@ export default function Header() {
           {/* CTA — desktop only */}
           <button
             onClick={openModal}
-            className="hidden md:flex shrink-0 relative isolate overflow-hidden bg-brand text-white text-[11px] font-semibold px-4 py-2 rounded-lg glow-brand-sm ring-1 ring-brand/30 transition-all duration-300 hover:scale-[1.05] active:scale-[0.97]"
+            className="hidden md:flex shrink-0 items-center gap-1.5 bg-brand text-white text-[11px] font-bold px-4 py-2 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-150 active:scale-[0.97] rounded-none"
           >
-            <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 pointer-events-none" />
-            <span className="relative z-20">Free Audit →</span>
+            <span>Free Audit →</span>
           </button>
 
           {/* Mobile hamburger */}

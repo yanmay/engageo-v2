@@ -99,9 +99,7 @@ export default function Testimonials() {
 
         {/* Header */}
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-canvas border border-border mb-6">
-            <span className="font-mono text-[10px] text-subtle uppercase tracking-widest font-semibold">Clinic Owners on Engageo</span>
-          </div>
+          <div className="section-label mb-6">Clinic Owners on Engageo</div>
           <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter">
             Don't take our word for it.
           </h2>
@@ -109,7 +107,7 @@ export default function Testimonials() {
 
         {/* Carousel */}
         <div
-          className="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden cursor-default"
+          className="bg-white border-2 border-obsidian retro-shadow-hard p-8 md:p-12 relative overflow-hidden cursor-default"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -117,7 +115,7 @@ export default function Testimonials() {
           <Quote size={36} className="text-brand/10 mb-6" fill="currentColor" stroke="none" />
 
           {/* Specialty tag */}
-          <span className="inline-block font-mono text-[9px] uppercase tracking-widest text-brand bg-brand/8 border border-brand/15 px-2.5 py-1 rounded-full mb-6 font-bold">
+          <span className="inline-block font-mono text-[9px] uppercase tracking-widest text-obsidian bg-white border-2 border-obsidian px-3 py-1.5 mb-6 font-bold">
             {t.tag}
           </span>
 
@@ -133,8 +131,8 @@ export default function Testimonials() {
           {/* Author */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center shrink-0">
-                <span className="font-sans text-xs font-bold text-brand">{t.initials}</span>
+              <div className="w-10 h-10 bg-brand text-white border-2 border-obsidian flex items-center justify-center shrink-0">
+                <span className="font-sans text-xs font-bold">{t.initials}</span>
               </div>
               <div>
                 <div className="font-sans font-bold text-sm text-obsidian">{t.name}</div>
@@ -151,8 +149,8 @@ export default function Testimonials() {
                 <button
                   key={i}
                   onClick={() => { setActive(i); setPaused(true); setTimeout(() => setPaused(false), 8000); }}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    i === active ? 'w-8 bg-brand' : 'w-2 bg-border hover:bg-brand/30'
+                  className={`h-2 transition-all duration-300 border-2 border-obsidian ${
+                    i === active ? 'w-6 bg-brand' : 'w-2 bg-obsidian text-transparent'
                   }`}
                 />
               ))}
@@ -164,7 +162,7 @@ export default function Testimonials() {
             <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-border/40 overflow-hidden rounded-b-3xl">
               <div
                 key={`${active}-bar`}
-                className="h-full bg-brand rounded-full origin-left"
+                className="h-full bg-brand origin-left"
                 style={{ animation: `progressBar ${SLIDE_INTERVAL}ms linear` }}
               />
             </div>
@@ -180,10 +178,9 @@ export default function Testimonials() {
         <div className="mt-12 text-center">
           <button
             onClick={openModal}
-            className="group relative isolate overflow-hidden bg-brand text-white text-sm font-bold px-10 py-4 rounded-2xl glow-brand-sm transition-all duration-400 hover:scale-[1.04] hover:shadow-brand-lg active:scale-[0.98]"
+            className="group inline-flex items-center gap-2 bg-brand text-white text-[13px] font-bold tracking-wide px-10 py-4 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
           >
-            <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none" />
-            <span className="relative z-10">Book Your Free Strategy Call →</span>
+            <span>Book Your Free Strategy Call →</span>
           </button>
         </div>
 

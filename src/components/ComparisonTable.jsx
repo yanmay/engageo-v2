@@ -104,41 +104,42 @@ const rows = [
 ];
 
 function Cell({ data, isEngageo }) {
-  if (!data) return <span className="text-muted text-xs">—</span>;
+  if (!data) return <span className="text-muted text-[13px] font-medium">—</span>;
 
   const { v, note, warn } = data;
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2">
       {v === true ? (
-        <div className="flex items-center gap-1.5">
-          <div className={`w-5 h-5 rounded-full flex items-center justify-center ${isEngageo ? 'bg-brand/15' : 'bg-emerald-50'}`}>
-            <Check size={11} strokeWidth={3} className={isEngageo ? 'text-brand' : 'text-emerald-600'} />
+        <div className="flex items-center gap-3">
+          <div className={`w-6 h-6 border-2 border-obsidian flex items-center justify-center shrink-0 ${isEngageo ? 'bg-brand text-white shadow-[2px_2px_0px_0px_#0F0D0B]' : 'bg-emerald-50 text-emerald-600'}`}>
+            <Check size={14} strokeWidth={3} className={isEngageo ? 'text-white' : 'text-emerald-600'} />
           </div>
-          {isEngageo && note && <span className="text-[11px] text-brand font-semibold">{note}</span>}
+          {isEngageo && note && <span className="text-xs text-brand font-bold leading-tight">{note}</span>}
         </div>
       ) : v === false ? (
-        <div className="w-5 h-5 rounded-full bg-red-50 flex items-center justify-center">
-          <X size={11} strokeWidth={2.5} className="text-red-400" />
+        <div className="w-5 h-5 border-2 border-obsidian bg-white flex items-center justify-center shrink-0">
+          <X size={12} strokeWidth={3} className="text-obsidian" />
         </div>
       ) : (
-        <span className={`text-xs leading-snug ${isEngageo ? 'font-bold text-obsidian' : warn ? 'text-subtle' : 'text-subtle'}`}>
+        <span className={`text-[13px] leading-snug ${isEngageo ? 'font-bold text-obsidian text-[14px]' : warn ? 'text-subtle' : 'text-obsidian font-medium'}`}>
           {v}
         </span>
       )}
 
       {/* Sub-note */}
       {isEngageo && note && v !== true && (
-        <span className="text-[10px] text-brand/80 font-medium">{note}</span>
+        <span className="text-[11px] text-brand/90 font-bold leading-tight mt-0.5">{note}</span>
       )}
       {!isEngageo && warn && typeof warn === 'string' && (
-        <span className="text-[10px] text-amber-500 flex items-center gap-0.5">
-          <AlertTriangle size={9} /> {warn}
+        <span className="text-[11px] text-obsidian/60 font-semibold flex items-center gap-1.5 mt-0.5">
+          <AlertTriangle size={10} className="text-amber-500 shrink-0" />
+          <span className="leading-tight">{warn}</span>
         </span>
       )}
       {!isEngageo && warn === true && typeof v === 'string' && (
-        <span className="text-[10px] text-red-400/80 flex items-center gap-0.5">
-          <AlertTriangle size={9} /> Not for Indian clinics
+        <span className="text-[11px] text-red-500/80 font-bold flex items-center gap-1.5 mt-0.5">
+          <AlertTriangle size={10} className="shrink-0" /> Not for Indian clinics
         </span>
       )}
     </div>
@@ -153,9 +154,7 @@ export default function ComparisonTable() {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-border shadow-card mb-6">
-            <span className="font-mono text-[10px] text-subtle uppercase tracking-widest font-semibold">Direct Comparison</span>
-          </div>
+          <div className="section-label mb-6">Direct Comparison</div>
           <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
             Every Alternative
             <span className="gradient-text block">Built for Developers. Not Doctors.</span>
@@ -166,28 +165,30 @@ export default function ComparisonTable() {
           </p>
         </div>
 
-        {/* Table */}
-        <div className="rounded-3xl overflow-hidden border border-border shadow-card overflow-x-auto">
+        {/* Table w/ Cinematic UI */}
+        <div className="bg-white border-2 border-obsidian retro-shadow-hard overflow-x-auto relative">
           <table className="w-full min-w-[700px] border-collapse">
 
             {/* Col headers */}
             <thead>
-              <tr className="bg-white border-b border-border">
-                <th className="p-5 text-left border-r border-border w-[26%]">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted">Factor</span>
+              <tr className="bg-white border-b-2 border-obsidian/20 w-full">
+                <th className="p-6 text-left border-r last:border-r-0 border-obsidian/20 w-[24%] align-bottom">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted font-bold">Comparison Factor</span>
                 </th>
                 {columns.map((col) => (
-                  <th key={col.key} className={`p-5 text-left border-r last:border-r-0 border-border relative ${col.highlight ? 'bg-brand/5' : ''}`}>
+                  <th key={col.key} className={`p-6 text-left border-r last:border-r-0 border-obsidian/20 relative align-top ${col.highlight ? 'bg-[#F2F4FF]' : ''}`}>
                     {col.highlight && (
-                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand to-brand/50" />
+                      <div className="absolute top-0 left-0 right-0 h-[4px] bg-brand" />
                     )}
-                    <div className="space-y-1">
-                      <div className="font-sans font-bold text-sm text-obsidian">{col.label}</div>
-                      <div className={`font-mono text-[9px] uppercase tracking-wider ${col.highlight ? 'text-brand' : 'text-muted'}`}>{col.sub}</div>
+                    <div className="space-y-1.5 relative z-10">
+                      <div className="font-sans font-bold text-[15px] text-obsidian">{col.label}</div>
+                      <div className={`font-mono text-[9px] uppercase tracking-wider ${col.highlight ? 'text-brand font-bold' : 'text-muted'}`}>{col.sub}</div>
                       {col.highlight && (
-                        <span className="inline-block bg-brand/10 text-brand text-[9px] font-bold font-mono px-1.5 py-0.5 rounded tracking-widest">
-                          RECOMMENDED
-                        </span>
+                        <div className="pt-2">
+                          <span className="inline-block bg-brand text-white border-2 border-obsidian shadow-[2px_2px_0px_0px_#0F0D0B] text-[9px] font-bold font-mono px-2.5 py-1 tracking-widest uppercase">
+                            Recommended
+                          </span>
+                        </div>
                       )}
                     </div>
                   </th>
@@ -200,16 +201,16 @@ export default function ComparisonTable() {
               {rows.map((row, idx) => (
                 <tr
                   key={idx}
-                  className={`border-b border-border/50 last:border-b-0 transition-colors duration-200 hover:bg-white/70 ${idx % 2 === 0 ? 'bg-white' : 'bg-canvas/40'}`}
+                  className={`border-b border-obsidian/10 last:border-b-0 transition-colors duration-200 hover:bg-obsidian/[0.03] ${idx % 2 === 0 ? 'bg-transparent' : 'bg-obsidian/[0.01]'}`}
                 >
-                  <td className="p-5 border-r border-border/50 align-top">
-                    <div className="font-sans text-xs font-semibold text-obsidian leading-snug mb-0.5">{row.factor}</div>
+                  <td className="p-6 border-r border-obsidian/10 align-top w-[26%]">
+                    <div className="font-sans text-[13px] md:text-[14px] font-bold text-obsidian leading-snug mb-1.5">{row.factor}</div>
                     {row.factorNote && (
-                      <div className="font-mono text-[9px] text-muted italic">{row.factorNote}</div>
+                      <div className="font-mono text-[10px] text-muted italic leading-relaxed">{row.factorNote}</div>
                     )}
                   </td>
                   {columns.map((col) => (
-                    <td key={col.key} className={`p-5 border-r last:border-r-0 border-border/50 align-top ${col.highlight ? 'bg-brand/[0.025]' : ''}`}>
+                    <td key={col.key} className={`p-6 border-r last:border-r-0 border-obsidian/10 align-top ${col.highlight ? 'bg-[#F2F4FF]' : ''}`}>
                       <Cell data={row[col.key]} isEngageo={col.highlight} />
                     </td>
                   ))}
@@ -227,9 +228,9 @@ export default function ComparisonTable() {
           </p>
           <button
             onClick={openModal}
-            className="group relative isolate overflow-hidden bg-brand text-white text-sm font-bold px-10 py-4 rounded-2xl glow-brand-sm transition-all duration-400 hover:scale-[1.04] hover:shadow-brand-lg active:scale-[0.98]">
-            <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none" />
-            <span className="relative z-10">Get the Clinic-Ready System — Free Audit →</span>
+            className="group inline-flex items-center gap-2 bg-brand text-white text-[13px] font-bold tracking-wide px-10 py-4 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
+          >
+            <span>Get the Clinic-Ready System — Free Audit →</span>
           </button>
           <p className="text-[11px] text-muted">15 confirmed bookings guaranteed · No developer needed · 4-day setup</p>
         </div>

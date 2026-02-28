@@ -22,8 +22,8 @@ function App() {
   return (
     <ModalProvider>
       <div className="w-full relative bg-canvas">
-        {/* Fixed Backgrounds */}
-        <div className="fixed inset-0 z-0 technical-grid pointer-events-none" />
+        {/* Grain texture overlay — replaces dot grid */}
+        <div className="grain-texture" />
 
         {/* Modal */}
         <AuditModal />
@@ -47,25 +47,25 @@ function App() {
           <div id="lifecycle"><DecisionLifecycle /></div>
 
           {/* 5. Platform depth */}
-          <div id="features" className="bg-white"><Features /></div>
+          <div id="features" style={{ background: '#EDE9E0' }}><Features /></div>
 
           {/* 6. Workflow clarity */}
           <div id="workflow"><WorkflowSlider /></div>
 
           {/* 7. Make it personal — addictive calculator */}
-          <div id="calculator" className="bg-white"><ROICalculator /></div>
+          <div id="calculator" className="bg-surface"><ROICalculator /></div>
 
           {/* 8. Objection handling */}
           <div id="proof"><ComparisonTable /></div>
 
           {/* 9. Social proof */}
-          <div id="testimonials" className="bg-white"><Testimonials /></div>
+          <div id="testimonials" className="bg-surface"><Testimonials /></div>
 
           {/* 10. Commitment */}
-          <div id="pricing"><Pricing /></div>
+          <div id="pricing" style={{ background: '#EDE9E0' }}><Pricing /></div>
 
           {/* 11. Tail — FAQ + guarantee + footer */}
-          <div id="faq" className="bg-white"><FAQ /></div>
+          <div id="faq" className="bg-surface"><FAQ /></div>
           <DefensibleDecision />
           <Footer />
         </div>

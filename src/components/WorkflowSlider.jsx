@@ -12,7 +12,7 @@ export default function WorkflowSlider() {
   ];
 
   return (
-    <section className="py-24 bg-white border-y border-border/50 relative z-10 overflow-hidden">
+    <section className="py-24 border-y-2 border-obsidian/10 relative z-10 overflow-hidden" style={{ background: '#EDE9E0' }}>
       <div className="max-w-[90rem] mx-auto px-6 md:px-12">
 
         <motion.div
@@ -22,12 +22,13 @@ export default function WorkflowSlider() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
+          <div className="section-label mb-6">The Recovery Workflow</div>
           <h2 className="font-sans text-3xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
             Total Recovery.{' '}
             <span className="gradient-text">Zero Friction.</span>
           </h2>
           <p className="text-subtle text-base md:text-lg max-w-2xl">
-            Engageo replaces the "forgotten" missed call with a revenue-generating conversation.
+            Engageo replaces the “forgotten” missed call with a revenue-generating conversation.
           </p>
         </motion.div>
 
@@ -50,9 +51,9 @@ export default function WorkflowSlider() {
               >
                 {/* Connector line (desktop) */}
                 {idx < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-5 left-[3rem] right-0 w-[calc(100%-2.5rem)] h-px bg-border z-0 pointer-events-none">
+                  <div className="hidden lg:block absolute top-[20px] left-[3rem] right-0 w-[calc(100%-2.5rem)] h-[2px] bg-obsidian/5 z-0 pointer-events-none">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-brand to-brand/40 origin-left"
+                      className="h-full bg-brand origin-left"
                       variants={{
                         hidden: { scaleX: 0 },
                         visible: { scaleX: 1, transition: { duration: 0.8, ease: 'easeOut' } },
@@ -61,9 +62,9 @@ export default function WorkflowSlider() {
                   </div>
                 )}
 
-                {/* Step number badge */}
-                <div className="w-10 h-10 rounded-lg bg-brand text-white flex items-center justify-center mb-5 relative z-10 shadow-brand-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-brand">
-                  <span className="font-mono text-xs font-bold">{step.num}</span>
+                {/* Step number badge — cinematic */}
+                <div className="w-10 h-10 bg-white text-obsidian border-2 border-obsidian flex items-center justify-center mb-5 relative z-10 retro-shadow transition-transform duration-300 group-hover:-translate-y-1 group-hover:text-brand">
+                  <span className="font-mono text-xs font-semibold">{step.num}</span>
                 </div>
 
                 {/* Content */}

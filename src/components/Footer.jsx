@@ -2,7 +2,14 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-border/50 py-20 px-6 md:px-12 lg:px-20 relative z-10">
+    <footer className="bg-white border-t-2 border-obsidian/10 py-20 px-6 md:px-12 lg:px-20 relative z-10">
+      {/* 4-stripe top accent */}
+      <div className="absolute top-0 left-0 right-0 flex h-[3px]">
+        <div style={{ flex: 1, background: '#1E1A16' }} />
+        <div style={{ flex: 1, background: '#3D5AFE' }} />
+        <div style={{ flex: 1, background: '#E8552A' }} />
+        <div style={{ flex: 1, background: '#C97B2A' }} />
+      </div>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
 
         {/* Brand */}
@@ -18,9 +25,9 @@ export default function Footer() {
           </p>
 
           {/* Status indicator */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot" />
-            <span className="font-mono text-[10px] text-emerald-700 font-semibold uppercase tracking-widest">System Operational</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 border-2 border-obsidian/10 bg-emerald-50/50">
+            <span className="w-1.5 h-1.5 bg-emerald-500 pulse-dot" />
+            <span className="font-mono text-[10px] text-emerald-800 font-bold uppercase tracking-widest">System Operational</span>
           </div>
         </div>
 

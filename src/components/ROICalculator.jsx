@@ -52,10 +52,10 @@ function Slider({ value, min, max, step, onChange, label, format }) {
         </span>
       </div>
 
-      <div className="relative h-1.5 rounded-full bg-border overflow-visible">
+      <div className="relative h-2 bg-obsidian/5 overflow-visible border border-obsidian/20">
         {/* Filled track */}
         <div
-          className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-brand to-brand/80 transition-none"
+          className="absolute top-0 left-0 h-full bg-brand transition-none"
           style={{ width: `${pct}%` }}
         />
         {/* Native input overlaid for interaction */}
@@ -70,7 +70,7 @@ function Slider({ value, min, max, step, onChange, label, format }) {
         />
         {/* Thumb */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-2 border-brand shadow-brand-sm pointer-events-none transition-none"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 bg-white border-2 border-obsidian retro-shadow pointer-events-none transition-none"
           style={{ left: `${pct}%` }}
         />
       </div>
@@ -118,10 +118,7 @@ export default function ROICalculator() {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-border shadow-card mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
-            <span className="font-mono text-[10px] text-subtle uppercase tracking-widest font-semibold">Revenue Calculator</span>
-          </div>
+          <div className="section-label mb-6">Revenue Calculator</div>
           <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
             See What You're{' '}
             <span className="gradient-text">Actually Losing</span>
@@ -132,8 +129,8 @@ export default function ROICalculator() {
         </div>
 
         {/* Card */}
-        <div className="glass-card rounded-3xl overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border/50">
+        <div className="bg-white border-2 border-obsidian retro-shadow-amber relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-obsidian/5">
 
             {/* Left — inputs */}
             <div className="p-10 space-y-10">
@@ -182,13 +179,13 @@ export default function ROICalculator() {
 
               {/* Divider with arrow */}
               <div className="flex items-center gap-3">
-                <div className="flex-1 h-px bg-gradient-to-r from-border to-brand/30" />
-                <div className="w-8 h-8 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center">
+                <div className="flex-1 h-px bg-obsidian/5" />
+                <div className="w-8 h-8 rounded-full bg-brand/5 border border-brand/20 flex items-center justify-center">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <div className="flex-1 h-px bg-gradient-to-l from-border to-brand/30" />
+                <div className="flex-1 h-px bg-obsidian/5" />
               </div>
 
               {/* Recovery card */}
@@ -211,9 +208,9 @@ export default function ROICalculator() {
               {/* CTA */}
               <button
                 onClick={openModal}
-                className="group relative isolate overflow-hidden w-full py-4 rounded-xl bg-brand text-white text-sm font-bold glow-brand-sm ring-1 ring-brand/30 transition-all duration-400 hover:scale-[1.03] hover:shadow-brand-lg active:scale-[0.98] flex items-center justify-center gap-2">
-                <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none" />
-                <span className="relative z-10">Get My Free Recovery Audit →</span>
+                className="group w-full py-4 bg-brand text-white text-[13px] font-bold tracking-wide border-2 border-obsidian retro-shadow-hard flex items-center justify-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
+              >
+                <span>Get My Free Recovery Audit →</span>
               </button>
 
               <p className="text-[10px] text-center text-muted/60">

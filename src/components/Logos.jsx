@@ -6,8 +6,14 @@ export default function Logos() {
   const doubled = [...clinics, ...clinics];
 
   return (
-    <section className="border-y border-border/50 py-14 bg-white/60 backdrop-blur-sm relative z-10">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-10">
+    <section className="border-y-2 border-obsidian/10 py-5 bg-white relative z-10 overflow-hidden">
+      {/* 3-stripe top accent */}
+      <div className="absolute top-0 left-0 right-0 flex h-[3px]">
+        <div style={{ flex: 1, background: '#3D5AFE' }} />
+        <div style={{ flex: 1, background: '#E8552A' }} />
+        <div style={{ flex: 1, background: '#C97B2A' }} />
+      </div>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-10 pt-4">
 
         {/* Label */}
         <div className="flex items-center gap-2 whitespace-nowrap shrink-0">

@@ -35,9 +35,7 @@ export default function FAQ() {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-canvas border border-border mb-6">
-            <span className="font-mono text-[10px] text-subtle uppercase tracking-widest font-semibold">Common Objections</span>
-          </div>
+          <div className="section-label mb-6">Common Objections</div>
           <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
             Your Questions,{' '}
             <span className="gradient-text">Answered Directly</span>
@@ -54,19 +52,19 @@ export default function FAQ() {
             return (
               <div
                 key={idx}
-                className={`rounded-2xl border transition-all duration-300 cursor-pointer ${
+                className={`transition-all duration-200 cursor-pointer border-2 ${
                   isOpen
-                    ? 'bg-white border-brand/25 shadow-[0_0_0_1px_rgba(61,90,254,0.15),0_8px_24px_-4px_rgba(61,90,254,0.1)]'
-                    : 'bg-white border-border hover:border-brand/20 hover:shadow-card'
+                    ? 'bg-white border-obsidian retro-shadow translate-y-[-2px]'
+                    : 'bg-transparent border-transparent hover:border-obsidian/20 hover:bg-obsidian/[0.02]'
                 }`}
                 onClick={() => setOpen(isOpen ? -1 : idx)}
               >
                 <div className="flex items-start justify-between gap-4 p-6">
                   <div className="flex items-start gap-4">
-                    <div className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5 transition-colors duration-300 ${
-                      isOpen ? 'bg-brand' : 'bg-canvas border border-border'
+                    <div className={`shrink-0 w-6 h-6 border-2 border-obsidian flex items-center justify-center mt-0.5 transition-all duration-200 ${
+                      isOpen ? 'bg-brand text-white' : 'bg-transparent'
                     }`}>
-                      <Check size={12} strokeWidth={3} className={isOpen ? 'text-white' : 'text-subtle'} />
+                      <Check size={12} strokeWidth={3} className={isOpen ? 'text-white' : 'opacity-0'} />
                     </div>
                     <span className="font-sans font-semibold text-obsidian text-[15px] leading-snug">{faq.q}</span>
                   </div>
@@ -94,7 +92,7 @@ export default function FAQ() {
           <p className="text-sm text-subtle mb-4">Still have a question?</p>
           <button
             onClick={openModal}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-brand/20 text-brand text-sm font-semibold hover:bg-brand/5 hover:border-brand/40 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-white border-2 border-obsidian retro-shadow-hard text-obsidian text-[13px] font-bold hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200"
           >
             Talk to a human →
           </button>

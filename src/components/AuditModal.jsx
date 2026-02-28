@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Calendar } from 'lucide-react';
+import { X, Calendar, Check } from 'lucide-react';
 import { useModal } from '../context/ModalContext';
 
 const CALENDLY_URL =
@@ -18,7 +18,7 @@ export default function AuditModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-6"
       onClick={closeModal}
     >
       {/* Backdrop */}
@@ -26,41 +26,82 @@ export default function AuditModal() {
 
       {/* Panel */}
       <div
-        className="relative w-full max-w-3xl bg-white rounded-3xl shadow-[0_32px_80px_-12px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col"
-        style={{ maxHeight: '90vh' }}
+        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber overflow-hidden flex flex-col md:flex-row"
+        style={{ maxHeight: '90vh', minHeight: '600px' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top accent */}
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand to-brand/40 z-10" />
-
-        {/* Header bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center">
-              <Calendar size={14} className="text-brand" />
-            </div>
-            <div>
-              <p className="font-sans text-sm font-bold text-obsidian tracking-tight">Book Your Free Strategy Call</p>
-              <p className="font-mono text-[9px] text-subtle uppercase tracking-widest">30 min · No commitment · Free</p>
-            </div>
-          </div>
-          <button
-            onClick={closeModal}
-            className="w-8 h-8 rounded-full bg-canvas hover:bg-border flex items-center justify-center transition-colors"
-          >
-            <X size={14} className="text-subtle" />
-          </button>
+        <div className="absolute top-0 left-0 right-0 flex h-[3px] z-20 pointer-events-none">
+          <div style={{ flex: 1, background: '#1E1A16' }} />
+          <div style={{ flex: 1, background: '#3D5AFE' }} />
+          <div style={{ flex: 1, background: '#E8552A' }} />
+          <div style={{ flex: 1, background: '#C97B2A' }} />
         </div>
 
-        {/* Calendly inline embed */}
-        <div className="flex-1 overflow-hidden" style={{ minHeight: '580px' }}>
+        {/* Close Button (Absolute Top Right) */}
+        <button
+          onClick={closeModal}
+          className="absolute top-4 right-4 z-50 w-8 h-8 flex items-center justify-center bg-white border-2 border-obsidian retro-shadow hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+        >
+          <X size={16} className="text-obsidian" strokeWidth={3} />
+        </button>
+
+        {/* Left Column (Value Prop) */}
+        <div className="w-full md:w-5/12 bg-canvas border-b-2 md:border-b-0 md:border-r-2 border-obsidian p-8 lg:p-12 flex flex-col justify-between shrink-0 overflow-y-auto">
+          <div>
+            <div className="flex items-center gap-2 mb-10">
+              <span className="font-sans text-xl font-bold tracking-tighter text-obsidian">Engageo</span>
+              <span className="w-1.5 h-1.5 bg-brand pulse-dot" />
+            </div>
+
+            <h2 className="font-sans text-3xl lg:text-4xl font-bold text-obsidian tracking-tighter leading-tight mb-4">
+              Stop losing <br />
+              <span className="text-brand">₹3L+ every month.</span>
+            </h2>
+            
+            <p className="text-subtle text-[13px] leading-relaxed mb-8">
+              Book your free 30-minute strategy session. We'll audit your current front-desk performance and map out exactly how Engageo can recover your missed patient revenue.
+            </p>
+
+            <div className="space-y-4">
+              {[
+                'Deep dive into your missed call metrics',
+                'Custom ROI & recovery projection',
+                'Live demonstration of the AI system',
+                'Zero commitment required'
+              ].map((point, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="w-5 h-5 flex-shrink-0 border-2 border-obsidian bg-white flex items-center justify-center mt-0.5">
+                    <Check size={12} strokeWidth={3} className="text-obsidian" />
+                  </div>
+                  <span className="font-sans text-xs font-bold text-obsidian mt-1">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t-2 border-obsidian/10">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 bg-brand text-white border-2 border-obsidian flex items-center justify-center shrink-0">
+                <span className="font-sans text-xs font-bold">SM</span>
+              </div>
+              <p className="font-sans text-[11px] font-bold text-obsidian leading-snug">
+                "We went from missing 20% of calls to recovering ₹2.4L in the first month."
+                <span className="block mt-1 text-brand">— Dr. Suresh Mehta</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column (Calendly) */}
+        <div className="w-full md:w-7/12 flex-1 relative bg-white flex flex-col pt-12 md:pt-4">
           <iframe
             src={CALENDLY_URL}
             width="100%"
             height="100%"
             frameBorder="0"
             title="Book a call with Engageo"
-            style={{ border: 'none', minHeight: '580px' }}
+            style={{ minHeight: '600px', display: 'block' }}
           />
         </div>
       </div>

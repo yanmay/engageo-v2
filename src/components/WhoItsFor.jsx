@@ -234,12 +234,7 @@ export default function WhoItsFor() {
             transform: revealed ? 'translateY(0)' : 'translateY(24px)',
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border shadow-card mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
-            <span className="font-mono text-[10px] font-semibold text-subtle uppercase tracking-widest">
-              Precision Targeting
-            </span>
-          </div>
+          <div className="section-label mb-6">Precision Targeting</div>
           <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-6 leading-[1.05]">
             Built for clinics that
             <span className="gradient-text block">can't afford to miss.</span>
@@ -259,15 +254,15 @@ export default function WhoItsFor() {
               <button
                 key={a.id}
                 onClick={() => setActiveCard(i)}
-                className={`group w-full text-left p-5 rounded-2xl border transition-all duration-300 ease-out ${
+                className={`group w-full text-left p-5 border-2 transition-all duration-200 ${
                   activeCard === i
-                    ? 'bg-white border-brand/20 shadow-card-hover'
-                    : 'bg-white/50 border-border hover:bg-white hover:border-border hover:shadow-card'
+                    ? 'bg-white border-obsidian retro-shadow translate-y-[-2px]'
+                    : 'bg-transparent border-transparent hover:border-obsidian/20'
                 }`}
                 style={{
                   opacity: revealed ? 1 : 0,
                   transform: revealed ? 'translateY(0)' : 'translateY(20px)',
-                  transition: `all 0.3s ease-out, opacity 0.6s ease ${0.1 + i * 0.08}s, transform 0.6s ease ${0.1 + i * 0.08}s`,
+                  transition: `all 0.2s ease, opacity 0.6s ease ${0.1 + i * 0.08}s, transform 0.6s ease ${0.1 + i * 0.08}s`,
                 }}
               >
                 <div className="flex items-center gap-4">
@@ -315,8 +310,8 @@ export default function WhoItsFor() {
           {/* ── Right: Detail Pane ── */}
           <div
             key={current.id}
-            className="lg:col-span-8 feature-card rounded-3xl overflow-hidden"
-            style={{ animation: 'fadeInUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) both' }}
+            className="lg:col-span-8 overflow-hidden bg-white border-2 border-obsidian retro-shadow-amber"
+            style={{ animation: 'fadeInUp 0.5s ease-out both' }}
           >
             <div className="p-10 md:p-12 h-full flex flex-col gap-10">
 
@@ -346,10 +341,10 @@ export default function WhoItsFor() {
               {/* Middle: Pain → Gain */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Pain */}
-                <div className="glass-card rounded-2xl p-6">
+                <div className="p-6 border-2 border-red-200" style={{ background: 'rgba(220,38,38,0.02)' }}>
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                    <span className="font-mono text-[10px] text-red-400 uppercase tracking-widest font-bold">
+                    <span className="font-mono text-[10px] text-red-500 uppercase tracking-widest font-bold">
                       The Problem
                     </span>
                   </div>
@@ -360,10 +355,10 @@ export default function WhoItsFor() {
 
                 {/* Gain */}
                 <div
-                  className="rounded-2xl p-6 border"
+                  className="p-6 border-2"
                   style={{
-                    background: 'rgba(61,90,254,0.04)',
-                    borderColor: 'rgba(61,90,254,0.15)',
+                    background: 'rgba(61,90,254,0.03)',
+                    borderColor: 'rgba(61,90,254,0.25)',
                   }}
                 >
                   <div className="flex items-center gap-2 mb-3">
@@ -397,11 +392,10 @@ export default function WhoItsFor() {
                 {/* CTA */}
                 <button
                   onClick={openModal}
-                  className="group relative isolate overflow-hidden bg-brand text-white text-xs font-semibold px-6 py-3 rounded-xl glow-brand-sm ring-1 ring-brand/30 transition-all duration-400 hover:scale-[1.04] hover:glow-brand active:scale-[0.97] shrink-0 flex items-center gap-2"
+                  className="group bg-brand text-white text-sm font-bold px-7 py-3.5 border-2 border-obsidian retro-shadow-hard shrink-0 flex items-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
                 >
-                  <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 pointer-events-none" />
-                  <span className="relative z-20">Get Free Audit</span>
-                  <svg className="relative z-20 w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <span>Get Free Audit</span>
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
@@ -411,17 +405,16 @@ export default function WhoItsFor() {
 
         </div>
 
-        {/* ── Bottom: Compact "not right for" signal ── */}
         <div
-          className="mt-12 glass-card rounded-2xl px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4"
+          className="mt-12 bg-white border-2 border-obsidian retro-shadow px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{
             opacity: revealed ? 1 : 0,
             transform: revealed ? 'translateY(0)' : 'translateY(16px)',
-            transition: 'opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s',
+            transition: 'opacity 0.6s ease 0.4s, transform 0.6s ease-out 0.4s',
           }}
         >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-canvas border border-border flex items-center justify-center text-subtle text-sm">✕</div>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-canvas border border-black/5 flex items-center justify-center text-subtle text-sm">✕</div>
             <p className="font-sans text-sm text-subtle">
               <span className="text-obsidian font-semibold">Not for you if:</span> You're a single-doctor general physician with under 20 calls/day,
               or a hospital already running a full enterprise CRM stack.
