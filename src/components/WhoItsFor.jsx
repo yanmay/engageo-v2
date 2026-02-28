@@ -219,7 +219,7 @@ export default function WhoItsFor() {
     <section
       ref={sectionRef}
       id="who"
-      className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-canvas"
+      className="py-20 md:py-32 px-4 md:px-12 lg:px-20 relative z-10 bg-canvas"
     >
       {/* Subtle top divider */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-border to-transparent" />

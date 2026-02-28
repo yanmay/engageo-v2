@@ -98,10 +98,10 @@ export default function Header() {
             <span className="w-1.5 h-1.5 rounded-sm bg-brand rotate-45 inline-block" />
           </a>
 
-          {/* Section chips — centered, scrollable */}
+          {/* Section chips — centered, scrollable, hidden on mobile */}
           <div
             ref={chipsRef}
-            className="flex-1 flex items-center justify-center gap-0.5 overflow-x-auto"
+            className="hidden md:flex flex-1 items-center justify-center gap-0.5 overflow-x-auto"
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {SECTIONS.map((s) => {

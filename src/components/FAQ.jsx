@@ -30,7 +30,7 @@ export default function FAQ() {
   const { openModal } = useModal();
 
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10 bg-white border-t border-border/50">
+    <section className="py-20 md:py-32 px-4 md:px-12 lg:px-20 relative z-10 bg-white border-t border-border/50">
       <div className="max-w-3xl mx-auto">
 
         {/* Header */}

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t-2 border-obsidian/10 py-20 px-6 md:px-12 lg:px-20 relative z-10">
+    <footer className="bg-white border-t-2 border-obsidian/10 py-16 md:py-20 px-4 md:px-12 lg:px-20 relative z-10">
       {/* 4-stripe top accent */}
       <div className="absolute top-0 left-0 right-0 flex h-[3px]">
         <div style={{ flex: 1, background: '#1E1A16' }} />

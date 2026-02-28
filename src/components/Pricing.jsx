@@ -4,7 +4,7 @@ import { useModal } from '../context/ModalContext';
 export default function Pricing() {
   const { openModal } = useModal();
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 border-b border-border relative z-10 bg-canvas">
+    <section className="py-20 md:py-32 px-4 md:px-12 lg:px-20 border-b border-border relative z-10 bg-canvas">
       <div className="max-w-5xl mx-auto">
 
         {/* Section header */}

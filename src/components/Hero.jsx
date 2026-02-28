@@ -306,30 +306,30 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[92vh] flex flex-col lg:flex-row items-center justify-between px-6 md:px-12 lg:px-20 pt-32 pb-20 gap-16">
+    <section className="relative min-h-[85vh] md:min-h-[92vh] flex flex-col lg:flex-row items-center justify-between px-5 md:px-12 lg:px-20 pt-24 md:pt-32 pb-16 md:pb-20 gap-12 md:gap-16">
       {/* Copy */}
-      <div className="max-w-2xl space-y-10 relative z-10">
+      <div className="w-full max-w-2xl space-y-8 md:space-y-10 relative z-10 mx-auto md:mx-0">
         <motion.div
           className="space-y-8"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-label">Live in 47 Indian Clinics</div>
+          <div className="section-label mb-6 text-xs md:text-sm">Live in 47 Indian Clinics</div>
 
-          <h1 className="tracking-tighter leading-[0.95]">
-            <span className="font-sans text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-obsidian block mb-2">
+          <h1 className="tracking-tighter leading-[1]">
+            <span className="font-sans text-4xl md:text-6xl lg:text-[5.5rem] font-bold text-obsidian block mb-1 md:mb-2">
               Your clinic is losing
             </span>
             <span
               className="font-sans font-bold block tracking-tight text-brand"
-              style={{ fontSize: 'clamp(4rem, 9vw, 7.5rem)' }}
+              style={{ fontSize: 'clamp(2.75rem, 10vw, 7.5rem)' }}
             >
               ₹3L every month.
             </span>
           </h1>
 
-          <p className="max-w-md font-sans text-base text-subtle leading-relaxed">
+          <p className="max-w-[19rem] md:max-w-md font-sans text-[15px] md:text-base text-subtle leading-relaxed">
             Every call your receptionist misses is a patient your competitor books. Engageo
             intercepts that call in 8 seconds — qualifies the patient, books the slot, sends
             the WhatsApp confirmation. While you're with your next patient.
@@ -344,14 +344,14 @@ export default function Hero() {
         >
           <button
             onClick={openModal}
-            className="group flex items-center gap-2 bg-brand text-white text-[13px] font-bold tracking-wide px-8 py-4 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
+            className="group flex flex-1 justify-center items-center gap-2 bg-brand text-white text-[12px] md:text-[13px] font-bold tracking-wide px-4 md:px-8 py-3.5 md:py-4 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
           >
-            <span>See What You're Losing — Free Audit</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <span className="whitespace-nowrap">See What You're Losing — Free Audit</span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 shrink-0" />
           </button>
           <button
             onClick={scrollToLifecycle}
-            className="px-7 py-4 text-obsidian bg-white border-2 border-obsidian retro-shadow text-[13px] font-bold tracking-wide hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200"
+            className="px-4 md:px-7 py-3.5 md:py-4 flex-1 justify-center text-obsidian bg-white border-2 border-obsidian retro-shadow text-[12px] md:text-[13px] font-bold tracking-wide hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 whitespace-nowrap"
           >
             Watch a Real Recovery Call
           </button>
@@ -366,10 +366,10 @@ export default function Hero() {
           {metrics.map((m) => (
             <div
               key={m.label}
-              className="flex items-center gap-3 px-5 py-2.5 bg-white border-2 border-obsidian/15 retro-shadow"
+              className="flex items-center gap-3 px-4 md:px-5 py-2 md:py-2.5 bg-white border-2 border-obsidian/15 retro-shadow flex-1 md:flex-auto justify-center"
             >
-              <span className="font-sans text-base font-bold text-obsidian tracking-tight">{m.value}</span>
-              <span className="font-mono text-[10px] text-muted uppercase tracking-widest">{m.label}</span>
+              <span className="font-sans text-sm md:text-base font-bold text-obsidian tracking-tight whitespace-nowrap">{m.value}</span>
+              <span className="font-mono text-[9px] md:text-[10px] text-muted uppercase tracking-widest whitespace-nowrap">{m.label}</span>
             </div>
           ))}
         </motion.div>

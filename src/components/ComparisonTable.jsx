@@ -149,8 +149,8 @@ function Cell({ data, isEngageo }) {
 export default function ComparisonTable() {
   const { openModal } = useModal();
   return (
-    <section className="py-32 px-6 md:px-8 lg:px-16 relative z-10 bg-canvas border-t border-border/50">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-20 md:py-32 px-4 md:px-8 lg:px-16 relative z-10 bg-canvas border-t border-border/50">
+      <div className="max-w-6xl mx-auto overflow-hidden">
 
         {/* Header */}
         <div className="text-center mb-16">
