@@ -16,7 +16,14 @@ const SECTIONS = [
 ];
 
 function jumpTo(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const el = document.getElementById(id);
+  if (el) {
+    if (window.lenis) {
+      window.lenis.scrollTo(el);
+    } else {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }
 
 export default function Header() {
@@ -30,23 +37,52 @@ export default function Header() {
 
   /* ── Track scroll: progress + active section ── */
   useEffect(() => {
-    const handle = () => {
-      const y    = window.scrollY;
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const sectionElements = SECTIONS.map(s => ({
+      id: s.id,
+      el: document.getElementById(s.id)
+    }));
+
+    let ticking = false;
+    let cachedDocH = document.documentElement.scrollHeight - window.innerHeight;
+
+    const update = () => {
+      const y = window.scrollY;
       setScrolled(y > 60);
-      setScrollPct(docH > 0 ? y / docH : 0);
+      setScrollPct(cachedDocH > 0 ? y / cachedDocH : 0);
 
       const mid = y + window.innerHeight * 0.35;
       let cur = SECTIONS[0].id;
-      SECTIONS.forEach(({ id }) => {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop <= mid) cur = id;
-      });
+      
+      for (let i = 0; i < sectionElements.length; i++) {
+        const item = sectionElements[i];
+        if (item.el && item.el.offsetTop <= mid) {
+          cur = item.id;
+        }
+      }
       setActiveId(cur);
+      ticking = false;
     };
+
+    const handle = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    const handleResize = () => {
+      cachedDocH = document.documentElement.scrollHeight - window.innerHeight;
+      handle();
+    };
+
     window.addEventListener('scroll', handle, { passive: true });
-    handle();
-    return () => window.removeEventListener('scroll', handle);
+    window.addEventListener('resize', handleResize, { passive: true });
+    update();
+    
+    return () => {
+      window.removeEventListener('scroll', handle);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   /* ── Auto-scroll active chip into view ── */

@@ -20,23 +20,52 @@ export default function SectionNav() {
   const activeRef                  = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      // Show strip only after hero (≈ 80vh)
-      setVisible(scrollY > window.innerHeight * 0.6);
+    // Cache elements to prevent DOM querying on every scroll tick
+    const sectionElements = SECTIONS.map(s => ({
+      id: s.id,
+      el: document.getElementById(s.id)
+    }));
 
-      // Determine active section — whichever's top is closest above mid-viewport
-      const mid = scrollY + window.innerHeight * 0.35;
+    let ticking = false;
+
+    const update = () => {
+      const scrollY = window.scrollY;
+      const innerH = window.innerHeight;
+      
+      // Show strip only after hero
+      setVisible(scrollY > innerH * 0.6);
+
+      // Determine active section using cached elements
+      const mid = scrollY + innerH * 0.35;
       let current = SECTIONS[0].id;
-      SECTIONS.forEach(({ id }) => {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop <= mid) current = id;
-      });
+      
+      for (let i = 0; i < sectionElements.length; i++) {
+        const item = sectionElements[i];
+        if (item.el && item.el.offsetTop <= mid) {
+          current = item.id;
+        }
+      }
       setActiveId(current);
+      ticking = false;
     };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    update();
+    
+    // Re-cache elements on resize in case offsets change
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   // Auto-scroll the active chip into view within the strip
@@ -54,7 +83,10 @@ export default function SectionNav() {
 
   const jumpTo = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) {
+      if (window.lenis) window.lenis.scrollTo(el);
+      else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -111,13 +143,34 @@ export default function SectionNav() {
 function ScrollFill() {
   const [pct, setPct] = useState(0);
   useEffect(() => {
+    let ticking = false;
+    let cachedDocH = document.documentElement.scrollHeight - window.innerHeight;
+
     const update = () => {
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(docH > 0 ? window.scrollY / docH : 0);
+      setPct(cachedDocH > 0 ? window.scrollY / cachedDocH : 0);
+      ticking = false;
     };
-    window.addEventListener('scroll', update, { passive: true });
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    const handleResize = () => {
+      cachedDocH = document.documentElement.scrollHeight - window.innerHeight;
+      handleScroll();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
     update();
-    return () => window.removeEventListener('scroll', update);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
   return (
     <div

@@ -19,33 +19,66 @@ export default function ScrollSpine() {
   const [hoveredDot, setHoveredDot] = useState(null);
   const [visible, setVisible] = useState(false);
 
-  const calcProgress = useCallback(() => {
-    const docH = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docH > 0 ? Math.min(window.scrollY / docH, 1) : 0;
-    setScrollPct(pct);
-    setVisible(window.scrollY > 200);
-
-    // Find active section
-    let current = SECTIONS[0].id;
-    for (const section of SECTIONS) {
-      const el = document.getElementById(section.id);
-      if (el) {
-        const top = el.getBoundingClientRect().top;
-        if (top <= window.innerHeight * 0.45) current = section.id;
-      }
-    }
-    setActiveSection(current);
-  }, []);
-
   useEffect(() => {
-    window.addEventListener('scroll', calcProgress, { passive: true });
-    calcProgress();
-    return () => window.removeEventListener('scroll', calcProgress);
-  }, [calcProgress]);
+    const sectionElements = SECTIONS.map(s => ({
+      id: s.id,
+      el: document.getElementById(s.id)
+    }));
+
+    let ticking = false;
+    let cachedDocH = document.documentElement.scrollHeight - window.innerHeight;
+    let cachedWinH = window.innerHeight;
+
+    const update = () => {
+      const scrollY = window.scrollY;
+      const pct = cachedDocH > 0 ? Math.min(scrollY / cachedDocH, 1) : 0;
+      setScrollPct(pct);
+      setVisible(scrollY > 200);
+
+      // Determine active section without getBoundingClientRect thrashing
+      const mid = scrollY + cachedWinH * 0.45;
+      let current = SECTIONS[0].id;
+      
+      for (let i = 0; i < sectionElements.length; i++) {
+        const item = sectionElements[i];
+        if (item.el && item.el.offsetTop <= mid) {
+          current = item.id;
+        }
+      }
+      
+      setActiveSection(current);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    const handleResize = () => {
+      cachedDocH = document.documentElement.scrollHeight - window.innerHeight;
+      cachedWinH = window.innerHeight;
+      handleScroll();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    update();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) {
+      if (window.lenis) window.lenis.scrollTo(el);
+      else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (

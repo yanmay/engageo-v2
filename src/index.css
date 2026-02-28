@@ -13,7 +13,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Removed scroll-behavior: smooth to prevent iOS crashes */
   }
 
   body {

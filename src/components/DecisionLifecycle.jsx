@@ -6,8 +6,13 @@ export default function DecisionLifecycle() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
+    let ticking = false;
+
+    const update = () => {
+      if (!sectionRef.current) {
+        ticking = false;
+        return;
+      }
       const rect = sectionRef.current.getBoundingClientRect();
       const viewH = window.innerHeight;
       const travelDistance = rect.height - viewH;
@@ -15,9 +20,18 @@ export default function DecisionLifecycle() {
       let p = scrolled / travelDistance;
       p = Math.max(0, Math.min(1, p));
       setProgress(p);
+      ticking = false;
     };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    update();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

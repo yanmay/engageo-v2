@@ -6,21 +6,48 @@ export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
   const [nearFooter, setNearFooter] = useState(false);
 
-  const handleScroll = useCallback(() => {
-    const scrollY = window.scrollY;
-    const docH = document.documentElement.scrollHeight;
-    const winH = window.innerHeight;
-    setVisible(scrollY > 600);
-    setNearFooter(scrollY + winH > docH - 400);
+  useEffect(() => {
+    let ticking = false;
+    let cachedDocH = document.documentElement.scrollHeight;
+    let cachedWinH = window.innerHeight;
+
+    const update = () => {
+      const scrollY = window.scrollY;
+      setVisible(scrollY > 600);
+      setNearFooter(scrollY + cachedWinH > cachedDocH - 400);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    const handleResize = () => {
+      cachedDocH = document.documentElement.scrollHeight;
+      cachedWinH = window.innerHeight;
+      handleScroll();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    update();
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  const scrollToTop = () =>
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const show = visible && !nearFooter;
 
