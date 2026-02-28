@@ -90,11 +90,11 @@ function TypewriterText({ words }) {
   }, [text, isDeleting, loopNum, words]);
 
   return (
-    <span className="inline-flex items-center">
+    <span className="inline">
       <span>{text}</span>
       <span 
-        className="inline-block bg-brand animate-pulse ml-1 md:ml-2 lg:ml-3" 
-        style={{ width: '0.08em', height: '0.9em', animationDuration: '0.8s' }} 
+        className="inline-block bg-brand animate-pulse ml-1" 
+        style={{ width: '0.06em', height: '0.9em', verticalAlign: 'baseline', transform: 'translateY(0.1em)', animationDuration: '0.8s' }} 
       />
     </span>
   );
