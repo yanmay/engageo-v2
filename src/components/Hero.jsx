@@ -396,7 +396,9 @@ export default function Hero() {
 
           <h1 className="tracking-tighter text-left">
             <div className="font-sans text-[2.5rem] md:text-6xl lg:text-[5rem] font-bold text-obsidian mb-2 leading-[1.05] w-full">
-              Your clinic is<br />losing
+              Your clinic is<br />
+              {/* Optical alignment correction for lowercase 'l' compared to 'Y' and '7' */}
+              <span className="-ml-[0.03em] inline-block">losing</span>
             </div>
             {/* Typewriter line — controlled size so all phrases stay on 1 line,
                 preventing the phantom-spacer from leaving visible blank space */}
