@@ -165,64 +165,47 @@ export default function ComparisonTable() {
           </p>
         </div>
 
-        {/* ── Mobile View: Swipeable Card Deck ── */}
-        <div className="block lg:hidden">
-          <div className="flex overflow-x-auto snap-x gap-4 pb-8 -mx-4 px-4 hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
-            {rows.map((row, idx) => (
-              <div key={idx} className="shrink-0 w-[85vw] max-w-[340px] bg-white border-2 border-obsidian retro-shadow-amber flex flex-col snap-center">
-                {/* Factor Header */}
-                <div className="bg-obsidian text-white p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-brand block">Factor {idx + 1}/{rows.length}</span>
-                    {/* Dots indicator simulation */}
-                    <div className="flex gap-1">
-                       {[...Array(3)].map((_, i) => (
-                         <div key={i} className={`w-1 h-1 rounded-full ${i === 0 ? 'bg-brand' : 'bg-white/20'}`} />
-                       ))}
-                    </div>
+        {/* ── Mobile View: Compact Vertical Stack ── */}
+        <div className="block lg:hidden space-y-6">
+          {rows.map((row, idx) => (
+            <div key={idx} className="bg-white border-2 border-obsidian retro-shadow-amber flex flex-col overflow-hidden">
+              {/* Factor Header */}
+              <div className="bg-obsidian text-white p-4">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-brand mb-1 block">Comparison Factor</span>
+                <div className="font-sans text-[16px] md:text-lg font-bold leading-snug">{row.factor}</div>
+                {row.factorNote && (
+                  <div className="font-mono text-[11px] text-white/70 italic leading-relaxed mt-1">&ldquo;{row.factorNote}&rdquo;</div>
+                )}
+              </div>
+              
+              {/* Engageo (Winner) Row */}
+              <div className="p-4 bg-[#F2F4FF] border-b-2 border-obsidian/20 relative">
+                <div className="absolute top-0 left-0 w-1 h-full bg-brand" />
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex flex-col">
+                    <span className="font-sans font-bold text-[15px] text-obsidian tracking-tight">Engageo</span>
                   </div>
-                  <div className="font-sans text-[16px] md:text-lg font-bold leading-snug">{row.factor}</div>
-                  {row.factorNote && (
-                    <div className="font-mono text-[11px] text-white/70 italic leading-relaxed mt-2">&ldquo;{row.factorNote}&rdquo;</div>
-                  )}
+                  <span className="inline-block bg-brand text-white border border-obsidian shadow-[1px_1px_0px_0px_#0F0D0B] text-[9px] font-bold font-mono px-2 py-0.5 tracking-widest uppercase">
+                    Winner
+                  </span>
                 </div>
-                
-                {/* Engageo (Winner) Row */}
-                <div className="p-5 bg-[#F2F4FF] border-b-2 border-obsidian/10 relative">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-brand" />
-                  <div className="flex justify-between items-center mb-4">
-                    <div className="flex flex-col">
-                      <span className="font-sans font-bold text-[15px] text-obsidian tracking-tight">Engageo</span>
-                    </div>
-                    <span className="inline-block bg-brand text-white border border-obsidian shadow-[1px_1px_0px_0px_#0F0D0B] text-[9px] font-bold font-mono px-2 py-0.5 tracking-widest uppercase">
-                      Winner
-                    </span>
-                  </div>
-                  <Cell data={row.engageo} isEngageo={true} />
-                </div>
+                <Cell data={row.engageo} isEngageo={true} />
+              </div>
 
-                {/* Competitors Stack - Compact */}
-                <div className="p-5 bg-white flex flex-col">
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-obsidian/40 mb-4">Alternatives</div>
-                  <div className="flex flex-col gap-4">
-                    {columns.filter(c => c.key !== 'engageo').map(col => (
-                      <div key={col.key} className="flex flex-col gap-1 border-b border-obsidian/5 pb-4 last:border-0 last:pb-0">
-                        <span className="font-sans font-bold text-[13px] text-obsidian/80">{col.label}</span>
-                        <Cell data={row[col.key]} isEngageo={false} />
-                      </div>
-                    ))}
-                  </div>
+              {/* Competitors Grid - 2 columns for compactness */}
+              <div className="p-4 bg-canvas/30">
+                <div className="font-mono text-[9px] font-bold uppercase tracking-widest text-obsidian/40 mb-3">Alternatives</div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+                  {columns.filter(c => c.key !== 'engageo').map(col => (
+                    <div key={col.key} className="flex flex-col gap-1.5 border-obsidian/5">
+                      <span className="font-sans font-bold text-[12px] text-obsidian/80 leading-tight">{col.label}</span>
+                      <Cell data={row[col.key]} isEngageo={false} />
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Mobile Swipe Hint */}
-          <div className="text-center mt-2 flex items-center justify-center gap-2 text-obsidian/40 font-mono text-[10px] uppercase tracking-widest font-bold">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Swipe to compare more factors
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-          </div>
+            </div>
+          ))}
         </div>
 
         {/* ── Desktop View: Brutalist Table ── */}

@@ -6,6 +6,8 @@ export default function WorkflowSlider() {
     { num: '02', title: 'AI Intercept', desc: 'Engageo identifies the drop and calls the patient back in 8 seconds.' },
     { num: '03', title: 'Voice Qualification', desc: 'AI handles the conversation, answers FAQs, and qualifies intent.' },
     { num: '04', title: 'Schedule Sync', desc: 'AI checks your real-time Google/HMS calendar for open slots.' },
+    { num: '05', title: 'Slot Secured', desc: 'Appointment is booked. Patient receives instant WhatsApp confirmation.' },
+    { num: '06', title: 'Staff Notified', desc: 'Receptionist sees the recovered booking on the dashboard.' },
   ];
 
   return (
