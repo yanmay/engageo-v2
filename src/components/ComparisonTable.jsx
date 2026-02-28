@@ -165,9 +165,55 @@ export default function ComparisonTable() {
           </p>
         </div>
 
-        {/* Table w/ Cinematic UI */}
-        <div className="bg-white border-2 border-obsidian retro-shadow-hard overflow-x-auto relative">
-          <table className="w-full min-w-[700px] border-collapse">
+        {/* ── Mobile View: Stacked Cards ── */}
+        <div className="block lg:hidden space-y-8">
+          {rows.map((row, idx) => (
+            <div key={idx} className="bg-white border-2 border-obsidian retro-shadow-amber flex flex-col">
+              {/* Factor Header */}
+              <div className="bg-obsidian text-white p-5 border-b-2 border-obsidian">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-brand mb-1 block">Comparison Factor</span>
+                <div className="font-sans text-[15px] font-bold leading-snug">{row.factor}</div>
+                {row.factorNote && (
+                  <div className="font-mono text-[10px] text-white/70 italic leading-relaxed mt-1">{row.factorNote}</div>
+                )}
+              </div>
+              
+              {/* Engageo (Winner) Row */}
+              <div className="p-5 bg-[#F2F4FF] border-b-2 border-obsidian/20 relative">
+                <div className="absolute top-0 left-0 w-1 h-full bg-brand" />
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex flex-col">
+                    <span className="font-sans font-bold text-[14px] text-obsidian">Engageo</span>
+                    <span className="font-mono text-[9px] uppercase text-brand font-bold">Built for Indian Clinics</span>
+                  </div>
+                  <span className="inline-block bg-brand text-white border border-obsidian shadow-[1px_1px_0px_0px_#0F0D0B] text-[8px] font-bold font-mono px-2 py-0.5 tracking-widest uppercase">
+                    Recommended
+                  </span>
+                </div>
+                <Cell data={row.engageo} isEngageo={true} />
+              </div>
+
+              {/* Competitors Stack */}
+              <div className="flex flex-col divide-y divide-obsidian/10">
+                {columns.filter(c => c.key !== 'engageo').map(col => (
+                  <div key={col.key} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-obsidian/[0.01]">
+                    <div className="flex flex-col sm:w-1/3">
+                      <span className="font-sans font-bold text-[13px] text-obsidian">{col.label}</span>
+                      <span className="font-mono text-[9px] text-muted">{col.sub}</span>
+                    </div>
+                    <div className="sm:w-2/3">
+                      <Cell data={row[col.key]} isEngageo={false} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── Desktop View: Brutalist Table ── */}
+        <div className="hidden lg:block bg-white border-2 border-obsidian retro-shadow-hard relative">
+          <table className="w-full border-collapse">
 
             {/* Col headers */}
             <thead>
