@@ -213,17 +213,18 @@ export default function DecisionLifecycle() {
                     {step.desc}
                   </p>
 
-                  {/* Visual widget — only show for active step */}
-                  {isActive && (
-                    <div className={`mt-2 ${isLeft ? 'md:ml-auto' : ''}`}>
-                      <StepVisual
-                        type={step.type}
-                        label={step.cardLabel}
-                        text={step.text}
-                        metric={step.metric}
-                      />
-                    </div>
-                  )}
+                  {/* Visual widget — always rendered to prevent layout shift jitter */}
+                  <div
+                    className={`mt-2 ${isLeft ? 'md:ml-auto' : ''} transition-opacity duration-300`}
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <StepVisual
+                      type={step.type}
+                      label={step.cardLabel}
+                      text={step.text}
+                      metric={step.metric}
+                    />
+                  </div>
                 </div>
               </div>
             );
