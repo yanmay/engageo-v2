@@ -13,7 +13,9 @@
 
 @layer base {
   html {
-    /* Removed scroll-behavior: smooth to prevent iOS crashes */
+    /* dvh handles dynamic viewport on modern mobile browsers.
+       For older browsers, a JS-based --vh variable is set in App.jsx. */
+    --vh-fallback: 1vh;
   }
 
   body {

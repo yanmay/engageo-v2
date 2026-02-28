@@ -23,6 +23,17 @@ import FloatingCTA from './components/FloatingCTA';
 
 function App() {
   useEffect(() => {
+    // Detect touch devices — Lenis causes blank gaps and layout fighting
+    // with iOS Safari / Android Chrome dynamic address bars.
+    // Native touch scrolling is already smooth with hardware acceleration.
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    if (isTouchDevice) {
+      // Native scrolling on mobile — no library needed
+      window.lenis = null;
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
@@ -42,7 +53,6 @@ function App() {
 
     requestAnimationFrame(raf);
 
-    // Make lenis globally accessible for anchoring if necessary
     window.lenis = lenis;
 
     return () => {

@@ -51,7 +51,7 @@ export default function Philosophy() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen py-32 flex items-center overflow-hidden bg-dark text-primary">
+    <section ref={sectionRef} className="relative w-full py-24 md:py-32 flex items-center overflow-hidden bg-dark text-primary" style={{ minHeight: '100dvh' }}>
       {/* Background Parallax */}
       <div className="absolute inset-0 w-full h-[130%] -top-[15%] pointer-events-none z-0">
         <img 

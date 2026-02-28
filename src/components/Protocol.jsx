@@ -104,21 +104,21 @@ export default function Protocol() {
   ];
 
   return (
-    <section id="protocol" ref={containerRef} className="relative bg-dark text-primary pb-[100vh]">
+    <section id="protocol" ref={containerRef} className="relative bg-dark text-primary" style={{ paddingBottom: '100dvh' }}>
       {steps.map((step, index) => (
         <div 
           key={step.id} 
-          className="protocol-card w-full h-screen sticky top-0 flex items-center justify-center p-6 md:p-16"
-          style={{ zIndex: index + 1 }}
+          className="protocol-card w-full sticky top-0 flex items-center justify-center p-4 md:p-16"
+          style={{ height: '100dvh', zIndex: index + 1 }}
         >
-          <div className="w-full max-w-6xl bg-primary text-dark rounded-[3rem] p-12 md:p-20 shadow-2xl border border-dark/10 flex flex-col md:flex-row gap-16 h-[80vh] items-center">
+          <div className="w-full max-w-6xl bg-primary text-dark rounded-[2rem] md:rounded-[3rem] p-6 md:p-20 shadow-2xl border border-dark/10 flex flex-col md:flex-row gap-8 md:gap-16 items-center" style={{ minHeight: '60dvh', maxHeight: '85dvh' }}>
             
-            <div className="flex-1 space-y-8">
-              <span className="font-mono text-2xl tracking-widest text-accent font-bold">[{step.id}]</span>
-              <h2 className="font-sans font-bold text-5xl md:text-7xl tracking-tighter leading-none">
+            <div className="flex-1 space-y-4 md:space-y-8">
+              <span className="font-mono text-lg md:text-2xl tracking-widest text-accent font-bold">[{step.id}]</span>
+              <h2 className="font-sans font-bold text-2xl md:text-5xl lg:text-7xl tracking-tighter leading-none">
                 {step.title}
               </h2>
-              <p className="font-sans text-xl md:text-2xl opacity-80 max-w-lg leading-relaxed">
+              <p className="font-sans text-base md:text-xl lg:text-2xl opacity-80 max-w-lg leading-relaxed">
                 {step.desc}
               </p>
             </div>
