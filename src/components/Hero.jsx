@@ -57,6 +57,49 @@ function LedgerRow({ call, isRecovery }) {
   );
 }
 
+/* ─── Typewriter Effect ──────────────────────────────────────── */
+const HERO_WORDS = [
+  "₹3L every month.",
+  "70% of missed calls.",
+  "patients to rivals."
+];
+
+function TypewriterText({ words }) {
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+
+  useEffect(() => {
+    let timer;
+    const currentWord = words[loopNum % words.length];
+    
+    if (isDeleting) {
+      timer = setTimeout(() => setText(currentWord.substring(0, text.length - 1)), 35);
+    } else {
+      timer = setTimeout(() => setText(currentWord.substring(0, text.length + 1)), 65);
+    }
+
+    if (!isDeleting && text === currentWord) {
+      timer = setTimeout(() => setIsDeleting(true), 2400);
+    } else if (isDeleting && text === '') {
+      setIsDeleting(false);
+      setLoopNum(prev => prev + 1);
+    }
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, loopNum, words]);
+
+  return (
+    <span className="inline-flex items-center">
+      <span>{text}</span>
+      <span 
+        className="inline-block bg-brand animate-pulse ml-1 md:ml-2 lg:ml-3" 
+        style={{ width: '0.08em', height: '0.9em', animationDuration: '0.8s' }} 
+      />
+    </span>
+  );
+}
+
 /* ─── Main dashboard ─────────────────────────────────────────── */
 function LiveDashboard() {
   const [phase, setPhase] = useState(1);
@@ -318,14 +361,14 @@ export default function Hero() {
           <div className="section-label mb-6 text-xs md:text-sm">Live in 47 Indian Clinics</div>
 
           <h1 className="tracking-tighter leading-[1]">
-            <span className="font-sans text-4xl md:text-6xl lg:text-[5.5rem] font-bold text-obsidian block mb-1 md:mb-2">
+            <span className="font-sans text-4xl md:text-6xl lg:text-[5.5rem] font-bold text-obsidian block mb-1 md:mb-2 leading-[1.1]">
               Your clinic is losing
             </span>
             <span
-              className="font-sans font-bold block tracking-tight text-brand"
-              style={{ fontSize: 'clamp(2.75rem, 10vw, 7.5rem)' }}
+              className="font-sans font-bold block tracking-tight text-brand leading-[1.1] min-h-[1.2em]"
+              style={{ fontSize: 'clamp(2.75rem, 8vw, 7.5rem)' }}
             >
-              ₹3L every month.
+              <TypewriterText words={HERO_WORDS} />
             </span>
           </h1>
 
