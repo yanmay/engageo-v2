@@ -26,7 +26,7 @@ export default function FloatingCTA() {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 pointer-events-none"
+      className="hidden md:flex fixed bottom-6 right-6 z-50 flex-col items-end gap-2 pointer-events-none"
       aria-hidden={!show}
     >
       {/* Main CTA pill */}
