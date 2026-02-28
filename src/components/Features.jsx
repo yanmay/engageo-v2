@@ -3,7 +3,7 @@ import { GitBranch, History, FileText } from 'lucide-react';
 
 export default function Features() {
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10">
+    <section className="py-20 md:py-32 px-4 md:px-12 lg:px-20 relative z-10">
       <div className="max-w-7xl mx-auto">
 
         {/* Section header */}
@@ -32,7 +32,7 @@ export default function Features() {
             className="md:col-span-8 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden"
             style={{ color: '#3D5AFE' /* used by ::before left-border */ }}
           >
-            <div className="relative z-10 p-10 h-full flex flex-col justify-between">
+            <div className="relative z-10 p-6 md:p-10 h-full flex flex-col justify-between">
               <div className="flex justify-between items-start">
                 <div className="max-w-md">
                   {/* Numeral anchor */}
@@ -81,7 +81,7 @@ export default function Features() {
             className="md:col-span-4 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden flex flex-col"
             style={{ color: '#E8552A' /* rust left-border */ }}
           >
-            <div className="p-10 relative z-10 flex flex-col h-full">
+            <div className="p-6 md:p-10 relative z-10 flex flex-col h-full">
               <div className="card-numeral mb-2 -ml-1" style={{ color: 'rgba(232,85,42,0.1)' }}>02</div>
               <h3 className="text-xl font-bold text-obsidian mb-3 tracking-tight">
                 Lowest Risk Entry
@@ -114,7 +114,7 @@ export default function Features() {
             className="md:col-span-12 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden"
             style={{ color: '#1E1A16' /* charcoal left-border */ }}
           >
-            <div className="p-10 flex flex-col md:flex-row items-center gap-12">
+            <div className="p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
               <div className="flex-1 max-w-lg">
                 <div className="card-numeral mb-2 -ml-1" style={{ color: 'rgba(30,26,22,0.07)' }}>03</div>
                 <h3 className="text-xl font-bold text-obsidian mb-3 tracking-tight">

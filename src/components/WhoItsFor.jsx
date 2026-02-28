@@ -246,15 +246,15 @@ export default function WhoItsFor() {
         </div>
 
         {/* ── Main Layout: Left list + Right detail ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6">
 
           {/* ── Left: Audience Selector ── */}
-          <div className="lg:col-span-4 flex flex-col gap-2">
+          <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3 lg:gap-2 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x hide-scrollbar" style={{ scrollbarWidth: 'none' }}>
             {audiences.map((a, i) => (
               <button
                 key={a.id}
                 onClick={() => setActiveCard(i)}
-                className={`group w-full text-left p-5 border-2 transition-all duration-200 ${
+                className={`group shrink-0 w-[280px] lg:w-full text-left p-5 border-2 transition-all duration-200 snap-start ${
                   activeCard === i
                     ? 'bg-white border-obsidian retro-shadow translate-y-[-2px]'
                     : 'bg-transparent border-transparent hover:border-obsidian/20'
@@ -311,12 +311,12 @@ export default function WhoItsFor() {
           <div
             key={current.id}
             className="lg:col-span-8 overflow-hidden bg-white border-2 border-obsidian retro-shadow-amber"
-            style={{ animation: 'fadeInUp 0.5s ease-out both' }}
+            style={{ animation: 'fadeInUp 0.4s ease-out both' }}
           >
-            <div className="p-10 md:p-12 h-full flex flex-col gap-10">
+            <div className="p-6 md:p-10 lg:p-12 h-full flex flex-col gap-8 md:gap-10">
 
               {/* Top: Header */}
-              <div className="flex items-start justify-between gap-6">
+              <div className="flex flex-col-reverse md:flex-row items-start justify-between gap-6">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="font-mono text-[10px] text-muted uppercase tracking-widest">

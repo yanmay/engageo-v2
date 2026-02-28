@@ -18,7 +18,7 @@ export default function AuditModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-6"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       onClick={closeModal}
     >
       {/* Backdrop */}
@@ -26,8 +26,8 @@ export default function AuditModal() {
 
       {/* Panel */}
       <div
-        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber overflow-hidden flex flex-col md:flex-row"
-        style={{ maxHeight: '90vh', minHeight: '600px' }}
+        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber flex flex-col md:flex-row h-[90vh] md:h-auto"
+        style={{ md: { maxHeight: '90vh', minHeight: '600px' } }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top accent */}
@@ -46,8 +46,8 @@ export default function AuditModal() {
           <X size={16} className="text-obsidian" strokeWidth={3} />
         </button>
 
-        {/* Left Column (Value Prop) */}
-        <div className="w-full md:w-5/12 bg-canvas border-b-2 md:border-b-0 md:border-r-2 border-obsidian p-8 lg:p-12 flex flex-col justify-between shrink-0 overflow-y-auto">
+        {/* Left Column (Value Prop) - Hidden on mobile for compactness */}
+        <div className="hidden md:flex w-5/12 bg-canvas border-r-2 border-obsidian p-8 lg:p-12 flex-col justify-between shrink-0 overflow-y-auto">
           <div>
             <div className="flex items-center gap-2 mb-10">
               <span className="font-sans text-xl font-bold tracking-tighter text-obsidian">Engageo</span>
@@ -94,7 +94,7 @@ export default function AuditModal() {
         </div>
 
         {/* Right Column (Calendly) */}
-        <div className="w-full md:w-7/12 flex-1 relative bg-white flex flex-col pt-12 md:pt-4">
+        <div className="w-full md:w-7/12 flex-1 relative bg-white flex flex-col">
           <iframe
             src={CALENDLY_URL}
             width="100%"
