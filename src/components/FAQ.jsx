@@ -8,26 +8,43 @@ const faqs = [
     a: 'Yes. Engageo handles administrative scheduling calls — not clinical consultations. This falls squarely within the category of appointment management tools, no different from an IVR system or a front-desk CRM. No HIPAA or DPDP Act provisions are violated. We do not record, store, or process clinical data — only name, phone number, and appointment preference.',
   },
   {
-    q: 'What if the patient figures out it\'s AI?',
-    a: 'In 47 clinics and 12,000+ recovered calls, fewer than 0.3% of patients pushed back on the AI. Our voice is natural, conversational, and trained on real clinic reception dialogue. Patients care about one thing: getting their appointment booked quickly. Engageo does exactly that in under 90 seconds.',
+    q: "What if the patient figures out it's AI?",
+    a: "In 47 clinics and 12,000+ recovered calls, fewer than 0.3% of patients pushed back on the AI. Our voice is natural, conversational, and trained on real clinic reception dialogue. Patients care about one thing: getting their appointment booked quickly. Engageo does exactly that in under 90 seconds.",
   },
   {
     q: 'Does it integrate with my HMS or Practo?',
-    a: 'Engageo natively integrates with Google Calendar (for slot syncing), WhatsApp Business (for confirmations), and can sync with Practo, Doctify, and most HMS systems via our API bridge. Setup takes 4 days. Our onboarding team does it for you — you don\'t need a tech person.',
+    a: "Engageo natively integrates with Google Calendar (for slot syncing), WhatsApp Business (for confirmations), and can sync with Practo, Doctify, and most HMS systems via our API bridge. Setup takes 4 days. Our onboarding team does it for you — you don't need a tech person.",
   },
   {
-    q: 'What happens if the AI can\'t answer the patient\'s question?',
-    a: 'If a query falls outside the booking flow (e.g., clinical queries, pricing disputes, insurance questions), the AI gracefully escalates: it logs the call, sends your receptionist a WhatsApp alert with the patient\'s number and query summary, and schedules a manual callback. Nothing falls through the cracks.',
+    q: "What happens if the AI can't answer the patient's question?",
+    a: "If a query falls outside the booking flow (e.g., clinical queries, pricing disputes, insurance questions), the AI gracefully escalates: it logs the call, sends your receptionist a WhatsApp alert with the patient's number and query summary, and schedules a manual callback. Nothing falls through the cracks.",
   },
   {
     q: 'How long does it take to go live?',
-    a: '4 business days. Day 1: intake form + calendar access. Day 2: AI voice training on your specialty and FAQ set. Day 3: test run with your team. Day 4: go live. You don\'t need a developer, and there\'s nothing to install on your end.',
+    a: "4 business days. Day 1: intake form + calendar access. Day 2: AI voice training on your specialty and FAQ set. Day 3: test run with your team. Day 4: go live. You don't need a developer, and there's nothing to install on your end.",
+  },
+  {
+    q: "What happens if it doesn't work?",
+    a: "Every tier comes with a 30-day money-back guarantee. If you don't see results, you don't pay. No conditions. We're confident enough in the system that we absorb the risk — not you.",
   },
 ];
 
 export default function FAQ() {
-  const [open, setOpen] = useState(0);
+  // Multi-open: track a Set of open indices
+  const [openSet, setOpenSet] = useState(new Set([0]));
   const { openModal } = useModal();
+
+  const toggle = (idx) => {
+    setOpenSet((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) {
+        next.delete(idx);
+      } else {
+        next.add(idx);
+      }
+      return next;
+    });
+  };
 
   return (
     <section className="py-20 md:py-32 px-4 md:px-12 lg:px-20 relative z-10 bg-white border-t border-border/50">
@@ -45,10 +62,10 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* Accordion */}
+        {/* Accordion — multi-open */}
         <div className="space-y-3">
           {faqs.map((faq, idx) => {
-            const isOpen = open === idx;
+            const isOpen = openSet.has(idx);
             return (
               <div
                 key={idx}
@@ -57,9 +74,9 @@ export default function FAQ() {
                     ? 'bg-white border-obsidian retro-shadow translate-y-[-2px]'
                     : 'bg-transparent border-transparent hover:border-obsidian/20 hover:bg-obsidian/[0.02]'
                 }`}
-                onClick={() => setOpen(isOpen ? -1 : idx)}
+                onClick={() => toggle(idx)}
               >
-                <div className="flex items-start justify-between gap-4 p-6">
+                <div className="flex items-start justify-between gap-4 p-6 min-h-[56px]">
                   <div className="flex items-start gap-4">
                     <div className={`shrink-0 w-6 h-6 border-2 border-obsidian flex items-center justify-center mt-0.5 transition-all duration-200 ${
                       isOpen ? 'bg-brand text-white' : 'bg-transparent'
@@ -76,7 +93,7 @@ export default function FAQ() {
 
                 <div
                   className="overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                  style={{ maxHeight: isOpen ? '400px' : '0px' }}
+                  style={{ maxHeight: isOpen ? '500px' : '0px' }}
                 >
                   <p className="px-6 pb-6 pl-16 text-sm text-subtle leading-relaxed">
                     {faq.a}

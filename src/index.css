@@ -21,6 +21,7 @@
   body {
     background-color: #F7F5F2;
     color: #0F0D0B;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -28,6 +29,13 @@
     background-image:
       radial-gradient(ellipse 80% 45% at 50% -10%, rgba(245,238,225,0.9) 0%, transparent 70%),
       radial-gradient(ellipse 50% 30% at 15% 10%, rgba(61,90,254,0.025) 0%, transparent 60%);
+  }
+
+  /* Offset all anchor sections by the height of the fixed header (56px) +
+     the decorative 3-stripe bar (12px) = 68px, rounded to 80px for breathing room */
+  section[id],
+  div[id] {
+    scroll-margin-top: 80px;
   }
 }
 

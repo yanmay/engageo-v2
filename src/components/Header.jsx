@@ -17,12 +17,13 @@ const SECTIONS = [
 
 function jumpTo(id) {
   const el = document.getElementById(id);
-  if (el) {
-    if (window.lenis) {
-      window.lenis.scrollTo(el);
-    } else {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  if (!el) return;
+  const OFFSET = 80; // fixed header (56px) + stripe (12px) + breathing room
+  const top = el.getBoundingClientRect().top + window.scrollY - OFFSET;
+  if (window.lenis) {
+    window.lenis.scrollTo(el, { offset: -OFFSET });
+  } else {
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   }
 }
 
@@ -174,10 +175,10 @@ export default function Header() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen((v) => !v)}
-            className="md:hidden shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-canvas border border-border text-obsidian hover:border-brand/30 transition-colors"
+            className="md:hidden ml-auto shrink-0 w-11 h-11 flex items-center justify-center rounded-lg bg-canvas border border-border text-obsidian hover:border-brand/30 transition-colors"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={14} /> : <Menu size={14} />}
+            {mobileOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
 
