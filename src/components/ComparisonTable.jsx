@@ -50,7 +50,7 @@ const rows = [
   {
     factor: 'WhatsApp patient journey',
     factorNote: 'Confirmation → Reminder → Pre-visit → No-show recovery',
-    engageo:      { v: true, note: '✅ Booking confirmation (instant)\n✅ 24hr appointment reminder\n✅ Pre-visit directions message\n✅ No-show recovery message' },
+    engageo:      { v: true, note: '• Booking confirmation (instant)\n• 24hr appointment reminder\n• Pre-visit directions message\n• No-show recovery message' },
     ringg:        { v: false },
     bland:        { v: false },
     vapi:         { v: false },
