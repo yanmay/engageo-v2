@@ -49,8 +49,8 @@ export default function TheSecondLayer() {
             for (let j = 0; j < i; j++) {
                const depth = i - j; // e.g., if i=1, j=0, depth=1
                tl.to(cards[j], {
-                 scale: 1 - (depth * 0.04),
-                 y: `-${depth * 20}px`, // Fixed pixel offset prevents pushing up too high on tall screens
+                 scale: 1 - (depth * 0.05),
+                 y: `-${depth * 3}vh`, // Responsive step gap so they tuck gracefully on small heights
                  opacity: Math.max(0, 1 - (depth * 0.35)),
                  ease: "power2.out"
                }, `card${i}`);
@@ -185,21 +185,21 @@ export default function TheSecondLayer() {
       `}</style>
       
       {/* Section Title Header (IN-FLOW Element prevents ALL overlap possibility natively) */}
-      <div className="w-full px-5 md:px-12 lg:px-20 z-0 shrink-0 pt-[12vh] md:pt-[15vh] pb-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 relative top-0 max-w-7xl mx-auto">
-        <h2 className="font-sans text-4xl leading-[1.05] md:text-6xl lg:text-[4.5rem] font-bold text-obsidian tracking-tighter md:leading-[1]">
+      <div className="w-full px-5 md:px-12 lg:px-20 z-0 shrink-0 pt-[10vh] md:pt-[8vh] pb-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 relative top-0 max-w-7xl mx-auto">
+        <h2 className="font-sans text-4xl leading-[1.05] md:text-5xl lg:text-[4.5rem] font-bold text-obsidian tracking-tighter md:leading-[1]">
           The call recovers.<br className="hidden md:block"/>
           <span className="serif-hero font-light italic text-[#25D366] [text-shadow:0_0_35px_rgba(37,211,102,0.4)] drop-shadow-sm md:ml-4 inline-block mt-1">
             WhatsApp retains.
           </span>
         </h2>
-        <p className="font-mono text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#1A1A1A]/30 text-left md:text-right hidden md:block pb-2">
+        <p className="font-mono text-[10px] md:text-sm uppercase tracking-widest font-bold text-[#1A1A1A]/30 text-left md:text-right hidden md:block pb-2">
           04 Step WhatsApp <br/>Retention Protocol
         </p>
       </div>
 
       {/* Cards container automatically takes the REMAINING height securely without clipping */}
-      <div className="flex-1 min-h-0 w-full z-10 flex flex-col items-center justify-end md:justify-end px-3 md:px-12 pb-6 md:pb-12">
-        <div className="w-full max-w-[26rem] md:max-w-3xl h-full max-h-[60vh] md:max-h-[65vh] relative perspective-[1000px] mt-auto">
+      <div className="flex-1 min-h-0 w-full z-10 flex flex-col items-center justify-end md:justify-end px-3 md:px-12 pb-6 md:pb-8">
+        <div className="w-full max-w-[26rem] md:max-w-[48rem] lg:max-w-3xl h-full max-h-[60vh] md:max-h-[58vh] relative perspective-[1000px] mt-auto">
           
           {steps.map((step, i) => (
             <div 
