@@ -41,9 +41,10 @@ export default function TheSecondLayer() {
             // Adds a small pause before sliding the next card
             tl.to({}, { duration: 0.15 });
 
-            // Previous card scales and fades beautifully into the background
+            // Previous card slides up slightly to tuck under and scales down
             tl.to(cards[i - 1], {
               scale: 0.94,
+              y: "-4vh", // Slide up slightly to create a layered stack instead of shrinking in place
               opacity: 0.35,
               ease: "none"
             }, `card${i}`);
@@ -186,7 +187,7 @@ export default function TheSecondLayer() {
         </div>
       </div>
 
-      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-center px-4 md:px-12 pb-4 md:pb-0 md:pt-[15vh]">
+      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-center px-4 md:px-12 pb-4 md:pb-0 md:pt-[12vh]">
         <div className="w-full max-w-4xl h-[74vh] md:h-[75vh] relative perspective-[1000px] mt-auto md:mt-0">
           
           {steps.map((step, i) => (
