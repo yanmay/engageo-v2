@@ -4,6 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// BEAST MODE: Force iOS/Android to process scroll on the main thread so it syncs perfectly with GSAP repaints.
+// This completely destroys the native scroll elastic jitter when pinning items on mobile.
+ScrollTrigger.normalizeScroll(true);
+
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
 
@@ -25,9 +29,12 @@ export default function TheSecondLayer() {
             start: "top top",
             // More scroll room so we don't rush the user reading the chat
             end: `+=${cards.length * 1500}`,
-            scrub: true,
+            // BEAST MODE: Add 1 second of linear interpolation to the scrub. Acts as a shock-absorber for messy finger swipes.
+            scrub: 1, 
             pin: true,
             pinSpacing: true,
+            // BEAST MODE: Pre-calculate the pin state before it hits to prevent the initial violent "snap".
+            anticipatePin: 1,
           }
         });
 
