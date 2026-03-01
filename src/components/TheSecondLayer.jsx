@@ -22,9 +22,10 @@ export default function TheSecondLayer() {
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            // More scroll room so we don't rush the user reading the chat
-            end: `+=${cards.length * 1500}`,
-            scrub: 1, 
+            // Lightning fast responsiveness: 800px per card is about one screen length
+            end: `+=${cards.length * 800}`,
+            // BEAST MODE: Instant tracking native to touch scrolling, removes all artificial 'lag' delay
+            scrub: true, 
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -46,7 +47,7 @@ export default function TheSecondLayer() {
                const depth = i - j; // e.g., if i=1, j=0, depth=1
                tl.to(cards[j], {
                  scale: 1 - (depth * 0.04),
-                 y: `-${depth * 4}vh`, // Push up to create a layered stack
+                 y: `-${depth * 20}px`, // Fixed pixel offset prevents pushing up too high on tall screens
                  opacity: Math.max(0, 1 - (depth * 0.35)),
                  ease: "power2.out"
                }, `card${i}`);
@@ -180,20 +181,19 @@ export default function TheSecondLayer() {
         }
       `}</style>
       
-      {/* Background Section Title Header */}
-      <div className="absolute top-8 md:top-12 left-0 right-0 px-5 md:px-12 lg:px-20 z-0 opacity-40">
-        <div className="max-w-7xl mx-auto flex flex-col items-start md:items-center text-left md:text-center gap-4">
-          <h2 className="font-sans text-[2.75rem] leading-[1] md:text-6xl font-bold text-obsidian tracking-tighter md:leading-[1.05]">
-            The call recovers. <span className="serif-hero font-light italic text-brand md:ml-4">WhatsApp retains.</span>
-          </h2>
-          <p className="font-mono text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#1A1A1A]/50">
-            04 Step WhatsApp Retention Protocol
-          </p>
-        </div>
+      {/* Section Title Header (IN-FLOW Element prevents ALL overlap possibility natively) */}
+      <div className="w-full px-5 md:px-12 lg:px-20 z-0 opacity-40 shrink-0 pt-6 md:pt-10 pb-2 md:pb-4 flex flex-col items-start md:items-center text-left md:text-center gap-2 md:gap-4 relative top-0">
+        <h2 className="font-sans text-[2.75rem] leading-[1] md:text-[3.5rem] lg:text-[4rem] font-bold text-obsidian tracking-tighter md:leading-[1.05]">
+          The call recovers. <span className="serif-hero font-light italic text-brand md:ml-4">WhatsApp retains.</span>
+        </h2>
+        <p className="font-mono text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#1A1A1A]/50">
+          04 Step WhatsApp Retention Protocol
+        </p>
       </div>
 
-      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-end px-4 md:px-12 pb-4 md:pb-8 pt-[15vh] md:pt-[24vh]">
-        <div className="w-full max-w-3xl h-[74vh] md:h-[68vh] relative perspective-[1000px] mt-auto">
+      {/* Cards container automatically takes the REMAINING height securely without clipping */}
+      <div className="flex-1 w-full z-10 flex flex-col items-center justify-end md:justify-end px-4 md:px-12 pb-4 md:pb-8">
+        <div className="w-full max-w-3xl h-full max-h-[72vh] md:max-h-[68vh] relative perspective-[1000px] mt-auto">
           
           {steps.map((step, i) => (
             <div 
