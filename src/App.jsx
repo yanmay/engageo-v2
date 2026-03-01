@@ -35,30 +35,49 @@ function App() {
       return;
     }
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
+    // Dynamically import GSAP ScrollTrigger to connect with Lenis
+    import('gsap').then(({ default: gsap }) => {
+      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+          direction: 'vertical',
+          gestureDirection: 'vertical',
+          smooth: true,
+          mouseMultiplier: 1,
+          smoothTouch: false,
+          touchMultiplier: 2,
+          infinite: false,
+        });
+
+        // ── CRITICAL: Bridge Lenis → GSAP ScrollTrigger ──
+        // Without this, ScrollTrigger never receives Lenis scroll updates
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // Use GSAP ticker instead of manual rAF for perfect sync
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        window.lenis = lenis;
+
+        // Store cleanup references
+        window._lenisCleanup = () => {
+          gsap.ticker.remove(lenis.raf);
+          lenis.destroy();
+          window.lenis = null;
+        };
+      });
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    window.lenis = lenis;
-
     return () => {
-      lenis.destroy();
-      window.lenis = null;
+      if (window._lenisCleanup) {
+        window._lenisCleanup();
+        window._lenisCleanup = null;
+      }
     };
   }, []);
 

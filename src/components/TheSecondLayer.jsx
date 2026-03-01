@@ -70,7 +70,7 @@ export default function TheSecondLayer() {
       }, containerRef);
 
       containerRef._gsapCtx = ctx;
-    }, 100);
+    }, 300);
 
     return () => {
       clearTimeout(timerId);
