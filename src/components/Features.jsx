@@ -87,7 +87,7 @@ export default function Features() {
                 Lowest Risk Entry
               </h3>
               <p className="text-sm text-subtle leading-relaxed mb-8">
-                Don't hit 15 confirmed appointments in 30 days? We extend free until we do — or you don't pay.
+                We keep going for free. If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend the service at zero cost until we hit that number. No invoices. Just the number we promised.
               </p>
 
               <div className="mt-auto relative w-full h-32 flex flex-col justify-end items-center">

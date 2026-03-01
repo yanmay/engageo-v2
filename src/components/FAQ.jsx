@@ -8,24 +8,24 @@ const faqs = [
     a: 'Yes. Engageo handles administrative scheduling calls — not clinical consultations. This falls squarely within the category of appointment management tools, no different from an IVR system or a front-desk CRM. No HIPAA or DPDP Act provisions are violated. We do not record, store, or process clinical data — only name, phone number, and appointment preference.',
   },
   {
-    q: "What if the patient figures out it's AI?",
-    a: "In 47 clinics and 12,000+ recovered calls, fewer than 0.3% of patients pushed back on the AI. Our voice is natural, conversational, and trained on real clinic reception dialogue. Patients care about one thing: getting their appointment booked quickly. Engageo does exactly that in under 90 seconds.",
-  },
-  {
-    q: 'Does it integrate with my HMS or Practo?',
-    a: "Engageo natively integrates with Google Calendar (for slot syncing), WhatsApp Business (for confirmations), and can sync with Practo, Doctify, and most HMS systems via our API bridge. Setup takes 4 days. Our onboarding team does it for you — you don't need a tech person.",
-  },
-  {
-    q: "What happens if the AI can't answer the patient's question?",
-    a: "If a query falls outside the booking flow (e.g., clinical queries, pricing disputes, insurance questions), the AI gracefully escalates: it logs the call, sends your receptionist a WhatsApp alert with the patient's number and query summary, and schedules a manual callback. Nothing falls through the cracks.",
-  },
-  {
-    q: 'How long does it take to go live?',
-    a: "4 business days. Day 1: intake form + calendar access. Day 2: AI voice training on your specialty and FAQ set. Day 3: test run with your team. Day 4: go live. You don't need a developer, and there's nothing to install on your end.",
-  },
-  {
     q: "What happens if it doesn't work?",
-    a: "Every tier comes with a 30-day money-back guarantee. If you don't see results, you don't pay. No conditions. We're confident enough in the system that we absorb the risk — not you.",
+    a: "We keep going for free. If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend the service at zero cost until we hit that number. No refund negotiation. No invoices. Just the number we promised.",
+  },
+  {
+    q: "What if the patient figures out it's AI?",
+    a: "Most don't. And those who do don't mind — they got a response in 8 seconds instead of a voicemail. We're solving a speed problem, not trying to impersonate a human.",
+  },
+  {
+    q: 'Does it integrate with HMS or Practo?',
+    a: "We work on top of Google Calendar, not inside your HMS. If your team manages appointments from Google Calendar, you're ready. Practo integration is on our roadmap.",
+  },
+  {
+    q: "What happens if the AI can't answer?",
+    a: "It doesn't guess. It captures the patient's name and number, tells them the clinic team will call back within the hour, and sends you an instant WhatsApp alert. No patient is left without a response.",
+  },
+  {
+    q: 'How long to go live?',
+    a: "4 days from the moment you sign. Day 1–2 we configure. Day 3 we test with you. Day 4 you're live.",
   },
 ];
 
@@ -69,25 +69,18 @@ export default function FAQ() {
             return (
               <div
                 key={idx}
-                className={`transition-all duration-200 cursor-pointer border-2 ${
+                className={`transition-all duration-300 cursor-pointer border ${
                   isOpen
-                    ? 'bg-white border-obsidian retro-shadow translate-y-[-2px]'
-                    : 'bg-transparent border-transparent hover:border-obsidian/20 hover:bg-obsidian/[0.02]'
+                    ? 'bg-white border-border/60 border-l-[3px] !border-l-brand shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] translate-y-[-2px]'
+                    : 'bg-transparent border-transparent hover:border-black/5 hover:bg-black/[0.02]'
                 }`}
                 onClick={() => toggle(idx)}
               >
-                <div className="flex items-start justify-between gap-4 p-6 min-h-[56px]">
-                  <div className="flex items-start gap-4">
-                    <div className={`shrink-0 w-6 h-6 border-2 border-obsidian flex items-center justify-center mt-0.5 transition-all duration-200 ${
-                      isOpen ? 'bg-brand text-white' : 'bg-transparent'
-                    }`}>
-                      <Check size={12} strokeWidth={3} className={isOpen ? 'text-white' : 'opacity-0'} />
-                    </div>
-                    <span className="font-sans font-semibold text-obsidian text-[15px] leading-snug">{faq.q}</span>
-                  </div>
+                <div className="flex items-center justify-between gap-4 p-6 min-h-[56px]">
+                  <span className="font-sans font-semibold text-obsidian text-[15.5px] leading-snug pr-4">{faq.q}</span>
                   <ChevronDown
-                    size={18}
-                    className={`shrink-0 text-subtle mt-0.5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand' : ''}`}
+                    size={20}
+                    className={`shrink-0 text-subtle transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand' : ''}`}
                   />
                 </div>
 
@@ -95,7 +88,7 @@ export default function FAQ() {
                   className="overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.25,1,0.5,1)]"
                   style={{ maxHeight: isOpen ? '500px' : '0px' }}
                 >
-                  <p className="px-6 pb-6 pl-16 text-sm text-subtle leading-relaxed">
+                  <p className="px-6 pb-6 text-[14.5px] text-subtle leading-relaxed pr-12">
                     {faq.a}
                   </p>
                 </div>

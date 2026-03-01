@@ -112,33 +112,39 @@ export default function Header() {
   return (
     <>
       {/* ── Decorative top stripe (Importism-style) ── */}
-      <div className="fixed top-0 left-0 right-0 z-[51] flex flex-col pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 z-[52] flex flex-col pointer-events-none">
         <div style={{ height: 3, background: '#3D5AFE' }} />
         <div style={{ height: 3, background: '#E8552A' }} />
         <div style={{ height: 3, background: '#C97B2A' }} />
         <div style={{ height: 3, background: '#1E1A16' }} />
       </div>
 
-      <header
-        className={`fixed top-3 left-0 right-0 z-50 w-full transition-all duration-500 ${
-          scrolled
-            ? 'bg-[#FBF9F6]/90 backdrop-blur-xl shadow-[0_1px_0_rgba(15,13,11,0.06),0_4px_16px_-4px_rgba(15,13,11,0.07)]'
-            : 'bg-transparent'
-        }`}
-      >
-        {/* ── Single unified row ── */}
-        <div className="flex items-center gap-4 px-5 md:px-10 h-14">
+      {/* ── Scroll progress bar at top window edge ── */}
+      <div className="fixed top-[12px] left-0 right-0 h-[2px] bg-border/40 z-[51] pointer-events-none">
+        <div
+          className="h-full bg-brand transition-none"
+          style={{ width: `${scrollPct * 100}%` }}
+        />
+      </div>
 
-          {/* Brand — always visible */}
-          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center gap-1.5 shrink-0">
-            <span className="font-sans text-base font-bold tracking-tighter text-obsidian">Engageo</span>
+      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none px-4 md:px-8">
+        <header
+          className={`pointer-events-auto flex items-center justify-between w-full transition-all duration-[400ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${
+            scrolled
+              ? 'max-w-[1200px] bg-[#FBF9F6]/95 backdrop-blur-xl shadow-[0_8px_32px_-8px_rgba(15,13,11,0.12)] border border-obsidian/10 rounded-full mt-6 h-[56px] px-4'
+              : 'max-w-[1280px] bg-transparent mt-5 h-16 md:px-2'
+          }`}
+        >
+          {/* Brand — left */}
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="flex items-center gap-1.5 shrink-0 pl-2">
+            <span className="font-sans text-[17px] font-bold tracking-tighter text-obsidian">Engageo</span>
             <span className="w-1.5 h-1.5 rounded-sm bg-brand rotate-45 inline-block" />
           </a>
 
-          {/* Section chips — centered, scrollable, hidden on mobile */}
+          {/* Section chips — center */}
           <div
             ref={chipsRef}
-            className="hidden md:flex flex-1 items-center justify-center gap-0.5 overflow-x-auto"
+            className="hidden md:flex flex-1 mx-4 items-center justify-center overflow-x-auto"
             style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {SECTIONS.map((s) => {
@@ -148,48 +154,42 @@ export default function Header() {
                   key={s.id}
                   ref={active ? activeRef : null}
                   onClick={() => jumpTo(s.id)}
-                  className="shrink-0 px-3 py-1.5 text-[12.5px] whitespace-nowrap transition-all duration-200 relative"
+                  className="shrink-0 px-3.5 py-1.5 text-[13px] whitespace-nowrap transition-all duration-200 relative"
                   style={{
-                    color:      active ? '#0F0D0B' : '#A09890',
-                    fontWeight: active ? 700       : 500,
-                    letterSpacing: '-0.01em',
+                    color:      active ? '#0F0D0B' : '#736B63',
+                    fontWeight: active ? 600       : 500,
                   }}
                 >
                   {s.label}
                   {active && (
-                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-brand rounded-full" />
+                    <span className="absolute bottom-1.5 left-3.5 right-3.5 h-[2px] bg-brand rounded-full" />
                   )}
                 </button>
               );
             })}
           </div>
 
-          {/* CTA — desktop only */}
+          {/* CTA — right */}
           <button
             onClick={openModal}
-            className="hidden md:flex shrink-0 items-center gap-1.5 bg-brand text-white text-[11px] font-bold px-4 py-2 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-150 active:scale-[0.97] rounded-none"
+            className="hidden md:flex shrink-0 items-center justify-center gap-1.5 bg-obsidian text-white text-[12px] font-bold hover:bg-[#201D19] active:scale-[0.98] transition-transform duration-200 rounded-full h-[40px] px-5"
           >
-            <span>Free Audit →</span>
+            <span>Free Audit</span>
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen((v) => !v)}
-            className="md:hidden ml-auto shrink-0 w-11 h-11 flex items-center justify-center rounded-lg bg-canvas border border-border text-obsidian hover:border-brand/30 transition-colors"
+            className="md:hidden ml-auto shrink-0 w-[42px] h-[42px] flex items-center justify-center rounded-full bg-white border border-border text-obsidian hover:border-brand/40 transition-colors shadow-sm"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
-        </div>
-
-        {/* ── Scroll progress bar — flush at bottom of header ── */}
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-border/30">
-          <div
-            className="h-full bg-gradient-to-r from-brand to-brand/50 transition-none"
-            style={{ width: `${scrollPct * 100}%` }}
-          />
-        </div>
-      </header>
+        </header>
+      </div>
 
       {/* ── Mobile Nav Overlay ── */}
       {mobileOpen && (

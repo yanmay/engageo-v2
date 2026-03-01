@@ -77,7 +77,7 @@ const rows = [
   {
     factor: 'Outcome guarantee',
     factorNote: 'What if it doesn\'t work?',
-    engageo:      { v: '15 booked appts in 30 days — or we extend free', note: 'Extra 30 days at zero cost if needed' },
+    engageo:      { v: '15 booked appts in 30 days — or we keep going for free', note: 'Extended at zero cost until we hit 15' },
     ringg:        { v: '$10 free trial credits', warn: true },
     bland:        { v: '$2 free trial credits', warn: true },
     vapi:         { v: '$10 free trial credits', warn: true },

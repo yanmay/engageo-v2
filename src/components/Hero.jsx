@@ -39,10 +39,10 @@ function LedgerRow({ call, isRecovery }) {
       {/* Response badge — recovery only */}
       {isRecovery && (
         <span
-          className="font-mono text-[9px] px-1.5 py-0.5 rounded-lg mr-3 shrink-0"
-          style={{ background: 'rgba(61,90,254,0.07)', color: '#3D5AFE' }}
+          className="font-mono text-[9px] px-1.5 py-[1px] border border-[#3D5AFE]/30 uppercase tracking-widest font-semibold mr-3 shrink-0"
+          style={{ color: '#3D5AFE', background: 'transparent' }}
         >
-          {call.secs}s
+          {call.secs}S
         </span>
       )}
 
@@ -283,10 +283,11 @@ function LiveDashboard() {
             </span>
           </div>
           <span
-            className="font-mono text-[9px] px-2 py-0.5 rounded-lg font-medium"
+            className="font-mono text-[9px] px-2 py-[2px] border font-bold uppercase tracking-[0.15em]"
             style={{
               color: accentColor,
-              background: isRecovery ? 'rgba(61,90,254,0.08)' : 'rgba(220,38,38,0.07)',
+              borderColor: isRecovery ? 'rgba(61,90,254,0.3)' : 'rgba(220,38,38,0.3)',
+              background: 'transparent',
             }}
           >
             {isRecovery ? 'LIVE' : 'TODAY'}

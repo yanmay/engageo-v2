@@ -271,9 +271,9 @@ export default function Pricing() {
           })}
         </div>
 
-        {/* Money-back guarantee */}
-        <p className="text-center text-sm text-muted mt-10 font-mono">
-          30-day money-back on all tiers. If you don't see results — you don't pay. No fine print.
+        {/* Performance guarantee */}
+        <p className="text-center text-[13px] text-muted mt-10 max-w-2xl mx-auto leading-relaxed">
+          <span className="font-semibold text-obsidian">The 15-Booking Guarantee:</span> We keep going for free. If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend the service at zero cost until we hit that number. No refund negotiation. No invoices. Just the number we promised.
         </p>
 
       </div>
