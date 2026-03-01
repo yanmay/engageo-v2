@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const STEP_COUNT = 4;
-const SCROLL_PER_CARD = 900;
+const SCROLL_PER_CARD = 1100;
 
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
@@ -89,10 +89,12 @@ export default function TheSecondLayer() {
 
   const steps = [
     {
-      tag: "STEP 01",
+      num: "01",
       label: "Instant Confirmation",
+      timing: "Right after the call",
       headerName: "Smile Dental Clinic",
       headerStatus: "online",
+      accentColor: "#25D366",
       messages: [
         { type: "system", text: "Today" },
         { type: "outgoing", text: "Hi Priya! Your appointment with Dr. Mehta is confirmed.", time: "09:12" },
@@ -102,10 +104,12 @@ export default function TheSecondLayer() {
       ],
     },
     {
-      tag: "STEP 02",
-      label: "Smart Reminder",  
+      num: "02",
+      label: "Smart Reminder",
+      timing: "24 hours before",
       headerName: "Smile Dental Clinic",
       headerStatus: "online",
+      accentColor: "#128C7E",
       messages: [
         { type: "system", text: "1 Day Before Appointment" },
         { type: "outgoing", text: "Hi Priya, just a friendly reminder about your appointment tomorrow!", time: "10:30" },
@@ -115,10 +119,12 @@ export default function TheSecondLayer() {
       ],
     },
     {
-      tag: "STEP 03",
+      num: "03",
       label: "Pre-Visit Sync",
+      timing: "2 hours before",
       headerName: "Smile Dental Clinic",
       headerStatus: "online",
+      accentColor: "#075E54",
       messages: [
         { type: "system", text: "2 Hours Before Appointment" },
         { type: "outgoing", text: "Hi Priya! Your appointment is in 2 hours. Here's everything you need:", time: "08:30" },
@@ -128,10 +134,12 @@ export default function TheSecondLayer() {
       ],
     },
     {
-      tag: "STEP 04",
+      num: "04",
       label: "No-Show Recovery",
-      headerName: "Smile Dental Clinic", 
+      timing: "If they don't show up",
+      headerName: "Smile Dental Clinic",
       headerStatus: "online",
+      accentColor: "#DC2626",
       messages: [
         { type: "system", text: "15 Minutes After Missed Slot" },
         { type: "outgoing", text: "Hi Priya, we noticed you couldn't make it today. No worries at all!", time: "10:45" },
@@ -170,29 +178,37 @@ export default function TheSecondLayer() {
               style={{ zIndex: i }}
             >
               
+              {/* ── Step Identity Banner ── */}
+              <div className="shrink-0 px-5 md:px-8 py-3 md:py-4 flex items-center justify-between" style={{ backgroundColor: step.accentColor }}>
+                <div className="flex items-center gap-3 md:gap-4">
+                  <span className="font-mono text-2xl md:text-3xl font-bold text-white/30 leading-none">{step.num}</span>
+                  <div>
+                    <p className="text-white font-bold text-sm md:text-base tracking-tight">{step.label}</p>
+                    <p className="text-white/60 text-[11px] md:text-xs font-medium">{step.timing}</p>
+                  </div>
+                </div>
+                <span className="font-mono text-[10px] md:text-xs text-white/40 uppercase tracking-widest hidden md:block">WhatsApp Protocol</span>
+              </div>
+
               {/* ── WhatsApp Header Bar ── */}
-              <div className="bg-[#075E54] px-4 md:px-8 py-3 md:py-4 flex items-center gap-3 md:gap-4 shrink-0">
+              <div className="bg-[#075E54] px-4 md:px-8 py-2.5 md:py-3 flex items-center gap-3 md:gap-4 shrink-0">
                 {/* Back arrow */}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-white/80 shrink-0 hidden md:block">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white/80 shrink-0 hidden md:block">
                   <path d="M15 19L8 12L15 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 {/* Avatar */}
-                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#128C7E] flex items-center justify-center text-white font-bold text-sm shrink-0">
+                <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#128C7E] flex items-center justify-center text-white font-bold text-xs shrink-0">
                   SD
                 </div>
                 {/* Name & status */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-semibold text-sm md:text-base truncate">{step.headerName}</p>
-                  <p className="text-[#25D366] text-xs">{step.headerStatus}</p>
+                  <p className="text-white font-semibold text-sm truncate">{step.headerName}</p>
+                  <p className="text-[#25D366] text-[11px]">{step.headerStatus}</p>
                 </div>
-                {/* Step tag */}
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold text-white/60 bg-white/10 px-3 py-1 rounded-full shrink-0">
-                  {step.tag}
-                </span>
                 {/* Icons */}
-                <div className="flex items-center gap-3 text-white/70 shrink-0 hidden md:flex">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+                <div className="flex items-center gap-3 text-white/70 shrink-0">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
                 </div>
               </div>
 
@@ -245,12 +261,7 @@ export default function TheSecondLayer() {
                 </div>
               </div>
 
-              {/* ── Step label overlay ── */}
-              <div className="absolute bottom-14 md:bottom-16 right-4 md:right-8">
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold text-[#075E54]/50 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full">
-                  {step.label}
-                </span>
-              </div>
+
 
             </div>
           ))}
