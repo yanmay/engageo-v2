@@ -4,10 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// BEAST MODE: Force iOS/Android to process scroll on the main thread so it syncs perfectly with GSAP repaints.
-// This completely destroys the native scroll elastic jitter when pinning items on mobile.
-ScrollTrigger.normalizeScroll(true);
-
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
 
@@ -22,18 +18,15 @@ export default function TheSecondLayer() {
         if (cards.length === 0) return;
 
         // One timeline synchronizes all the card animations mathematically across the scroll distance
-        // Added 50% more scroll duration to allow time to automate scrolling inside the message body
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
             // More scroll room so we don't rush the user reading the chat
             end: `+=${cards.length * 1500}`,
-            // BEAST MODE: Add 1 second of linear interpolation to the scrub. Acts as a shock-absorber for messy finger swipes.
             scrub: 1, 
             pin: true,
             pinSpacing: true,
-            // BEAST MODE: Pre-calculate the pin state before it hits to prevent the initial violent "snap".
             anticipatePin: 1,
           }
         });
@@ -48,32 +41,38 @@ export default function TheSecondLayer() {
             // Adds a small pause before sliding the next card
             tl.to({}, { duration: 0.15 });
 
-            // Previous card slides up slightly to tuck under and scales down
-            tl.to(cards[i - 1], {
-              scale: 0.94,
-              y: "-4vh", // Slide up slightly to create a layered stack instead of shrinking in place
-              opacity: 0.35,
-              ease: "none"
-            }, `card${i}`);
+            // Animate ALL previous cards down the stack dynamically
+            for (let j = 0; j < i; j++) {
+               const depth = i - j; // e.g., if i=1, j=0, depth=1
+               tl.to(cards[j], {
+                 scale: 1 - (depth * 0.04),
+                 y: `-${depth * 4}vh`, // Push up to create a layered stack
+                 opacity: Math.max(0, 1 - (depth * 0.35)),
+                 ease: "power2.out"
+               }, `card${i}`);
+            }
 
             // Current card sweeps up from below the viewport perfectly overlapping
             tl.fromTo(card,
-              { y: "120vh" },
-              { y: "0vh", ease: "none" },
+              { y: "120vh", opacity: 0 },
+              { y: "0vh", opacity: 1, ease: "power2.out" },
               `card${i}`
             );
           }
 
           // Cinematic chat scrolling automated by page scroll
           if (chatBody) {
+             let maxScroll = 0;
              const scrollProxy = { y: 0 };
              tl.to(scrollProxy, {
                 y: 100, // Evaluates 0 to 100 percentage
-                ease: "power1.inOut",
-                duration: 1.2, // dedicate substantial timeline space to reading the chat
+                ease: "none",
+                duration: 1.5, // dedicate substantial timeline space to reading the chat
+                onStart: () => {
+                    // CACHE: Read DOM layout once when tween starts to prevent 60fps synchronous layout thrashing!
+                    maxScroll = chatBody.scrollHeight - chatBody.clientHeight;
+                },
                 onUpdate: () => {
-                    // Using onUpdate and calculating dynamically ensures we handle fonts loading, resize events natively!
-                    const maxScroll = chatBody.scrollHeight - chatBody.clientHeight;
                     if (maxScroll > 0) {
                       chatBody.scrollTop = (scrollProxy.y / 100) * maxScroll;
                     }
@@ -182,20 +181,19 @@ export default function TheSecondLayer() {
       `}</style>
       
       {/* Background Section Title Header */}
-      <div className="absolute top-6 md:top-16 left-0 right-0 px-5 md:px-12 lg:px-20 z-0 opacity-40">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-          <h2 className="font-sans text-[2.75rem] leading-[1] md:text-7xl font-bold text-obsidian tracking-tighter md:leading-[0.9]">
-            The call recovers.<br />
-            <span className="serif-hero font-light italic">WhatsApp retains.</span>
+      <div className="absolute top-8 md:top-12 left-0 right-0 px-5 md:px-12 lg:px-20 z-0 opacity-40">
+        <div className="max-w-7xl mx-auto flex flex-col items-start md:items-center text-left md:text-center gap-4">
+          <h2 className="font-sans text-[2.75rem] leading-[1] md:text-6xl font-bold text-obsidian tracking-tighter md:leading-[1.05]">
+            The call recovers. <span className="serif-hero font-light italic text-brand md:ml-4">WhatsApp retains.</span>
           </h2>
-          <p className="font-mono text-xs uppercase tracking-widest font-bold max-w-xs text-right hidden md:block">
-            04 Step WhatsApp <br/>retention protocol
+          <p className="font-mono text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#1A1A1A]/50">
+            04 Step WhatsApp Retention Protocol
           </p>
         </div>
       </div>
 
-      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-center px-4 md:px-12 pb-4 md:pb-0 md:pt-[12vh]">
-        <div className="w-full max-w-4xl h-[74vh] md:h-[75vh] relative perspective-[1000px] mt-auto md:mt-0">
+      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-end px-4 md:px-12 pb-4 md:pb-8 pt-[15vh] md:pt-[24vh]">
+        <div className="w-full max-w-3xl h-[74vh] md:h-[68vh] relative perspective-[1000px] mt-auto">
           
           {steps.map((step, i) => (
             <div 
