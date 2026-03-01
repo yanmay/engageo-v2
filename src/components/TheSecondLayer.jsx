@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -16,24 +16,25 @@ export default function TheSecondLayer() {
     if (el) cardsRef.current[i] = el;
   }, []);
 
-  useEffect(() => {
-    // Wait one frame so refs are populated after render
-    const frameId = requestAnimationFrame(() => {
+  useLayoutEffect(() => {
+    // Small delay to let Lenis + other scroll libs fully settle
+    const timerId = setTimeout(() => {
+      if (!containerRef.current) return;
       const cards = cardsRef.current.filter(Boolean);
-      if (!cards.length || !containerRef.current) return;
+      if (cards.length < STEP_COUNT) return;
 
       const ctx = gsap.context(() => {
-        // Pin the entire section so it stays on screen while cards scroll
+        // Pin the entire section — use STEP_COUNT so it never depends on ref timing
         ScrollTrigger.create({
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${cards.length * SCROLL_PER_CARD}`,
+          end: `+=${STEP_COUNT * SCROLL_PER_CARD}`,
           pin: true,
           pinSpacing: true,
         });
 
         cards.forEach((card, i) => {
-          // Skip the very first card for entrance animation, it's already there
+          // First card is already visible — only animate cards 1-3 in
           if (i > 0) {
             gsap.fromTo(card,
               { y: "150vh" },
@@ -50,8 +51,7 @@ export default function TheSecondLayer() {
             );
           }
 
-          // When the *next* card slides up over this one,
-          // this card scales down, fades out slightly, and blurs.
+          // When the *next* card slides up, push this one back
           if (i < cards.length - 1) {
             gsap.to(card, {
               scale: 0.9,
@@ -69,14 +69,14 @@ export default function TheSecondLayer() {
         });
       }, containerRef);
 
-      // Store ctx for cleanup
       containerRef._gsapCtx = ctx;
-    });
+    }, 100);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      clearTimeout(timerId);
       if (containerRef._gsapCtx) containerRef._gsapCtx.revert();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* ── Double-tick SVG component ── */
