@@ -31,13 +31,16 @@ export default function TheSecondLayer() {
         });
 
         cards.forEach((card, i) => {
+          // Force hardware acceleration on the card
+          gsap.set(card, { force3D: true, z: 0.1 });
+
           if (i === 0) return; // First card is visually present instantly
 
           // Previous card scales and fades beautifully into the background
+          // 🔥 PERFORMANCE FIX: Removed blur() which causes severe mobile scroll jitter and memory crash
           tl.to(cards[i - 1], {
-            scale: 0.92,
-            opacity: 0.5,
-            filter: "blur(4px)",
+            scale: 0.94,
+            opacity: 0.35,
             ease: "none"
           }, `card${i}`);
 
@@ -191,8 +194,8 @@ export default function TheSecondLayer() {
                 </div>
               </div>
 
-              {/* ── Chat Body (WhatsApp chat background) ── */}
-              <div className="flex-1 px-3 md:px-6 py-4 md:py-6 overflow-y-auto flex flex-col gap-1.5 md:gap-2" style={{ backgroundColor: '#ECE5DD', backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4ccc2' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}>
+              {/* ── Chat Body ── */}
+              <div className="flex-1 px-3 md:px-6 py-4 md:py-6 overflow-y-auto flex flex-col gap-1.5 md:gap-2 bg-[#ECE5DD]">
                 
                 {step.messages.map((msg, mi) => {
                   if (msg.type === "system") {
