@@ -181,18 +181,27 @@ export default function Features() {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot" />
                   <span className="font-mono text-[9px] text-obsidian uppercase tracking-wider font-bold">Live Tracking</span>
                 </div>
-                <div className="flex flex-col gap-3 mt-2 md:mt-6">
-                  <div className="flex items-center gap-3 bg-white p-3 border border-obsidian/10 rounded-xl shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
-                    <span className="text-base leading-none">✅</span>
-                    <span className="text-[13px] font-semibold text-obsidian">Booking confirmation — instant</span>
+                <div className="flex flex-col gap-0 mt-2 md:mt-6 w-full">
+                  <div className="flex items-center justify-between p-3 border-b border-obsidian/10 hover:bg-white/40 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span className="font-mono text-[11px] font-bold text-obsidian uppercase tracking-wider">Instant</span>
+                    </div>
+                    <span className="text-[13px] text-subtle font-medium">Booking Confirmation</span>
                   </div>
-                  <div className="flex items-center gap-3 bg-white p-3 border border-obsidian/10 rounded-xl shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
-                    <span className="text-base leading-none">⏰</span>
-                    <span className="text-[13px] font-semibold text-obsidian">24hr reminder — automatic</span>
+                  <div className="flex items-center justify-between p-3 border-b border-obsidian/10 hover:bg-white/40 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full bg-brand" />
+                      <span className="font-mono text-[11px] font-bold text-obsidian uppercase tracking-wider">T-24 HRS</span>
+                    </div>
+                    <span className="text-[13px] text-subtle font-medium">Automated Reminder</span>
                   </div>
-                  <div className="flex items-center gap-3 bg-white p-3 border border-obsidian/10 rounded-xl shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
-                    <span className="text-base leading-none">🔄</span>
-                    <span className="text-[13px] font-semibold text-obsidian">No-show recovery — automatic</span>
+                  <div className="flex items-center justify-between p-3 hover:bg-white/40 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full bg-amber-500" />
+                      <span className="font-mono text-[11px] font-bold text-obsidian uppercase tracking-wider">No-Show</span>
+                    </div>
+                    <span className="text-[13px] text-subtle font-medium">Recovery Sequence</span>
                   </div>
                 </div>
               </div>

@@ -14,9 +14,17 @@ const RECOVERY_CALLS = [
   { id: 5, time: '14:18', name: 'Sonal R.', procedure: 'Mouth Rehab', value: 65000, secs: 8 },
   { id: 6, time: '15:44', name: 'Meera T.', procedure: 'IVF Consultation', value: 85000, secs: 7 },
 ];
+const WHATSAPP_EVENTS = [
+  { id: 7, time: '12:46', name: 'Vikram D.', procedure: 'Booking Confirmed', action: 'SENT', value: 0 },
+  { id: 8, time: '14:19', name: 'Sonal R.', procedure: 'Booking Confirmed', action: 'SENT', value: 0 },
+  { id: 9, time: '15:45', name: 'Meera T.', procedure: 'Booking Confirmed', action: 'SENT', value: 0 },
+];
 
 /* ─── Single ledger row ──────────────────────────────────────── */
-function LedgerRow({ call, isRecovery }) {
+function LedgerRow({ call, phase }) {
+  const isRecovery = phase === 2;
+  const isWhatsapp = phase === 3;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
@@ -46,23 +54,31 @@ function LedgerRow({ call, isRecovery }) {
         </span>
       )}
 
-      {/* Amount */}
-      <span
-        className="font-mono text-[12px] font-bold tabular-nums shrink-0"
-        style={{ color: isRecovery ? '#3D5AFE' : '#DC2626' }}
-      >
-        {isRecovery ? '+' : '−'}₹{call.value.toLocaleString('en-IN')}
-      </span>
+      {/* Amount or Action */}
+      {isWhatsapp ? (
+        <span className="font-mono text-[10px] font-bold text-[#059669] uppercase tracking-wider shrink-0 bg-[#059669]/10 px-2 py-0.5 rounded border border-[#059669]/20">
+          ✓ {call.action}
+        </span>
+      ) : (
+        <span
+          className="font-mono text-[12px] font-bold tabular-nums shrink-0"
+          style={{ color: isRecovery ? '#3D5AFE' : '#DC2626' }}
+        >
+          {isRecovery ? '+' : '−'}₹{call.value.toLocaleString('en-IN')}
+        </span>
+      )}
     </motion.div>
   );
 }
 
 const HERO_WORDS = [
-  "We answer. We qualify. We book. We follow up — automatically."
+  "₹3L every month.",
+  "70% of missed calls.",
+  "patients to rivals."
 ];
 
 // ← The longest phrase determines container height. Update if you add a longer one.
-const LONGEST_WORD = "We answer. We qualify. We book. We follow up — automatically.";
+const LONGEST_WORD = "70% of missed calls.";
 
 function TypewriterText({ words }) {
   const [text, setText] = useState(words[0]);
@@ -75,15 +91,15 @@ function TypewriterText({ words }) {
 
     if (phase === 'typing') {
       if (text.length < currentWord.length) {
-        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), 60);
+        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), 90);
       } else {
-        timer = setTimeout(() => setPhase('pause'), 5000);
+        timer = setTimeout(() => setPhase('pause'), 3000);
       }
     } else if (phase === 'pause') {
       timer = setTimeout(() => setPhase('deleting'), 200);
     } else if (phase === 'deleting') {
       if (text.length > 0) {
-        timer = setTimeout(() => setText(text.slice(0, -1)), 30);
+        timer = setTimeout(() => setText(text.slice(0, -1)), 50);
       } else {
         const next = (wordIdx + 1) % words.length;
         setWordIdx(next);
@@ -112,66 +128,249 @@ function TypewriterText({ words }) {
 
 /* ─── Main dashboard ─────────────────────────────────────────── */
 function LiveDashboard() {
+  const [phase, setPhase] = useState(1);
+  const [activating, setActivating] = useState(false);
+  const [visibleCalls, setVisibleCalls] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [incoming, setIncoming] = useState(null);
+  const timerRef = useRef(null);
+
+  const clear = () => clearTimeout(timerRef.current);
+
+  const runPhase = (calls, nextFn) => {
+    let i = 0;
+    const step = () => {
+      if (i >= calls.length) { timerRef.current = setTimeout(nextFn, 800); return; }
+      const call = calls[i];
+      setIncoming(call);
+      timerRef.current = setTimeout(() => {
+        setIncoming(null);
+        setVisibleCalls(prev => [call, ...prev]);
+        setTotal(prev => prev + (call.value || 0));
+        i++;
+        timerRef.current = setTimeout(step, 1000);
+      }, 1500);
+    };
+    timerRef.current = setTimeout(step, 700);
+  };
+
+  const startPhase1 = () => {
+    setPhase(1); setVisibleCalls([]); setTotal(0); setIncoming(null);
+    runPhase(BLEED_CALLS, () => {
+      setActivating(true);
+      timerRef.current = setTimeout(() => {
+        setActivating(false);
+        setVisibleCalls([]); setTotal(0); setIncoming(null);
+        startPhase2();
+      }, 1500);
+    });
+  };
+
+  const startPhase2 = () => {
+    setPhase(2);
+    runPhase(RECOVERY_CALLS, () => {
+      timerRef.current = setTimeout(() => {
+        setVisibleCalls([]); setIncoming(null);
+        startPhase3();
+      }, 1200);
+    });
+  };
+
+  const startPhase3 = () => {
+    setPhase(3);
+    runPhase(WHATSAPP_EVENTS, () => {
+      timerRef.current = setTimeout(startPhase1, 3000);
+    });
+  };
+
+  useEffect(() => { startPhase1(); return clear; }, []);
+
+  const isRecovery = phase === 2;
+  const isWhatsapp = phase === 3;
+  const accentColor = isWhatsapp ? '#059669' : (isRecovery ? '#3D5AFE' : '#DC2626');
+
+  /* ── Activation screen ── */
+  if (activating) {
+    return (
+      <div
+        className="w-full overflow-hidden flex items-center justify-center"
+        style={{
+          background: '#FFFFFF',
+          border: '2px solid #0F0D0B',
+          boxShadow: '12px 12px 0px 0px #3D5AFE',
+          minHeight: 360,
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center gap-5 px-10 text-center"
+        >
+          <div className="relative">
+            <div
+              className="w-14 h-14 rounded-full flex items-center justify-center"
+              style={{ background: 'rgba(61,90,254,0.07)' }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="#3D5AFE" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div
+              className="absolute inset-0 rounded-full animate-ping opacity-20"
+              style={{ background: '#3D5AFE' }}
+            />
+          </div>
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] mb-2" style={{ color: '#3D5AFE' }}>
+              Engageo Activating
+            </p>
+            <p className="font-sans text-sm font-semibold text-obsidian">Taking control of your calls</p>
+            <p className="font-mono text-[9px] text-muted mt-1.5">Every future call answered in &lt; 8 seconds</p>
+          </div>
+          <div
+            className="w-40 h-[2px] rounded-full overflow-hidden mt-1"
+            style={{ background: '#F2F0EB' }}
+          >
+            <motion.div
+              style={{ background: '#3D5AFE', height: '100%' }}
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 1.5, ease: 'easeInOut' }}
+            />
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      style={{
-        background: '#FFFFFF',
-        overflow: 'hidden',
-        border: '2px solid #0F0D0B',
-        boxShadow: '12px 12px 0px 0px #3D5AFE',
-        minHeight: 360,
-      }}
-      className="flex flex-col h-full rounded-xl w-full"
-    >
-      <div className="flex h-full min-h-[360px]">
-        {/* Left Column */}
-        <div className="flex-1 flex flex-col border-r border-obsidian/10">
-          <div className="px-4 py-3 bg-[#DC2626]/5 border-b border-obsidian/10">
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#DC2626]">
-              WITHOUT ENGAGEO
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={`phase-${phase}`}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.35 }}
+        style={{
+          background: '#FFFFFF',
+          overflow: 'hidden',
+          border: '2px solid #0F0D0B',
+          boxShadow: isWhatsapp 
+            ? '12px 12px 0px 0px #059669' 
+            : (isRecovery ? '12px 12px 0px 0px #3D5AFE' : '12px 12px 0px 0px #DC2626'),
+          transition: 'box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
+          minHeight: 360,
+        }}
+        className="flex flex-col h-full rounded-xl w-full"
+      >
+        {/* Top colour tag */}
+        <div style={{ height: 3, background: accentColor, opacity: 0.9, borderRadius: '28px 28px 0 0' }} />
+
+        {/* Header */}
+        <div
+          className="flex items-center justify-between px-5 pt-4 pb-3.5"
+          style={{ background: isWhatsapp ? 'rgba(5,150,105,0.03)' : (isRecovery ? 'rgba(61,90,254,0.03)' : 'rgba(220,38,38,0.025)') }}
+        >
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+                style={{ background: accentColor }}
+              />
+              <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: accentColor }} />
+            </span>
+            <span
+              className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em]"
+              style={{ color: accentColor }}
+            >
+              {isWhatsapp ? 'WhatsApp Engine' : (isRecovery ? 'Engageo Active' : 'Without Engageo')}
             </span>
           </div>
-          <div className="p-4 flex flex-col gap-3 flex-1">
-            <div className="bg-[#DC2626]/5 p-3 rounded-lg border border-[#DC2626]/10">
-              <span className="text-[11px] text-muted block mb-1">Patient</span>
-              <span className="text-[13px] font-bold text-obsidian block">Priya S.</span>
-              <span className="text-[11px] text-charcoal block mt-0.5">Dental Implant</span>
-            </div>
-            <div className="mt-auto">
-              <span className="text-[10px] uppercase text-muted tracking-widest block mb-1">Lost Revenue</span>
-              <span className="text-xl font-bold font-mono text-[#DC2626]">−₹28,000</span>
-            </div>
+          <span
+            className="font-mono text-[9px] px-2 py-[2px] border font-bold uppercase tracking-[0.15em]"
+            style={{
+              color: accentColor,
+              borderColor: isWhatsapp ? 'rgba(5,150,105,0.3)' : (isRecovery ? 'rgba(61,90,254,0.3)' : 'rgba(220,38,38,0.3)'),
+              background: 'transparent',
+            }}
+          >
+            {isWhatsapp ? 'ACTIVE' : (isRecovery ? 'LIVE' : 'TODAY')}
+          </span>
+        </div>
+
+        {/* Incoming flash */}
+        <div
+          className="overflow-hidden transition-all duration-300 mx-4"
+          style={{ maxHeight: incoming ? 56 : 0, opacity: incoming ? 1 : 0, marginTop: incoming ? 10 : 0 }}
+        >
+          <div
+            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl"
+            style={{ background: isWhatsapp ? 'rgba(5,150,105,0.06)' : (isRecovery ? 'rgba(61,90,254,0.06)' : 'rgba(220,38,38,0.05)') }}
+          >
+            <span className="relative flex h-1.5 w-1.5 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: accentColor }} />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: accentColor }} />
+            </span>
+            <span className="font-sans text-[11px] font-medium text-obsidian truncate flex-1">
+              {isWhatsapp ? 'Dispatching' : (isRecovery ? 'Intercepting' : 'Incoming')}: <strong>{incoming?.name}</strong> · {incoming?.procedure}
+            </span>
+            {!isWhatsapp && (
+              <span className="font-mono text-[11px] font-bold shrink-0" style={{ color: accentColor }}>
+                ₹{incoming?.value?.toLocaleString('en-IN')}
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="flex-1 flex flex-col bg-[#3D5AFE]/[0.02]">
-          <div className="px-4 py-3 bg-[#3D5AFE]/[0.06] border-b border-obsidian/10 flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60 bg-[#3D5AFE]" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3D5AFE]" />
-            </span>
-            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#3D5AFE]">
-              WITH ENGAGEO
-            </span>
-          </div>
-          <div className="p-4 flex flex-col gap-3 flex-1 justify-center">
-            <div className="flex items-start gap-2">
-              <span className="text-[13px]">📞</span>
-              <span className="text-[13px] font-medium text-obsidian leading-snug">Call missed → AI answers in 8s</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-[13px]">💬</span>
-              <span className="text-[13px] font-medium text-obsidian leading-snug">WhatsApp confirmation sent</span>
-            </div>
-            <div className="flex items-start gap-2 mt-2 bg-[#3D5AFE]/10 p-2.5 rounded-lg border border-[#3D5AFE]/20">
-              <span className="text-[13px]">✅</span>
-              <span className="text-[13px] font-bold text-[#3D5AFE] leading-snug">Slot locked. ₹28,000 recovered.</span>
-            </div>
-          </div>
+        {/* Column headers */}
+        <div className="flex items-center px-4 pt-5 pb-2">
+          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] w-11">Time</span>
+          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] flex-1 px-3">Patient</span>
+          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">{isWhatsapp ? 'Status' : 'Amount'}</span>
         </div>
-      </div>
-    </div>
+
+        <div className="mx-4" style={{ height: 1, background: '#F2F0EB' }} />
+
+        {/* Call rows */}
+        <div className="px-2 pt-1 pb-2" style={{ minHeight: 130 }}>
+          {visibleCalls.length === 0 && !incoming && (
+            <div className="flex items-center justify-center h-28">
+              <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">
+                {isWhatsapp ? 'Awaiting slot confirms…' : (isRecovery ? 'Ready to intercept…' : 'Monitoring calls…')}
+              </p>
+            </div>
+          )}
+          {[...visibleCalls].reverse().map(call => (
+            <LedgerRow key={call.id} call={call} phase={phase} />
+          ))}
+        </div>
+
+        {/* Footer total */}
+        <div
+          className="px-5 py-4 mx-4 mb-4 rounded-2xl flex items-center justify-between mt-auto"
+          style={{ background: '#F7F5F2' }}
+        >
+          <div>
+            <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] mb-0.5">
+              {isRecovery || isWhatsapp ? 'Revenue Secured' : 'Revenue Lost'}
+            </p>
+            <p className="font-mono text-[9px]" style={{ color: (isRecovery || isWhatsapp) ? 'rgba(61,90,254,0.65)' : 'rgba(220,38,38,0.45)' }}>
+              {isRecovery || isWhatsapp ? "Calls that would've been missed." : "And it's not even noon yet."}
+            </p>
+          </div>
+          <motion.p
+            key={total}
+            initial={{ scale: 1.08 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.25 }}
+            className="font-mono font-bold tabular-nums"
+            style={{ fontSize: 22, color: (isRecovery || isWhatsapp) ? '#3D5AFE' : '#DC2626', letterSpacing: '-0.02em' }}
+          >
+            {isRecovery || isWhatsapp ? '+' : '−'}₹{total.toLocaleString('en-IN')}
+          </motion.p>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -204,17 +403,16 @@ export default function Hero() {
 
           <h1 className="tracking-tighter text-left">
             <div className="font-sans text-[2.5rem] md:text-6xl lg:text-[5rem] font-bold text-obsidian mb-2 leading-[1.05] w-full">
-              Your clinic is<br />
+              Your clinic is<br className="hidden md:block"/>
               {/* Aggressive optical alignment to match stem of 'l' with edge of 'Y' */}
-              <span className="-ml-[0.05em] inline-block tracking-tight">losing</span><br />
-              patients to silence.
+              <span className="-ml-[0.05em] inline-block tracking-tight">losing</span>
             </div>
             {/* Typewriter line — controlled size so all phrases stay on 1 line,
                 preventing the phantom-spacer from leaving visible blank space */}
             <span
-              className="font-sans font-bold text-brand tracking-tight"
+              className="font-sans font-bold text-brand tracking-tight break-words whitespace-normal md:whitespace-nowrap"
               style={{
-                fontSize: 'clamp(1.75rem, 5vw, 3rem)',
+                fontSize: 'clamp(1.5rem, 5vw, 3rem)',
                 display: 'block',
                 lineHeight: 1.15,
               }}
