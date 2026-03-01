@@ -137,6 +137,20 @@ export default function TheSecondLayer() {
   return (
     <section className="bg-[#FAF8F5] relative overflow-hidden h-screen flex flex-col justify-center" ref={containerRef}>
       
+      {/* Inject custom scrollbar for the internal chat UI */}
+      <style>{`
+        .chat-scrollbar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .chat-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .chat-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: 10px;
+        }
+      `}</style>
+      
       {/* Background Section Title Header */}
       <div className="absolute top-6 md:top-16 left-0 right-0 px-5 md:px-12 lg:px-20 z-0 opacity-40">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -150,8 +164,8 @@ export default function TheSecondLayer() {
         </div>
       </div>
 
-      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-center px-4 md:px-12 pb-6 md:pb-0 md:pt-[15vh]">
-        <div className="w-full max-w-4xl h-[60vh] md:h-[65vh] relative perspective-[1000px] mt-auto md:mt-0">
+      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-center px-4 md:px-12 pb-4 md:pb-0 md:pt-[15vh]">
+        <div className="w-full max-w-4xl h-[74vh] md:h-[75vh] relative perspective-[1000px] mt-auto md:mt-0">
           
           {steps.map((step, i) => (
             <div 
@@ -163,39 +177,39 @@ export default function TheSecondLayer() {
               {/* ── Step Identity Banner ── */}
               <div className="shrink-0 px-5 md:px-8 py-3 md:py-4 flex items-center justify-between" style={{ backgroundColor: step.accentColor }}>
                 <div className="flex items-center gap-3 md:gap-4">
-                  <span className="font-mono text-2xl md:text-3xl font-bold text-white/30 leading-none">{step.num}</span>
+                  <div className="font-mono text-2xl md:text-3xl font-light text-white/40 tracking-tighter">
+                    {step.num}
+                  </div>
                   <div>
-                    <p className="text-white font-bold text-sm md:text-base tracking-tight">{step.label}</p>
-                    <p className="text-white/60 text-[11px] md:text-xs font-medium">{step.timing}</p>
+                    <h3 className="font-sans text-white font-bold text-base md:text-lg leading-tight tracking-tight">
+                      {step.label}
+                    </h3>
+                    <p className="text-white/80 text-xs md:text-sm font-medium">
+                      {step.timing}
+                    </p>
                   </div>
                 </div>
-                <span className="font-mono text-[10px] md:text-xs text-white/40 uppercase tracking-widest hidden md:block">WhatsApp Protocol</span>
               </div>
 
-              {/* ── WhatsApp Header Bar ── */}
-              <div className="bg-[#075E54] px-4 md:px-8 py-2.5 md:py-3 flex items-center gap-3 md:gap-4 shrink-0">
-                {/* Back arrow */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white/80 shrink-0 hidden md:block">
-                  <path d="M15 19L8 12L15 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                {/* Avatar */}
-                <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#128C7E] flex items-center justify-center text-white font-bold text-xs shrink-0">
-                  SD
+              {/* ── WhatsApp Header ── */}
+              <div className="shrink-0 bg-[#075E54] px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-sm md:text-base border border-white/10 shrink-0">
+                    {step.headerName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-white font-semibold text-sm md:text-base truncate tracking-tight">{step.headerName}</h3>
+                    <p className="text-white/70 text-xs truncate mt-0.5">{step.headerStatus}</p>
+                  </div>
                 </div>
-                {/* Name & status */}
-                <div className="flex-1 min-w-0">
-                  <p className="text-white font-semibold text-sm truncate">{step.headerName}</p>
-                  <p className="text-[#25D366] text-[11px]">{step.headerStatus}</p>
-                </div>
-                {/* Icons */}
-                <div className="flex items-center gap-3 text-white/70 shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+                <div className="flex items-center gap-3 md:gap-5 text-white/90 shrink-0">
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
                 </div>
               </div>
 
               {/* ── Chat Body ── */}
-              <div className="flex-1 px-3 md:px-6 py-4 md:py-6 overflow-y-auto flex flex-col gap-1.5 md:gap-2 bg-[#ECE5DD]">
+              <div className="flex-1 px-3 md:px-6 py-4 md:py-6 overflow-y-auto chat-scrollbar flex flex-col gap-1.5 md:gap-2 bg-[#ECE5DD]">
                 
                 {step.messages.map((msg, mi) => {
                   if (msg.type === "system") {
