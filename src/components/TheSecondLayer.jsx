@@ -1,71 +1,82 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const STEP_COUNT = 4;
+const SCROLL_PER_CARD = 900;
+
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
 
-  const addToRefs = (el) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
+  // Stable ref callback — collects DOM nodes during render
+  const setCardRef = useCallback((el, i) => {
+    if (el) cardsRef.current[i] = el;
+  }, []);
 
   useEffect(() => {
-    cardsRef.current = [];
-    let ctx = gsap.context(() => {
-      const cards = cardsRef.current;
-      
-      // Pin the entire section so it stays on screen while cards scroll
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: `+=${cards.length * 900}`, // long scroll distance
-        pin: true,
-        pinSpacing: true,
-      });
+    // Wait one frame so refs are populated after render
+    const frameId = requestAnimationFrame(() => {
+      const cards = cardsRef.current.filter(Boolean);
+      if (!cards.length || !containerRef.current) return;
 
-      cards.forEach((card, i) => {
-        // Skip the very first card for entrance animation, it's already there
-        if (i > 0) {
-          gsap.fromTo(card, 
-            { y: "150vh" }, // start hidden below
-            {
-              y: "0vh",   // slide up into view
+      const ctx = gsap.context(() => {
+        // Pin the entire section so it stays on screen while cards scroll
+        ScrollTrigger.create({
+          trigger: containerRef.current,
+          start: "top top",
+          end: `+=${cards.length * SCROLL_PER_CARD}`,
+          pin: true,
+          pinSpacing: true,
+        });
+
+        cards.forEach((card, i) => {
+          // Skip the very first card for entrance animation, it's already there
+          if (i > 0) {
+            gsap.fromTo(card,
+              { y: "150vh" },
+              {
+                y: "0vh",
+                ease: "none",
+                scrollTrigger: {
+                  trigger: containerRef.current,
+                  start: `top+=${i * SCROLL_PER_CARD - SCROLL_PER_CARD} top`,
+                  end: `top+=${i * SCROLL_PER_CARD} top`,
+                  scrub: true,
+                }
+              }
+            );
+          }
+
+          // When the *next* card slides up over this one,
+          // this card scales down, fades out slightly, and blurs.
+          if (i < cards.length - 1) {
+            gsap.to(card, {
+              scale: 0.9,
+              opacity: 0.4,
+              filter: "blur(10px)",
               ease: "none",
               scrollTrigger: {
                 trigger: containerRef.current,
-                start: `top+=${i * 900 - 900} top`, 
-                end: `top+=${i * 900} top`,
+                start: `top+=${(i + 1) * SCROLL_PER_CARD - SCROLL_PER_CARD} top`,
+                end: `top+=${(i + 1) * SCROLL_PER_CARD} top`,
                 scrub: true,
               }
-            }
-          );
-        }
+            });
+          }
+        });
+      }, containerRef);
 
-        // When the *next* card slides up over this one,
-        // this card scales down, fades out slightly, and blurs.
-        if (i < cards.length - 1) {
-          gsap.to(card, {
-            scale: 0.9,
-            opacity: 0.4,
-            filter: "blur(10px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: `top+=${(i + 1) * 900 - 900} top`,
-              end: `top+=${(i + 1) * 900} top`,
-              scrub: true,
-            }
-          });
-        }
-      });
-    }, containerRef);
-    
-    return () => ctx.revert();
+      // Store ctx for cleanup
+      containerRef._gsapCtx = ctx;
+    });
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      if (containerRef._gsapCtx) containerRef._gsapCtx.revert();
+    };
   }, []);
 
   const steps = [
@@ -125,7 +136,7 @@ export default function TheSecondLayer() {
           {steps.map((step, i) => (
             <div 
               key={i} 
-              ref={addToRefs}
+              ref={(el) => setCardRef(el, i)}
               className={`absolute top-0 left-0 w-full h-full rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-16 flex flex-col justify-between shadow-2xl border ${step.bg} ${step.text} will-change-transform origin-top`}
               style={{ zIndex: i }}
             >
