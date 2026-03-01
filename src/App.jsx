@@ -39,6 +39,10 @@ function App() {
     import('gsap').then(({ default: gsap }) => {
       import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
+        
+        // ── CRITICAL: Bridge Lenis → GSAP ScrollTrigger ──
+        // Tell ScrollTrigger to ignore mobile UI resize events globally to stop layout thrashing
+        ScrollTrigger.config({ ignoreMobileResize: true });
 
         const lenis = new Lenis({
           duration: 1.2,

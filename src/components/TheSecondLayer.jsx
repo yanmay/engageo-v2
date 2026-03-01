@@ -4,9 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Fix for mobile address bar infinite resize loop jittering
-ScrollTrigger.config({ ignoreMobileResize: true });
-
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
 

@@ -26,7 +26,7 @@ export default function AuditModal() {
 
       {/* Panel */}
       <div
-        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber flex flex-col md:flex-row h-[90vh] md:h-auto"
+        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber flex flex-col md:flex-row h-[90svh] md:h-auto"
         style={{ md: { maxHeight: '90vh', minHeight: '600px' } }}
         onClick={(e) => e.stopPropagation()}
       >

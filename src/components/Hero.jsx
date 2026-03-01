@@ -393,7 +393,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-[92vh] flex flex-col lg:flex-row items-center justify-between px-5 md:px-12 lg:px-20 pt-24 md:pt-32 pb-16 md:pb-20 gap-12 md:gap-16">
+    <section className="relative min-h-[85svh] md:min-h-[92vh] flex flex-col lg:flex-row items-center justify-between px-5 md:px-12 lg:px-20 pt-24 md:pt-32 pb-16 md:pb-20 gap-12 md:gap-16">
       {/* Copy */}
       <div className="w-full max-w-2xl space-y-8 md:space-y-10 relative z-10 mx-auto md:mx-0">
         <motion.div
