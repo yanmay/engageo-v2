@@ -22,9 +22,9 @@ export default function TheSecondLayer() {
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            // Lightning fast responsiveness: 800px per card is about one screen length
-            end: `+=${cards.length * 800}`,
-            // BEAST MODE: Instant tracking native to touch scrolling, removes all artificial 'lag' delay
+            // Lightning fast responsiveness: 500px per card for rapid mouse-wheel transitions
+            end: `+=${cards.length * 500}`,
+            // BEAST MODE: Instant tracking native to touch scrolling
             scrub: true, 
             pin: true,
             pinSpacing: true,
@@ -39,8 +39,8 @@ export default function TheSecondLayer() {
           const chatBody = card.querySelector('.chat-scrollbar');
 
           if (i > 0) {
-            // Adds a small pause before sliding the next card
-            tl.to({}, { duration: 0.15 });
+            // Adds a minimal pause before sliding the next card
+            tl.to({}, { duration: 0.1 });
 
             // Animate ALL previous cards down the stack dynamically
             for (let j = 0; j < i; j++) {
@@ -53,10 +53,10 @@ export default function TheSecondLayer() {
                }, `card${i}`);
             }
 
-            // Current card sweeps up from below the viewport perfectly overlapping
+            // Current card sweeps up from below container perfectly overlapping
             tl.fromTo(card,
-              { y: "120vh", opacity: 0 },
-              { y: "0vh", opacity: 1, ease: "power2.out" },
+              { y: "120%", opacity: 0 },
+              { y: "0%", opacity: 1, ease: "power2.out" },
               `card${i}`
             );
           }
@@ -68,7 +68,7 @@ export default function TheSecondLayer() {
              tl.to(scrollProxy, {
                 y: 100, // Evaluates 0 to 100 percentage
                 ease: "none",
-                duration: 1.5, // dedicate substantial timeline space to reading the chat
+                duration: 0.8, // Reduced duration for faster scroll interaction
                 onStart: () => {
                     // CACHE: Read DOM layout once when tween starts to prevent 60fps synchronous layout thrashing!
                     maxScroll = chatBody.scrollHeight - chatBody.clientHeight;
@@ -165,7 +165,7 @@ export default function TheSecondLayer() {
   ];
 
   return (
-    <section className="bg-[#FAF8F5] relative overflow-hidden h-screen flex flex-col justify-center" ref={containerRef}>
+    <section className="bg-[#FAF8F5] relative overflow-hidden h-[100dvh] flex flex-col" ref={containerRef}>
       
       {/* Inject custom scrollbar for the internal chat UI */}
       <style>{`
@@ -182,18 +182,21 @@ export default function TheSecondLayer() {
       `}</style>
       
       {/* Section Title Header (IN-FLOW Element prevents ALL overlap possibility natively) */}
-      <div className="w-full px-5 md:px-12 lg:px-20 z-0 opacity-40 shrink-0 pt-6 md:pt-10 pb-2 md:pb-4 flex flex-col items-start md:items-center text-left md:text-center gap-2 md:gap-4 relative top-0">
-        <h2 className="font-sans text-[2.75rem] leading-[1] md:text-[3.5rem] lg:text-[4rem] font-bold text-obsidian tracking-tighter md:leading-[1.05]">
-          The call recovers. <span className="serif-hero font-light italic text-brand md:ml-4">WhatsApp retains.</span>
+      <div className="w-full px-5 md:px-12 lg:px-20 z-0 shrink-0 pt-[12vh] md:pt-[15vh] pb-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 relative top-0 max-w-7xl mx-auto">
+        <h2 className="font-sans text-4xl leading-[1.05] md:text-6xl lg:text-[4.5rem] font-bold text-obsidian tracking-tighter md:leading-[1]">
+          The call recovers.<br className="hidden md:block"/>
+          <span className="serif-hero font-light italic text-[#25D366] [text-shadow:0_0_35px_rgba(37,211,102,0.4)] drop-shadow-sm md:ml-4 inline-block mt-1">
+            WhatsApp retains.
+          </span>
         </h2>
-        <p className="font-mono text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#1A1A1A]/50">
-          04 Step WhatsApp Retention Protocol
+        <p className="font-mono text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#1A1A1A]/30 text-left md:text-right hidden md:block pb-2">
+          04 Step WhatsApp <br/>Retention Protocol
         </p>
       </div>
 
       {/* Cards container automatically takes the REMAINING height securely without clipping */}
-      <div className="flex-1 w-full z-10 flex flex-col items-center justify-end md:justify-end px-4 md:px-12 pb-4 md:pb-8">
-        <div className="w-full max-w-3xl h-full max-h-[72vh] md:max-h-[68vh] relative perspective-[1000px] mt-auto">
+      <div className="flex-1 min-h-0 w-full z-10 flex flex-col items-center justify-end md:justify-end px-3 md:px-12 pb-6 md:pb-12">
+        <div className="w-full max-w-[26rem] md:max-w-3xl h-full max-h-[60vh] md:max-h-[65vh] relative perspective-[1000px] mt-auto">
           
           {steps.map((step, i) => (
             <div 
