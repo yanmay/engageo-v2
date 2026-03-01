@@ -184,8 +184,6 @@ function MobileDetail({ a, openModal }) {
 /* ─── Main Section ───────────────────────────────────────────── */
 export default function WhoItsFor() {
   const { openModal } = useModal();
-  const [activeCard, setActiveCard] = useState(0);
-  const [fading, setFading]         = useState(false);
   const [revealed, setRevealed]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(null);
   const sectionRef = useRef(null);
@@ -200,24 +198,11 @@ export default function WhoItsFor() {
     return () => observer.disconnect();
   }, []);
 
-  const switchCard = useCallback((i) => {
-    if (i === activeCard) return;
-    if (fadeTimer.current) clearTimeout(fadeTimer.current);
-    setFading(true);
-    fadeTimer.current = setTimeout(() => {
-      setActiveCard(i);
-      setFading(false);
-    }, 170);
-  }, [activeCard]);
-
   useEffect(() => () => { if (fadeTimer.current) clearTimeout(fadeTimer.current); }, []);
 
   const toggleMobile = useCallback((i) => {
     setMobileOpen((prev) => (prev === i ? null : i));
   }, []);
-
-  const current = audiences[activeCard];
-
   return (
     <section
       ref={sectionRef}

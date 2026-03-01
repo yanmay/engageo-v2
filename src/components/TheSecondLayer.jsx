@@ -7,8 +7,6 @@ gsap.registerPlugin(ScrollTrigger);
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
-  // Clear refs on re-render to avoid duplicates
-  cardsRef.current = [];
 
   const addToRefs = (el) => {
     if (el && !cardsRef.current.includes(el)) {
@@ -17,6 +15,7 @@ export default function TheSecondLayer() {
   };
 
   useEffect(() => {
+    cardsRef.current = [];
     let ctx = gsap.context(() => {
       const cards = cardsRef.current;
       

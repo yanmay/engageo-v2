@@ -1,0 +1,34 @@
+C:\Users\noobg\engageo\src\components\Hero.jsx:3 'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u.
+C:\Users\noobg\engageo\src\components\Hero.jsx:105 Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  103 |       } else {
+  104 |         const next = (wordIdx + 1) % words.length;
+> 105 |         setWordIdx(next);
+      |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  106 |         setPhase('typing');
+  107 |       }
+  108 |     }
+C:\Users\noobg\engageo\src\components\Hero.jsx:186 React Hook useEffect has a missing dependency: 'startPhase1'. Either include it or remove the dependency array.
+C:\Users\noobg\engageo\src\components\ScrollSpine.jsx:1 'useCallback' is defined but never used. Allowed unused vars must match /^[A-Z_]/u.
+C:\Users\noobg\engageo\src\components\TheSecondLayer.jsx:11 Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+   9 |   const cardsRef = useRef([]);
+  10 |   // Clear refs on re-render to avoid duplicates
+> 11 |   cardsRef.current = [];
+     |   ^^^^^^^^^^^^^^^^ Cannot update ref during render
+  12 |
+  13 |   const addToRefs = (el) => {
+  14 |     if (el && !cardsRef.current.includes(el)) {
+C:\Users\noobg\engageo\src\components\ThreeBackground.jsx:215 The ref value 'mountRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'mountRef.current' to a variable inside the effect, and use that variable in the cleanup function.
+C:\Users\noobg\engageo\src\components\WhoItsFor.jsx:188 'fading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u.
+C:\Users\noobg\engageo\src\components\WhoItsFor.jsx:203 'switchCard' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u.
+C:\Users\noobg\engageo\src\components\WhoItsFor.jsx:219 'current' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u.
+C:\Users\noobg\engageo\src\context\ModalContext.jsx:14 Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.

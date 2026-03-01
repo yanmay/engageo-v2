@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { useModal } from '../context/ModalContext';
 
 /* ─── Data ───────────────────────────────────────────────────── */
@@ -102,8 +102,10 @@ function TypewriterText({ words }) {
         timer = setTimeout(() => setText(text.slice(0, -1)), 50);
       } else {
         const next = (wordIdx + 1) % words.length;
-        setWordIdx(next);
-        setPhase('typing');
+        timer = setTimeout(() => {
+          setWordIdx(next);
+          setPhase('typing');
+        }, 50);
       }
     }
 
@@ -183,6 +185,7 @@ function LiveDashboard() {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { startPhase1(); return clear; }, []);
 
   const isRecovery = phase === 2;

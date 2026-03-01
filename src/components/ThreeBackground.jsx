@@ -206,13 +206,15 @@ export default function ThreeBackground() {
 
     animate();
 
+    const mount = mountRef.current;
+    
     return () => {
       cancelAnimationFrame(frameId);
       document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', adjustLayout);
       window.removeEventListener('scroll', handleScroll);
-      if (mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement);
+      if (mount) {
+        mount.removeChild(renderer.domElement);
       }
       geometry.dispose();
       material.dispose();
