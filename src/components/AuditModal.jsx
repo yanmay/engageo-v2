@@ -26,8 +26,7 @@ export default function AuditModal() {
 
       {/* Panel */}
       <div
-        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber flex flex-col md:flex-row h-[90svh] md:h-auto"
-        style={{ md: { maxHeight: '90vh', minHeight: '600px' } }}
+        className="relative w-full max-w-5xl bg-white border-2 border-obsidian retro-shadow-amber flex flex-col md:flex-row h-[90svh] md:h-auto md:max-h-[90vh] md:min-h-[37.5rem]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top accent */}
@@ -101,7 +100,7 @@ export default function AuditModal() {
             height="100%"
             frameBorder="0"
             title="Book a call with Engageo"
-            style={{ minHeight: '600px', display: 'block' }}
+            style={{ minHeight: '37.5rem', display: 'block' }}
           />
         </div>
       </div>

@@ -23,6 +23,15 @@
     /* dvh handles dynamic viewport on modern mobile browsers.
        For older browsers, a JS-based --vh variable is set in App.jsx. */
     --vh-fallback: 1vh;
+    /* Scale down all rem utilities globally for mobile */
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      /* Strictly preserve desktop scaling exactly as before */
+      font-size: 16px;
+    }
   }
 
   body {

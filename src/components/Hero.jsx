@@ -201,7 +201,7 @@ function LiveDashboard() {
           background: '#FFFFFF',
           border: '2px solid #0F0D0B',
           boxShadow: '12px 12px 0px 0px #3D5AFE',
-          minHeight: 360,
+          minHeight: '22.5rem',
         }}
       >
         <motion.div
@@ -262,7 +262,7 @@ function LiveDashboard() {
             ? '12px 12px 0px 0px #059669' 
             : (isRecovery ? '12px 12px 0px 0px #3D5AFE' : '12px 12px 0px 0px #DC2626'),
           transition: 'box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-          minHeight: 360,
+          minHeight: '22.5rem',
         }}
         className="flex flex-col h-full rounded-xl w-full"
       >
@@ -335,7 +335,7 @@ function LiveDashboard() {
         <div className="mx-4" style={{ height: 1, background: '#F2F0EB' }} />
 
         {/* Call rows */}
-        <div className="px-2 pt-1 pb-2" style={{ minHeight: 130 }}>
+        <div className="px-2 pt-1 pb-2" style={{ minHeight: '8.125rem' }}>
           {visibleCalls.length === 0 && !incoming && (
             <div className="flex items-center justify-center h-28">
               <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">
@@ -367,7 +367,7 @@ function LiveDashboard() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.25 }}
             className="font-mono font-bold tabular-nums"
-            style={{ fontSize: 22, color: (isRecovery || isWhatsapp) ? '#3D5AFE' : '#DC2626', letterSpacing: '-0.02em' }}
+            style={{ fontSize: '1.375rem', color: (isRecovery || isWhatsapp) ? '#3D5AFE' : '#DC2626', letterSpacing: '-0.02em' }}
           >
             {isRecovery || isWhatsapp ? '+' : '−'}₹{total.toLocaleString('en-IN')}
           </motion.p>
