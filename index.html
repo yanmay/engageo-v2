@@ -30,6 +30,14 @@
   </head>
   <body class="noise-overlay text-dark bg-background">
     <div id="root"></div>
+    <script>
+      window.onerror = function(msg, url, line, col, err) {
+        document.getElementById('root').innerHTML = '<pre style="padding:2rem;color:red;">ERROR: ' + msg + '\nAt: ' + url + ':' + line + '\n' + (err && err.stack || '') + '</pre>';
+      };
+      window.addEventListener('unhandledrejection', function(e) {
+        document.getElementById('root').innerHTML = '<pre style="padding:2rem;color:red;">PROMISE ERROR: ' + (e.reason && e.reason.stack || e.reason) + '</pre>';
+      });
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
