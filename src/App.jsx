@@ -83,7 +83,7 @@ function App() {
 
   return (
     <ModalProvider>
-      <div className="w-full relative bg-canvas">
+      <div className="w-full relative bg-canvas overflow-x-hidden">
         {/* Grain texture overlay — replaces dot grid */}
         <div className="grain-texture" />
 
