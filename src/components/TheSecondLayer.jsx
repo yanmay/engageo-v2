@@ -18,12 +18,13 @@ export default function TheSecondLayer() {
         if (cards.length === 0) return;
 
         // One timeline synchronizes all the card animations mathematically across the scroll distance
+        // Added 50% more scroll duration to allow time to automate scrolling inside the message body
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            // Give 1000px of scroll room per incoming card
-            end: `+=${(cards.length - 1) * 1100}`,
+            // More scroll room so we don't rush the user reading the chat
+            end: `+=${cards.length * 1500}`,
             scrub: true,
             pin: true,
             pinSpacing: true,
@@ -33,23 +34,44 @@ export default function TheSecondLayer() {
         cards.forEach((card, i) => {
           // Force hardware acceleration on the card
           gsap.set(card, { force3D: true, z: 0.1 });
+          
+          const chatBody = card.querySelector('.chat-scrollbar');
 
-          if (i === 0) return; // First card is visually present instantly
+          if (i > 0) {
+            // Adds a small pause before sliding the next card
+            tl.to({}, { duration: 0.15 });
 
-          // Previous card scales and fades beautifully into the background
-          // 🔥 PERFORMANCE FIX: Removed blur() which causes severe mobile scroll jitter and memory crash
-          tl.to(cards[i - 1], {
-            scale: 0.94,
-            opacity: 0.35,
-            ease: "none"
-          }, `card${i}`);
+            // Previous card scales and fades beautifully into the background
+            tl.to(cards[i - 1], {
+              scale: 0.94,
+              opacity: 0.35,
+              ease: "none"
+            }, `card${i}`);
 
-          // Current card sweeps up from below the viewport perfectly overlapping
-          tl.fromTo(card,
-            { y: "120vh" },
-            { y: "0vh", ease: "none" },
-            `card${i}`
-          );
+            // Current card sweeps up from below the viewport perfectly overlapping
+            tl.fromTo(card,
+              { y: "120vh" },
+              { y: "0vh", ease: "none" },
+              `card${i}`
+            );
+          }
+
+          // Cinematic chat scrolling automated by page scroll
+          if (chatBody) {
+             const scrollProxy = { y: 0 };
+             tl.to(scrollProxy, {
+                y: 100, // Evaluates 0 to 100 percentage
+                ease: "power1.inOut",
+                duration: 1.2, // dedicate substantial timeline space to reading the chat
+                onUpdate: () => {
+                    // Using onUpdate and calculating dynamically ensures we handle fonts loading, resize events natively!
+                    const maxScroll = chatBody.scrollHeight - chatBody.clientHeight;
+                    if (maxScroll > 0) {
+                      chatBody.scrollTop = (scrollProxy.y / 100) * maxScroll;
+                    }
+                }
+             }, `scroll${i}`); 
+          }
         });
       }, containerRef);
 

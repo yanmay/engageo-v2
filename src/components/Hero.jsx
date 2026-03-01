@@ -406,7 +406,7 @@ export default function Hero() {
 
           <h1 className="tracking-tighter text-left">
             <div className="font-sans text-[2.5rem] md:text-6xl lg:text-[5rem] font-bold text-obsidian mb-2 leading-[1.05] w-full">
-              Your clinic is<br className="hidden md:block"/>
+              Your clinic is<br className="hidden md:block"/>{" "}
               {/* Aggressive optical alignment to match stem of 'l' with edge of 'Y' */}
               <span className="-ml-[0.05em] inline-block tracking-tight">losing</span>
             </div>
