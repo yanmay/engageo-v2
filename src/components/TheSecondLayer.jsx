@@ -138,9 +138,9 @@ export default function TheSecondLayer() {
     <section className="bg-[#FAF8F5] relative overflow-hidden h-screen flex flex-col justify-center" ref={containerRef}>
       
       {/* Background Section Title Header */}
-      <div className="absolute top-8 md:top-16 left-0 right-0 px-6 md:px-12 lg:px-20 z-0 opacity-40">
+      <div className="absolute top-6 md:top-16 left-0 right-0 px-5 md:px-12 lg:px-20 z-0 opacity-40">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-          <h2 className="font-sans text-5xl md:text-7xl font-bold text-obsidian tracking-tighter leading-[0.9]">
+          <h2 className="font-sans text-[2.75rem] leading-[1] md:text-7xl font-bold text-obsidian tracking-tighter md:leading-[0.9]">
             The call recovers.<br />
             <span className="serif-hero font-light italic">WhatsApp retains.</span>
           </h2>
@@ -150,8 +150,8 @@ export default function TheSecondLayer() {
         </div>
       </div>
 
-      <div className="absolute inset-0 z-10 w-full h-full flex items-center justify-center px-4 md:px-12 pt-24 md:pt-[15vh]">
-        <div className="w-full max-w-4xl h-[70vh] md:h-[65vh] relative perspective-[1000px]">
+      <div className="absolute inset-0 z-10 w-full h-full flex flex-col items-center justify-end md:justify-center px-4 md:px-12 pb-6 md:pb-0 md:pt-[15vh]">
+        <div className="w-full max-w-4xl h-[60vh] md:h-[65vh] relative perspective-[1000px] mt-auto md:mt-0">
           
           {steps.map((step, i) => (
             <div 
