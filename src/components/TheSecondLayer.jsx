@@ -4,6 +4,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Fix for mobile address bar infinite resize loop jittering
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
 
@@ -165,7 +168,7 @@ export default function TheSecondLayer() {
   ];
 
   return (
-    <section className="bg-[#FAF8F5] relative overflow-hidden h-[100dvh] flex flex-col" ref={containerRef}>
+    <section className="bg-[#FAF8F5] relative overflow-hidden h-[100svh] flex flex-col" ref={containerRef}>
       
       {/* Inject custom scrollbar for the internal chat UI */}
       <style>{`
