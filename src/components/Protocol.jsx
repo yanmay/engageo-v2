@@ -104,14 +104,14 @@ export default function Protocol() {
   ];
 
   return (
-    <section id="protocol" ref={containerRef} className="relative bg-dark text-primary" style={{ paddingBottom: '100svh' }}>
+    <section id="protocol" ref={containerRef} className="relative bg-dark text-primary force-gpu" style={{ paddingBottom: '100vh' }}>
       {steps.map((step, index) => (
         <div 
           key={step.id} 
           className="protocol-card w-full flex items-center justify-center p-4 md:p-16"
-          style={{ height: '100svh', zIndex: index + 1 }}
+          style={{ height: '100vh', zIndex: index + 1 }}
         >
-          <div className="w-full max-w-6xl bg-primary text-dark rounded-[2rem] md:rounded-[3rem] p-6 md:p-20 shadow-2xl border border-dark/10 flex flex-col md:flex-row gap-8 md:gap-16 items-center" style={{ minHeight: '60svh', maxHeight: '85svh' }}>
+          <div className="w-full max-w-6xl bg-primary text-dark rounded-[2rem] md:rounded-[3rem] p-6 md:p-20 shadow-2xl border border-dark/10 flex flex-col md:flex-row gap-8 md:gap-16 items-center h-full max-h-[85vh] py-8">
             
             <div className="flex-1 space-y-4 md:space-y-8">
               <span className="font-mono text-lg md:text-2xl tracking-widest text-accent font-bold">[{step.id}]</span>

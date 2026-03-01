@@ -165,7 +165,7 @@ export default function TheSecondLayer() {
   ];
 
   return (
-    <section className="bg-[#FAF8F5] relative overflow-hidden h-[100svh] flex flex-col" ref={containerRef}>
+    <section className="bg-[#FAF8F5] relative overflow-hidden h-[100vh] flex flex-col force-gpu" ref={containerRef}>
       
       {/* Inject custom scrollbar for the internal chat UI */}
       <style>{`
