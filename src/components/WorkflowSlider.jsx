@@ -7,7 +7,8 @@ export default function WorkflowSlider() {
     { num: '03', title: 'Voice Qualification', desc: 'AI handles the conversation, answers FAQs, and qualifies intent.' },
     { num: '04', title: 'Schedule Sync', desc: 'AI checks your real-time Google/HMS calendar for open slots.' },
     { num: '05', title: 'Slot Secured', desc: 'Appointment is booked. Patient receives instant WhatsApp confirmation.' },
-    { num: '06', title: 'Staff Notified', desc: 'Receptionist sees the recovered booking on the dashboard.' },
+    { num: '06', title: 'WhatsApp Sent', desc: 'Patient receives booking confirmation on WhatsApp in 90 seconds. 24-hour reminder fires automatically. No-show rate drops.' },
+    { num: '07', title: 'Staff Notified', desc: 'Receptionist sees the recovered booking on the dashboard.' },
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function WorkflowSlider() {
             <span className="gradient-text ml-0 md:ml-3">Zero Friction.</span>
           </h2>
           <p className="text-subtle text-lg max-w-2xl leading-relaxed">
-            Engageo replaces the "forgotten" missed call with a revenue-generating conversation automatically in the background.
+            Engageo runs the entire patient recovery sequence — voice call, qualification, booking, WhatsApp confirmation, reminder — while you focus on the patient in front of you.
           </p>
         </div>
 

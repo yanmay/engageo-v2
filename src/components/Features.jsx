@@ -12,12 +12,11 @@ export default function Features() {
             {/* Editorial tag */}
             <div className="section-label mb-6">Platform Capabilities</div>
             <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-5 leading-[1.05]">
-              Flawless execution.{' '}
-              <span className="serif-hero text-brand">Not just chatbots.</span>
+              One missed call.{' '}
+              <span className="serif-hero text-brand">Seven automatic actions.</span>
             </h2>
             <p className="text-subtle text-lg leading-relaxed">
-              Bridge the gap between raw missed calls and confirmed hospital pipeline
-              with a platform designed for clinical precision.
+              Most clinics patch one hole. Engageo closes the entire leak.
             </p>
           </div>
           <a href="#" className="link-underline pb-1 text-sm font-semibold text-subtle hover:text-obsidian transition-colors mb-2 shrink-0">
@@ -121,8 +120,7 @@ export default function Features() {
                   Proven Infrastructure
                 </h3>
                 <p className="text-subtle leading-relaxed text-sm">
-                  The same AI voice + WhatsApp automation stack recovering ₹5–20L/month across clinics.
-                  Complex chat streams become clean calendar invites automatically.
+                  The same AI voice + WhatsApp funnel recovering ₹5–20L/month across 47 clinics. A voice call gets the patient. WhatsApp keeps them.
                 </p>
               </div>
 
@@ -150,6 +148,51 @@ export default function Features() {
                           style={{ transitionDelay: `${300 + i * 150}ms`, maxWidth: `${w}%` }} />
                       </div>
                     ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 4 — WhatsApp That Does the Work */}
+          <div
+            className="md:col-span-12 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden"
+            style={{ color: '#059669' /* emerald left-border */ }}
+          >
+            <div className="p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12 relative z-10">
+              <div className="flex-1 max-w-lg">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="card-numeral mb-0" style={{ color: 'rgba(5,150,105,0.1)' }}>04</div>
+                  <div className="flex items-center gap-1.5 md:hidden">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="font-mono text-[10px] text-muted uppercase tracking-wider font-bold">Live Tracking</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-obsidian mb-3 tracking-tight">
+                  WhatsApp That Does the Work
+                </h3>
+                <p className="text-subtle leading-relaxed text-sm">
+                  The moment a slot is booked, the patient gets a confirmation. 24 hours before, they get a reminder. If they miss it, a recovery message fires. All on WhatsApp. Zero manual effort from your team.
+                </p>
+              </div>
+
+              <div className="flex-1 w-full bg-canvas/50 border border-obsidian/10 rounded-2xl p-6 relative">
+                <div className="hidden md:flex absolute top-4 right-4 items-center gap-1.5 bg-white px-2 py-1 border border-obsidian/10 rounded">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot" />
+                  <span className="font-mono text-[9px] text-obsidian uppercase tracking-wider font-bold">Live Tracking</span>
+                </div>
+                <div className="flex flex-col gap-3 mt-2 md:mt-6">
+                  <div className="flex items-center gap-3 bg-white p-3 border border-obsidian/10 rounded-xl shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+                    <span className="text-base leading-none">✅</span>
+                    <span className="text-[13px] font-semibold text-obsidian">Booking confirmation — instant</span>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white p-3 border border-obsidian/10 rounded-xl shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+                    <span className="text-base leading-none">⏰</span>
+                    <span className="text-[13px] font-semibold text-obsidian">24hr reminder — automatic</span>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white p-3 border border-obsidian/10 rounded-xl shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+                    <span className="text-base leading-none">🔄</span>
+                    <span className="text-[13px] font-semibold text-obsidian">No-show recovery — automatic</span>
                   </div>
                 </div>
               </div>

@@ -14,8 +14,7 @@ const tiers = [
     features: [
       'AI voice callback in 8 seconds',
       'Google Calendar booking',
-      'WhatsApp confirmation sent',
-      '24-hour appointment reminder',
+      'WhatsApp confirmation sequence (booking + reminder)',
       'Weekly recovery report',
     ],
     cta: 'Start Recovery →',
@@ -37,7 +36,7 @@ const tiers = [
       'Everything in Tier 1',
       'Meta & Google Ads management',
       'Google My Business optimisation',
-      'Full-funnel WhatsApp automation',
+      '4-touchpoint WhatsApp patient journey (confirmation, reminder, pre-visit, no-show recovery)',
       'Landing page (we build it)',
       'Weekly ROI report',
     ],
@@ -253,7 +252,7 @@ export default function Pricing() {
                   {/* Tier 2 social proof nudge */}
                   {tier.id === 'grow' && (
                     <p className="text-[11px] italic mt-3" style={{ color: 'rgba(255,255,255,0.38)' }}>
-                      Most clinics recover their fee in the first week.
+                      Clinics on this tier see 40% fewer no-shows within 30 days.
                     </p>
                   )}
 

@@ -48,9 +48,9 @@ const rows = [
     receptionist: { v: 'Trained manually by you', warn: 'Takes months, knowledge leaves if they quit' },
   },
   {
-    factor: 'WhatsApp booking confirmation',
-    factorNote: 'How Indian patients actually communicate',
-    engageo:      { v: true, note: 'Confirmation + reminder + pre-visit message' },
+    factor: 'WhatsApp patient journey',
+    factorNote: 'Confirmation → Reminder → Pre-visit → No-show recovery',
+    engageo:      { v: true, note: '✅ Booking confirmation (instant)\n✅ 24hr appointment reminder\n✅ Pre-visit directions message\n✅ No-show recovery message' },
     ringg:        { v: false },
     bland:        { v: false },
     vapi:         { v: false },
@@ -115,7 +115,7 @@ function Cell({ data, isEngageo }) {
           <div className={`w-6 h-6 border-2 border-obsidian flex items-center justify-center shrink-0 ${isEngageo ? 'bg-brand text-white shadow-[2px_2px_0px_0px_#0F0D0B]' : 'bg-emerald-50 text-emerald-600'}`}>
             <Check size={14} strokeWidth={3} className={isEngageo ? 'text-white' : 'text-emerald-600'} />
           </div>
-          {isEngageo && note && <span className="text-xs text-brand font-bold leading-tight">{note}</span>}
+          {isEngageo && note && <span className="text-xs text-brand font-bold leading-tight whitespace-pre-wrap">{note}</span>}
         </div>
       ) : v === false ? (
         <div className="w-5 h-5 border-2 border-obsidian bg-white flex items-center justify-center shrink-0">

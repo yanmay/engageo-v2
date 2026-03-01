@@ -57,15 +57,12 @@ function LedgerRow({ call, isRecovery }) {
   );
 }
 
-/* ─── Typewriter Effect ──────────────────────────────────────── */
 const HERO_WORDS = [
-  "₹3L every month.",
-  "70% of missed calls.",
-  "patients to rivals."
+  "We answer. We qualify. We book. We follow up — automatically."
 ];
 
 // ← The longest phrase determines container height. Update if you add a longer one.
-const LONGEST_WORD = "70% of missed calls.";
+const LONGEST_WORD = "We answer. We qualify. We book. We follow up — automatically.";
 
 function TypewriterText({ words }) {
   const [text, setText] = useState(words[0]);
@@ -78,15 +75,15 @@ function TypewriterText({ words }) {
 
     if (phase === 'typing') {
       if (text.length < currentWord.length) {
-        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), 90);
+        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), 60);
       } else {
-        timer = setTimeout(() => setPhase('pause'), 3000);
+        timer = setTimeout(() => setPhase('pause'), 5000);
       }
     } else if (phase === 'pause') {
       timer = setTimeout(() => setPhase('deleting'), 200);
     } else if (phase === 'deleting') {
       if (text.length > 0) {
-        timer = setTimeout(() => setText(text.slice(0, -1)), 50);
+        timer = setTimeout(() => setText(text.slice(0, -1)), 30);
       } else {
         const next = (wordIdx + 1) % words.length;
         setWordIdx(next);
@@ -98,36 +95,15 @@ function TypewriterText({ words }) {
   }, [text, phase, wordIdx, words]);
 
   return (
-    /*
-     * PHANTOM SPACER TECHNIQUE
-     * ─────────────────────────
-     * The outer span is `position: relative`. Inside:
-     *   1. An invisible copy of the LONGEST phrase — this is what determines height.
-     *      `aria-hidden` + `select-none` + `opacity-0` keeps it invisible.
-     *   2. The actual animated text, `position: absolute, inset-0`, so it sits
-     *      on top of the phantom but NEVER contributes to layout flow.
-     * Result: container height is ALWAYS = height of longest phrase. Zero shift.
-     */
-    <span className="relative block">
-      {/* 1. Phantom — sets the height */}
-      <span
-        className="invisible select-none pointer-events-none"
-        aria-hidden="true"
-      >
+    <span className="relative block whitespace-normal md:whitespace-nowrap">
+      <span className="invisible select-none pointer-events-none" aria-hidden="true">
         {LONGEST_WORD}
       </span>
-
-      {/* 2. Actual animated text — floats above phantom */}
       <span className="absolute top-0 left-0">
         {text}
         <span
           className="inline-block bg-brand ml-1"
-          style={{
-            width: '3px',
-            height: '0.85em',
-            verticalAlign: 'text-bottom',
-            animation: 'caretBlink 1s step-end infinite',
-          }}
+          style={{ width: '3px', height: '0.85em', verticalAlign: 'text-bottom', animation: 'caretBlink 1s step-end infinite' }}
         />
       </span>
     </span>
@@ -136,244 +112,75 @@ function TypewriterText({ words }) {
 
 /* ─── Main dashboard ─────────────────────────────────────────── */
 function LiveDashboard() {
-  const [phase, setPhase] = useState(1);
-  const [activating, setActivating] = useState(false);
-  const [visibleCalls, setVisibleCalls] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [incoming, setIncoming] = useState(null);
-  const timerRef = useRef(null);
-
-  const clear = () => clearTimeout(timerRef.current);
-
-  const runPhase = (calls, nextFn) => {
-    let i = 0;
-    const step = () => {
-      if (i >= calls.length) { timerRef.current = setTimeout(nextFn, 800); return; }
-      const call = calls[i];
-      setIncoming(call);
-      timerRef.current = setTimeout(() => {
-        setIncoming(null);
-        setVisibleCalls(prev => [call, ...prev]);
-        setTotal(prev => prev + call.value);
-        i++;
-        timerRef.current = setTimeout(step, 1000);
-      }, 1500);
-    };
-    timerRef.current = setTimeout(step, 700);
-  };
-
-  const startPhase1 = () => {
-    setPhase(1); setVisibleCalls([]); setTotal(0); setIncoming(null);
-    runPhase(BLEED_CALLS, () => {
-      setActivating(true);
-      timerRef.current = setTimeout(() => {
-        setActivating(false);
-        setVisibleCalls([]); setTotal(0); setIncoming(null);
-        startPhase2();
-      }, 2000);
-    });
-  };
-
-  const startPhase2 = () => {
-    setPhase(2);
-    runPhase(RECOVERY_CALLS, () => {
-      timerRef.current = setTimeout(startPhase1, 3000);
-    });
-  };
-
-  useEffect(() => { startPhase1(); return clear; }, []);
-
-  const isRecovery = phase === 2;
-  const accentColor = isRecovery ? '#3D5AFE' : '#DC2626';
-
-  /* ── Activation screen ── */
-  if (activating) {
-    return (
-      <div
-        className="w-full overflow-hidden flex items-center justify-center"
-        style={{
-          background: '#FFFFFF',
-          border: '2px solid #0F0D0B',
-          boxShadow: '12px 12px 0px 0px #3D5AFE',
-          minHeight: 360,
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-5 px-10 text-center"
-        >
-          <div className="relative">
-            <div
-              className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(61,90,254,0.07)' }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="#3D5AFE" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <div
-              className="absolute inset-0 rounded-full animate-ping opacity-20"
-              style={{ background: '#3D5AFE' }}
-            />
-          </div>
-          <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] mb-2" style={{ color: '#3D5AFE' }}>
-              Engageo Activating
-            </p>
-            <p className="font-sans text-sm font-semibold text-obsidian">Taking control of your calls</p>
-            <p className="font-mono text-[9px] text-muted mt-1.5">Every future call answered in &lt; 8 seconds</p>
-          </div>
-          <div
-            className="w-40 h-[2px] rounded-full overflow-hidden mt-1"
-            style={{ background: '#F2F0EB' }}
-          >
-            <motion.div
-              style={{ background: '#3D5AFE', height: '100%' }}
-              initial={{ width: '0%' }}
-              animate={{ width: '100%' }}
-              transition={{ duration: 1.8, ease: 'easeInOut' }}
-            />
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={`phase-${isRecovery ? 2 : 1}`}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.35 }}
-        style={{
-          background: '#FFFFFF',
-          overflow: 'hidden',
-          border: '2px solid #0F0D0B',
-          boxShadow: isRecovery
-            ? '12px 12px 0px 0px #3D5AFE'
-            : '12px 12px 0px 0px #DC2626',
-          transition: 'box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-          minHeight: 360,
-        }}
-      >
-        {/* Top colour tag — replaces the border accent */}
-        <div style={{ height: 3, background: accentColor, opacity: 0.9, borderRadius: '28px 28px 0 0' }} />
-
-        {/* Header — uses background tint instead of border-bottom */}
-        <div
-          className="flex items-center justify-between px-5 pt-4 pb-3.5"
-          style={{ background: isRecovery ? 'rgba(61,90,254,0.03)' : 'rgba(220,38,38,0.025)' }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
-                style={{ background: accentColor }}
-              />
-              <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: accentColor }} />
-            </span>
-            <span
-              className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em]"
-              style={{ color: accentColor }}
-            >
-              {isRecovery ? 'Engageo Active' : 'Without Engageo'}
+    <div
+      style={{
+        background: '#FFFFFF',
+        overflow: 'hidden',
+        border: '2px solid #0F0D0B',
+        boxShadow: '12px 12px 0px 0px #3D5AFE',
+        minHeight: 360,
+      }}
+      className="flex flex-col h-full rounded-xl w-full"
+    >
+      <div className="flex h-full min-h-[360px]">
+        {/* Left Column */}
+        <div className="flex-1 flex flex-col border-r border-obsidian/10">
+          <div className="px-4 py-3 bg-[#DC2626]/5 border-b border-obsidian/10">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#DC2626]">
+              WITHOUT ENGAGEO
             </span>
           </div>
-          <span
-            className="font-mono text-[9px] px-2 py-[2px] border font-bold uppercase tracking-[0.15em]"
-            style={{
-              color: accentColor,
-              borderColor: isRecovery ? 'rgba(61,90,254,0.3)' : 'rgba(220,38,38,0.3)',
-              background: 'transparent',
-            }}
-          >
-            {isRecovery ? 'LIVE' : 'TODAY'}
-          </span>
-        </div>
-
-        {/* Incoming flash */}
-        <div
-          className="overflow-hidden transition-all duration-300 mx-4"
-          style={{ maxHeight: incoming ? 56 : 0, opacity: incoming ? 1 : 0, marginTop: incoming ? 10 : 0 }}
-        >
-          <div
-            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl"
-            style={{ background: isRecovery ? 'rgba(61,90,254,0.06)' : 'rgba(220,38,38,0.05)' }}
-          >
-            <span className="relative flex h-1.5 w-1.5 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: accentColor }} />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: accentColor }} />
-            </span>
-            <span className="font-sans text-[11px] font-medium text-obsidian truncate flex-1">
-              {isRecovery ? 'Intercepting' : 'Incoming'}: <strong>{incoming?.name}</strong> · {incoming?.procedure}
-            </span>
-            <span className="font-mono text-[11px] font-bold shrink-0" style={{ color: accentColor }}>
-              ₹{incoming?.value?.toLocaleString('en-IN')}
-            </span>
-          </div>
-        </div>
-
-        {/* Column headers */}
-        <div className="flex items-center px-4 pt-5 pb-2">
-          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] w-11">Time</span>
-          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] flex-1 px-3">Patient</span>
-          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">Amount</span>
-        </div>
-
-        {/* Thin rule under headers — the one line I'm keeping since it's functional */}
-        <div className="mx-4" style={{ height: 1, background: '#F2F0EB' }} />
-
-        {/* Call rows */}
-        <div className="px-2 pt-1 pb-2" style={{ minHeight: 130 }}>
-          {visibleCalls.length === 0 && !incoming && (
-            <div className="flex items-center justify-center h-28">
-              <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">
-                {isRecovery ? 'Ready to intercept…' : 'Monitoring calls…'}
-              </p>
+          <div className="p-4 flex flex-col gap-3 flex-1">
+            <div className="bg-[#DC2626]/5 p-3 rounded-lg border border-[#DC2626]/10">
+              <span className="text-[11px] text-muted block mb-1">Patient</span>
+              <span className="text-[13px] font-bold text-obsidian block">Priya S.</span>
+              <span className="text-[11px] text-charcoal block mt-0.5">Dental Implant</span>
             </div>
-          )}
-          {[...visibleCalls].reverse().map(call => (
-            <LedgerRow key={call.id} call={call} isRecovery={isRecovery} />
-          ))}
+            <div className="mt-auto">
+              <span className="text-[10px] uppercase text-muted tracking-widest block mb-1">Lost Revenue</span>
+              <span className="text-xl font-bold font-mono text-[#DC2626]">−₹28,000</span>
+            </div>
+          </div>
         </div>
 
-        {/* Footer total — background tint, no border */}
-        <div
-          className="px-5 py-4 mx-4 mb-4 rounded-2xl flex items-center justify-between"
-          style={{ background: '#F7F5F2' }}
-        >
-          <div>
-            <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] mb-0.5">
-              {isRecovery ? 'Revenue Secured' : 'Revenue Lost'}
-            </p>
-            <p className="font-mono text-[9px]" style={{ color: isRecovery ? 'rgba(61,90,254,0.45)' : 'rgba(220,38,38,0.45)' }}>
-              {isRecovery ? "Calls that would've been missed." : "And it's not even noon yet."}
-            </p>
+        {/* Right Column */}
+        <div className="flex-1 flex flex-col bg-[#3D5AFE]/[0.02]">
+          <div className="px-4 py-3 bg-[#3D5AFE]/[0.06] border-b border-obsidian/10 flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60 bg-[#3D5AFE]" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3D5AFE]" />
+            </span>
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#3D5AFE]">
+              WITH ENGAGEO
+            </span>
           </div>
-          <motion.p
-            key={total}
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.25 }}
-            className="font-mono font-bold tabular-nums"
-            style={{ fontSize: 22, color: accentColor, letterSpacing: '-0.02em' }}
-          >
-            {isRecovery ? '+' : '−'}₹{total.toLocaleString('en-IN')}
-          </motion.p>
+          <div className="p-4 flex flex-col gap-3 flex-1 justify-center">
+            <div className="flex items-start gap-2">
+              <span className="text-[13px]">📞</span>
+              <span className="text-[13px] font-medium text-obsidian leading-snug">Call missed → AI answers in 8s</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-[13px]">💬</span>
+              <span className="text-[13px] font-medium text-obsidian leading-snug">WhatsApp confirmation sent</span>
+            </div>
+            <div className="flex items-start gap-2 mt-2 bg-[#3D5AFE]/10 p-2.5 rounded-lg border border-[#3D5AFE]/20">
+              <span className="text-[13px]">✅</span>
+              <span className="text-[13px] font-bold text-[#3D5AFE] leading-snug">Slot locked. ₹28,000 recovered.</span>
+            </div>
+          </div>
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+    </div>
   );
 }
 
 /* ─── Metrics ────────────────────────────────────────────────── */
 const metrics = [
-  { label: 'Avg Recovery', value: '₹24K' },
-  { label: 'Response Time', value: '< 8s' },
-  { label: 'Clinics Live', value: '47+' },
+  { label: 'AVG RECOVERY', value: '₹24K' },
+  { label: 'CALL RECOVERY', value: '<8s' },
+  { label: 'WHATSAPP OPEN RATE', value: '94%' },
+  { label: 'CLINICS LIVE', value: '47+' },
 ];
 
 export default function Hero() {
@@ -393,13 +200,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease: [0.25, 1, 0.5, 1] }}
         >
-          <div className="section-label mb-6 text-xs md:text-sm">Live in 47 Indian Clinics</div>
+          <div className="section-label mb-6 text-xs md:text-sm">● Voice + WhatsApp Recovery — Live in 47 Clinics</div>
 
           <h1 className="tracking-tighter text-left">
             <div className="font-sans text-[2.5rem] md:text-6xl lg:text-[5rem] font-bold text-obsidian mb-2 leading-[1.05] w-full">
               Your clinic is<br />
               {/* Aggressive optical alignment to match stem of 'l' with edge of 'Y' */}
-              <span className="-ml-[0.05em] inline-block tracking-tight">losing</span>
+              <span className="-ml-[0.05em] inline-block tracking-tight">losing</span><br />
+              patients to silence.
             </div>
             {/* Typewriter line — controlled size so all phrases stay on 1 line,
                 preventing the phantom-spacer from leaving visible blank space */}
@@ -415,10 +223,11 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="max-w-[19rem] md:max-w-md font-sans text-[15px] md:text-base text-subtle leading-relaxed">
-            Every call your receptionist misses is a patient your competitor books. Engageo
-            intercepts that call in 8 seconds — qualifies the patient, books the slot, sends
-            the WhatsApp confirmation. While you're with your next patient.
+          <p className="max-w-[19rem] md:max-w-md font-sans text-[15px] md:text-base text-subtle leading-relaxed mt-4">
+            Every missed call triggers a full recovery sequence — AI voice 
+            callback in 8 seconds, patient qualified, slot booked to your 
+            calendar, WhatsApp confirmation sent, 24-hour reminder fired. 
+            While you're with your next patient.
           </p>
         </motion.div>
 

@@ -17,13 +17,13 @@ const STEPS = [
     desc: "We know why they called. Specialty matched. Priority assigned. No human needed.",
     type: "text",
     cardLabel: "Action",
-    text: "High-intent implant patient. Callback queued. Est. case value: ₹85,000.",
+    text: "High-intent implant patient. AI callback queued. WhatsApp pre-message drafted. Est. case value: ₹85,000.",
   },
   {
     num: "03",
     label: "Engagement",
     title: "AI Calls Them Back First",
-    desc: "Not a message. A voice call — in 8 seconds. Before they open Google and find your competitor.",
+    desc: "Not a message. Not a form. A real voice call in 8 seconds — before they open Google and find your competitor.",
     type: "metric",
     cardLabel: "Response Time",
     metric: "< 8 sec",
@@ -40,8 +40,8 @@ const STEPS = [
     num: "05",
     label: "Conversion",
     title: "The Slot Is Filled",
-    desc: "Google Calendar updated. Patient receives WhatsApp confirmation. Receptionist notified. You just recovered ₹22,000 without lifting a finger.",
-    type: "approved",
+    desc: "Slot locked to Google Calendar. Patient gets a WhatsApp confirmation in 90 seconds — with their doctor's name, time, and clinic address. A reminder fires 24 hours before. No-shows drop. You just recovered ₹22,000 without lifting a finger.",
+    type: "whatsapp",
     text: "Slot Confirmed",
     cardLabel: "Booking locked. No manual action required.",
   },
@@ -51,7 +51,7 @@ const STEPS = [
     title: "Your Weekly Revenue Report",
     desc: "Every recovery logged. Every rupee tracked. Friday report lands in your WhatsApp.",
     type: "hash",
-    text: "This week: 11 recoveries. ₹2,64,000 secured. 3 no-shows prevented.",
+    text: "This week — Dr. Sharma's Clinic\n11 recoveries. ₹2,64,000 secured.\n3 no-shows prevented by reminder.\nSent via WhatsApp · Every Friday · 9 AM",
   },
 ];
 
@@ -299,10 +299,30 @@ function StepVisual({ type, label, text, metric }) {
       </div>
     );
   }
+  if (type === 'whatsapp') {
+    return (
+      <div className="flex flex-col items-start gap-2 w-full max-w-sm">
+        <div className="p-4 md:p-5 text-left w-full bg-white border-2 border-obsidian" style={{ boxShadow: '4px 4px 0px 0px rgba(61,90,254,0.35)' }}>
+          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-obsidian/10">
+            <span className="text-[10px]">🟢</span>
+            <span className="text-xs font-bold text-obsidian tracking-tight">Dr. Mehta's Dental Clinic</span>
+          </div>
+          <p className="text-[13px] font-medium text-obsidian leading-relaxed whitespace-pre-wrap">
+            ✅ Appointment Confirmed!{"\n"}
+            Hi Priya, your implant consultation is booked for Saturday, 11 AM.{"\n"}
+            📍 Sector 18, Noida{"\n"}
+            👨‍⚕️ Dr. Mehta{"\n"}
+            Reply CONFIRM or call us to reschedule.
+          </p>
+        </div>
+        {label && <span className="text-[10px] md:text-[11px] text-white/40 font-mono uppercase tracking-widest">{label}</span>}
+      </div>
+    );
+  }
   if (type === 'hash') {
     return (
       <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
-        <span className="font-mono text-xs md:text-sm text-obsidian">{text}</span>
+        <span className="font-mono text-xs md:text-sm text-obsidian whitespace-pre-wrap">{text}</span>
       </div>
     );
   }

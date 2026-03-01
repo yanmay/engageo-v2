@@ -12,6 +12,7 @@ import DecisionLifecycle from './components/DecisionLifecycle';
 import Features from './components/Features';
 import WorkflowSlider from './components/WorkflowSlider';
 import ROICalculator from './components/ROICalculator';
+import TheSecondLayer from './components/TheSecondLayer';
 import ComparisonTable from './components/ComparisonTable';
 import Testimonials from './components/Testimonials';
 import Pricing from './components/Pricing';
@@ -96,6 +97,9 @@ function App() {
 
           {/* 7. Make it personal — addictive calculator */}
           <div id="calculator" className="bg-surface"><ROICalculator /></div>
+
+          {/* 7.5 WhatsApp Layer */}
+          <TheSecondLayer />
 
           {/* 8. Objection handling */}
           <div id="proof"><ComparisonTable /></div>
