@@ -1,82 +1,62 @@
-import React, { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STEP_COUNT = 4;
-const SCROLL_PER_CARD = 1100;
-
 export default function TheSecondLayer() {
   const containerRef = useRef(null);
-  const cardsRef = useRef([]);
-
-  // Stable ref callback — collects DOM nodes during render
-  const setCardRef = useCallback((el, i) => {
-    if (el) cardsRef.current[i] = el;
-  }, []);
 
   useLayoutEffect(() => {
-    // Small delay to let Lenis + other scroll libs fully settle
+    // Small delay ensures DOM is fully painted and external scroll libs are ready
     const timerId = setTimeout(() => {
       if (!containerRef.current) return;
-      const cards = cardsRef.current.filter(Boolean);
-      if (cards.length < STEP_COUNT) return;
 
       const ctx = gsap.context(() => {
-        // Pin the entire section — use STEP_COUNT so it never depends on ref timing
-        ScrollTrigger.create({
-          trigger: containerRef.current,
-          start: "top top",
-          end: `+=${STEP_COUNT * SCROLL_PER_CARD}`,
-          pin: true,
-          pinSpacing: true,
+        // Use GSAP's selector scoped to this component, bypassing React strict-mode ref array bugs
+        const cards = gsap.utils.toArray('.whatsapp-card');
+        if (cards.length === 0) return;
+
+        // One timeline synchronizes all the card animations mathematically across the scroll distance
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            // Give 1000px of scroll room per incoming card
+            end: `+=${(cards.length - 1) * 1100}`,
+            scrub: true,
+            pin: true,
+            pinSpacing: true,
+          }
         });
 
         cards.forEach((card, i) => {
-          // First card is already visible — only animate cards 1-3 in
-          if (i > 0) {
-            gsap.fromTo(card,
-              { y: "150vh" },
-              {
-                y: "0vh",
-                ease: "none",
-                scrollTrigger: {
-                  trigger: containerRef.current,
-                  start: `top+=${i * SCROLL_PER_CARD - SCROLL_PER_CARD} top`,
-                  end: `top+=${i * SCROLL_PER_CARD} top`,
-                  scrub: true,
-                }
-              }
-            );
-          }
+          if (i === 0) return; // First card is visually present instantly
 
-          // When the *next* card slides up, push this one back
-          if (i < cards.length - 1) {
-            gsap.to(card, {
-              scale: 0.9,
-              opacity: 0.4,
-              filter: "blur(10px)",
-              ease: "none",
-              scrollTrigger: {
-                trigger: containerRef.current,
-                start: `top+=${(i + 1) * SCROLL_PER_CARD - SCROLL_PER_CARD} top`,
-                end: `top+=${(i + 1) * SCROLL_PER_CARD} top`,
-                scrub: true,
-              }
-            });
-          }
+          // Previous card scales and fades beautifully into the background
+          tl.to(cards[i - 1], {
+            scale: 0.92,
+            opacity: 0.5,
+            filter: "blur(4px)",
+            ease: "none"
+          }, `card${i}`);
+
+          // Current card sweeps up from below the viewport perfectly overlapping
+          tl.fromTo(card,
+            { y: "120vh" },
+            { y: "0vh", ease: "none" },
+            `card${i}`
+          );
         });
       }, containerRef);
 
       containerRef._gsapCtx = ctx;
-    }, 300);
+    }, 150);
 
     return () => {
       clearTimeout(timerId);
       if (containerRef._gsapCtx) containerRef._gsapCtx.revert();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* ── Double-tick SVG component ── */
@@ -173,8 +153,7 @@ export default function TheSecondLayer() {
           {steps.map((step, i) => (
             <div 
               key={i} 
-              ref={(el) => setCardRef(el, i)}
-              className="absolute top-0 left-0 w-full h-full rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-[#0B3D2C]/20 will-change-transform origin-top flex flex-col"
+              className="whatsapp-card absolute top-0 left-0 w-full h-full rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-[#0B3D2C]/20 will-change-transform origin-top flex flex-col"
               style={{ zIndex: i }}
             >
               
