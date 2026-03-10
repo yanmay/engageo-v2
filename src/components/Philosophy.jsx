@@ -1,87 +1,58 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Philosophy() {
   const sectionRef = useRef(null);
-  
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Parallax Background
-      gsap.to('.parallax-bg', {
-        yPercent: 30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
 
-      // Text Reveal Animation (SplitText alternative with simple stagger)
-      gsap.from('.reveal-text', {
-        y: 50,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.manifesto-container',
-          start: 'top 70%',
-        }
-      });
-      
-      gsap.from('.reveal-large', {
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".philosophy-reveal", {
         y: 60,
         opacity: 0,
+        stagger: 0.2,
         duration: 1.5,
-        stagger: 0.3,
-        ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.manifesto-container',
-          start: 'top 50%',
+          trigger: sectionRef.current,
+          start: "top 70%",
         }
       });
     }, sectionRef);
-    
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full py-24 md:py-32 flex items-center overflow-hidden bg-dark text-primary" style={{ minHeight: '100vh' }}>
-      {/* Background Parallax */}
-      <div className="absolute inset-0 w-full h-[130%] -top-[15%] pointer-events-none z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2940&auto=format&fit=crop" 
-          alt="Raw concrete texture" 
-          className="parallax-bg w-full h-full object-cover opacity-20 mix-blend-luminosity"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark via-transparent to-dark"></div>
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative py-32 px-8 md:px-24 bg-[var(--charcoal)] overflow-hidden"
+    >
+      {/* Organic texture background */}
+      <div
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1550686041-366ad85a1355?q=80&w=2574&auto=format&fit=crop")', // Abstract organic
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          mixBlendMode: 'overlay'
+        }}
+      />
 
-      <div className="manifesto-container relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 flex flex-col items-center justify-center text-center">
-        
-        <p className="reveal-text font-mono text-sm md:text-base tracking-widest uppercase text-primary/60 mb-6 font-semibold">
-          Most clinics focus on:
-        </p>
-        
-        <h3 className="reveal-text font-sans font-bold text-2xl md:text-4xl text-primary/80 max-w-3xl leading-tight mb-20">
-          Acquiring new leads while letting high-intent callers slip away.
-        </h3>
+      <div className="relative z-10 max-w-5xl mx-auto flex flex-col gap-24">
+        <div className="flex flex-col gap-6 max-w-2xl">
+          <p className="philosophy-reveal font-data text-white/40 text-xs tracking-widest uppercase">The Perspective</p>
+          <div className="philosophy-reveal text-white/60 text-xl leading-relaxed">
+            Most clinics focus on: <span className="text-white">Acquiring new leads while letting high-intent callers slip away.</span>
+          </div>
+        </div>
 
-        <p className="reveal-large font-mono text-sm tracking-widest uppercase text-accent mb-6 font-bold flex items-center justify-center gap-4">
-          <span className="w-12 h-px bg-accent"></span>
-          We focus on
-          <span className="w-12 h-px bg-accent"></span>
-        </p>
-        
-        <h2 className="reveal-large font-serif italic text-6xl md:text-8xl lg:text-[7rem] leading-[0.9] max-w-5xl tracking-normal text-primary">
-          Recovering <span className="text-accent underline decoration-4 underline-offset-[16px]">every</span> missed booking.
-        </h2>
-        
+        <div className="philosophy-reveal flex flex-col items-start md:items-end">
+          <h2 className="text-white/40 text-lg md:text-xl font-medium mb-4">We focus on:</h2>
+          <div className="font-drama text-6xl md:text-8xl lg:text-9xl text-[var(--clay)] text-right leading-tight italic">
+            Recovering every <br />missed booking.
+          </div>
+        </div>
       </div>
     </section>
   );

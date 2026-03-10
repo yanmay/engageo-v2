@@ -2,370 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Typewriter caret blink ─────────────────────────────────── */
-@keyframes caretBlink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
+/* ═══════════════════════════════════════════════════════════════
+   PRESET: "CINEMATIC COMMAND" DESIGN SYSTEM
+   Palette: Recovery Blue (Primary), Command Black (Hero/Dark), Clinic White (Body)
+   Typography: Plus Jakarta Sans, Outfit, Cormorant Garamond, IBM Plex Mono
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ─── Google Fonts ────────────────────────────────────────────── */
-/* Instrument Serif loaded in index.html */
+:root {
+  /* Core Brand Tokens */
+  --recovery-blue: #2563EB;
+  --command-black: #0A0F1E;
+  --clinic-white: #F8F9FB;
+  
+  /* Accent & Functional Tokens */
+  --signal-green: #10B981;
+  --recovered-green: #059669;
+  --loss-red: #DC2626;
+  --sovereign-gold: #D97706;
+
+  /* Semantic Mapping */
+  --primary: var(--recovery-blue);
+  --background: var(--clinic-white);
+  --surface-dark: var(--command-black);
+  --text: var(--command-black);
+  
+  /* Radius System */
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+}
 
 @layer base {
-  html, body {
-    /* Prevent mobile Safari horizontal rubber-banding completely */
-    max-width: 100vw;
-    overflow-x: hidden !important;
-    position: relative;
-    overscroll-behavior-y: none;
-    min-height: 100vh;
-    /* iOS Safari mobile height fix */
-    min-height: -webkit-fill-available;
-  }
-
-  html {
-    /* dvh handles dynamic viewport on modern mobile browsers.
-       For older browsers, a JS-based --vh variable is set in App.jsx. */
-    --vh-fallback: 1vh;
-    /* Scale down all rem utilities globally for mobile */
-    font-size: 14px;
-  }
-
-  @media (min-width: 768px) {
-    html {
-      /* Strictly preserve desktop scaling exactly as before */
-      font-size: 16px;
-    }
-  }
-
   body {
-    background-color: #F7F5F2;
-    color: #0F0D0B;
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    /* Warm radial light leak from top — studio overhead feel */
-    background-image:
-      radial-gradient(ellipse 80% 45% at 50% -10%, rgba(245,238,225,0.9) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 30% at 15% 10%, rgba(61,90,254,0.025) 0%, transparent 60%);
+    @apply bg-[var(--background)] text-[var(--text)] antialiased;
+    font-family: 'Outfit', sans-serif; /* Using Outfit for body/UI as per PRD "UI labels" */
   }
 
-  #root {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
-    touch-action: pan-y;
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-bold;
+    font-family: 'Plus Jakarta Sans', sans-serif; /* Headings */
   }
 
-  /* Offset all anchor sections by the height of the fixed header (56px) +
-     the decorative 3-stripe bar (12px) = 68px, rounded to 80px for breathing room */
-  section[id],
-  div[id] {
-    scroll-margin-top: 80px;
+  /* Global Noise Overlay - Apply to all dark sections */
+  .noise-overlay {
+    position: relative;
   }
-  
-  /* Utility to force GPU acceleration and stop repaint jitter on scroll */
-  .force-gpu {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    will-change: transform;
+
+  .noise-overlay::after, .grain-texture {
+    content: "";
+    @apply fixed inset-0 pointer-events-none z-[9999];
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    opacity: 0.04;
+  }
+
+  /* Ensure grain texture specifically in App.jsx works */
+  .grain-texture {
+    @apply fixed inset-0 w-full h-full pointer-events-none z-[9999];
   }
 }
 
-/* ─── GRAIN TEXTURE ─────────────────────────────────────────── */
-/* Replaces the animated dot grid — this reads as deliberate, not template */
-.grain-texture {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 300px 300px;
-}
+@layer components {
+  .rounded-premium {
+    @apply rounded-[2rem] md:rounded-[3rem];
+  }
 
-/* ─── Warm card ───────────────────────────────────────────────── */
-/* Replaces glass-card — warm tinted white, soft warm border */
-.glass-card {
-  background: rgba(254, 252, 250, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(200, 185, 165, 0.3);
-  box-shadow:
-    0 1px 2px rgba(15,13,11,0.03),
-    0 4px 16px -4px rgba(15,13,11,0.07),
-    inset 0 1px 0 rgba(255,255,255,0.9);
-  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-}
+  /* Magnetic feel buttons */
+  .btn-magnetic {
+    @apply relative overflow-hidden transition-transform duration-300 ease-[cubic-bezier(0.25, 0.46, 0.45, 0.94)] hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
+  }
 
-.glass-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 2px 4px rgba(15,13,11,0.04),
-    0 14px 36px -8px rgba(15,13,11,0.11),
-    0 0 0 1px rgba(61,90,254,0.09),
-    inset 0 1px 0 rgba(255,255,255,0.95);
-}
+  .btn-magnetic span.bg-layer {
+    @apply absolute inset-0 -z-10 transition-transform duration-500 ease-out translate-y-full;
+  }
 
-/* ─── Premium card ────────────────────────────────────────────── */
-.premium-card {
-  background: rgba(254, 252, 250, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(200, 185, 165, 0.28);
-  box-shadow:
-    0 1px 3px rgba(15,13,11,0.03),
-    0 8px 24px -6px rgba(15,13,11,0.07);
-  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-}
+  .btn-magnetic:hover span.bg-layer {
+    @apply translate-y-0;
+  }
 
-.premium-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 4px 8px rgba(15,13,11,0.04),
-    0 16px 36px -8px rgba(15,13,11,0.1);
-}
+  /* Typography Drama & Data styles */
+  .font-drama {
+    font-family: 'Cormorant Garamond', serif;
+    @apply italic;
+  }
 
-/* ─── Dark product card — for the hero dashboard ─────────────── */
-.dark-card {
-  background: #111008;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04),
-    0 24px 60px -12px rgba(0,0,0,0.6),
-    0 8px 24px -6px rgba(0,0,0,0.4);
-}
+  .font-data {
+    font-family: 'IBM Plex Mono', monospace;
+  }
 
-/* ─── Static brand text (no animation) ───────────────────────── */
-.gradient-text {
-  background: linear-gradient(135deg, #3D5AFE 0%, #6B7FFF 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ─── Serif italic accent — editorial secondary line ─────────── */
-.serif-hero {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-/* ─── Section label — editorial tag with side rule ───────────── */
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #A09890;
-}
-
-.section-label::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: #C8B9A5;
-  flex-shrink: 0;
-}
-
-/* ─── Numeral label — 01, 02, 03 card anchors ────────────────── */
-.card-numeral {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic;
-  font-size: 64px;
-  line-height: 1;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  color: rgba(61,90,254,0.14);
-  user-select: none;
-  pointer-events: none;
-}
-
-/* ─── Feature card — Smooth Cinematic ──────────────────────────── */
-.feature-card {
-  background: #FEFCFA;
-  border: 1px solid rgba(200, 185, 165, 0.4);
-  border-radius: 2.5rem;
-  box-shadow: 0 4px 20px -6px rgba(15,13,11,0.08);
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px -10px rgba(15,13,11,0.12);
-}
-
-
-
-/* ─── Lifecycle step animation (DecisionLifecycle) ───────────── */
-.lifecycle-step-anim {
-  animation: lifecycleFadeUp 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
-}
-@keyframes lifecycleFadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Icon container (legacy — kept for compat) ───────────────── */
-.icon-box {
-  width: 40px; height: 40px;
-  background: rgba(61,90,254,0.08);
-  border: 1px solid rgba(61,90,254,0.15);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  color: #3D5AFE;
-  transition: all 0.3s;
-}
-
-/* ─── Shimmer button ──────────────────────────────────────────── */
-@keyframes shimmer {
-  100% { transform: translateX(100%); }
-}
-
-.shimmer-layer {
-  transform: translateX(-100%);
-}
-
-.group:hover .shimmer-layer {
-  animation: shimmer 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-/* ─── Scrollbar hide ──────────────────────────────────────────── */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* ─── Marquee ─────────────────────────────────────────────────── */
-@keyframes marquee {
-  0%   { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: marquee 24s linear infinite;
-}
-
-/* ─── Animated underline link ──────────────────────────────────── */
-.link-underline {
-  position: relative;
-  text-decoration: none;
-}
-
-.link-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px; left: 0;
-  width: 0; height: 1px;
-  background: #3D5AFE;
-  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.link-underline:hover::after {
-  width: 100%;
-}
-
-/* ─── Pulse dot ────────────────────────────────────────────────── */
-@keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.5); opacity: 0.5; }
-}
-
-.pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-/* ─── Brand glow ───────────────────────────────────────────────── */
-.glow-brand {
-  box-shadow: 0 0 24px rgba(61,90,254,0.3), 0 0 60px rgba(61,90,254,0.12);
-}
-
-.glow-brand-sm {
-  box-shadow: 0 4px 20px rgba(61,90,254,0.25);
-}
-
-/* ─── Lifecycle step anim ──────────────────────────────────────── */
-.lifecycle-step-anim {
-  animation: lifecycleFadeUp 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
-}
-
-@keyframes lifecycleFadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Pricing ──────────────────────────────────────────────────── */
-.pricing-transition {
-  transition:
-    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 500ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, opacity, box-shadow;
-}
-
-/* ─── Dashboard node line ──────────────────────────────────────── */
-.node-line {
-  stroke-dasharray: 4;
-  animation: dash 30s linear infinite;
-}
-
-@keyframes dash {
-  to { stroke-dashoffset: -100; }
-}
-
-/* ─── Legacy def-step states ───────────────────────────────────── */
-.def-active .def-num {
-  border-color: #0F0D0B; color: #0F0D0B;
-  background-color: #FEFCFA;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.def-inactive .def-content {
-  opacity: 0.4; filter: grayscale(100%);
-}
-
-.def-active .def-content {
-  opacity: 1; filter: grayscale(0%); transform: translateY(0);
-}
-
-.def-step {
-  transition: opacity 0.5s ease;
-}
-
-/* ─── Section reveal ────────────────────────────────────────────── */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.reveal {
-  animation: fadeInUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) both;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes progressBar {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-
-@keyframes bounceArrow {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
+  .lift-on-hover {
+    @apply transition-transform duration-300 hover:-translate-y-[1px];
+  }
 }

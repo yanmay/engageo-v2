@@ -31,10 +31,10 @@ export default function AuditModal() {
       >
         {/* Top accent */}
         <div className="absolute top-0 left-0 right-0 flex h-[3px] z-20 pointer-events-none">
-          <div style={{ flex: 1, background: '#1E1A16' }} />
-          <div style={{ flex: 1, background: '#3D5AFE' }} />
-          <div style={{ flex: 1, background: '#E8552A' }} />
-          <div style={{ flex: 1, background: '#C97B2A' }} />
+          <div style={{ flex: 1, background: 'var(--command-surface)' }} />
+          <div style={{ flex: 1, background: 'var(--recovery-blue)' }} />
+          <div style={{ flex: 1, background: 'var(--loss-red)' }} />
+          <div style={{ flex: 1, background: 'var(--sovereign-gold)' }} />
         </div>
 
         {/* Close Button (Absolute Top Right) */}
@@ -50,14 +50,14 @@ export default function AuditModal() {
           <div>
             <div className="flex items-center gap-2 mb-10">
               <span className="font-sans text-xl font-bold tracking-tighter text-obsidian">Engageo</span>
-              <span className="w-1.5 h-1.5 bg-brand pulse-dot" />
+              <span className="w-1.5 h-1.5 bg-[var(--green)] pulse-dot" />
             </div>
 
             <h2 className="font-sans text-3xl lg:text-4xl font-bold text-obsidian tracking-tighter leading-tight mb-4">
               Stop losing <br />
               <span className="text-brand">₹3L+ every month.</span>
             </h2>
-            
+
             <p className="text-subtle text-[13px] leading-relaxed mb-8">
               Book your free 30-minute strategy session. We'll audit your current front-desk performance and map out exactly how Engageo can recover your missed patient revenue.
             </p>
@@ -81,7 +81,7 @@ export default function AuditModal() {
 
           <div className="mt-12 pt-8 border-t-2 border-obsidian/10">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-brand text-white border-2 border-obsidian flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 bg-[var(--green)] text-[var(--parchment)] border border-[var(--ink-faint)] flex items-center justify-center shrink-0">
                 <span className="font-sans text-xs font-bold">SM</span>
               </div>
               <p className="font-sans text-[11px] font-bold text-obsidian leading-snug">

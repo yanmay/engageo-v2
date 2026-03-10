@@ -67,7 +67,7 @@ export default function Protocol() {
       anim: (
         // Scanning laser line
         <div className="relative w-full h-full border border-dark/20 rounded-lg overflow-hidden bg-primary/20">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-accent shadow-[0_0_15px_#E63B2E] animate-[ping_2s_ease-in-out_infinite_alternate]" style={{animation: 'scan 3s ease-in-out infinite alternate'}}></div>
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-accent shadow-[0_0_15px_var(--loss-red)] animate-[ping_2s_ease-in-out_infinite_alternate]" style={{animation: 'scan 3s ease-in-out infinite alternate'}}></div>
           <style>{`
             @keyframes scan {
               0% { top: 0; }

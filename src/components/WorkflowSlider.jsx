@@ -33,7 +33,7 @@ export default function WorkflowSlider() {
               {/* Connector line (desktop) */}
               {idx < steps.length - 1 && (
                 <div className="absolute top-[20px] left-[3rem] right-0 w-[calc(100%-2.5rem)] h-[2px] bg-obsidian/10 z-0 pointer-events-none">
-                  <div className="h-full bg-brand w-0 group-hover:w-full transition-all duration-700 ease-out" />
+                  <div className="h-full bg-[var(--green)] w-0 group-hover:w-full transition-all duration-700 ease-out" />
                 </div>
               )}
 
@@ -60,7 +60,7 @@ export default function WorkflowSlider() {
                 <div className="absolute -left-[21px] top-0 w-10 h-10 bg-white text-obsidian border-2 border-obsidian flex items-center justify-center retro-shadow">
                   <span className="font-mono text-xs font-bold text-brand">{step.num}</span>
                 </div>
-                
+
                 {/* Content Card */}
                 <div className="bg-white border-2 border-obsidian retro-shadow p-6 mt-1">
                   <h3 className="font-sans text-lg font-bold text-obsidian mb-2 tracking-tight">{step.title}</h3>

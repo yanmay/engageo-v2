@@ -1,0 +1,455 @@
+﻿commit d6d471801833e4ee39b4e033d216ca3f7d845ee2
+Author: yanmay <yanmay@users.noreply.github.com>
+Date:   Sun Mar 1 14:45:40 2026 +0530
+
+    chore: redesign the second layer into premium medical timeline
+
+diff --git a/src/components/ROICalculator.jsx b/src/components/ROICalculator.jsx
+index a3de1c7..204ee0c 100644
+--- a/src/components/ROICalculator.jsx
++++ b/src/components/ROICalculator.jsx
+@@ -117,23 +117,23 @@ export default function ROICalculator() {
+       <div className="max-w-5xl mx-auto relative z-10">
+ 
+         {/* Header */}
+-        <div className="text-center mb-16">
++        <div className="text-center mb-10 md:mb-16">
+           <div className="section-label mb-6">Revenue Calculator</div>
+-          <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
++          <h2 className="font-sans text-3xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
+             See What You're{' '}
+             <span className="gradient-text">Actually Losing</span>
+           </h2>
+-          <p className="text-subtle text-base max-w-lg mx-auto leading-relaxed">
++          <p className="text-subtle text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+             Adjust the sliders to match your clinic. Watch your number appear.
+           </p>
+         </div>
+ 
+         {/* Card */}
+         <div className="bg-white border-2 border-obsidian retro-shadow-amber relative overflow-hidden">
+-          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-obsidian/5">
++          <div className="grid grid-cols-1 lg:grid-cols-2 lg:divide-x divide-obsidian/5 border-b lg:border-b-0 border-obsidian/10 lg:border-obsidian/5">
+ 
+             {/* Left ΓÇö inputs */}
+-            <div className="p-10 space-y-10">
++            <div className="p-6 md:p-10 space-y-8 md:space-y-10 border-b lg:border-b-0 border-obsidian/10">
+               <Slider
+                 value={missedPerWeek}
+                 min={5}
+@@ -161,61 +161,64 @@ export default function ROICalculator() {
+             </div>
+ 
+             {/* Right ΓÇö output */}
+-            <div className="p-10 flex flex-col justify-between gap-8">
++            <div className="p-6 md:p-10 flex flex-col justify-between gap-6 md:gap-8">
+ 
+               {/* Loss card */}
+               <div className="space-y-1">
+-                <span className="font-mono text-[10px] uppercase tracking-widest text-subtle font-semibold">
++                <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-subtle font-semibold">
+                   Monthly revenue walking out the door
+                 </span>
+-                <div className="text-5xl font-bold tracking-tighter text-obsidian leading-none">
++                <div className="text-4xl md:text-5xl font-bold tracking-tighter text-obsidian leading-none">
+                   <AnimatedNumber value={monthlyLoss} prefix="Γé╣" />
+                 </div>
+-                <p className="text-xs text-muted">
++                <p className="text-[11px] md:text-xs text-muted mt-2 md:mt-0">
+                   <AnimatedNumber value={monthlyMissed} />{' '}
+                   missed calls ├ù Γé╣{avgCaseValue.toLocaleString('en-IN')} avg value
+                 </p>
+               </div>
+ 
+               {/* Divider with arrow */}
+-              <div className="flex items-center gap-3">
+-                <div className="flex-1 h-px bg-obsidian/5" />
++              <div className="flex items-center gap-3 py-2 md:py-0">
++                <div className="flex-1 h-px bg-obsidian/10" />
+                 <div className="w-8 h-8 rounded-full bg-brand/5 border border-brand/20 flex items-center justify-center">
+                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                     <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                   </svg>
+                 </div>
+-                <div className="flex-1 h-px bg-obsidian/5" />
++                <div className="flex-1 h-px bg-obsidian/10" />
+               </div>
+ 
+               {/* Recovery card */}
+               <div className="space-y-1">
+-                <span className="font-mono text-[10px] uppercase tracking-widest text-brand font-semibold">
++                <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-brand font-semibold">
+                   Engageo recovers for you
+                 </span>
+-                <div className="text-5xl font-bold tracking-tighter leading-none gradient-text">
++                <div className="text-4xl md:text-5xl font-bold tracking-tighter leading-none gradient-text py-1 md:py-0">
+                   <AnimatedNumber value={engageoRecovers} prefix="Γé╣" />
+                 </div>
+-                <p className="text-xs text-subtle">
++                <p className="text-[11px] md:text-xs text-subtle leading-relaxed md:leading-normal mt-1 md:mt-0">
+                   Net gain after Engageo fee:{' '}
+                   <span className="font-semibold text-obsidian">
+                     <AnimatedNumber value={netGain} prefix="Γé╣" />
+                   </span>{' '}
+-                  ┬╖ <span className="text-brand font-bold">{roiMultiple}├ù ROI</span>
++                  <span className="hidden md:inline">┬╖</span> <br className="block md:hidden" />
++                  <span className="text-brand font-bold">{roiMultiple}├ù ROI</span>
+                 </p>
+               </div>
+ 
+               {/* CTA */}
+-              <button
+-                onClick={openModal}
+-                className="group w-full py-4 bg-brand text-white text-[13px] font-bold tracking-wide border-2 border-obsidian retro-shadow-hard flex items-center justify-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
+-              >
+-                <span>Get My Free Recovery Audit ΓåÆ</span>
+-              </button>
+-
+-              <p className="text-[10px] text-center text-muted/60">
+-                Free audit ┬╖ No credit card ┬╖ Results in 24 hrs
+-              </p>
++              <div className="pt-2 md:pt-0">
++                  <button
++                    onClick={openModal}
++                    className="group w-full py-3.5 md:py-4 bg-brand text-white text-[12px] md:text-[13px] font-bold tracking-wide border-2 border-obsidian retro-shadow-hard flex items-center justify-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
++                  >
++                    <span>Get My Free Recovery Audit ΓåÆ</span>
++                  </button>
++
++                  <p className="text-[10px] text-center text-muted/60 mt-3 md:mt-2">
++                    Free audit ┬╖ No credit card ┬╖ Results in 24 hrs
++                  </p>
++              </div>
+             </div>
+ 
+           </div>
+
+commit 480d2bb9779897b85cdddf807ef7ac4f05ca265b
+Author: yanmay <yanmay@users.noreply.github.com>
+Date:   Sat Feb 28 16:00:25 2026 +0530
+
+    feat: complete UI/UX overhaul to Premium Brutalism, modal redesign, and table polish
+
+diff --git a/src/components/ROICalculator.jsx b/src/components/ROICalculator.jsx
+index 67931b8..a3de1c7 100644
+--- a/src/components/ROICalculator.jsx
++++ b/src/components/ROICalculator.jsx
+@@ -52,10 +52,10 @@ function Slider({ value, min, max, step, onChange, label, format }) {
+         </span>
+       </div>
+ 
+-      <div className="relative h-1.5 rounded-full bg-border overflow-visible">
++      <div className="relative h-2 bg-obsidian/5 overflow-visible border border-obsidian/20">
+         {/* Filled track */}
+         <div
+-          className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-brand to-brand/80 transition-none"
++          className="absolute top-0 left-0 h-full bg-brand transition-none"
+           style={{ width: `${pct}%` }}
+         />
+         {/* Native input overlaid for interaction */}
+@@ -70,7 +70,7 @@ function Slider({ value, min, max, step, onChange, label, format }) {
+         />
+         {/* Thumb */}
+         <div
+-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-2 border-brand shadow-brand-sm pointer-events-none transition-none"
++          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 bg-white border-2 border-obsidian retro-shadow pointer-events-none transition-none"
+           style={{ left: `${pct}%` }}
+         />
+       </div>
+@@ -118,10 +118,7 @@ export default function ROICalculator() {
+ 
+         {/* Header */}
+         <div className="text-center mb-16">
+-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-border shadow-card mb-6">
+-            <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
+-            <span className="font-mono text-[10px] text-subtle uppercase tracking-widest font-semibold">Revenue Calculator</span>
+-          </div>
++          <div className="section-label mb-6">Revenue Calculator</div>
+           <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
+             See What You're{' '}
+             <span className="gradient-text">Actually Losing</span>
+@@ -132,8 +129,8 @@ export default function ROICalculator() {
+         </div>
+ 
+         {/* Card */}
+-        <div className="glass-card rounded-3xl overflow-hidden">
+-          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border/50">
++        <div className="bg-white border-2 border-obsidian retro-shadow-amber relative overflow-hidden">
++          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-obsidian/5">
+ 
+             {/* Left ΓÇö inputs */}
+             <div className="p-10 space-y-10">
+@@ -182,13 +179,13 @@ export default function ROICalculator() {
+ 
+               {/* Divider with arrow */}
+               <div className="flex items-center gap-3">
+-                <div className="flex-1 h-px bg-gradient-to-r from-border to-brand/30" />
+-                <div className="w-8 h-8 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center">
++                <div className="flex-1 h-px bg-obsidian/5" />
++                <div className="w-8 h-8 rounded-full bg-brand/5 border border-brand/20 flex items-center justify-center">
+                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+-                    <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
++                    <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                   </svg>
+                 </div>
+-                <div className="flex-1 h-px bg-gradient-to-l from-border to-brand/30" />
++                <div className="flex-1 h-px bg-obsidian/5" />
+               </div>
+ 
+               {/* Recovery card */}
+@@ -211,9 +208,9 @@ export default function ROICalculator() {
+               {/* CTA */}
+               <button
+                 onClick={openModal}
+-                className="group relative isolate overflow-hidden w-full py-4 rounded-xl bg-brand text-white text-sm font-bold glow-brand-sm ring-1 ring-brand/30 transition-all duration-400 hover:scale-[1.03] hover:shadow-brand-lg active:scale-[0.98] flex items-center justify-center gap-2">
+-                <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none" />
+-                <span className="relative z-10">Get My Free Recovery Audit ΓåÆ</span>
++                className="group w-full py-4 bg-brand text-white text-[13px] font-bold tracking-wide border-2 border-obsidian retro-shadow-hard flex items-center justify-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
++              >
++                <span>Get My Free Recovery Audit ΓåÆ</span>
+               </button>
+ 
+               <p className="text-[10px] text-center text-muted/60">
+
+commit 00c8ae87beaaedfc8f5c1455ea47e55e9f77f1cf
+Author: yanmay <noobgtx70@gmail.com>
+Date:   Sun Feb 22 00:48:49 2026 +0530
+
+    feat: Engageo full landing page with animations, testimonials, and interactive components
+
+diff --git a/src/components/ROICalculator.jsx b/src/components/ROICalculator.jsx
+new file mode 100644
+index 0000000..67931b8
+--- /dev/null
++++ b/src/components/ROICalculator.jsx
+@@ -0,0 +1,230 @@
++import React, { useState, useEffect, useRef } from 'react';
++import { useModal } from '../context/ModalContext';
++
++// ΓöÇΓöÇΓöÇ Animated number counter ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
++function AnimatedNumber({ value, prefix = '', suffix = '' }) {
++  const [display, setDisplay] = useState(value);
++  const prevRef = useRef(value);
++  const rafRef = useRef(null);
++
++  useEffect(() => {
++    const start = prevRef.current;
++    const end = value;
++    const duration = 600;
++    const startTime = performance.now();
++
++    const tick = (now) => {
++      const elapsed = now - startTime;
++      const progress = Math.min(elapsed / duration, 1);
++      // ease-out expo
++      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
++      const current = Math.round(start + (end - start) * eased);
++      setDisplay(current);
++      if (progress < 1) rafRef.current = requestAnimationFrame(tick);
++      else prevRef.current = end;
++    };
++
++    rafRef.current = requestAnimationFrame(tick);
++    return () => cancelAnimationFrame(rafRef.current);
++  }, [value]);
++
++  return (
++    <span>
++      {prefix}
++      {display.toLocaleString('en-IN')}
++      {suffix}
++    </span>
++  );
++}
++
++// ΓöÇΓöÇΓöÇ Custom slider ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
++function Slider({ value, min, max, step, onChange, label, format }) {
++  const pct = ((value - min) / (max - min)) * 100;
++
++  return (
++    <div className="space-y-3">
++      <div className="flex justify-between items-baseline">
++        <label className="font-mono text-[10px] uppercase tracking-widest text-subtle font-semibold">
++          {label}
++        </label>
++        <span className="font-sans text-lg font-bold text-obsidian tracking-tight">
++          {format(value)}
++        </span>
++      </div>
++
++      <div className="relative h-1.5 rounded-full bg-border overflow-visible">
++        {/* Filled track */}
++        <div
++          className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-brand to-brand/80 transition-none"
++          style={{ width: `${pct}%` }}
++        />
++        {/* Native input overlaid for interaction */}
++        <input
++          type="range"
++          min={min}
++          max={max}
++          step={step}
++          value={value}
++          onChange={(e) => onChange(Number(e.target.value))}
++          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
++        />
++        {/* Thumb */}
++        <div
++          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-2 border-brand shadow-brand-sm pointer-events-none transition-none"
++          style={{ left: `${pct}%` }}
++        />
++      </div>
++
++      <div className="flex justify-between">
++        <span className="font-mono text-[9px] text-muted">{format(min)}</span>
++        <span className="font-mono text-[9px] text-muted">{format(max)}</span>
++      </div>
++    </div>
++  );
++}
++
++// ΓöÇΓöÇΓöÇ Main component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
++export default function ROICalculator() {
++  const { openModal } = useModal();
++  const [missedPerWeek, setMissedPerWeek] = useState(20);
++  const [avgCaseValue, setAvgCaseValue] = useState(18000);
++
++  // ΓöÇΓöÇ Math ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
++  const RECOVERY_RATE = 0.68;       // 68% recovery rate (from pilot data)
++  const ENGAGEO_COST = 27500;       // mid-point of Path A pricing
++
++  const monthlyMissed = Math.round(missedPerWeek * 4.33);
++  const monthlyLoss = monthlyMissed * avgCaseValue;
++  const engageoRecovers = Math.round(monthlyLoss * RECOVERY_RATE);
++  const netGain = engageoRecovers - ENGAGEO_COST;
++  const roiMultiple = (engageoRecovers / ENGAGEO_COST).toFixed(1);
++
++  // intensity band for colour
++  const lossIntensity = Math.min(monthlyLoss / 1_000_000, 1); // caps at 10L
++
++  return (
++    <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10 overflow-hidden">
++
++      {/* Background glow */}
++      <div
++        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[60vh] rounded-full pointer-events-none"
++        style={{
++          background: `radial-gradient(ellipse, rgba(61,90,254,${0.04 + lossIntensity * 0.06}) 0%, transparent 65%)`,
++          transition: 'background 0.8s ease',
++        }}
++      />
++
++      <div className="max-w-5xl mx-auto relative z-10">
++
++        {/* Header */}
++        <div className="text-center mb-16">
++          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-border shadow-card mb-6">
++            <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
++            <span className="font-mono text-[10px] text-subtle uppercase tracking-widest font-semibold">Revenue Calculator</span>
++          </div>
++          <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
++            See What You're{' '}
++            <span className="gradient-text">Actually Losing</span>
++          </h2>
++          <p className="text-subtle text-base max-w-lg mx-auto leading-relaxed">
++            Adjust the sliders to match your clinic. Watch your number appear.
++          </p>
++        </div>
++
++        {/* Card */}
++        <div className="glass-card rounded-3xl overflow-hidden">
++          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border/50">
++
++            {/* Left ΓÇö inputs */}
++            <div className="p-10 space-y-10">
++              <Slider
++                value={missedPerWeek}
++                min={5}
++                max={100}
++                step={1}
++                onChange={setMissedPerWeek}
++                label="Missed calls per week"
++                format={(v) => `${v} calls`}
++              />
++              <Slider
++                value={avgCaseValue}
++                min={2000}
++                max={150000}
++                step={1000}
++                onChange={setAvgCaseValue}
++                label="Average case value (Γé╣)"
++                format={(v) => `Γé╣${(v / 1000).toFixed(0)}K`}
++              />
++
++              {/* Context line */}
++              <p className="text-[11px] text-muted leading-relaxed">
++                Based on recovery data from <span className="text-obsidian font-semibold">47 Indian specialist clinics</span>.
++                Engageo's average call-back success rate is <span className="text-brand font-semibold">68%</span>.
++              </p>
++            </div>
++
++            {/* Right ΓÇö output */}
++            <div className="p-10 flex flex-col justify-between gap-8">
++
++              {/* Loss card */}
++              <div className="space-y-1">
++                <span className="font-mono text-[10px] uppercase tracking-widest text-subtle font-semibold">
++                  Monthly revenue walking out the door
++                </span>
++                <div className="text-5xl font-bold tracking-tighter text-obsidian leading-none">
++                  <AnimatedNumber value={monthlyLoss} prefix="Γé╣" />
++                </div>
++                <p className="text-xs text-muted">
++                  <AnimatedNumber value={monthlyMissed} />{' '}
++                  missed calls ├ù Γé╣{avgCaseValue.toLocaleString('en-IN')} avg value
++                </p>
++              </div>
++
++              {/* Divider with arrow */}
++              <div className="flex items-center gap-3">
++                <div className="flex-1 h-px bg-gradient-to-r from-border to-brand/30" />
++                <div className="w-8 h-8 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center">
++                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
++                    <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
++                  </svg>
++                </div>
++                <div className="flex-1 h-px bg-gradient-to-l from-border to-brand/30" />
++              </div>
++
++              {/* Recovery card */}
++              <div className="space-y-1">
++                <span className="font-mono text-[10px] uppercase tracking-widest text-brand font-semibold">
++                  Engageo recovers for you
++                </span>
++                <div className="text-5xl font-bold tracking-tighter leading-none gradient-text">
++                  <AnimatedNumber value={engageoRecovers} prefix="Γé╣" />
++                </div>
++                <p className="text-xs text-subtle">
++                  Net gain after Engageo fee:{' '}
++                  <span className="font-semibold text-obsidian">
++                    <AnimatedNumber value={netGain} prefix="Γé╣" />
++                  </span>{' '}
++                  ┬╖ <span className="text-brand font-bold">{roiMultiple}├ù ROI</span>
++                </p>
++              </div>
++
++              {/* CTA */}
++              <button
++                onClick={openModal}
++                className="group relative isolate overflow-hidden w-full py-4 rounded-xl bg-brand text-white text-sm font-bold glow-brand-sm ring-1 ring-brand/30 transition-all duration-400 hover:scale-[1.03] hover:shadow-brand-lg active:scale-[0.98] flex items-center justify-center gap-2">
++                <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent z-0 pointer-events-none" />
++                <span className="relative z-10">Get My Free Recovery Audit ΓåÆ</span>
++              </button>
++
++              <p className="text-[10px] text-center text-muted/60">
++                Free audit ┬╖ No credit card ┬╖ Results in 24 hrs
++              </p>
++            </div>
++
++          </div>
++        </div>
++
++      </div>
++    </section>
++  );
++}

@@ -94,7 +94,7 @@ export default function ThreeBackground() {
     if (!mountRef.current) return;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0xF5F5F7, 0.04);
+    scene.fog = new THREE.FogExp2(0xF8F9FB, 0.04);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0, 20);
@@ -112,7 +112,7 @@ export default function ThreeBackground() {
         uTime: { value: 0 },
         uDistortion: { value: 1.5 },
         uSize: { value: 2.0 },
-        uColor: { value: new THREE.Color('#084DF2') },
+        uColor: { value: new THREE.Color('#2563EB') },
         uMouse: { value: new THREE.Vector2(0, 0) }
     };
 

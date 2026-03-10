@@ -55,7 +55,7 @@ function Slider({ value, min, max, step, onChange, label, format }) {
       <div className="relative h-2 bg-obsidian/5 overflow-visible border border-obsidian/20">
         {/* Filled track */}
         <div
-          className="absolute top-0 left-0 h-full bg-brand transition-none"
+          className="absolute top-0 left-0 h-full bg-[var(--green)] transition-none"
           style={{ width: `${pct}%` }}
         />
         {/* Native input overlaid for interaction */}
@@ -109,8 +109,9 @@ export default function ROICalculator() {
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[60vh] rounded-full pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse, rgba(61,90,254,${0.04 + lossIntensity * 0.06}) 0%, transparent 65%)`,
-          transition: 'background 0.8s ease',
+          background: `radial-gradient(ellipse, var(--green) 0%, transparent 65%)`,
+          opacity: 0.04 + lossIntensity * 0.06,
+          transition: 'background 0.8s ease, opacity 0.8s ease',
         }}
       />
 
@@ -129,7 +130,7 @@ export default function ROICalculator() {
         </div>
 
         {/* Card */}
-        <div className="bg-white border-2 border-obsidian retro-shadow-amber relative overflow-hidden">
+        <div className="bg-[var(--surface)] border border-[var(--ink-faint)] rounded-[2.5rem] relative overflow-hidden shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:divide-x divide-obsidian/5 border-b lg:border-b-0 border-obsidian/10 lg:border-obsidian/5">
 
             {/* Left — inputs */}
@@ -180,9 +181,9 @@ export default function ROICalculator() {
               {/* Divider with arrow */}
               <div className="flex items-center gap-3 py-2 md:py-0">
                 <div className="flex-1 h-px bg-obsidian/10" />
-                <div className="w-8 h-8 rounded-full bg-brand/5 border border-brand/20 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[var(--green)]/5 border border-[var(--green)]/20 flex items-center justify-center">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 2v8M3 7l3 3 3-3" stroke="#3D5AFE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M6 2v8M3 7l3 3 3-3" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <div className="flex-1 h-px bg-obsidian/10" />
@@ -190,34 +191,34 @@ export default function ROICalculator() {
 
               {/* Recovery card */}
               <div className="space-y-1">
-                <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-brand font-semibold">
+                <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-[var(--green)] font-semibold">
                   Engageo recovers for you
                 </span>
-                <div className="text-4xl md:text-5xl font-bold tracking-tighter leading-none gradient-text py-1 md:py-0">
+                <div className="text-4xl md:text-5xl font-bold tracking-tighter leading-none text-[var(--green)] py-1 md:py-0">
                   <AnimatedNumber value={engageoRecovers} prefix="₹" />
                 </div>
-                <p className="text-[11px] md:text-xs text-subtle leading-relaxed md:leading-normal mt-1 md:mt-0">
+                <p className="text-[11px] md:text-xs text-[var(--ink)] opacity-70 leading-relaxed md:leading-normal mt-1 md:mt-0">
                   Net gain after Engageo fee:{' '}
-                  <span className="font-semibold text-obsidian">
+                  <span className="font-semibold text-[var(--ink)]">
                     <AnimatedNumber value={netGain} prefix="₹" />
                   </span>{' '}
                   <span className="hidden md:inline">·</span> <br className="block md:hidden" />
-                  <span className="text-brand font-bold">{roiMultiple}× ROI</span>
+                  <span className="text-[var(--green)] font-bold">{roiMultiple}× ROI</span>
                 </p>
               </div>
 
               {/* CTA */}
               <div className="pt-2 md:pt-0">
-                  <button
-                    onClick={openModal}
-                    className="group w-full py-3.5 md:py-4 bg-brand text-white text-[12px] md:text-[13px] font-bold tracking-wide border-2 border-obsidian retro-shadow-hard flex items-center justify-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
-                  >
-                    <span>Get My Free Recovery Audit →</span>
-                  </button>
+                <button
+                  onClick={openModal}
+                  className="group w-full py-3.5 md:py-4 bg-[var(--green)] text-[var(--parchment)] text-[12px] md:text-[13px] font-bold tracking-wide border border-[var(--ink-faint)] rounded-full flex items-center justify-center gap-2 hover:scale-[1.02] transition-all duration-200 active:scale-[0.98] shadow-lg"
+                >
+                  <span>Get My Free Recovery Audit →</span>
+                </button>
 
-                  <p className="text-[10px] text-center text-muted/60 mt-3 md:mt-2">
-                    Free audit · No credit card · Results in 24 hrs
-                  </p>
+                <p className="text-[10px] text-center text-muted/60 mt-3 md:mt-2">
+                  Free audit · No credit card · Results in 24 hrs
+                </p>
               </div>
             </div>
 

@@ -47,15 +47,15 @@ export default function FAQ() {
   };
 
   return (
-    <section className="py-20 md:py-32 px-4 md:px-12 lg:px-20 relative z-10 bg-white border-t border-border/50">
+    <section className="py-20 md:py-32 px-4 md:px-12 lg:px-20 relative z-10 bg-[var(--parchment)] border-t border-[var(--ink-faint)]">
       <div className="max-w-3xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-16">
           <div className="section-label mb-6">Common Objections</div>
-          <h2 className="font-sans text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
+          <h2 className="font-sans text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tighter mb-4">
             Your Questions,{' '}
-            <span className="gradient-text">Answered Directly</span>
+            <span className="italic text-[var(--green)] font-drama">Answered Directly</span>
           </h2>
           <p className="text-subtle text-base max-w-lg mx-auto">
             No vague marketing answers. Here's exactly what clinic owners ask before signing up.
@@ -69,11 +69,10 @@ export default function FAQ() {
             return (
               <div
                 key={idx}
-                className={`transition-all duration-300 cursor-pointer border ${
-                  isOpen
-                    ? 'bg-white border-border/60 border-l-[3px] !border-l-brand shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] translate-y-[-2px]'
-                    : 'bg-transparent border-transparent hover:border-black/5 hover:bg-black/[0.02]'
-                }`}
+                className={`transition-all duration-300 cursor-pointer border-b border-[var(--ink-faint)] ${isOpen
+                    ? 'bg-[var(--surface)] border-l-[3px] !border-l-[var(--green)]'
+                    : 'bg-transparent hover:bg-[var(--surface-deep)]/30'
+                  }`}
                 onClick={() => toggle(idx)}
               >
                 <div className="flex items-center justify-between gap-4 p-6 min-h-[56px]">

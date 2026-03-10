@@ -5,13 +5,13 @@ const integrations = [
     name: 'Google Calendar',
     icon: (
       <svg viewBox="0 0 48 48" width="28" height="28">
-        <rect width="48" height="48" rx="8" fill="#fff" />
-        <path d="M35 13H13a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h22a2 2 0 0 0 2-2V15a2 2 0 0 0-2-2Z" fill="#fff" stroke="#E2E8F0" strokeWidth="1.5" />
+        <rect width="48" height="48" rx="8" fill="#FFF" />
+        <path d="M35 13H13a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h22a2 2 0 0 0 2-2V15a2 2 0 0 0-2-2Z" fill="#FFF" stroke="#E2E8F0" strokeWidth="1.5" />
         <path d="M11 20h26" stroke="#E2E8F0" strokeWidth="1.5" />
-        <rect x="17" y="9" width="3" height="8" rx="1.5" fill="#3D5AFE" />
-        <rect x="28" y="9" width="3" height="8" rx="1.5" fill="#3D5AFE" />
-        <rect x="16" y="24" width="7" height="7" rx="1" fill="#3D5AFE" opacity="0.7" />
-        <rect x="25" y="24" width="7" height="7" rx="1" fill="#3D5AFE" opacity="0.4" />
+        <rect x="17" y="9" width="3" height="8" rx="1.5" fill="var(--green)" />
+        <rect x="28" y="9" width="3" height="8" rx="1.5" fill="var(--green)" />
+        <rect x="16" y="24" width="7" height="7" rx="1" fill="var(--green)" opacity="0.7" />
+        <rect x="25" y="24" width="7" height="7" rx="1" fill="var(--green)" opacity="0.4" />
       </svg>
     ),
   },
@@ -19,7 +19,7 @@ const integrations = [
     name: 'WhatsApp Business',
     icon: (
       <svg viewBox="0 0 48 48" width="28" height="28">
-        <rect width="48" height="48" rx="8" fill="#25D366" />
+        <rect width="48" height="48" rx="8" fill="var(--signal-green)" />
         <path d="M36 12.2A16.8 16.8 0 0 0 24 8C15.2 8 8 15.2 8 24c0 2.8.7 5.5 2.1 7.9L8 40l8.4-2.2A16.8 16.8 0 0 0 40 24c0-4.5-1.7-8.7-4.8-11.8Zm-12 23c-2.3 0-4.6-.6-6.6-1.8l-.5-.3-5 1.3 1.3-4.8-.3-.5A13.8 13.8 0 0 1 24 11.2c7.6 0 13.8 6.2 13.8 13.8S31.6 38.8 24 38.8Z" fill="white" />
         <path d="M31.3 27c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.2.4-.9 1.3-1.2 1.6-.2.3-.4.3-.8.1-.4-.2-1.8-.7-3.4-2.1-1.3-1.1-2.1-2.5-2.4-2.9-.2-.4 0-.6.2-.8l.5-.6.3-.5v-.5l-1.2-3c-.3-.8-.6-.7-.9-.7h-.7c-.3 0-.7.1-1 .4C18 17.6 17 18.8 17 21c0 2.3 1.7 4.5 1.9 4.8.2.3 3.3 5 8 7 1.1.5 2 .8 2.7 1 1.1.3 2.1.3 2.9.2.9-.1 2.7-1.1 3.1-2.2.4-1 .4-1.9.3-2.1-.1-.2-.4-.3-.8-.5Z" fill="white" />
       </svg>
@@ -47,7 +47,7 @@ const integrations = [
     name: 'Google Ads',
     icon: (
       <svg viewBox="0 0 48 48" width="28" height="28">
-        <rect width="48" height="48" rx="8" fill="#fff" stroke="#E2E8F0" strokeWidth="1" />
+        <rect width="48" height="48" rx="8" fill="#FFF" stroke="#E2E8F0" strokeWidth="1" />
         <circle cx="16" cy="32" r="7" fill="#FBBC05" />
         <circle cx="32" cy="32" r="7" fill="#34A853" />
         <circle cx="24" cy="18" r="7" fill="#4285F4" />

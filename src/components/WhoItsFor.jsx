@@ -9,8 +9,8 @@ const audiences = [
     index: '01',
     title: 'Hair Transplant Clinics',
     tagBadge: 'First Close',
-    badgeColor: 'bg-brand/8 text-brand',
-    badgeBorder: 'border-l-2 border-brand',
+    badgeColor: 'bg-[var(--green)]/10 text-[var(--green)]',
+    badgeBorder: 'border-l-2 border-[var(--green)]',
     tagline: '60–120 calls a day. One receptionist. The math doesn’t work.',
     summary:
       "Your Instagram leads call on impulse — they cool off in 4 hours. Your receptionist is mid-consultation. By the time she calls back, that patient has booked the clinic that picked up first. Engageo answers in 8 seconds, qualifies intent, and drops a confirmed slot on your calendar before the lead goes cold.",
@@ -18,10 +18,11 @@ const audiences = [
     gain: "Engageo picks up in 8 seconds. Qualifies. Books. Sends the WhatsApp confirmation. The lead never had a chance to go cold.",
     metrics: [
       { value: '₹80K–2L', label: 'revenue per procedure' },
-      { value: '4 hrs',   label: 'lead cooling window' },
-      { value: '4 days',  label: 'days to go live' },
+      { value: '4 hrs', label: 'lead cooling window' },
+      { value: '4 days', label: 'days to go live' },
     ],
-    accent: '#3D5AFE',
+    ctaSubtext: "Most hair transplant clinics go live in 3 days.",
+    accent: 'var(--green)',
     visual: 'pulse',
   },
   {
@@ -38,10 +39,11 @@ const audiences = [
     gain: "Engageo answers before your receptionist even sees the missed call notification. Lead qualified. Slot booked. Ad spend justified.",
     metrics: [
       { value: '₹5–15K', label: 'per recovered consultation' },
-      { value: '38%',    label: 'avg calls missed at peak hours' },
+      { value: '38%', label: 'avg calls missed at peak hours' },
       { value: '4 days', label: 'to go live' },
     ],
-    accent: '#059669',
+    ctaSubtext: "ROI visible before end of Week 1.",
+    accent: 'var(--signal-green)',
     visual: 'bars',
   },
   {
@@ -59,9 +61,10 @@ const audiences = [
     metrics: [
       { value: '₹1–5L', label: 'revenue per IVF cycle' },
       { value: '72 hrs', label: 'avg patient decision window' },
-      { value: '24/7',   label: 'always answered' },
+      { value: '24/7', label: 'always answered' },
     ],
-    accent: '#7C3AED',
+    ctaSubtext: "Setup takes 4 days. Recovery starts the same night.",
+    accent: 'var(--loss-red)',
     visual: 'wave',
   },
 ];
@@ -85,8 +88,8 @@ function PulseVisual({ active }) {
         />
       ))}
       <div
-        className="w-4 h-4 rounded-full bg-brand"
-        style={{ boxShadow: active ? '0 0 18px rgba(61,90,254,0.65)' : 'none', transition: 'box-shadow 0.5s' }}
+        className="w-4 h-4 rounded-full bg-[var(--green)]"
+        style={{ boxShadow: active ? '0 0 18px var(--green)' : 'none', transition: 'box-shadow 0.5s' }}
       />
     </div>
   );
@@ -102,7 +105,7 @@ function WaveVisual({ active }) {
           className="flex-1 rounded-sm"
           style={{
             height: active ? `${h * 0.85}px` : '3px',
-            background: `rgba(124,58,237,${active ? 0.45 + (h / 21) * 0.55 : 0.12})`,
+            background: `rgba(26,122,74,${active ? 0.45 + (h / 21) * 0.55 : 0.12})`,
             transition: `height 0.5s cubic-bezier(0.25,1,0.5,1) ${i * 35}ms, background 0.4s`,
           }}
         />
@@ -132,8 +135,8 @@ function BarsVisual({ active }) {
 
 function VisualFor({ type, active }) {
   if (type === 'pulse') return <PulseVisual active={active} />;
-  if (type === 'wave')  return <WaveVisual  active={active} />;
-  if (type === 'bars')  return <BarsVisual  active={active} />;
+  if (type === 'wave') return <WaveVisual active={active} />;
+  if (type === 'bars') return <BarsVisual active={active} />;
   return null;
 }
 
@@ -143,16 +146,16 @@ function MobileDetail({ a, openModal }) {
     <div className="flex flex-col gap-5 pt-2">
       <p className="text-sm text-subtle leading-relaxed">{a.summary}</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="p-4 border-2 border-red-200" style={{ background: 'rgba(220,38,38,0.025)' }}>
+        <div className="p-4 border-2 border-red-200" style={{ background: 'var(--loss-tint)' }}>
           <div className="flex items-center gap-2 mb-2">
             <div className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
             <span className="font-mono text-[9px] text-red-500 uppercase tracking-widest font-bold">The Reality</span>
           </div>
           <p className="text-[13px] text-charcoal leading-relaxed">{a.pain}</p>
         </div>
-        <div className="p-4 border-2" style={{ background: 'rgba(61,90,254,0.028)', borderColor: 'rgba(61,90,254,0.24)' }}>
+        <div className="p-4 border border-[var(--ink-faint)] bg-[var(--green)]/5 rounded-2xl">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot shrink-0" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--green)] pulse-dot shrink-0" />
             <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-bold">What Changes</span>
           </div>
           <p className="text-[13px] text-charcoal leading-relaxed">{a.gain}</p>
@@ -167,15 +170,20 @@ function MobileDetail({ a, openModal }) {
             </div>
           ))}
         </div>
-        <button
-          onClick={openModal}
-          className="group bg-brand text-white text-[13px] font-bold px-6 py-3 border-2 border-obsidian retro-shadow-hard shrink-0 flex items-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98] whitespace-nowrap"
-        >
-          <span>Get Free Audit</span>
-          <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
+        <div className="flex flex-col shrink-0 w-full sm:w-auto mt-4 sm:mt-0">
+          <button
+            onClick={openModal}
+            className="group bg-[var(--green)] text-[var(--parchment)] text-[13px] font-bold px-8 py-4 border border-[var(--ink-faint)] rounded-full shadow-lg flex items-center justify-center gap-2 hover:scale-[1.03] transition-all duration-200 active:scale-[0.98] whitespace-nowrap w-full sm:w-auto"
+          >
+            <span>Get Free Audit</span>
+            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <div className="text-center mt-2" style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}>
+            {a.ctaSubtext}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -184,10 +192,10 @@ function MobileDetail({ a, openModal }) {
 /* ─── Main Section ───────────────────────────────────────────── */
 export default function WhoItsFor() {
   const { openModal } = useModal();
-  const [revealed, setRevealed]     = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(null);
   const sectionRef = useRef(null);
-  const fadeTimer  = useRef(null);
+  const fadeTimer = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -207,7 +215,7 @@ export default function WhoItsFor() {
     <section
       ref={sectionRef}
       id="who"
-      className="py-16 md:py-24 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10 bg-canvas"
+      className="py-16 md:py-24 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10 bg-[var(--parchment)]"
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-border to-transparent" />
 
@@ -222,15 +230,30 @@ export default function WhoItsFor() {
             transition: 'opacity 0.7s ease, transform 0.7s ease',
           }}
         >
-          <div className="section-label mb-5">Honest Fit</div>
-          <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold text-obsidian tracking-tighter mb-5 leading-[1.05]">
+          <div className="section-label mb-5 text-[var(--ink-muted)]">Honest Fit</div>
+          <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tighter mb-5 leading-[1.05]">
             Three clinics.
-            <span className="gradient-text block">That's the whole list.</span>
+            <span className="italic block mt-1 text-[var(--green)]">That's the whole list.</span>
           </h2>
-          <p className="text-subtle text-base md:text-lg leading-relaxed">
+          <p className="text-[var(--ink)] opacity-70 text-base md:text-lg leading-relaxed">
             Engageo works best where the doctor is the decision-maker and every
             missed call has a face attached to it. That narrows the field — intentionally.
           </p>
+        </div>
+
+        {/* Disqualifier Strip */}
+        <div
+          className="flex items-center w-full mb-8"
+          style={{ opacity: revealed ? 1 : 0, transition: 'opacity 0.6s ease 0.15s' }}
+        >
+          <div className="flex-1 h-px" style={{ backgroundColor: 'var(--clinic-silver)' }}></div>
+          <p
+            className="px-4 text-center"
+            style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}
+          >
+            NOT FOR: General practices under 50 calls/month · Hospital chains · Clinics with full-time call teams · Anyone who wants a chatbot
+          </p>
+          <div className="flex-1 h-px" style={{ backgroundColor: 'var(--clinic-silver)' }}></div>
         </div>
 
         <div
@@ -240,9 +263,8 @@ export default function WhoItsFor() {
           {audiences.map((a, i) => (
             <div
               key={a.id}
-              className="flex flex-col bg-white border-2 border-obsidian overflow-hidden"
+              className="flex flex-col bg-[var(--surface)] border border-[var(--ink-faint)] overflow-hidden rounded-[2rem] shadow-sm"
               style={{
-                boxShadow: '4px 4px 0px 0px rgba(0,0,0,0.12)',
                 opacity: revealed ? 1 : 0,
                 transform: revealed ? 'translateY(0)' : 'translateY(20px)',
                 transition: `opacity 0.55s ease ${0.08 + i * 0.1}s, transform 0.55s ease ${0.08 + i * 0.1}s`,
@@ -274,14 +296,14 @@ export default function WhoItsFor() {
 
                 {/* Reality / What Changes */}
                 <div className="flex flex-col gap-2">
-                  <div className="px-3 py-2.5 border border-red-200" style={{ background: 'rgba(220,38,38,0.025)' }}>
+                  <div className="px-3 py-2.5 border border-red-200" style={{ background: 'var(--loss-tint)' }}>
                     <div className="flex items-center gap-1.5 mb-1">
                       <div className="w-1 h-1 rounded-full bg-red-400 shrink-0" />
                       <span className="font-mono text-[8px] text-red-500 uppercase tracking-widest font-bold">The Reality</span>
                     </div>
                     <p className="text-xs text-charcoal leading-relaxed">{a.pain}</p>
                   </div>
-                  <div className="px-3 py-2.5 border" style={{ background: 'rgba(61,90,254,0.025)', borderColor: 'rgba(61,90,254,0.22)' }}>
+                  <div className="px-3 py-2.5 border border-brand/20 bg-brand/[0.03]">
                     <div className="flex items-center gap-1.5 mb-1">
                       <div className="w-1 h-1 rounded-full bg-brand shrink-0" />
                       <span className="font-mono text-[8px] text-brand uppercase tracking-widest font-bold">What Changes</span>
@@ -304,14 +326,17 @@ export default function WhoItsFor() {
                 <div className="mt-auto pt-2">
                   <button
                     onClick={openModal}
-                    className="group w-full bg-brand text-white text-[12px] font-bold py-3 border-2 border-obsidian flex items-center justify-center gap-2 hover:translate-x-[2px] hover:translate-y-[2px] transition-transform duration-150 active:scale-[0.98]"
-                    style={{ boxShadow: '3px 3px 0px 0px #111' }}
+                    className="group w-full bg-[var(--green)] text-[var(--parchment)] text-[12px] font-bold py-3.5 border border-[var(--ink-faint)] rounded-full flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform duration-150 active:scale-[0.98]"
+                    style={{ boxShadow: '3px 3px 0px 0px var(--command-black)' }}
                   >
                     <span>Get Free Audit</span>
                     <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
+                  <div className="text-center mt-2" style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}>
+                    {a.ctaSubtext}
+                  </div>
                 </div>
               </div>
             </div>

@@ -28,8 +28,8 @@ export default function Features() {
 
           {/* Card 1 — Revenue from Day 1 */}
           <div
-            className="md:col-span-8 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden"
-            style={{ color: '#3D5AFE' /* used by ::before left-border */ }}
+            className="md:col-span-8 bg-[var(--parchment)] border border-[var(--ink-faint)] rounded-[2rem] group relative overflow-hidden shadow-sm"
+            style={{ color: 'var(--recovery-blue)' /* used by ::before left-border */ }}
           >
             <div className="relative z-10 p-6 md:p-10 h-full flex flex-col justify-between">
               <div className="flex justify-between items-start">
@@ -59,7 +59,7 @@ export default function Features() {
                       style={{
                         height: `${h}%`,
                         background: i >= 9
-                          ? 'linear-gradient(180deg,#3D5AFE 0%,#6B7FFF 100%)'
+                          ? 'linear-gradient(180deg,var(--recovery-blue) 0%,var(--recovery-blue-glow) 100%)'
                           : 'rgba(61,90,254,0.12)',
                         opacity: 0.5 + (i / 18),
                         transitionDelay: `${i * 40}ms`,
@@ -77,8 +77,8 @@ export default function Features() {
 
           {/* Card 2 — Lowest Risk Entry */}
           <div
-            className="md:col-span-4 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden flex flex-col"
-            style={{ color: '#E8552A' /* rust left-border */ }}
+            className="md:col-span-4 bg-[var(--parchment)] border border-[var(--ink-faint)] rounded-[2rem] group relative overflow-hidden flex flex-col shadow-sm"
+            style={{ color: 'var(--loss-red)' /* rust left-border */ }}
           >
             <div className="p-6 md:p-10 relative z-10 flex flex-col h-full">
               <div className="card-numeral mb-2" style={{ color: 'rgba(232,85,42,0.1)' }}>02</div>
@@ -110,8 +110,8 @@ export default function Features() {
 
           {/* Card 3 — Proven Infrastructure */}
           <div
-            className="md:col-span-12 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden"
-            style={{ color: '#1E1A16' /* charcoal left-border */ }}
+            className="md:col-span-12 bg-[var(--clinic-white)] border-2 border-obsidian retro-shadow group relative overflow-hidden"
+            style={{ color: 'var(--command-surface)' /* charcoal left-border */ }}
           >
             <div className="p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
               <div className="flex-1 max-w-lg">
@@ -136,15 +136,15 @@ export default function Features() {
 
                 <div className="w-14 h-14 rounded-full border border-dashed border-brand/30 flex items-center justify-center relative">
                   <div className="absolute inset-0 rounded-full border-2 border-t-brand border-r-transparent border-b-transparent border-l-transparent animate-spin [animation-duration:2.5s] opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand/50 group-hover:text-brand transition-colors"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 12"/><path d="M3 3v9h9"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand/50 group-hover:text-brand transition-colors"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 12" /><path d="M3 3v9h9" /></svg>
                 </div>
 
                 <div className="w-24 h-32 glass-card rounded-xl p-4 space-y-3 transition-all duration-500 group-hover:shadow-brand group-hover:scale-105 group-hover:border-brand/20">
-                  <div className="w-6 h-6 rounded-md bg-brand/10" />
+                  <div className="w-6 h-6 rounded-md bg-[var(--green)]/10" />
                   <div className="space-y-2">
                     {[100, 75, 83].map((w, i) => (
                       <div key={i} className="h-[3px] bg-border rounded-full overflow-hidden">
-                        <div className="h-full bg-brand/70 w-0 group-hover:w-full transition-all duration-700 ease-out rounded-full"
+                        <div className="h-full bg-[var(--green)]/70 w-0 group-hover:w-full transition-all duration-700 ease-out rounded-full"
                           style={{ transitionDelay: `${300 + i * 150}ms`, maxWidth: `${w}%` }} />
                       </div>
                     ))}
@@ -156,8 +156,8 @@ export default function Features() {
 
           {/* Card 4 — WhatsApp That Does the Work */}
           <div
-            className="md:col-span-12 bg-[#FEFCFA] border-2 border-obsidian retro-shadow group relative overflow-hidden"
-            style={{ color: '#059669' /* emerald left-border */ }}
+            className="md:col-span-12 bg-[var(--clinic-white)] border-2 border-obsidian retro-shadow group relative overflow-hidden"
+            style={{ color: 'var(--signal-green)' /* emerald left-border */ }}
           >
             <div className="p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12 relative z-10">
               <div className="flex-1 max-w-lg">
@@ -191,7 +191,7 @@ export default function Features() {
                   </div>
                   <div className="flex items-center justify-between p-3 border-b border-obsidian/10 hover:bg-white/40 transition-colors">
                     <div className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-brand" />
+                      <span className="w-2 h-2 rounded-full bg-[var(--green)]" />
                       <span className="font-mono text-[11px] font-bold text-obsidian uppercase tracking-wider">T-24 HRS</span>
                     </div>
                     <span className="text-[13px] text-subtle font-medium">Automated Reminder</span>

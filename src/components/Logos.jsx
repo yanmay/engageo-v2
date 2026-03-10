@@ -1,39 +1,38 @@
 import React from 'react';
 
-const clinics = ['NDMR Fertility', 'Apollo Dental', 'Elite Hair Clinic', 'Clove Dental', 'Nova IVF', 'Fortis Ortho', 'Skin & You'];
+const CLINICS = [
+  "Nuvance Health", "Apollo Health", "Fortis Escorts", "Medanta The Medicity",
+  "Max Healthcare", "Aster DM Healthcare", "Cloudnine", "Motherhood",
+  "Clove Dental", "Sabka Dentist", "Skin City", "Kaya Clinic"
+];
 
 export default function Logos() {
-  const doubled = [...clinics, ...clinics];
+  const doubled = [...CLINICS, ...CLINICS, ...CLINICS];
 
   return (
-    <section className="border-y-2 border-obsidian/10 py-5 bg-white relative z-10 overflow-hidden">
-      {/* 3-stripe top accent */}
-      <div className="absolute top-0 left-0 right-0 flex h-[3px]">
-        <div style={{ flex: 1, background: '#3D5AFE' }} />
-        <div style={{ flex: 1, background: '#E8552A' }} />
-        <div style={{ flex: 1, background: '#C97B2A' }} />
-      </div>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-10 pt-4">
+    <section className="relative py-12 bg-[var(--deep)] overflow-hidden border-y border-[var(--parchment)]/5">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-8">
 
         {/* Label */}
-        <div className="flex items-center gap-2 whitespace-nowrap shrink-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-brand pulse-dot" />
-          <p className="font-mono text-[10px] font-semibold text-subtle uppercase tracking-widest">
-            Powering clinics across India
-          </p>
+        <div className="flex items-center gap-3 opacity-40">
+          <div className="w-1 h-1 rounded-full bg-[var(--parchment)]" />
+          <span className="font-mono text-[9px] font-bold text-[var(--parchment)] uppercase tracking-[0.3em]">
+            Trusted by Leading Medical Institutions
+          </span>
+          <div className="w-1 h-1 rounded-full bg-[var(--parchment)]" />
         </div>
 
-        {/* Marquee */}
-        <div className="w-full md:flex-1 overflow-hidden relative">
-          {/* Fade edges */}
-          <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-          <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+        {/* Infinite Marquee */}
+        <div className="w-full relative">
+          {/* Masked edges for smooth fade */}
+          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--deep)] to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[var(--deep)] to-transparent z-10 pointer-events-none" />
 
-          <div className="flex animate-marquee w-max gap-x-12 items-center">
+          <div className="flex animate-marquee whitespace-nowrap gap-16 items-center">
             {doubled.map((name, i) => (
               <span
                 key={i}
-                className="font-sans text-sm font-semibold text-obsidian/50 tracking-tight whitespace-nowrap hover:text-obsidian transition-colors duration-300 px-1"
+                className="font-display font-bold text-lg md:text-xl text-[var(--parchment)] opacity-20 hover:opacity-100 transition-opacity duration-500 cursor-default uppercase tracking-tight"
               >
                 {name}
               </span>
@@ -41,6 +40,17 @@ export default function Logos() {
           </div>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 40s linear infinite;
+        }
+      `}} />
     </section>
   );
 }

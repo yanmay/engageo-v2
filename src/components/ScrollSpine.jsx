@@ -120,7 +120,7 @@ export default function ScrollSpine() {
                 style={{
                   width: isActive ? '8px' : '5px',
                   height: isActive ? '8px' : '5px',
-                  background: isActive ? '#3D5AFE' : isPast ? '#3D5AFE' : '#CBD5E1',
+                  background: isActive ? 'var(--recovery-blue)' : isPast ? 'var(--recovery-blue)' : 'var(--clinic-stone)',
                   boxShadow: isActive ? '0 0 0 3px rgba(61,90,254,0.2)' : 'none',
                 }}
               />

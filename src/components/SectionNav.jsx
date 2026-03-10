@@ -116,8 +116,8 @@ export default function SectionNav() {
                 onClick={() => jumpTo(s.id)}
                 className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-medium transition-all duration-250 whitespace-nowrap"
                 style={{
-                  backgroundColor: isActive ? '#3D5AFE' : 'transparent',
-                  color: isActive ? '#fff' : '#64748B',
+                  backgroundColor: isActive ? 'var(--recovery-blue)' : 'transparent',
+                  color: isActive ? '#FFFFFF' : 'var(--clinic-slate)',
                   fontWeight: isActive ? 600 : 500,
                 }}
               >

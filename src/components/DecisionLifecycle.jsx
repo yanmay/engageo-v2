@@ -100,11 +100,11 @@ export default function DecisionLifecycle() {
       ref={sectionRef}
       id="decision-lifecycle"
       className="relative w-full z-10"
-      style={{ background: '#1E1A16' }}
+      style={{ background: 'var(--command-surface)' }}
     >
       {/* ── Section Header ── */}
       <div className="py-16 md:py-24 text-center px-4">
-        <span className="section-label" style={{ color: '#3D5AFE' }}>Live Demo</span>
+        <span className="section-label" style={{ color: 'var(--green)' }}>Live Demo</span>
         <h2 className="font-sans text-2xl md:text-4xl font-bold text-white tracking-tight mt-4 mb-3 px-4">
           Watch a Real Recovery in 8 Seconds
         </h2>
@@ -124,7 +124,7 @@ export default function DecisionLifecycle() {
         >
           {/* Progress fill */}
           <div
-            className="w-full bg-brand transition-all duration-300 ease-out origin-top"
+            className="w-full bg-[var(--green)] transition-all duration-300 ease-out origin-top"
             style={{ height: `${progress * 100}%` }}
           />
         </div>
@@ -164,8 +164,8 @@ export default function DecisionLifecycle() {
                     flex items-center justify-center
                     border-2 transition-all duration-300 z-10
                     ${isActive
-                      ? 'bg-brand border-brand text-white shadow-[0_0_16px_rgba(61,90,254,0.4)]'
-                      : 'bg-[#1E1A16] border-white/20 text-white/30'
+                      ? 'bg-brand border-brand text-white shadow-[0_0_16px_var(--hover-glow)]'
+                      : 'bg-[var(--command-surface)] border-white/20 text-white/30'
                     }
                   `}
                 >
@@ -238,8 +238,8 @@ export default function DecisionLifecycle() {
 function StepVisual({ type, label, text, metric }) {
   const cardBase = {
     background: '#FFFFFF',
-    border: '2px solid #1E1A16',
-    boxShadow: '4px 4px 0px 0px rgba(61,90,254,0.35)',
+    border: '2px solid var(--command-surface)',
+    boxShadow: '4px 4px 0px 0px var(--hover-glow)',
   };
 
   if (type === 'card') {
@@ -263,8 +263,8 @@ function StepVisual({ type, label, text, metric }) {
   if (type === 'metric') {
     return (
       <div className="p-4 md:p-5 inline-flex items-center gap-4 md:gap-5" style={cardBase}>
-        <div className="w-10 h-10 md:w-12 md:h-12 bg-brand/10 flex items-center justify-center border border-brand/20">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3D5AFE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--green)]/10 flex items-center justify-center border border-[var(--green)]/20">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg>
         </div>
         <div className="text-left">
           <div className="text-[10px] text-subtle uppercase tracking-wider mb-1">{label}</div>
@@ -289,8 +289,8 @@ function StepVisual({ type, label, text, metric }) {
     return (
       <div className="flex flex-col items-start md:items-center gap-3">
         <span
-          className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-brand text-white text-xs md:text-sm font-bold border-2 border-obsidian"
-          style={{ boxShadow: '4px 4px 0px 0px #3D5AFE' }}
+          className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-[var(--green)] text-[var(--parchment)] text-xs md:text-sm font-bold border border-[var(--ink-faint)] rounded-full"
+          style={{ boxShadow: '0 4px 12px rgba(26,122,74,0.2)' }}
         >
           <span>{text}</span>
           <Check size={14} strokeWidth={3} />
@@ -302,7 +302,7 @@ function StepVisual({ type, label, text, metric }) {
   if (type === 'whatsapp') {
     return (
       <div className="flex flex-col items-start gap-2 w-full max-w-sm">
-        <div className="p-4 md:p-5 text-left w-full bg-white border-2 border-obsidian" style={{ boxShadow: '4px 4px 0px 0px rgba(61,90,254,0.35)' }}>
+        <div className="p-4 md:p-5 text-left w-full bg-white border-2 border-obsidian" style={{ boxShadow: '4px 4px 0px 0px var(--hover-glow)' }}>
           <div className="flex items-center gap-2 mb-3 pb-3 border-b border-obsidian/10">
             <span className="text-[10px]">🟢</span>
             <span className="text-xs font-bold text-obsidian tracking-tight">Dr. Mehta's Dental Clinic</span>

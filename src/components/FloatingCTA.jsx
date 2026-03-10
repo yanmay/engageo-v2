@@ -34,7 +34,7 @@ export default function FloatingCTA() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
     update();
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
@@ -69,7 +69,7 @@ export default function FloatingCTA() {
           {/* Audit button */}
           <button
             onClick={openModal}
-            className="group relative isolate overflow-hidden bg-brand text-white text-xs font-bold px-5 py-3.5 transition-all duration-300 hover:bg-[#2d4ae8] active:scale-[0.97] flex items-center gap-2"
+            className="group relative isolate overflow-hidden bg-[var(--green)] text-[var(--parchment)] text-xs font-bold px-5 py-3.5 transition-all duration-300 hover:scale-[1.05] active:scale-[0.97] flex items-center gap-2 rounded-full shadow-lg"
           >
             <div className="shimmer-layer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 pointer-events-none" />
             <span className="relative z-20 whitespace-nowrap">Claim Free Audit</span>
@@ -84,7 +84,7 @@ export default function FloatingCTA() {
           {/* Back to top */}
           <button
             onClick={scrollToTop}
-            className="bg-brand text-white p-3.5 transition-all duration-300 hover:bg-[#2d4ae8] active:scale-[0.97]"
+            className="bg-[var(--green)] text-[var(--parchment)] p-4 transition-all duration-300 hover:scale-[1.05] active:scale-[0.97] rounded-full shadow-lg"
             aria-label="Scroll to top"
           >
             <svg className="w-3.5 h-3.5 transition-transform duration-300 hover:-translate-y-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -114,7 +114,7 @@ export default function FloatingCTA() {
       >
         <button
           onClick={openModal}
-          className="w-full bg-brand text-white text-sm font-bold py-4 flex items-center justify-center gap-2 active:bg-[#2d4ae8] active:scale-[0.99] transition-all duration-150"
+          className="w-full bg-[var(--green)] text-[var(--parchment)] text-sm font-bold py-4 flex items-center justify-center gap-2 active:scale-[0.99] transition-all duration-150"
           style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
         >
           <span>Book Free Audit →</span>

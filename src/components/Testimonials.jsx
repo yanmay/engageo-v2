@@ -65,7 +65,7 @@ function Stars() {
   return (
     <div className="flex gap-0.5">
       {[...Array(5)].map((_, i) => (
-        <Star key={i} size={11} fill="#3D5AFE" stroke="none" />
+        <Star key={i} size={11} fill="var(--green)" stroke="none" />
       ))}
     </div>
   );
@@ -89,11 +89,11 @@ export default function Testimonials() {
   const t = testimonials[active];
 
   return (
-    <section className="py-28 px-6 md:px-12 lg:px-20 relative z-10 bg-white border-t border-border/50 overflow-hidden">
+    <section className="py-28 px-6 md:px-12 lg:px-20 relative z-10 bg-[var(--parchment)] border-t border-[var(--ink-faint)] overflow-hidden">
 
       {/* Subtle bg glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full pointer-events-none opacity-30"
-        style={{ background: 'radial-gradient(ellipse, rgba(61,90,254,0.08) 0%, transparent 70%)' }} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, var(--green) 0%, transparent 70%)', opacity: 0.05 }} />
 
       <div className="max-w-4xl mx-auto relative z-10">
 
@@ -107,7 +107,7 @@ export default function Testimonials() {
 
         {/* Carousel */}
         <div
-          className="bg-white border-2 border-obsidian retro-shadow-hard p-8 md:p-12 relative overflow-hidden cursor-default"
+          className="bg-[var(--surface)] border border-[var(--ink-faint)] rounded-[2rem] p-8 md:p-12 relative overflow-hidden cursor-default shadow-sm"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -131,7 +131,7 @@ export default function Testimonials() {
           {/* Author */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-brand text-white border-2 border-obsidian flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 bg-[var(--green)] text-[var(--parchment)] border border-[var(--ink-faint)] rounded-full flex items-center justify-center shrink-0">
                 <span className="font-sans text-xs font-bold">{t.initials}</span>
               </div>
               <div>
@@ -149,9 +149,8 @@ export default function Testimonials() {
                 <button
                   key={i}
                   onClick={() => { setActive(i); setPaused(true); setTimeout(() => setPaused(false), 8000); }}
-                  className={`h-2 transition-all duration-300 border-2 border-obsidian ${
-                    i === active ? 'w-6 bg-brand' : 'w-2 bg-obsidian text-transparent'
-                  }`}
+                  className={`h-2 transition-all duration-300 border border-[var(--ink-faint)] rounded-full ${i === active ? 'w-6 bg-[var(--green)]' : 'w-2 bg-[var(--ink)] opacity-10'
+                    }`}
                 />
               ))}
             </div>
@@ -178,7 +177,7 @@ export default function Testimonials() {
         <div className="mt-12 text-center">
           <button
             onClick={openModal}
-            className="group inline-flex items-center gap-2 bg-brand text-white text-[13px] font-bold tracking-wide px-10 py-4 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
+            className="group inline-flex items-center gap-2 bg-[var(--green)] text-[var(--parchment)] text-[13px] font-bold tracking-wide px-10 py-4 border border-[var(--ink-faint)] rounded-full hover:scale-[1.03] transition-all duration-200 active:scale-[0.98] shadow-lg"
           >
             <span>Book Your Free Strategy Call →</span>
           </button>

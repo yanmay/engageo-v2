@@ -1,488 +1,230 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useModal } from '../context/ModalContext';
 
-/* ─── Data ───────────────────────────────────────────────────── */
-const BLEED_CALLS = [
-  { id: 1, time: '09:12', name: 'Priya S.', procedure: 'Dental Implant', value: 28000 },
-  { id: 2, time: '10:34', name: 'Rahul K.', procedure: 'IVF Consultation', value: 85000 },
-  { id: 3, time: '11:07', name: 'Anjali M.', procedure: 'Laser Vision', value: 22000 },
-];
-const RECOVERY_CALLS = [
-  { id: 4, time: '12:45', name: 'Vikram D.', procedure: 'Rhinoplasty', value: 120000, secs: 6 },
-  { id: 5, time: '14:18', name: 'Sonal R.', procedure: 'Mouth Rehab', value: 65000, secs: 8 },
-  { id: 6, time: '15:44', name: 'Meera T.', procedure: 'IVF Consultation', value: 85000, secs: 7 },
-];
-const WHATSAPP_EVENTS = [
-  { id: 7, time: '12:46', name: 'Vikram D.', procedure: 'Booking Confirmed', action: 'SENT', value: 0 },
-  { id: 8, time: '14:19', name: 'Sonal R.', procedure: 'Booking Confirmed', action: 'SENT', value: 0 },
-  { id: 9, time: '15:45', name: 'Meera T.', procedure: 'Booking Confirmed', action: 'SENT', value: 0 },
-];
-
-/* ─── Single ledger row ──────────────────────────────────────── */
-function LedgerRow({ call, phase }) {
-  const isRecovery = phase === 2;
-  const isWhatsapp = phase === 3;
+/* Custom Slider Component using pure CSS variables */
+function CustomSlider({ label, min, max, step, value, onChange, valueDisplay }) {
+  const percentage = ((value - min) / (max - min)) * 100;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.38, ease: [0.25, 1, 0.5, 1] }}
-      className="flex items-center px-4 py-3 rounded-2xl transition-colors duration-150"
-      style={{ background: 'transparent' }}
-      onMouseEnter={e => e.currentTarget.style.background = '#F7F5F2'}
-      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-    >
-      {/* Time */}
-      <span className="font-mono text-[10px] text-muted tabular-nums shrink-0 w-11">{call.time}</span>
-
-      {/* Name + procedure */}
-      <div className="flex-1 min-w-0 px-3">
-        <p className="font-sans text-[12px] font-semibold text-obsidian truncate">{call.name}</p>
-        <p className="font-mono text-[9px] text-muted truncate mt-0.5">{call.procedure}</p>
+    <div className="flex flex-col mb-10 w-full group">
+      <div className="flex justify-between items-center mb-4">
+        <label className="font-sans font-bold text-[13px] tracking-widest uppercase text-white">
+          {label}
+        </label>
+        <div className="font-mono font-bold text-[18px] text-white">
+          {valueDisplay}
+        </div>
       </div>
 
-      {/* Response badge — recovery only */}
-      {isRecovery && (
-        <span
-          className="font-mono text-[9px] px-1.5 py-[1px] border border-[#3D5AFE]/30 uppercase tracking-widest font-semibold mr-3 shrink-0"
-          style={{ color: '#3D5AFE', background: 'transparent' }}
-        >
-          {call.secs}S
-        </span>
-      )}
-
-      {/* Amount or Action */}
-      {isWhatsapp ? (
-        <span className="font-mono text-[10px] font-bold text-[#059669] uppercase tracking-wider shrink-0 bg-[#059669]/10 px-2 py-0.5 rounded border border-[#059669]/20">
-          ✓ {call.action}
-        </span>
-      ) : (
-        <span
-          className="font-mono text-[12px] font-bold tabular-nums shrink-0"
-          style={{ color: isRecovery ? '#3D5AFE' : '#DC2626' }}
-        >
-          {isRecovery ? '+' : '−'}₹{call.value.toLocaleString('en-IN')}
-        </span>
-      )}
-    </motion.div>
-  );
-}
-
-const HERO_WORDS = [
-  "₹3L every month.",
-  "70% of missed calls.",
-  "patients to rivals."
-];
-
-// ← The longest phrase determines container height. Update if you add a longer one.
-const LONGEST_WORD = "70% of missed calls.";
-
-function TypewriterText({ words }) {
-  const [text, setText] = useState(words[0]);
-  const [phase, setPhase] = useState('pause');
-  const [wordIdx, setWordIdx] = useState(0);
-
-  useEffect(() => {
-    let timer;
-    const currentWord = words[wordIdx % words.length];
-
-    if (phase === 'typing') {
-      if (text.length < currentWord.length) {
-        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), 90);
-      } else {
-        timer = setTimeout(() => setPhase('pause'), 3000);
-      }
-    } else if (phase === 'pause') {
-      timer = setTimeout(() => setPhase('deleting'), 200);
-    } else if (phase === 'deleting') {
-      if (text.length > 0) {
-        timer = setTimeout(() => setText(text.slice(0, -1)), 50);
-      } else {
-        const next = (wordIdx + 1) % words.length;
-        timer = setTimeout(() => {
-          setWordIdx(next);
-          setPhase('typing');
-        }, 50);
-      }
-    }
-
-    return () => clearTimeout(timer);
-  }, [text, phase, wordIdx, words]);
-
-  return (
-    <span className="relative block whitespace-normal md:whitespace-nowrap">
-      <span className="invisible select-none pointer-events-none" aria-hidden="true">
-        {LONGEST_WORD}
-      </span>
-      <span className="absolute top-0 left-0">
-        {text}
-        <span
-          className="inline-block bg-brand ml-1"
-          style={{ width: '3px', height: '0.85em', verticalAlign: 'text-bottom', animation: 'caretBlink 1s step-end infinite' }}
+      <div className="relative w-full h-[1px] bg-white/10 rounded-full flex items-center">
+        <div
+          className="absolute left-0 top-0 h-full rounded-full pointer-events-none"
+          style={{ backgroundColor: '#4F46E5', width: `${percentage}%` }}
         />
-      </span>
-    </span>
-  );
-}
-
-/* ─── Main dashboard ─────────────────────────────────────────── */
-function LiveDashboard() {
-  const [phase, setPhase] = useState(1);
-  const [activating, setActivating] = useState(false);
-  const [visibleCalls, setVisibleCalls] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [incoming, setIncoming] = useState(null);
-  const timerRef = useRef(null);
-
-  const clear = () => clearTimeout(timerRef.current);
-
-  const runPhase = (calls, nextFn) => {
-    let i = 0;
-    const step = () => {
-      if (i >= calls.length) { timerRef.current = setTimeout(nextFn, 800); return; }
-      const call = calls[i];
-      setIncoming(call);
-      timerRef.current = setTimeout(() => {
-        setIncoming(null);
-        setVisibleCalls(prev => [call, ...prev]);
-        setTotal(prev => prev + (call.value || 0));
-        i++;
-        timerRef.current = setTimeout(step, 1000);
-      }, 1500);
-    };
-    timerRef.current = setTimeout(step, 700);
-  };
-
-  const startPhase1 = () => {
-    setPhase(1); setVisibleCalls([]); setTotal(0); setIncoming(null);
-    runPhase(BLEED_CALLS, () => {
-      setActivating(true);
-      timerRef.current = setTimeout(() => {
-        setActivating(false);
-        setVisibleCalls([]); setTotal(0); setIncoming(null);
-        startPhase2();
-      }, 1500);
-    });
-  };
-
-  const startPhase2 = () => {
-    setPhase(2);
-    runPhase(RECOVERY_CALLS, () => {
-      timerRef.current = setTimeout(() => {
-        setVisibleCalls([]); setIncoming(null);
-        startPhase3();
-      }, 1200);
-    });
-  };
-
-  const startPhase3 = () => {
-    setPhase(3);
-    runPhase(WHATSAPP_EVENTS, () => {
-      timerRef.current = setTimeout(startPhase1, 3000);
-    });
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { startPhase1(); return clear; }, []);
-
-  const isRecovery = phase === 2;
-  const isWhatsapp = phase === 3;
-  const accentColor = isWhatsapp ? '#059669' : (isRecovery ? '#3D5AFE' : '#DC2626');
-
-  /* ── Activation screen ── */
-  if (activating) {
-    return (
-      <div
-        className="w-full overflow-hidden flex items-center justify-center"
-        style={{
-          background: '#FFFFFF',
-          border: '2px solid #0F0D0B',
-          boxShadow: '12px 12px 0px 0px #3D5AFE',
-          minHeight: '22.5rem',
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-5 px-10 text-center"
-        >
-          <div className="relative">
-            <div
-              className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(61,90,254,0.07)' }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="#3D5AFE" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <div
-              className="absolute inset-0 rounded-full animate-ping opacity-20"
-              style={{ background: '#3D5AFE' }}
-            />
-          </div>
-          <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] mb-2" style={{ color: '#3D5AFE' }}>
-              Engageo Activating
-            </p>
-            <p className="font-sans text-sm font-semibold text-obsidian">Taking control of your calls</p>
-            <p className="font-mono text-[9px] text-muted mt-1.5">Every future call answered in &lt; 8 seconds</p>
-          </div>
-          <div
-            className="w-40 h-[2px] rounded-full overflow-hidden mt-1"
-            style={{ background: '#F2F0EB' }}
-          >
-            <motion.div
-              style={{ background: '#3D5AFE', height: '100%' }}
-              initial={{ width: '0%' }}
-              animate={{ width: '100%' }}
-              transition={{ duration: 1.5, ease: 'easeInOut' }}
-            />
-          </div>
-        </motion.div>
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="absolute w-full h-full opacity-0 cursor-pointer z-10 touch-pan-x"
+        />
+        <div
+          className="absolute w-[18px] h-[18px] rounded-full pointer-events-none transition-transform group-active:scale-125"
+          style={{
+            backgroundColor: '#6366F1', // Indigo/Purple thumb matching screenshot
+            left: `calc(${percentage}% - 9px)`,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            boxShadow: '0 0 16px rgba(99, 102, 241, 0.8), 0 0 32px rgba(99, 102, 241, 0.4)'
+          }}
+        />
       </div>
-    );
-  }
 
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={`phase-${phase}`}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.35 }}
-        style={{
-          background: '#FFFFFF',
-          overflow: 'hidden',
-          border: '2px solid #0F0D0B',
-          boxShadow: isWhatsapp 
-            ? '12px 12px 0px 0px #059669' 
-            : (isRecovery ? '12px 12px 0px 0px #3D5AFE' : '12px 12px 0px 0px #DC2626'),
-          transition: 'box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-          minHeight: '22.5rem',
-        }}
-        className="flex flex-col h-full rounded-xl w-full"
-      >
-        {/* Top colour tag */}
-        <div style={{ height: 3, background: accentColor, opacity: 0.9, borderRadius: '28px 28px 0 0' }} />
-
-        {/* Header */}
-        <div
-          className="flex items-center justify-between px-5 pt-4 pb-3.5"
-          style={{ background: isWhatsapp ? 'rgba(5,150,105,0.03)' : (isRecovery ? 'rgba(61,90,254,0.03)' : 'rgba(220,38,38,0.025)') }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
-                style={{ background: accentColor }}
-              />
-              <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: accentColor }} />
-            </span>
-            <span
-              className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em]"
-              style={{ color: accentColor }}
-            >
-              {isWhatsapp ? 'WhatsApp Engine' : (isRecovery ? 'Engageo Active' : 'Without Engageo')}
-            </span>
-          </div>
-          <span
-            className="font-mono text-[9px] px-2 py-[2px] border font-bold uppercase tracking-[0.15em]"
-            style={{
-              color: accentColor,
-              borderColor: isWhatsapp ? 'rgba(5,150,105,0.3)' : (isRecovery ? 'rgba(61,90,254,0.3)' : 'rgba(220,38,38,0.3)'),
-              background: 'transparent',
-            }}
-          >
-            {isWhatsapp ? 'ACTIVE' : (isRecovery ? 'LIVE' : 'TODAY')}
-          </span>
-        </div>
-
-        {/* Incoming flash */}
-        <div
-          className="overflow-hidden transition-all duration-300 mx-4"
-          style={{ maxHeight: incoming ? 56 : 0, opacity: incoming ? 1 : 0, marginTop: incoming ? 10 : 0 }}
-        >
-          <div
-            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl"
-            style={{ background: isWhatsapp ? 'rgba(5,150,105,0.06)' : (isRecovery ? 'rgba(61,90,254,0.06)' : 'rgba(220,38,38,0.05)') }}
-          >
-            <span className="relative flex h-1.5 w-1.5 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: accentColor }} />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: accentColor }} />
-            </span>
-            <span className="font-sans text-[11px] font-medium text-obsidian truncate flex-1">
-              {isWhatsapp ? 'Dispatching' : (isRecovery ? 'Intercepting' : 'Incoming')}: <strong>{incoming?.name}</strong> · {incoming?.procedure}
-            </span>
-            {!isWhatsapp && (
-              <span className="font-mono text-[11px] font-bold shrink-0" style={{ color: accentColor }}>
-                ₹{incoming?.value?.toLocaleString('en-IN')}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Column headers */}
-        <div className="flex items-center px-4 pt-5 pb-2">
-          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] w-11">Time</span>
-          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] flex-1 px-3">Patient</span>
-          <span className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">{isWhatsapp ? 'Status' : 'Amount'}</span>
-        </div>
-
-        <div className="mx-4" style={{ height: 1, background: '#F2F0EB' }} />
-
-        {/* Call rows */}
-        <div className="px-2 pt-1 pb-2" style={{ minHeight: '8.125rem' }}>
-          {visibleCalls.length === 0 && !incoming && (
-            <div className="flex items-center justify-center h-28">
-              <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em]">
-                {isWhatsapp ? 'Awaiting slot confirms…' : (isRecovery ? 'Ready to intercept…' : 'Monitoring calls…')}
-              </p>
-            </div>
-          )}
-          {[...visibleCalls].reverse().map(call => (
-            <LedgerRow key={call.id} call={call} phase={phase} />
-          ))}
-        </div>
-
-        {/* Footer total */}
-        <div
-          className="px-5 py-4 mx-4 mb-4 rounded-2xl flex items-center justify-between mt-auto"
-          style={{ background: '#F7F5F2' }}
-        >
-          <div>
-            <p className="font-mono text-[9px] text-muted uppercase tracking-[0.12em] mb-0.5">
-              {isRecovery || isWhatsapp ? 'Revenue Secured' : 'Revenue Lost'}
-            </p>
-            <p className="font-mono text-[9px]" style={{ color: (isRecovery || isWhatsapp) ? 'rgba(61,90,254,0.65)' : 'rgba(220,38,38,0.45)' }}>
-              {isRecovery || isWhatsapp ? "Calls that would've been missed." : "And it's not even noon yet."}
-            </p>
-          </div>
-          <motion.p
-            key={total}
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.25 }}
-            className="font-mono font-bold tabular-nums"
-            style={{ fontSize: '1.375rem', color: (isRecovery || isWhatsapp) ? '#3D5AFE' : '#DC2626', letterSpacing: '-0.02em' }}
-          >
-            {isRecovery || isWhatsapp ? '+' : '−'}₹{total.toLocaleString('en-IN')}
-          </motion.p>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+      <div className="flex justify-between mt-3">
+        <span className="font-mono text-[10px] text-white/40">{min}{label.includes('CALLS') ? ' calls' : 'K'}</span>
+        <span className="font-mono text-[10px] text-white/40">{max}{label.includes('CALLS') ? ' calls' : 'K'}</span>
+      </div>
+    </div>
   );
 }
-
-/* ─── Metrics ────────────────────────────────────────────────── */
-const metrics = [
-  { label: 'AVG RECOVERY', value: '₹24K' },
-  { label: 'CALL RECOVERY', value: '<8s' },
-  { label: 'WHATSAPP OPEN RATE', value: '94%' },
-  { label: 'CLINICS LIVE', value: '47+' },
-];
 
 export default function Hero() {
-  const { openModal } = useModal();
+  const [inboundCalls, setInboundCalls] = useState(20);
+  const [caseValue, setCaseValue] = useState(18000);
 
-  const scrollToLifecycle = () => {
-    document.querySelector('#lifecycle')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Math logic matching screenshot
+  const monthlyMissed = inboundCalls * 4;
+  const totalLost = monthlyMissed * caseValue;
+
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat('en-IN').format(val);
   };
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-[92vh] flex flex-col lg:flex-row items-center justify-between px-5 md:px-12 lg:px-20 pt-24 md:pt-32 pb-16 md:pb-20 gap-12 md:gap-16">
-      {/* Copy */}
-      <div className="w-full max-w-2xl space-y-8 md:space-y-10 relative z-10 mx-auto md:mx-0">
-        <motion.div
-          className="space-y-8"
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: [0.25, 1, 0.5, 1] }}
-        >
-          <div className="section-label mb-6 text-xs md:text-sm">● Voice + WhatsApp Recovery — Live in 47 Clinics</div>
+    <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-32 pb-20 bg-[#0B0C10] overflow-hidden">
 
-          <h1 className="tracking-tighter text-left">
-            <div className="font-sans text-[2.5rem] md:text-6xl lg:text-[5rem] font-bold text-obsidian mb-2 leading-[1.05] w-full">
-              Your clinic is<br className="hidden md:block"/>{" "}
-              {/* Aggressive optical alignment to match stem of 'l' with edge of 'Y' */}
-              <span className="-ml-[0.05em] inline-block tracking-tight">losing</span>
-            </div>
-            {/* Typewriter line — controlled size so all phrases stay on 1 line,
-                preventing the phantom-spacer from leaving visible blank space */}
-            <span
-              className="font-sans font-bold text-brand tracking-tight break-words whitespace-normal md:whitespace-nowrap"
-              style={{
-                fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-                display: 'block',
-                lineHeight: 1.15,
-              }}
-            >
-              <TypewriterText words={HERO_WORDS} />
-            </span>
+      <style>
+        {`
+        @keyframes grid-scan {
+          0% { transform: translateY(-100%); opacity: 0; }
+          10% { opacity: 0.5; }
+          90% { opacity: 0.5; }
+          100% { transform: translateY(100%); opacity: 0; }
+        }
+        .hero-grid {
+          background-image: 
+            linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+          background-size: 40px 40px;
+          mask-image: radial-gradient(circle at center, black 10%, transparent 70%);
+          -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 70%);
+        }
+        .laser-line {
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #6366F1, transparent);
+          box-shadow: 0 0 15px #6366F1, 0 0 30px #6366F1;
+          animation: grid-scan 6s linear infinite;
+        }
+        `}
+      </style>
+
+      {/* Cybernetic Grid Background */}
+      <div className="absolute inset-0 hero-grid pointer-events-none mix-blend-screen overflow-hidden">
+        <div className="absolute inset-0 flex flex-col justify-center">
+          <div className="laser-line"></div>
+        </div>
+      </div>
+
+      {/* Background abstract texture/glow */}
+      <motion.div
+        animate={{ scale: [1, 1.1, 1], opacity: [0.08, 0.15, 0.08] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#6366F1] blur-[140px] mix-blend-screen pointer-events-none rounded-full"
+      />
+
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], opacity: [0.03, 0.08, 0.03] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#34D399] blur-[150px] mix-blend-screen pointer-events-none rounded-full"
+      />
+
+      <div className="w-full max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
+
+        {/* Left Column - Inputs */}
+        <motion.div
+          className="w-full"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+        >
+          <div className="font-mono uppercase text-[10px] tracking-[0.2em] font-medium text-white/50 mb-6">
+            LOSS CALCULATOR
+          </div>
+
+          <h1 className="font-serif text-[42px] md:text-[56px] lg:text-[64px] font-bold text-white leading-[1.05] tracking-tight mb-2">
+            Exactly how much is
+            <br />
+            <span className="italic font-light text-[#E63B2E]" style={{ textShadow: '0 0 30px rgba(230,59,46,0.3)' }}>your receptionist missing?</span>
           </h1>
 
-          <p className="max-w-[19rem] md:max-w-md font-sans text-[15px] md:text-base text-subtle leading-relaxed mt-4">
-            Every missed call triggers a full recovery sequence — AI voice 
-            callback in 8 seconds, patient qualified, slot booked to your 
-            calendar, WhatsApp confirmation sent, 24-hour reminder fired. 
-            While you're with your next patient.
+          <p className="font-sans text-[15px] md:text-[16px] text-white/60 leading-relaxed max-w-md mt-6 mb-16">
+            Use your real clinic numbers. If you spend on Google or Meta Ads, this is the revenue you are actively throwing away every single month.
+          </p>
+
+          <div className="w-full max-w-[400px]">
+            <CustomSlider
+              label="MISSED CALLS PER WEEK"
+              min={5} max={100} step={1} value={inboundCalls}
+              onChange={setInboundCalls}
+              valueDisplay={`${inboundCalls} calls`}
+            />
+            <CustomSlider
+              label="AVERAGE CASE VALUE (₹)"
+              min={2000} max={150000} step={1000} value={caseValue}
+              onChange={setCaseValue}
+              valueDisplay={`₹${caseValue / 1000}K`}
+            />
+          </div>
+
+          <p className="font-mono text-[11px] text-white/40 leading-relaxed max-w-[380px] mt-12">
+            Based on recovery data from <span className="text-white font-bold">47 Indian specialist clinics</span>. Engageo's average call-back success rate is <span className="text-[#6366F1]">68%</span>.
           </p>
         </motion.div>
 
+        {/* Right Column - Output Card */}
         <motion.div
-          className="flex flex-wrap items-center gap-4"
-          initial={{ opacity: 0, y: 20 }}
+          className="w-full flex justify-center lg:justify-end relative"
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: [0.25, 1, 0.5, 1] }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 1, 0.5, 1] }}
         >
-          <button
-            onClick={openModal}
-            className="group flex flex-1 justify-center items-center gap-2 bg-brand text-white text-[12px] md:text-[13px] font-bold tracking-wide px-4 md:px-8 py-3.5 md:py-4 border-2 border-obsidian retro-shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 active:scale-[0.98]"
+          {/* Floating Accents */}
+          <motion.div
+            animate={{ y: [-8, 8, -8] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-6 -left-6 bg-[#0B0C10]/80 border border-white/10 text-white/80 font-mono text-[10px] tracking-widest px-4 py-2 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 hidden md:flex items-center gap-2 backdrop-blur-md"
           >
-            <span className="whitespace-nowrap">See What You're Losing — Free Audit</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 shrink-0" />
-          </button>
-          <button
-            onClick={scrollToLifecycle}
-            className="px-4 md:px-7 py-3.5 md:py-4 flex-1 justify-center text-obsidian bg-white border-2 border-obsidian retro-shadow text-[12px] md:text-[13px] font-bold tracking-wide hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 whitespace-nowrap"
-          >
-            Watch a Real Recovery Call
-          </button>
-        </motion.div>
+            <span className="w-1.5 h-1.5 bg-[#E63B2E] rounded-full animate-pulse shadow-[0_0_8px_#E63B2E]"></span>
+            Missed Call Detected
+          </motion.div>
 
-        <motion.div
-          className="flex flex-wrap gap-3 pt-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.45 }}
-        >
-          {metrics.map((m) => (
-            <div
-              key={m.label}
-              className="flex items-center gap-3 px-4 md:px-5 py-2 md:py-2.5 bg-white border-2 border-obsidian/15 retro-shadow flex-1 md:flex-auto justify-center"
-            >
-              <span className="font-sans text-sm md:text-base font-bold text-obsidian tracking-tight whitespace-nowrap">{m.value}</span>
-              <span className="font-mono text-[9px] md:text-[10px] text-muted uppercase tracking-widest whitespace-nowrap">{m.label}</span>
+          <motion.div
+            animate={{ y: [8, -8, 8] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute -bottom-8 -right-8 bg-[#34D399]/10 border border-[#34D399]/30 text-[#34D399] font-mono text-[10px] tracking-widest px-4 py-2 rounded-full shadow-[0_10px_30px_rgba(52,211,153,0.15)] z-20 hidden md:flex items-center gap-2 backdrop-blur-md"
+          >
+            <span className="w-1.5 h-1.5 bg-[#34D399] rounded-full shadow-[0_0_8px_#34D399]"></span>
+            AI Recovery Triggered
+          </motion.div>
+
+          <div className="w-full max-w-[460px] bg-[#F5F3ED] rounded-[32px] p-8 md:p-12 shadow-[0_30px_100px_-20px_rgba(99,102,241,0.25)] relative border border-white/5">
+
+            <div className="text-center w-full">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] font-semibold text-[#8C857B] mb-4">
+                GROSS REVENUE LOST THIS MONTH
+              </p>
+
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  key={totalLost}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="font-mono text-[48px] md:text-[64px] font-bold text-[#D95D39] leading-none mb-3 tracking-tighter"
+                >
+                  ₹{formatCurrency(totalLost)}
+                </motion.div>
+              </AnimatePresence>
+
+              <p className="font-mono text-[12px] text-[#8C857B] mb-10">
+                That's ~ <span className="font-bold">{monthlyMissed} patients</span> booking with competitors.
+              </p>
             </div>
-          ))}
-        </motion.div>
-      </div>
 
-      {/* Dashboard */}
-      <motion.div
-        className="relative w-full max-w-md"
-        initial={{ opacity: 0, scale: 0.94, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.35, ease: [0.25, 1, 0.5, 1] }}
-      >
-        <div className="absolute -inset-8 bg-gradient-to-tr from-brand/6 via-transparent to-red-400/4 blur-3xl rounded-3xl pointer-events-none" />
-        <div className="relative">
-          <LiveDashboard />
-        </div>
-      </motion.div>
+            {/* Inner White Box */}
+            <div className="w-full bg-white rounded-[20px] p-6 shadow-sm border border-[#E8E6E1]">
+              <p className="font-mono text-[9px] uppercase tracking-[0.15em] font-semibold text-[#A39D94] mb-3">
+                THE FIX
+              </p>
+
+              <p className="font-mono text-[13px] text-[#1A1A1A] leading-[1.6] mb-8">
+                Engageo costs ₹25,000/mo. You only need to recover <span className="font-bold">{(25000 / caseValue).toFixed(0) || 2}</span> of those {monthlyMissed} patients to break entirely even.
+              </p>
+
+              <a
+                href="/free-audit.html"
+                className="w-full flex justify-center bg-[#111111] hover:bg-[#222222] text-white font-sans text-[14px] font-bold py-4 rounded-xl transition-all hover:-translate-y-0.5"
+              >
+                Claim Free Audit &rarr;
+              </a>
+            </div>
+
+          </div>
+        </motion.div>
+
+      </div>
     </section>
   );
 }
