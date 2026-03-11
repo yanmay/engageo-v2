@@ -5,13 +5,13 @@
 - [x] Task 1.2: Configure fonts and assets.
 
 ## Wave 2: Structural Narrative
-- [ ] Task 2.1: Implement Floating Navbar and Hero "Opening Shot".
-- [ ] Task 2.2: Implement Philosophy manifesto section.
+- [x] Task 2.1: Implement Floating Navbar and Hero "Opening Shot".
+- [x] Task 2.2: Implement Philosophy manifesto section.
 
 ## Wave 3: Interactive Artifacts (Features)
-- [ ] Task 3.1: Build Diagnostic Shuffler card.
-- [ ] Task 3.2: Build Telemetry Typewriter card.
-- [ ] Task 3.3: Build Cursor Protocol Scheduler card.
+- [x] Task 3.1: Build Diagnostic Shuffler card.
+- [x] Task 3.2: Build Telemetry Typewriter card.
+- [x] Task 3.3: Build Cursor Protocol Scheduler card.
 
 ## Wave 4: Process & Proof
 - [ ] Task 4.1: Implement Protocol Stacking Archive (3 cards).
