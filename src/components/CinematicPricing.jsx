@@ -1,66 +1,117 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import gsap from 'gsap';
 
-const PricingCard = ({ name, price, desc, features, highlighted = false }) => (
-    <div className={`p-10 rounded-premium border transition-all duration-500 hover:-translate-y-4 ${highlighted
-            ? 'bg-[var(--moss)] text-white border-[var(--moss)] shadow-2xl scale-105 z-10'
-            : 'bg-white text-[var(--charcoal)] border-[var(--moss)]/5'
+const PricingCard = React.forwardRef(({ name, price, desc, features, highlighted = false }, ref) => (
+    <div 
+        ref={ref}
+        className={`p-6 md:p-10 rounded-premium border transition-all duration-500 hover:-translate-y-4 flex flex-col h-full ${highlighted
+            ? 'bg-[var(--surface-dark)] text-white border-white/10 shadow-3xl lg:scale-105 z-10'
+            : 'bg-white text-[var(--text)] border-[var(--primary)]/5 shadow-sm'
         }`}>
-        <div className="font-data text-xs tracking-widest uppercase mb-8 opacity-60">{name}</div>
-        <div className="text-4xl md:text-5xl font-bold mb-4">{price}</div>
-        <div className="text-sm opacity-60 mb-10 min-h-[3rem]">{desc}</div>
-        <div className="space-y-4 mb-12">
+        <div className="font-data text-[10px] tracking-[0.2em] uppercase mb-8 md:mb-10 opacity-60 font-bold">{name}</div>
+        <div className="text-4xl md:text-5xl font-bold mb-4 tracking-tighter">
+            {price}<span className="text-base font-medium opacity-40 ml-1">/mo</span>
+        </div>
+        <div className="text-sm font-medium opacity-60 mb-8 md:mb-12 min-h-[3rem] tracking-tight">{desc}</div>
+        <div className="space-y-4 md:space-y-5 mb-12 md:mb-16 flex-1">
             {features.map((f, i) => (
-                <div key={i} className="flex items-center gap-3 text-sm">
-                    <div className={`w-1.5 h-1.5 rounded-full ${highlighted ? 'bg-[var(--clay)]' : 'bg-[var(--moss)]'}`} />
-                    {f}
+                <div key={i} className="flex items-start gap-4 text-xs font-semibold tracking-tight">
+                    <div className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${highlighted ? 'bg-[var(--primary)] shadow-[0_0_8px_var(--primary)]' : 'bg-[var(--primary)]/30'}`} />
+                    <span className={highlighted ? 'text-white/80' : 'text-[var(--text)]/60'}>{f}</span>
                 </div>
             ))}
         </div>
-        <button className={`w-full py-4 rounded-full font-bold text-xs tracking-widest uppercase transition-all ${highlighted
-                ? 'bg-[var(--clay)] text-white hover:bg-white hover:text-[var(--moss)]'
-                : 'bg-[var(--charcoal)] text-white hover:bg-[var(--moss)]'
+        <button className={`w-full py-4 md:py-5 rounded-full font-bold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 ${highlighted
+                ? 'bg-[var(--primary)] text-white hover:bg-white hover:text-[var(--command-black)] shadow-[0_8px_24px_-8px_rgba(37,99,235,0.4)]'
+                : 'bg-[var(--command-black)] text-white hover:bg-[var(--primary)]'
             }`}>
             Get Started
         </button>
     </div>
-);
+));
 
 export default function CinematicPricing() {
+    const sectionRef = useRef(null);
+    const cardsRef = useRef([]);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(".reveal-pricing-header", {
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                }
+            });
+
+            cardsRef.current.forEach((card, i) => {
+                gsap.from(card, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    delay: i * 0.15,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                    }
+                });
+            });
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section id="pricing" className="py-32 px-8 md:px-24 bg-[var(--cream)]">
+        <section id="pricing" ref={sectionRef} className="py-24 md:py-32 px-6 md:px-24 bg-[var(--background)] overflow-hidden">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-24">
-                    <div className="font-data text-[var(--clay)] text-xs tracking-widest uppercase mb-4">Investment</div>
-                    <h2 className="text-5xl md:text-6xl font-bold text-[var(--charcoal)] mb-6">Pick Your Growth Stage</h2>
-                    <p className="text-[var(--charcoal)]/60 max-w-lg mx-auto">Most clinics start at Recover.<br />Most stay for Dominate.</p>
+                <div className="max-w-3xl mb-16 md:mb-24 reveal-pricing-header">
+                    <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-4 font-bold">Investment</div>
+                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[var(--command-black)] mb-8 tracking-tighter italic">
+                        Transparent Pricing. <span className="text-[var(--primary)] not-italic">One Guarantee.</span>
+                    </h2>
+                    <p className="text-[var(--command-black)]/60 text-lg md:text-xl leading-relaxed max-w-xl">
+                        Fixed monthly retainers. No success fees. No hidden setup costs. Scaled for every clinic stage.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-stretch pt-8">
                     <PricingCard
+                        ref={el => cardsRef.current[0] = el}
                         name="Recover"
-                        price="₹25K/mo"
+                        price="₹25K"
                         desc="Missed call recovery. Answered, qualified, and booked in under 8s."
                         features={["Missed Call Intercept", "AI Localized Voice", "WhatsApp Confirmations", "Google Calendar Sync"]}
                     />
                     <PricingCard
+                        ref={el => cardsRef.current[1] = el}
                         name="Grow"
-                        price="₹55K/mo"
+                        price="₹55K"
                         desc="Lead Generation + Recovery. We run ads, you stay in the OT."
-                        features={["All in Recover", "Facebook/Google Ad Mgmt", "Priority Lead Routing", "15 Matching Guarantee"]}
+                        features={["All in Recover", "Facebook/Google Ad Mgmt", "Priority Lead Routing", "15 Booking Guarantee"]}
                         highlighted={true}
                     />
                     <PricingCard
+                        ref={el => cardsRef.current[2] = el}
                         name="Dominate"
-                        price="₹1.2L/mo"
+                        price="₹1.2L"
                         desc="Full Clinic Growth System. Be the first choice in your city."
                         features={["All in Grow", "SEO Mastery", "Content Engine", "Direct ROI Dashboards"]}
                     />
                 </div>
 
-                <p className="mt-20 text-center text-[var(--charcoal)]/40 text-xs font-medium max-w-2xl mx-auto italic">
-                    * The 15-Booking Guarantee: If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend service at zero cost until we hit that number.
-                </p>
+                <div className="mt-20 flex flex-col md:flex-row items-center justify-between gap-10 border-t border-[var(--primary)]/5 pt-12">
+                    <p className="text-[var(--command-black)]/40 text-[10px] font-bold uppercase tracking-widest max-w-md">
+                        * The 15-Booking Guarantee: If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend service at zero cost until we hit that number.
+                    </p>
+                    <Link to="/pricing" className="text-[var(--primary)] text-xs font-bold tracking-widest uppercase border-b-2 border-transparent hover:border-[var(--primary)] transition-all pb-1">
+                        Full Breakdown & Comparison →
+                    </Link>
+                </div>
             </div>
         </section>
     );
 }
+

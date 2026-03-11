@@ -70,7 +70,7 @@ function CheckIcon({ color }) {
 
 export default function Pricing({ isPreview = false }) {
   return (
-    <section id="pricing" className="py-20 md:py-32 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10" style={{ backgroundColor: 'var(--parchment)' }}>
+    <section id="pricing" className="py-20 md:py-32 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10" style={{ backgroundColor: 'var(--clinic-white)' }}>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           {tiers.map((tier) => {
@@ -78,10 +78,10 @@ export default function Pricing({ isPreview = false }) {
             const isGrow = tier.theme === 'dark';
 
             const cardStyle = isDark
-              ? { backgroundColor: 'var(--ink)', color: 'var(--parchment)', borderColor: 'var(--ink)' }
-              : { backgroundColor: 'var(--parchment)', color: 'var(--ink)', borderColor: 'var(--ink-faint)' };
+              ? { backgroundColor: 'var(--command-black)', color: 'var(--clinic-white)', borderColor: 'var(--command-black)' }
+              : { backgroundColor: 'var(--clinic-white)', color: 'var(--command-black)', borderColor: 'var(--clinic-silver)' };
 
-            const accentColor = isGrow ? 'var(--green)' : (isDark ? 'var(--gold)' : 'var(--ink)');
+            const accentColor = isGrow ? 'var(--signal-green)' : (isDark ? 'var(--sovereign-gold)' : 'var(--recovery-blue)');
 
             return (
               <div
@@ -96,8 +96,8 @@ export default function Pricing({ isPreview = false }) {
                       className="inline-block text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full"
                       style={
                         isGrow
-                          ? { background: '#10B981', color: '#1A1A1A' }
-                          : { background: 'transparent', color: '#D97706', border: '1px solid #D97706' }
+                          ? { background: 'var(--signal-green)', color: '#1A1A1A' }
+                          : { background: 'transparent', color: 'var(--sovereign-gold)', border: '1px solid var(--sovereign-gold)' }
                       }
                     >
                       {tier.badge}
@@ -107,13 +107,13 @@ export default function Pricing({ isPreview = false }) {
 
                 <div className="flex flex-col flex-1 gap-0 relative z-10">
                   <div className="mb-1">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(26,26,26,0.5)' }}>
+                    <span className="font-data text-[10px] font-bold uppercase tracking-widest" style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(26,26,26,0.5)' }}>
                       {tier.label}
                     </span>
                   </div>
 
                   <div className="mb-2">
-                    <h3 className="text-2xl font-bold tracking-tight leading-tight" style={{ fontFamily: '"Fraunces", serif' }}>
+                    <h3 className="text-3xl font-bold tracking-tight leading-tight">
                       {tier.title}
                     </h3>
                   </div>
@@ -125,14 +125,14 @@ export default function Pricing({ isPreview = false }) {
                   </div>
 
                   <div className="min-h-[72px] mb-5">
-                    <span className="text-[40px] font-bold tracking-tighter block" style={{ fontFamily: '"Fraunces", serif' }}>
+                    <span className="text-[40px] font-bold tracking-tighter block font-data">
                       {tier.price}
                     </span>
-                    <span className="font-mono text-xs block mt-0.5" style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(26,26,26,0.5)' }}>
+                    <span className="font-data text-xs block mt-0.5 uppercase tracking-widest" style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(26,26,26,0.5)' }}>
                       {tier.priceSub}
                     </span>
                     {tier.priceNote ? (
-                      <span className="font-mono text-[10px] italic block mt-1" style={{ color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(26,26,26,0.4)' }}>
+                      <span className="font-data text-[10px] italic block mt-1" style={{ color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(26,26,26,0.4)' }}>
                         {tier.priceNote}
                       </span>
                     ) : (
@@ -144,7 +144,7 @@ export default function Pricing({ isPreview = false }) {
 
                   <ul className="flex flex-col gap-3 flex-1">
                     {tier.features.map((f, i) => (
-                      <li key={i} className="flex gap-3 text-sm items-start" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : '#1A1A1A' }}>
+                      <li key={i} className="flex gap-3 text-sm items-start font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : 'var(--clinic-ink)' }}>
                         <CheckIcon color={accentColor} />
                         {f}
                       </li>
@@ -160,11 +160,11 @@ export default function Pricing({ isPreview = false }) {
                   {!isPreview && (
                     <Link
                       to="/audit"
-                      className="block text-center w-full py-3.5 text-[15px] font-bold mt-6 rounded-lg transition-transform hover:scale-[1.02]"
+                      className="block text-center w-full py-4 text-[13px] tracking-widest uppercase font-bold mt-6 rounded-lg transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/10"
                       style={
                         isDark
-                          ? { background: accentColor, color: '#1A1A1A' }
-                          : { background: 'transparent', border: '1px solid #1A1A1A', color: '#1A1A1A' }
+                          ? { background: accentColor, color: (isGrow ? 'var(--command-black)' : 'white') }
+                          : { background: 'var(--command-black)', color: 'white' }
                       }
                     >
                       {tier.cta}
@@ -177,17 +177,17 @@ export default function Pricing({ isPreview = false }) {
         </div>
 
         {!isPreview && (
-          <div className="mt-20 p-10 border border-[var(--ink-faint)] rounded-[3rem] bg-[var(--green)]/5 text-center max-w-4xl mx-auto backdrop-blur-sm relative overflow-hidden group">
+          <div className="mt-20 p-10 border border-white/10 rounded-[3rem] bg-[var(--signal-green)]/5 text-center max-w-4xl mx-auto backdrop-blur-sm relative overflow-hidden group">
             {/* Subtle light leak inside the banner */}
-            <div className="absolute -top-24 -left-24 w-48 h-48 bg-[var(--green)]/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-[var(--signal-green)]/10 blur-[80px] rounded-full pointer-events-none" />
 
             <div className="relative z-10 flex flex-col items-center gap-4">
-              <span className="font-mono text-[10px] font-bold text-[var(--green)] tracking-[0.3em] uppercase">The Defensible Guarantee</span>
-              <p className="text-[17px] md:text-[20px] font-sans font-medium leading-tight max-w-2xl" style={{ color: 'var(--ink)' }}>
+              <span className="font-data text-[10px] font-bold text-[var(--signal-green)] tracking-[0.3em] uppercase">The Defensible Guarantee</span>
+              <p className="text-[17px] md:text-[22px] font-sans font-bold leading-tight max-w-2xl tracking-tight" style={{ color: 'var(--command-black)' }}>
                 30-day risk-free implementation. <br className="hidden md:block" />
-                <span className="text-[var(--green)] font-bold italic">15 confirmed bookings or we work for free.</span>
-                No negotiation. No fine print.
+                <span className="text-[var(--signal-green)] font-bold italic">15 confirmed bookings or we work for free.</span>
               </p>
+              <p className="text-xs text-[var(--clinic-stone)] font-medium">No negotiation. No fine print. Verified clinic-side results.</p>
             </div>
           </div>
         )}

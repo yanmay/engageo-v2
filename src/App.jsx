@@ -15,6 +15,13 @@ import ScrollToTop from './components/ScrollToTop';
 import CinematicNavbar from './components/CinematicNavbar';
 import CinematicFooter from './components/CinematicFooter';
 
+import Home from './pages/Home';
+import HowItWorks from './pages/HowItWorks';
+import PricingPage from './pages/PricingPage';
+import Compare from './pages/Compare';
+import FAQPage from './pages/FAQPage';
+import Audit from './pages/Audit';
+
 function Layout({ children }) {
   const location = useLocation();
   const isAudit = location.pathname === '/audit';
@@ -80,7 +87,7 @@ function App() {
     <ModalProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="w-full relative bg-canvas overflow-x-hidden min-h-screen flex flex-col">
+        <div className="w-full relative bg-[var(--clinic-white)] overflow-x-hidden min-h-screen flex flex-col">
           {/* Grain texture overlay — replaces dot grid */}
           <div className="grain-texture" />
 

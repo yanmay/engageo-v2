@@ -21,8 +21,8 @@ export default function Compare() {
           Every Alternative
         </h1>
         <h2
-          className="font-serif italic tracking-tighter mb-6 mx-auto leading-tight"
-          style={{ color: 'var(--green)', fontSize: 'clamp(22px, 3.5vw, 32px)' }}
+          className="font-drama italic tracking-tighter mb-6 mx-auto leading-tight"
+          style={{ color: 'var(--signal-green)', fontSize: 'clamp(22px, 3.5vw, 32px)' }}
         >
           Built for Developers. Not Doctors.
         </h2>
@@ -53,8 +53,8 @@ export default function Compare() {
           to="/audit"
           className="inline-flex items-center justify-center font-bold tracking-wide transition-all hover:scale-[1.02] active:scale-[0.98]"
           style={{
-            backgroundColor: 'var(--green)',
-            color: 'var(--parchment)',
+            backgroundColor: 'var(--signal-green)',
+            color: 'white',
             borderRadius: '9999px',
             padding: '16px 32px',
             fontSize: '18px'

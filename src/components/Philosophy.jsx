@@ -6,54 +6,110 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Philosophy() {
   const sectionRef = useRef(null);
+  const textRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".philosophy-reveal", {
-        y: 60,
+      // Reveal the small labels
+      gsap.from(".reveal-label", {
+        y: 20,
         opacity: 0,
-        stagger: 0.2,
-        duration: 1.5,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 70%",
+          start: "top 80%",
+        }
+      });
+
+      // Reveal the main manifesto text with a "staggered word" effect
+      const words = textRef.current?.querySelectorAll('.word');
+      if (words && words.length > 0) {
+        gsap.from(words, {
+          y: 40,
+          opacity: 0,
+          rotateX: -30,
+          stagger: 0.05,
+          duration: 1.2,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: textRef.current,
+            start: "top 85%",
+          }
+        });
+      }
+
+      // Reveal the big drama text
+      gsap.from(".reveal-drama", {
+        y: 100,
+        opacity: 0,
+        skewY: 5,
+        duration: 1.5,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: ".reveal-drama",
+          start: "top 90%",
         }
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
+  const manifestoText = "In a world where clinics spend lakhs on ads, but lose thousands on missed calls. Every ring is a relationship. Every missed call is a business failure.";
+
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 px-8 md:px-24 bg-[var(--charcoal)] overflow-hidden"
+      className="relative py-40 px-8 md:px-24 bg-[var(--command-black)] noise-overlay overflow-hidden border-t border-white/5"
     >
-      {/* Organic texture background */}
-      <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1550686041-366ad85a1355?q=80&w=2574&auto=format&fit=crop")', // Abstract organic
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          mixBlendMode: 'overlay'
-        }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto flex flex-col gap-24">
-        <div className="flex flex-col gap-6 max-w-2xl">
-          <p className="philosophy-reveal font-data text-white/40 text-xs tracking-widest uppercase">The Perspective</p>
-          <div className="philosophy-reveal text-white/60 text-xl leading-relaxed">
-            Most clinics focus on: <span className="text-white">Acquiring new leads while letting high-intent callers slip away.</span>
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+          
+          {/* Left Column: Context */}
+          <div className="lg:col-span-6 flex flex-col gap-12">
+            <div className="reveal-label font-data text-[var(--recovery-blue)] text-xs tracking-[0.3em] uppercase flex items-center gap-4">
+               <span className="w-10 h-[1px] bg-[var(--recovery-blue)]" />
+               The Contrast
+            </div>
+            
+            <div ref={textRef} className="flex flex-col gap-8">
+              <p className="text-white/40 text-xl md:text-2xl leading-relaxed font-medium italic">
+                "Most clinics focus on acquiring new leads while letting high-intent callers slip away."
+              </p>
+              <p className="text-white text-3xl md:text-4xl lg:text-5xl leading-[1.1] font-bold tracking-tight">
+                {manifestoText.split(" ").map((word, i) => (
+                  <span key={i} className="word inline-block mr-[0.3em]">{word}</span>
+                ))}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="philosophy-reveal flex flex-col items-start md:items-end">
-          <h2 className="text-white/40 text-lg md:text-xl font-medium mb-4">We focus on:</h2>
-          <div className="font-drama text-6xl md:text-8xl lg:text-9xl text-[var(--clay)] text-right leading-tight italic">
-            Recovering every <br />missed booking.
+          {/* Right Column: Manifesto Action */}
+          <div className="lg:col-span-6 flex flex-col items-start lg:items-end lg:text-right pt-6 lg:pt-48">
+            <div className="reveal-label font-data text-white/30 text-xs tracking-[0.3em] uppercase mb-12">
+               The Mission
+            </div>
+            
+            <div className="reveal-drama">
+               <h2 className="text-white/40 text-2xl md:text-3xl font-medium mb-8">Instead, we focus on:</h2>
+               <div className="font-drama text-5xl sm:text-6xl md:text-8xl lg:text-[10rem] text-white leading-[0.8] drop-shadow-2xl">
+                  Recovering <br className="hidden md:block" /> Every Booking.
+               </div>
+            </div>
+            
+            <div className="reveal-label mt-24 flex items-center justify-end gap-8 text-white/20 font-data text-[10px] tracking-widest uppercase italic">
+                <span>// Zero-Leakage Protocol</span>
+                <span>// Clinical Precision</span>
+                <span>// Patient-First AI</span>
+            </div>
           </div>
+
         </div>
       </div>
+
+      {/* Subtle background glow */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[var(--recovery-blue)]/5 blur-[120px] rounded-full pointer-events-none" />
     </section>
   );
 }

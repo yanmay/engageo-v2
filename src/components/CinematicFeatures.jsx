@@ -323,6 +323,9 @@ const SchedulerCard = () => {
 };
 
 export default function CinematicFeatures() {
+    const sectionRef = useRef(null);
+    const cardsRef = useRef([]);
+
     const features = [
         {
             title: "Instant Response",
@@ -341,13 +344,47 @@ export default function CinematicFeatures() {
         }
     ];
 
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(".reveal-header", {
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 80%",
+                }
+            });
+
+            cardsRef.current.forEach((card, i) => {
+                gsap.from(card, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    delay: i * 0.1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%",
+                    }
+                });
+            });
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section id="platform" className="py-24 px-8 md:px-24 bg-[var(--background)] relative overflow-hidden">
+        <section 
+            id="platform" 
+            ref={sectionRef}
+            className="py-24 px-6 md:px-24 bg-[var(--background)] relative overflow-hidden"
+        >
             {/* Subtle background flare */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--primary)]/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
             
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="mb-20">
+                <div className="mb-20 reveal-header">
                     <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-4 font-bold">Platform Capabilities</div>
                     <h2 className="text-4xl md:text-5xl lg:text-7xl text-[var(--command-black)] mb-8 tracking-tighter">Flawless execution.<br /><span className="text-[var(--primary)]">Not just chatbots.</span></h2>
                     <p className="max-w-2xl text-[var(--command-black)]/60 text-lg md:text-xl leading-relaxed">
@@ -357,12 +394,16 @@ export default function CinematicFeatures() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                     {features.map((f, i) => (
-                        <div key={i} className="group bg-white rounded-premium border border-[var(--primary)]/5 p-10 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-3">
-                            <div className="mb-12 overflow-hidden rounded-[1.5rem] border border-[var(--primary)]/5 shadow-inner">
+                        <div 
+                            key={i} 
+                            ref={el => cardsRef.current[i] = el}
+                            className="group bg-white rounded-premium border border-[var(--primary)]/5 p-6 md:p-10 hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-3"
+                        >
+                            <div className="mb-8 md:mb-12 overflow-hidden rounded-[1.5rem] border border-[var(--primary)]/5 shadow-inner">
                                 {f.visual}
                             </div>
-                            <h3 className="text-2xl font-bold text-[var(--command-black)] mb-4 tracking-tight">{f.title}</h3>
-                            <p className="text-[var(--command-black)]/50 text-base leading-relaxed">{f.desc}</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-[var(--command-black)] mb-4 tracking-tight">{f.title}</h3>
+                            <p className="text-[var(--command-black)]/50 text-sm md:text-base leading-relaxed">{f.desc}</p>
                         </div>
                     ))}
                 </div>

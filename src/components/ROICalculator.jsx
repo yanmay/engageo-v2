@@ -86,15 +86,27 @@ function Slider({ value, min, max, step, onChange, label, format }) {
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function ROICalculator() {
   const { openModal } = useModal();
-  const [missedPerWeek, setMissedPerWeek] = useState(20);
-  const [avgCaseValue, setAvgCaseValue] = useState(18000);
+  const [specialty, setSpecialty] = useState('Hair Transplant');
+  const [monthlyCalls, setMonthlyCalls] = useState(120);
+  const [missRate, setMissRate] = useState(25);
+
+  // ── Specialty Config ──────────────────────────────────────────────────────
+  const specialtyConfig = {
+    'Hair Transplant': { avgValue: 80000 },
+    'Dental Implants': { avgValue: 60000 },
+    'Dermatology': { avgValue: 15000 },
+    'IVF / Fertility': { avgValue: 150000 }
+  };
+
+  const avgCaseValue = specialtyConfig[specialty]?.avgValue || 18000;
 
   // ── Math ──────────────────────────────────────────────────────────────────
   const RECOVERY_RATE = 0.68;       // 68% recovery rate (from pilot data)
-  const ENGAGEO_COST = 27500;       // mid-point of Path A pricing
+  const ENGAGEO_COST = 25000;       // Tier 1 price
 
-  const monthlyMissed = Math.round(missedPerWeek * 4.33);
+  const monthlyMissed = Math.round((monthlyCalls * missRate) / 100);
   const monthlyLoss = monthlyMissed * avgCaseValue;
+  const annualLoss = monthlyLoss * 12;
   const engageoRecovers = Math.round(monthlyLoss * RECOVERY_RATE);
   const netGain = engageoRecovers - ENGAGEO_COST;
   const roiMultiple = (engageoRecovers / ENGAGEO_COST).toFixed(1);
@@ -135,28 +147,45 @@ export default function ROICalculator() {
 
             {/* Left — inputs */}
             <div className="p-6 md:p-10 space-y-8 md:space-y-10 border-b lg:border-b-0 border-obsidian/10">
+              {/* Specialty Dropdown */}
+              <div className="space-y-3">
+                <label className="font-mono text-[10px] uppercase tracking-widest text-subtle font-semibold">
+                  Select Specialty
+                </label>
+                <select 
+                  value={specialty}
+                  onChange={(e) => setSpecialty(e.target.value)}
+                  className="w-full bg-white border border-obsidian/20 rounded-lg px-4 py-3 font-sans text-sm font-bold text-obsidian focus:outline-none focus:border-[var(--recovery-blue)] transition-all"
+                  style={{ appearance: 'none' }}
+                >
+                  {Object.keys(specialtyConfig).map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+
               <Slider
-                value={missedPerWeek}
-                min={5}
-                max={100}
-                step={1}
-                onChange={setMissedPerWeek}
-                label="Missed calls per week"
-                format={(v) => `${v} calls`}
+                value={monthlyCalls}
+                min={20}
+                max={200}
+                step={5}
+                onChange={setMonthlyCalls}
+                label="Monthly Inbound Calls"
+                format={(v) => `${v} calls/mo`}
               />
               <Slider
-                value={avgCaseValue}
-                min={2000}
-                max={150000}
-                step={1000}
-                onChange={setAvgCaseValue}
-                label="Average case value (₹)"
-                format={(v) => `₹${(v / 1000).toFixed(0)}K`}
+                value={missRate}
+                min={10}
+                max={45}
+                step={1}
+                onChange={setMissRate}
+                label="Estimated Miss Rate"
+                format={(v) => `${v}%`}
               />
 
               {/* Context line */}
               <p className="text-[11px] text-muted leading-relaxed">
-                Based on recovery data from <span className="text-obsidian font-semibold">47 Indian specialist clinics</span>.
+                Avg. case value for {specialty}: <span className="text-obsidian font-semibold">₹{avgCaseValue.toLocaleString('en-IN')}</span>.
                 Engageo's average call-back success rate is <span className="text-brand font-semibold">68%</span>.
               </p>
             </div>
@@ -167,15 +196,19 @@ export default function ROICalculator() {
               {/* Loss card */}
               <div className="space-y-1">
                 <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-subtle font-semibold">
-                  Monthly revenue walking out the door
+                  Monthly revenue at risk
                 </span>
                 <div className="text-4xl md:text-5xl font-bold tracking-tighter text-obsidian leading-none">
                   <AnimatedNumber value={monthlyLoss} prefix="₹" />
                 </div>
-                <p className="text-[11px] md:text-xs text-muted mt-2 md:mt-0">
-                  <AnimatedNumber value={monthlyMissed} />{' '}
-                  missed calls × ₹{avgCaseValue.toLocaleString('en-IN')} avg value
-                </p>
+                <div className="mt-2 flex flex-col gap-1">
+                  <p className="text-[11px] md:text-xs text-muted">
+                    Annual revenue at risk: <span className="text-obsidian font-semibold">₹{annualLoss.toLocaleString('en-IN')}</span>
+                  </p>
+                  <p className="text-[11px] md:text-[10px] text-muted/60 bg-obsidian/5 rounded px-2 py-0.5 w-fit">
+                    Based on {monthlyMissed} missed calls/mo
+                  </p>
+                </div>
               </div>
 
               {/* Divider with arrow */}

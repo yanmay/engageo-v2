@@ -14,9 +14,10 @@
 - [x] Task 3.3: Build Cursor Protocol Scheduler card.
 
 ## Wave 4: Process & Proof
-- [ ] Task 4.1: Implement Protocol Stacking Archive (3 cards).
-- [ ] Task 4.2: Implement Pricing, Testimonials, and FAQ.
+- [x] Task 4.1: Implement Protocol Stacking Archive (3 cards).
+- [x] Task 4.2: Implement Pricing, Testimonials, and FAQ.
+- [x] Task 4.3: Implement AI Demo Trigger Modal.
 
 ## Wave 5: Final Polish
-- [ ] Task 5.1: Global animation pass and responsive audit.
-- [ ] Task 5.2: Verification and handoff.
+- [x] Task 5.1: Global animation pass and responsive audit.
+- [x] Task 5.2: Verification and handoff.

@@ -1,32 +1,50 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useModal } from '../context/ModalContext';
 
 export default function CinematicHero() {
     const heroRef = useRef(null);
     const contentRef = useRef(null);
+    const { openModal } = useModal();
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Staggered reveal
+            // Opening Shot: Background Reveal
+            gsap.fromTo(".hero-bg", 
+                { scale: 1.2, opacity: 0, filter: "blur(20px)" },
+                { scale: 1, opacity: 0.6, filter: "blur(0px)", duration: 2.5, ease: "power4.out" }
+            );
+
+            // Staggered reveal of content
             gsap.from(".reveal-item", {
-                y: 40,
+                y: 60,
                 opacity: 0,
-                duration: 1.2,
-                stagger: 0.15,
-                ease: "power3.out",
-                delay: 0.5
+                rotateX: -15,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: "expo.out",
+                delay: 0.3
+            });
+
+            // Pulse for the "Live" indicator
+            gsap.to(".live-pulse", {
+                scale: 1.5,
+                opacity: 0,
+                duration: 2,
+                repeat: -1,
+                ease: "power2.out"
             });
 
             // Subtle parallax on mouse move
             const handleMouseMove = (e) => {
                 const { clientX, clientY } = e;
-                const xPos = (clientX / window.innerWidth - 0.5) * 20;
-                const yPos = (clientY / window.innerHeight - 0.5) * 20;
+                const xPos = (clientX / window.innerWidth - 0.5) * 30;
+                const yPos = (clientY / window.innerHeight - 0.5) * 30;
 
                 gsap.to(".hero-bg", {
                     x: xPos,
                     y: yPos,
-                    duration: 1,
+                    duration: 1.5,
                     ease: "power2.out"
                 });
             };
@@ -64,7 +82,10 @@ export default function CinematicHero() {
             <div className="relative z-10 h-full flex flex-col justify-center p-8 md:p-24 lg:p-32 max-w-7xl mx-auto">
                 <div ref={contentRef} className="max-w-3xl">
                     <div className="reveal-item font-data flex items-center gap-3 text-[var(--recovery-blue)] text-xs tracking-[0.3em] uppercase mb-8">
-                        <span className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] animate-pulse" />
+                        <div className="relative flex items-center justify-center">
+                            <span className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] relative z-10" />
+                            <span className="live-pulse absolute w-2 h-2 rounded-full bg-[var(--recovery-blue)]" />
+                        </div>
                         Autonomous Recovery Systems Active
                     </div>
 
@@ -85,19 +106,35 @@ export default function CinematicHero() {
                     </p>
 
                     <div className="reveal-item flex flex-wrap gap-6 font-data">
-                        <button className="btn-magnetic group px-10 py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-sm tracking-widest uppercase relative shadow-lg shadow-blue-500/20">
+                        <button 
+                            onClick={openModal}
+                            className="btn-magnetic group px-10 py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-sm tracking-widest uppercase relative shadow-lg shadow-blue-500/20"
+                        >
                             <span className="relative z-10">Get Free Audit →</span>
                         </button>
 
-                        <button className="px-10 py-5 border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase backdrop-blur-md hover:bg-white/5 transition-all">
+                        <button 
+                            onClick={openModal}
+                            className="px-10 py-5 border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase backdrop-blur-md hover:bg-white/10 hover:border-white/40 transition-all text-center flex items-center justify-center whitespace-nowrap"
+                        >
+                            Test our AI →
+                        </button>
+
+                        <button 
+                            onClick={() => {
+                                const el = document.getElementById('protocol');
+                                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="w-full md:w-auto text-white/40 hover:text-white transition-colors text-[10px] font-bold tracking-[0.2em] uppercase"
+                        >
                             See how it works
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Key Metrics Floating */}
-            <div className="absolute bottom-12 right-12 z-10 flex flex-col gap-8 items-end">
+            {/* Key Metrics Floating - Hidden on small screens */}
+            <div className="absolute bottom-12 right-12 z-10 hidden lg:flex flex-col gap-8 items-end">
                 {[
                     { label: "AI Response", val: "8 seconds" },
                     { label: "Industry Avg Recovered", val: "₹2.4 Crore" },
@@ -108,6 +145,12 @@ export default function CinematicHero() {
                         <div className="text-white text-2xl font-bold">{stat.val}</div>
                     </div>
                 ))}
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4 opacity-30">
+                <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+                <span className="font-data text-[8px] tracking-[0.4em] uppercase text-white animate-pulse">Scroll</span>
             </div>
         </section>
     );

@@ -59,7 +59,7 @@ export default function FAQPage() {
           }}
         >
           <span>Your Questions,</span>
-          <span className="font-serif italic" style={{ color: 'var(--green)' }}>
+          <span className="font-drama italic" style={{ color: 'var(--recovered-green)' }}>
             Answered Directly.
           </span>
         </h1>
@@ -87,7 +87,7 @@ export default function FAQPage() {
                   style={{
                     backgroundColor: isOpen ? 'var(--clinic-white)' : 'transparent',
                     borderColor: isOpen ? 'var(--clinic-silver)' : 'transparent',
-                    borderLeft: isOpen ? '3px solid var(--green)' : '3px solid transparent',
+                    borderLeft: isOpen ? '3px solid var(--signal-green)' : '3px solid transparent',
                     boxShadow: isOpen ? '0 8px 30px -12px rgba(0,0,0,0.08)' : 'none',
                     transform: isOpen ? 'translateY(-2px)' : 'none',
                   }}
@@ -114,7 +114,7 @@ export default function FAQPage() {
                       size={20}
                       className="shrink-0 transition-transform duration-300"
                       style={{
-                        color: isOpen ? 'var(--green)' : 'var(--clinic-stone)',
+                        color: isOpen ? 'var(--signal-green)' : 'var(--clinic-stone)',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
                       }}
                     />
@@ -150,8 +150,8 @@ export default function FAQPage() {
           rel="noopener noreferrer"
           className="font-sans font-bold transition-all hover:underline"
           style={{
-            color: 'var(--green)',
-            textDecorationColor: 'var(--green)',
+            color: 'var(--signal-green)',
+            textDecorationColor: 'var(--signal-green)',
             fontSize: '16px'
           }}
         >

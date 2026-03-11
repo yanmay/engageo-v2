@@ -20,11 +20,19 @@
   --loss-red: #DC2626;
   --sovereign-gold: #D97706;
 
+  /* Derived UI Tokens for subpages */
+  --clinic-ink: var(--command-black);
+  --clinic-slate: #475569;
+  --clinic-stone: #94A3B8;
+  --clinic-mist: #F1F5F9;
+  --clinic-silver: #E2E8F0;
+
   /* Semantic Mapping */
   --primary: var(--recovery-blue);
   --background: var(--clinic-white);
   --surface-dark: var(--command-black);
   --text: var(--command-black);
+  --green: var(--signal-green); /* Fallback for legacy components */
   
   /* Radius System */
   --radius-lg: 2rem;
@@ -67,7 +75,7 @@
 
   /* Magnetic feel buttons */
   .btn-magnetic {
-    @apply relative overflow-hidden transition-transform duration-300 ease-[cubic-bezier(0.25, 0.46, 0.45, 0.94)] hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
+    @apply relative overflow-hidden transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
   }
 
   .btn-magnetic span.bg-layer {
@@ -90,5 +98,62 @@
 
   .lift-on-hover {
     @apply transition-transform duration-300 hover:-translate-y-[1px];
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+  }
+  .animate-scan {
+    animation: scan 4s linear infinite;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+  }
+
+  /* Custom thin scrollbar for telemetry cards */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(37, 99, 235, 0.2); /* var(--primary) with opacity */
+    border-radius: 10px;
+  }
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(37, 99, 235, 0.2) transparent;
+  }
+
+  .pulse-dot-green {
+    background-color: var(--signal-green);
+    box-shadow: 0 0 12px var(--signal-green);
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+
+  .pulse-dot {
+    position: relative;
+  }
+
+  .pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background-color: inherit;
+    opacity: 0.4;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
