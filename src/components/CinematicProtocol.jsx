@@ -41,18 +41,20 @@ const ProtocolCard = ({ step, title, desc, children }) => (
 
 export default function CinematicProtocol() {
   const containerRef = useRef(null);
+  const spineRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray(".protocol-card");
 
+      // Pin the whole container or just handle individual reveals
       cards.forEach((card, i) => {
         if (i < cards.length - 1) {
           gsap.to(card, {
             scale: 0.9,
-            opacity: 0.2,
-            filter: "blur(12px)",
-            y: -50,
+            opacity: 0.1,
+            filter: "blur(18px)",
+            y: -80,
             scrollTrigger: {
               trigger: cards[i + 1],
               start: "top center",
@@ -62,16 +64,36 @@ export default function CinematicProtocol() {
           });
         }
       });
+
+      // Operational Spine Animation
+      gsap.fromTo(spineRef.current, 
+        { height: "0%" },
+        { 
+          height: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top center",
+            end: "bottom center",
+            scrub: true,
+          }
+        }
+      );
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
   return (
     <section ref={containerRef} className="relative bg-[var(--command-black)]">
+      {/* The Operational Spine */}
+      <div className="absolute left-6 md:left-12 top-0 bottom-0 w-[1px] bg-white/5 z-20 hidden md:block">
+        <div ref={spineRef} className="absolute top-0 left-0 w-full bg-[var(--recovery-blue)] shadow-[0_0_15px_var(--recovery-blue)]" />
+      </div>
+
       <ProtocolCard
         step="01"
         title={<>Deep<br /><span className="text-[var(--recovery-blue)]">Integration.</span></>}
-        desc="AI voice & WhatsApp connect seamlessly to your existing clinic phone system and Google Calendar."
+        desc="Connects seamlessly to your clinic's existing phone system and Google Calendar. Zero IT effort required."
       >
         <div className="relative w-64 h-64">
            {/* Animated Orbitals */}
@@ -80,9 +102,6 @@ export default function CinematicProtocol() {
            <div className="absolute inset-16 border border-[var(--recovery-blue)]/30 rounded-full animate-[spin_10s_linear_infinite]" />
            
            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[var(--recovery-blue)] rounded-full shadow-[0_0_15px_var(--recovery-blue)]" />
-           <div className="absolute bottom-1/4 left-0 -translate-x-1/2 w-2 h-2 bg-white rounded-full opacity-50" />
-           <div className="absolute top-1/4 right-0 translate-x-1/2 w-2 h-2 bg-[var(--signal-green)] rounded-full opacity-50" />
-           
            <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 bg-[var(--recovery-blue)]/20 rounded-2xl backdrop-blur-xl border border-white/20 flex items-center justify-center">
                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -94,73 +113,81 @@ export default function CinematicProtocol() {
       <ProtocolCard
         step="02"
         title={<>Instant<br /><span className="text-[var(--recovery-blue)]">Recovery.</span></>}
-        desc="Instant Hinglish callback to any missed patient call. No more lost leads during peak clinic hours."
+        desc="8-second callback. Hinglish voice. Captures intent the moment a call is missed."
       >
-        <div className="relative w-full max-w-[280px] aspect-video bg-black/40 rounded-xl overflow-hidden border border-white/10 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <div className="font-data text-[8px] text-white/40 uppercase tracking-widest">Live_Call_Intercept</div>
+        <div className="relative w-full max-w-[300px] aspect-video bg-white/[0.03] rounded-2xl overflow-hidden border border-white/10 p-8">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+               <div className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] animate-pulse shadow-[0_0_8px_var(--recovery-blue)]" />
+               <div className="font-data text-[10px] text-white/40 uppercase tracking-widest">Live_Response</div>
+            </div>
+            <span className="font-data text-[10px] text-[var(--recovery-blue)]">00:08.24s</span>
           </div>
           
-          <div className="space-y-3">
-             <div className="h-2 w-3/4 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-[var(--recovery-blue)] w-[60%] animate-[pulse_2s_infinite]" />
+          <div className="space-y-4">
+             <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                <div className="h-full bg-[var(--recovery-blue)] w-[70%] animate-[shimmer_2s_infinite]" />
              </div>
-             <div className="h-2 w-1/2 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-[var(--recovery-blue)] w-[40%] animate-[pulse_2s_infinite_0.5s]" />
+             <div className="h-1.5 w-4/5 bg-white/5 rounded-full overflow-hidden">
+                <div className="h-full bg-[var(--recovery-blue)] w-[45%] animate-[shimmer_2s_infinite_0.4s]" />
              </div>
-             <div className="h-2 w-2/3 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-[var(--recovery-blue)] w-[80%] animate-[pulse_2s_infinite_1s]" />
+             <div className="h-1.5 w-3/4 bg-white/5 rounded-full overflow-hidden">
+                <div className="h-full bg-[var(--recovery-blue)] w-[90%] animate-[shimmer_2s_infinite_0.8s]" />
              </div>
           </div>
-          
-          <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center font-data text-[10px] text-[var(--recovery-blue)]">
-             <span>QUALIFYING...</span>
-             <span>8.2s</span>
-          </div>
-          
-          {/* Scanline effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--recovery-blue)]/5 to-transparent h-1/4 w-full animate-[scan_4s_linear_infinite] pointer-events-none" />
+
+          <style>{`
+            @keyframes shimmer {
+              0% { transform: translateX(-100%); }
+              100% { transform: translateX(100%); }
+            }
+          `}</style>
         </div>
       </ProtocolCard>
 
       <ProtocolCard
         step="03"
-        title={<>Automated<br /><span className="text-[var(--recovery-blue)]">Bookings.</span></>}
-        desc="High-ticket patients scheduled onto your calendar automatically. Followed by an airtight WhatsApp sequence."
+        title={<>Smart<br /><span className="text-[var(--recovery-blue)]">Scheduling.</span></>}
+        desc="Direct calendar synchronization. Secured slots for high-ticket procedures without human intervention."
       >
-        <div className="relative py-8">
-           <svg width="240" height="120" viewBox="0 0 240 120" className="drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]">
-              <path 
-                d="M0,60 Q30,60 40,30 T80,30 T120,90 T160,30 T200,60 L240,60" 
-                fill="none" 
-                stroke="var(--recovery-blue)" 
-                strokeWidth="3" 
-                className="animate-[dash_3s_ease-in-out_infinite]"
-                strokeDasharray="400"
-                strokeDashoffset="400"
-              />
-              <path 
-                d="M0,60 Q30,60 40,30 T80,30 T120,90 T160,30 T200,60 L240,60" 
-                fill="none" 
-                stroke="white" 
-                strokeWidth="1" 
-                className="opacity-20"
-              />
-           </svg>
-           
-           <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between pointer-events-none p-2 font-data text-[7px] text-white/20">
-              <div className="flex justify-between"><span>+40K VAL</span><span>SYNCED</span></div>
-              <div className="flex justify-between"><span>CAL_PUSH</span><span>02:14 PM</span></div>
+        <div className="bg-white/[0.03] p-8 rounded-2xl border border-white/10 w-full max-w-[320px]">
+           <div className="grid grid-cols-7 gap-2 mb-6">
+              {[...Array(14)].map((_, i) => (
+                <div key={i} className={`h-6 rounded-md border ${i === 8 ? 'bg-[var(--recovery-blue)] border-[var(--recovery-blue)] shadow-[0_0_15px_var(--recovery-blue)]' : 'border-white/5 bg-white/5'}`} />
+              ))}
            </div>
-           
-           <style>{`
-             @keyframes dash {
-               0% { stroke-dashoffset: 400; }
-               50% { stroke-dashoffset: 0; }
-               100% { stroke-dashoffset: -400; }
-             }
-           `}</style>
+           <div className="space-y-3">
+              <div className="flex justify-between items-center py-3 border-b border-white/5">
+                 <span className="font-data text-[10px] text-white/40">APPT_CONFIRMED</span>
+                 <span className="font-data text-[10px] text-[var(--recovery-blue)]">2:00 PM</span>
+              </div>
+              <div className="flex justify-between items-center py-3">
+                 <span className="font-data text-[10px] text-white/40">RECOVERY_VALUE</span>
+                 <span className="font-data text-[10px] text-[var(--signal-green)]">+₹80,000</span>
+              </div>
+           </div>
+        </div>
+      </ProtocolCard>
+
+      <ProtocolCard
+        step="04"
+        title={<>Airtight<br /><span className="text-[var(--recovery-blue)]">Retention.</span></>}
+        desc="Automated WhatsApp sequence ensures 0% no-show rates through persistent, clinical follow-ups."
+      >
+        <div className="flex flex-col gap-4 w-full max-w-[280px]">
+           {[
+             { text: "Namaste Dr. Arora's clinic...", delay: "0s", side: "left" },
+             { text: "Yes, I need to book hair transplant.", delay: "1.5s", side: "right" },
+             { text: "Confirmed for Tuesday 2 PM.", delay: "3s", side: "left" }
+           ].map((msg, i) => (
+             <div 
+               key={i} 
+               className={`p-4 rounded-2xl text-[11px] font-sans max-w-[80%] ${msg.side === 'left' ? 'bg-[var(--recovery-blue)]/20 text-white self-start border border-white/10' : 'bg-white/5 text-white/60 self-end border border-white/5'}`}
+               style={{ animation: `fade-in 0.5s ease-out forwards ${msg.delay}`, opacity: 0 }}
+             >
+                {msg.text}
+             </div>
+           ))}
         </div>
       </ProtocolCard>
     </section>

@@ -84,4 +84,64 @@
 </div>
 </div>
 </section>
-<script>(function(){var n=document.getElementById('navPill'),m=document.getElementById('mobileMenu');window.addEventListener('scroll',function(){if(n)n.classList.toggle('scrolled',window.scrollY>20);});var b=document.getElementById('hamburgerBtn'),c=document.getElementById('mobileClose');function op(){m.classList.add('open');document.body.style.overflow='hidden';}function cl(){m.classList.remove('open');document.body.style.overflow='';}if(b)b.addEventListener('click',op);if(c)c.addEventListener('click',cl);if(m)m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',cl);});window.toggleFaq=function(el){el.parentElement.classList.toggle('open');};var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});}());</script></body></html>
+  <script>
+    (function () {
+      var n = document.getElementById('navPill'), m = document.getElementById('mobileMenu');
+      window.addEventListener('scroll', function () { if (n) n.classList.toggle('scrolled', window.scrollY > 20); });
+      var b = document.getElementById('hamburgerBtn'), c = document.getElementById('mobileClose');
+      function op() { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function cl() { m.classList.remove('open'); document.body.style.overflow = ''; }
+      if (b) b.addEventListener('click', op); if (c) c.addEventListener('click', cl); if (m) m.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', cl); });
+      
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('active');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+
+      // Task 15: Lead Capture Logic
+      var form = document.getElementById('audit-form');
+      var formContainer = document.getElementById('audit-form-container');
+      var successState = document.getElementById('success-state');
+      var submitBtn = document.getElementById('submit-btn');
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          
+          // Disable button
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = "Processing...";
+          submitBtn.style.opacity = "0.7";
+
+          // Gather data
+          var formData = new FormData(form);
+          var data = {};
+          formData.forEach(function(value, key){
+              data[key] = value;
+          });
+
+          console.log('Audit Form Submission:', data);
+
+          // Simulate network delay
+          setTimeout(function() {
+            // Hide form, show success
+            formContainer.style.display = 'none';
+            successState.style.display = 'block';
+            
+            // Scroll to success state if mobile
+            if (window.innerWidth < 900) {
+              successState.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 1200);
+        });
+      }
+    }());
+  </script>
+</body>
+
+</html>

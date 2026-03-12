@@ -222,5 +222,5 @@ export default function ThreeBackground() {
     };
   }, []);
 
-  return <div ref={mountRef} className="fixed inset-0 z-0 opacity-100 pointer-events-none" />;
+  return <div ref={mountRef} className="absolute inset-0 z-0 opacity-80 pointer-events-none" />;
 }

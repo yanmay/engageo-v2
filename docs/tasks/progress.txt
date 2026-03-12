@@ -53,3 +53,32 @@ Task 15: /audit Page (Lead Capture)
 
 ----------
 ralph-done-hl2s0
+## Task 16: 21st.dev Design Component Integration
+Before building each UI section, visit https://21st.dev and find a 
+matching animation or component for that section. Copy its prompt, 
+paste it into Antigravity, and implement the output into the page.
+
+Target components to source from 21st.dev:
+- Hero section: cinematic text reveal or particle/mesh animation
+- Features section: animated data rows or scroll-triggered counters
+- How It Works timeline: step reveal animation on scroll
+- Revenue Calculator: animated number counter for output values
+- Pricing cards: hover state animations and tier highlight effects
+- Audit form: smooth focus states and confirmation checkmark animation
+
+Rules:
+- Always pick dark-mode compatible components only
+- Component must match --command-black or --clinic-white backgrounds
+- No components that use phone mockups or chat bubble UI patterns
+- Prefer motion that feels operational/data-driven over decorative
+
+- Integrated ThreeBackground (Mesh animation) and Text Reveal into CinematicHero.
+- Enhanced CinematicFeatures with shuffler, typewriter, and scheduler animations.
+- Updated CinematicProtocol with a dynamic operational spine and 4 steps.
+- Mounted ROICalculator with animated counters on the homepage.
+- Styled CinematicPricing with premium hover effects.
+- Verified AuditModal has focus states and success animations.
+- Fixed React mounting logic in home-mount.tsx.
+
+----------
+ralph-done-v8rv2

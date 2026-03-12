@@ -1,21 +1,24 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import Hero from './components/Hero';
 import DefensibleDecision from './components/DefensibleDecision';
 import Philosophy from './components/Philosophy';
 import CinematicFeatures from './components/CinematicFeatures';
 import CinematicProtocol from './components/CinematicProtocol';
 import DecisionLifecycle from './components/DecisionLifecycle';
+import CinematicHero from './components/CinematicHero';
+import { ModalProvider } from './context/ModalContext';
+import AuditModal from './components/AuditModal';
 import './index.css';
 
 const heroRoot = document.getElementById('react-home-hero');
 if (heroRoot) {
     createRoot(heroRoot).render(
         <StrictMode>
-            <BrowserRouter>
-                <Hero />
-            </BrowserRouter>
+            <ModalProvider>
+                <CinematicHero />
+                <AuditModal />
+            </ModalProvider>
         </StrictMode>
     );
 }
@@ -62,6 +65,8 @@ if (lifecycleRoot) {
     );
 }
 
+import ROICalculator from './components/ROICalculator';
+
 const guaranteeRoot = document.getElementById('react-home-guarantee');
 if (guaranteeRoot) {
     createRoot(guaranteeRoot).render(
@@ -69,6 +74,17 @@ if (guaranteeRoot) {
             <BrowserRouter>
                 <DefensibleDecision />
             </BrowserRouter>
+        </StrictMode>
+    );
+}
+
+const calculatorRoot = document.getElementById('react-home-calculator');
+if (calculatorRoot) {
+    createRoot(calculatorRoot).render(
+        <StrictMode>
+            <ModalProvider>
+                <ROICalculator />
+            </ModalProvider>
         </StrictMode>
     );
 }
