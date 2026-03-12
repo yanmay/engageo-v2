@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useModal } from '../context/ModalContext';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// ─── Animated number counter ──────────────────────────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── Animated number counter (Hinglish/Indian Format) ──────────────────────────
 function AnimatedNumber({ value, prefix = '', suffix = '' }) {
   const [display, setDisplay] = useState(value);
   const prevRef = useRef(value);
@@ -10,7 +14,7 @@ function AnimatedNumber({ value, prefix = '', suffix = '' }) {
   useEffect(() => {
     const start = prevRef.current;
     const end = value;
-    const duration = 600;
+    const duration = 800;
     const startTime = performance.now();
 
     const tick = (now) => {
@@ -37,25 +41,25 @@ function AnimatedNumber({ value, prefix = '', suffix = '' }) {
   );
 }
 
-// ─── Custom slider ────────────────────────────────────────────────────────────
+// ─── Custom slider (Cinematic Command Aesthetic) ──────────────────────────────
 function Slider({ value, min, max, step, onChange, label, format }) {
   const pct = ((value - min) / (max - min)) * 100;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex justify-between items-baseline">
-        <label className="font-mono text-[10px] uppercase tracking-widest text-subtle font-semibold">
+        <label className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--clinic-stone)] font-bold">
           {label}
         </label>
-        <span className="font-sans text-lg font-bold text-obsidian tracking-tight">
+        <span className="font-sans text-xl font-bold text-[var(--command-black)] tracking-tight">
           {format(value)}
         </span>
       </div>
 
-      <div className="relative h-2 bg-obsidian/5 overflow-visible border border-obsidian/20">
+      <div className="relative h-1.5 bg-[var(--clinic-silver)] overflow-visible rounded-full">
         {/* Filled track */}
         <div
-          className="absolute top-0 left-0 h-full bg-[var(--green)] transition-none"
+          className="absolute top-0 left-0 h-full bg-[var(--recovery-blue)] transition-all duration-300 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]"
           style={{ width: `${pct}%` }}
         />
         {/* Native input overlaid for interaction */}
@@ -70,14 +74,14 @@ function Slider({ value, min, max, step, onChange, label, format }) {
         />
         {/* Thumb */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 bg-white border-2 border-obsidian retro-shadow pointer-events-none transition-none"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-white border-2 border-[var(--recovery-blue)] rounded-full pointer-events-none transition-all duration-200 shadow-lg"
           style={{ left: `${pct}%` }}
         />
       </div>
 
       <div className="flex justify-between">
-        <span className="font-mono text-[9px] text-muted">{format(min)}</span>
-        <span className="font-mono text-[9px] text-muted">{format(max)}</span>
+        <span className="font-data text-[9px] text-[var(--clinic-stone)] font-bold">{format(min)}</span>
+        <span className="font-data text-[9px] text-[var(--clinic-stone)] font-bold">{format(max)}</span>
       </div>
     </div>
   );
@@ -86,21 +90,24 @@ function Slider({ value, min, max, step, onChange, label, format }) {
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function ROICalculator() {
   const { openModal } = useModal();
+  const sectionRef = useRef(null);
+  const cardRef = useRef(null);
+  
   const [specialty, setSpecialty] = useState('Hair Transplant');
   const [monthlyCalls, setMonthlyCalls] = useState(120);
   const [missRate, setMissRate] = useState(25);
 
   // ── Specialty Config ──────────────────────────────────────────────────────
   const specialtyConfig = {
-    'Hair Transplant': { avgValue: 80000 },
-    'Dental Implants': { avgValue: 60000 },
-    'Dermatology': { avgValue: 15000 },
-    'IVF / Fertility': { avgValue: 150000 }
+    'Hair Transplant': { avgValue: 80000, color: '#2563EB' },
+    'Dental Implants': { avgValue: 60000, color: '#10B981' },
+    'Dermatology': { avgValue: 15000, color: '#D97706' },
+    'IVF / Fertility': { avgValue: 150000, color: '#7C3AED' }
   };
 
   const avgCaseValue = specialtyConfig[specialty]?.avgValue || 18000;
 
-  // ── Math ──────────────────────────────────────────────────────────────────
+  // ── Math Logic (PRD 5.1 & 7.1) ─────────────────────────────────────────────
   const RECOVERY_RATE = 0.68;       // 68% recovery rate (from pilot data)
   const ENGAGEO_COST = 25000;       // Tier 1 price
 
@@ -111,150 +118,187 @@ export default function ROICalculator() {
   const netGain = engageoRecovers - ENGAGEO_COST;
   const roiMultiple = (engageoRecovers / ENGAGEO_COST).toFixed(1);
 
-  // intensity band for colour
-  const lossIntensity = Math.min(monthlyLoss / 1_000_000, 1); // caps at 10L
+  // Intensity for background animations
+  const lossIntensity = Math.min(monthlyLoss / 1_000_000, 1); 
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".reveal-calc-header", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        }
+      });
+
+      gsap.from(cardRef.current, {
+        scale: 0.95,
+        opacity: 0,
+        duration: 1.2,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: "top 85%",
+        }
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="py-32 px-6 md:px-12 lg:px-20 relative z-10 overflow-hidden">
-
-      {/* Background glow */}
+    <section 
+      ref={sectionRef} 
+      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--clinic-white)] relative overflow-hidden"
+    >
+      {/* Dynamic Background Flare using Recovery Blue */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[60vh] rounded-full pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] rounded-full pointer-events-none blur-[120px]"
         style={{
-          background: `radial-gradient(ellipse, var(--green) 0%, transparent 65%)`,
-          opacity: 0.04 + lossIntensity * 0.06,
+          background: `radial-gradient(ellipse, var(--recovery-blue) 0%, transparent 65%)`,
+          opacity: 0.03 + lossIntensity * 0.04,
           transition: 'background 0.8s ease, opacity 0.8s ease',
         }}
       />
 
-      <div className="max-w-5xl mx-auto relative z-10">
-
-        {/* Header */}
-        <div className="text-center mb-10 md:mb-16">
-          <div className="section-label mb-6">Revenue Calculator</div>
-          <h2 className="font-sans text-3xl md:text-5xl font-bold text-obsidian tracking-tighter mb-4">
-            See What You're{' '}
-            <span className="gradient-text">Actually Losing</span>
+      <div className="max-w-6xl mx-auto relative z-10">
+        
+        {/* Header (PRD Tone: "Silent Loss") */}
+        <div className="text-center mb-16 md:mb-24 reveal-calc-header">
+          <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-[0.3em] uppercase mb-4 font-bold">Revenue Leakage Diagnostic</div>
+          <h2 className="text-4xl md:text-6xl text-[var(--command-black)] mb-8 tracking-tighter">
+            End the bleed. <br />
+            <span className="text-[var(--loss-red)] font-drama italic">Calculate your recovery.</span>
           </h2>
-          <p className="text-subtle text-sm md:text-base max-w-lg mx-auto leading-relaxed">
-            Adjust the sliders to match your clinic. Watch your number appear.
+          <p className="max-w-xl mx-auto text-[var(--clinic-slate)] text-lg font-medium leading-relaxed">
+            Adjust the metrics to match your current clinic operations. See why missing 1 in 4 calls is costing you more than your ad spend.
           </p>
         </div>
 
-        {/* Card */}
-        <div className="bg-[var(--surface)] border border-[var(--ink-faint)] rounded-[2.5rem] relative overflow-hidden shadow-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 lg:divide-x divide-obsidian/5 border-b lg:border-b-0 border-obsidian/10 lg:border-obsidian/5">
-
-            {/* Left — inputs */}
-            <div className="p-6 md:p-10 space-y-8 md:space-y-10 border-b lg:border-b-0 border-obsidian/10">
-              {/* Specialty Dropdown */}
-              <div className="space-y-3">
-                <label className="font-mono text-[10px] uppercase tracking-widest text-subtle font-semibold">
-                  Select Specialty
+        {/* Diagnostic Interface */}
+        <div 
+          ref={cardRef}
+          className="bg-white rounded-premium border border-[var(--primary)]/5 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.08)] overflow-hidden"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            
+            {/* Left: Configuration Panel */}
+            <div className="lg:col-span-5 p-8 md:p-12 space-y-12 bg-[var(--clinic-mist)]/30 border-b lg:border-b-0 lg:border-r border-[var(--clinic-silver)]/50">
+              
+              <div className="space-y-4">
+                <label className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--clinic-stone)] font-bold">
+                  Clinical Specialty
                 </label>
-                <select 
-                  value={specialty}
-                  onChange={(e) => setSpecialty(e.target.value)}
-                  className="w-full bg-white border border-obsidian/20 rounded-lg px-4 py-3 font-sans text-sm font-bold text-obsidian focus:outline-none focus:border-[var(--recovery-blue)] transition-all"
-                  style={{ appearance: 'none' }}
-                >
-                  {Object.keys(specialtyConfig).map(s => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
+                <div className="relative group">
+                  <select 
+                    value={specialty}
+                    onChange={(e) => setSpecialty(e.target.value)}
+                    className="w-full bg-white border border-[var(--clinic-silver)] rounded-xl px-6 py-4 font-sans text-sm font-bold text-[var(--command-black)] focus:outline-none focus:border-[var(--recovery-blue)] transition-all cursor-pointer appearance-none shadow-sm"
+                  >
+                    {Object.keys(specialtyConfig).map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--clinic-stone)]">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5l3 3 3-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </div>
+                </div>
               </div>
 
               <Slider
                 value={monthlyCalls}
                 min={20}
-                max={200}
-                step={5}
+                max={400}
+                step={10}
                 onChange={setMonthlyCalls}
-                label="Monthly Inbound Calls"
+                label="Monthly Inbound Volume"
                 format={(v) => `${v} calls/mo`}
               />
+
               <Slider
                 value={missRate}
                 min={10}
                 max={45}
                 step={1}
                 onChange={setMissRate}
-                label="Estimated Miss Rate"
+                label="Estimated Miss Rate (%)"
                 format={(v) => `${v}%`}
               />
 
-              {/* Context line */}
-              <p className="text-[11px] text-muted leading-relaxed">
-                Avg. case value for {specialty}: <span className="text-obsidian font-semibold">₹{avgCaseValue.toLocaleString('en-IN')}</span>.
-                Engageo's average call-back success rate is <span className="text-brand font-semibold">68%</span>.
-              </p>
-            </div>
-
-            {/* Right — output */}
-            <div className="p-6 md:p-10 flex flex-col justify-between gap-6 md:gap-8">
-
-              {/* Loss card */}
-              <div className="space-y-1">
-                <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-subtle font-semibold">
-                  Monthly revenue at risk
-                </span>
-                <div className="text-4xl md:text-5xl font-bold tracking-tighter text-obsidian leading-none">
-                  <AnimatedNumber value={monthlyLoss} prefix="₹" />
-                </div>
-                <div className="mt-2 flex flex-col gap-1">
-                  <p className="text-[11px] md:text-xs text-muted">
-                    Annual revenue at risk: <span className="text-obsidian font-semibold">₹{annualLoss.toLocaleString('en-IN')}</span>
-                  </p>
-                  <p className="text-[11px] md:text-[10px] text-muted/60 bg-obsidian/5 rounded px-2 py-0.5 w-fit">
-                    Based on {monthlyMissed} missed calls/mo
-                  </p>
-                </div>
-              </div>
-
-              {/* Divider with arrow */}
-              <div className="flex items-center gap-3 py-2 md:py-0">
-                <div className="flex-1 h-px bg-obsidian/10" />
-                <div className="w-8 h-8 rounded-full bg-[var(--green)]/5 border border-[var(--green)]/20 flex items-center justify-center">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 2v8M3 7l3 3 3-3" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-                <div className="flex-1 h-px bg-obsidian/10" />
-              </div>
-
-              {/* Recovery card */}
-              <div className="space-y-1">
-                <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-[var(--green)] font-semibold">
-                  Engageo recovers for you
-                </span>
-                <div className="text-4xl md:text-5xl font-bold tracking-tighter leading-none text-[var(--green)] py-1 md:py-0">
-                  <AnimatedNumber value={engageoRecovers} prefix="₹" />
-                </div>
-                <p className="text-[11px] md:text-xs text-[var(--ink)] opacity-70 leading-relaxed md:leading-normal mt-1 md:mt-0">
-                  Net gain after Engageo fee:{' '}
-                  <span className="font-semibold text-[var(--ink)]">
-                    <AnimatedNumber value={netGain} prefix="₹" />
-                  </span>{' '}
-                  <span className="hidden md:inline">·</span> <br className="block md:hidden" />
-                  <span className="text-[var(--green)] font-bold">{roiMultiple}× ROI</span>
+              <div className="pt-8 border-t border-[var(--clinic-silver)]/50">
+                <p className="text-[11px] text-[var(--clinic-slate)] leading-relaxed italic font-medium">
+                  Average Procedure Value: <span className="text-[var(--command-black)] font-bold">₹{avgCaseValue.toLocaleString('en-IN')}</span> <br />
+                  Engageo Success Rate: <span className="text-[var(--recovery-blue)] font-bold">68% recovery avg.</span>
                 </p>
               </div>
+            </div>
 
-              {/* CTA */}
-              <div className="pt-2 md:pt-0">
-                <button
+            {/* Right: Results Dashboard */}
+            <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between overflow-hidden relative">
+              {/* Scanline pattern for diagnostic look */}
+              <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-[var(--clinic-mist)]/20 to-transparent pointer-events-none" />
+              
+              <div className="space-y-16">
+                {/* Metric 1: Loss */}
+                <div className="group">
+                  <div className="font-data text-[10px] uppercase tracking-[0.3em] text-[var(--clinic-stone)] font-bold mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--loss-red)] shadow-[0_0_8px_var(--loss-red)]" />
+                    Monthly Revenue At Risk
+                  </div>
+                  <div className="text-6xl md:text-8xl font-bold tracking-tighter text-[var(--command-black)] transition-colors duration-500 group-hover:text-[var(--loss-red)]">
+                    <AnimatedNumber value={monthlyLoss} prefix="₹" />
+                  </div>
+                  <div className="mt-4 flex items-center gap-6">
+                    <div className="font-data text-[11px] font-bold text-[var(--clinic-stone)] uppercase tracking-widest">
+                      Annual Loss: <span className="text-[var(--command-black)]">₹{(annualLoss/100000).toFixed(1)}L</span>
+                    </div>
+                    <div className="h-4 w-[1px] bg-[var(--clinic-silver)]" />
+                    <div className="font-data text-[11px] font-bold text-[var(--clinic-stone)] uppercase tracking-widest">
+                      Missed Leads: <span className="text-[var(--command-black)]">{monthlyMissed}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Metric 2: Recovery */}
+                <div className="p-8 md:p-10 rounded-[2rem] bg-[var(--recovered-green)]/10 border border-[var(--recovered-green)]/10 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--recovered-green)]/10 blur-3xl rounded-full" />
+                  
+                  <div className="relative z-10">
+                    <div className="font-data text-[10px] uppercase tracking-[0.3em] text-[var(--recovered-green)] font-bold mb-4 flex items-center gap-2">
+                      Engageo Monthly Recovery
+                    </div>
+                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--recovered-green)] mb-6">
+                      <AnimatedNumber value={engageoRecovers} prefix="₹" />
+                    </div>
+                    <div className="flex flex-wrap gap-x-8 gap-y-2">
+                       <div className="text-xs font-bold text-[var(--command-black)]/70 flex items-center gap-2">
+                          Net Gain: <span className="text-[var(--command-black)]">₹{netGain.toLocaleString('en-IN')}</span>
+                       </div>
+                       <div className="text-xs font-bold text-[var(--recovered-green)] flex items-center gap-2">
+                          ROI Multiple: <span className="bg-[var(--recovered-green)] text-white px-2 py-0.5 rounded text-[10px]">{roiMultiple}x</span>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom CTA (PRD Requirement) */}
+              <div className="mt-16 pt-8 border-t border-[var(--clinic-silver)]/50">
+                <button 
                   onClick={openModal}
-                  className="group w-full py-3.5 md:py-4 bg-[var(--green)] text-[var(--parchment)] text-[12px] md:text-[13px] font-bold tracking-wide border border-[var(--ink-faint)] rounded-full flex items-center justify-center gap-2 hover:scale-[1.02] transition-all duration-200 active:scale-[0.98] shadow-lg"
+                  className="btn-magnetic group w-full py-5 bg-[var(--command-black)] text-white rounded-full font-bold text-[11px] tracking-[0.2em] uppercase relative shadow-2xl overflow-hidden shadow-black/10 hover:bg-[var(--recovery-blue)] transition-colors"
                 >
-                  <span>Get My Free Recovery Audit →</span>
+                  <span className="relative z-10">Verify Recovery Audit →</span>
+                  <div className="absolute inset-0 bg-[var(--recovery-blue)] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 </button>
-
-                <p className="text-[10px] text-center text-muted/60 mt-3 md:mt-2">
-                  Free audit · No credit card · Results in 24 hrs
+                <p className="text-center font-data text-[9px] text-[var(--clinic-stone)] uppercase tracking-widest mt-6 font-bold italic">
+                  * This is what Engageo recovers for you. No setup fees. No long contracts.
                 </p>
               </div>
-            </div>
 
+            </div>
           </div>
         </div>
 

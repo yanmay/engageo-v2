@@ -21,3 +21,4 @@
 ## Wave 5: Final Polish
 - [x] Task 5.1: Global animation pass and responsive audit.
 - [x] Task 5.2: Verification and handoff.
+- [x] Task 5.3: Final PRD Polish and HowItWorks Enhancement.
