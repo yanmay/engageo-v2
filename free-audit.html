@@ -35,13 +35,6 @@
 <body>
 <nav class="eg-nav" id="top-nav">
     <a href="/index.html" class="eg-nav__logo">Engageo</a>
-    <ul class="eg-nav__links">
-        <li><a href="/how-it-works.html">How It Works</a></li>
-        <li><a href="/compare.html">Compare</a></li>
-        <li><a href="/pricing.html">Pricing</a></li>
-        <li><a href="/faq.html">FAQ</a></li>
-    </ul>
-    <a href="/free-audit.html" class="eg-nav__cta">Get the Audit</a>
 </nav>
 <section>
 <div class="container">
@@ -62,18 +55,24 @@
     </div>
   </div>
   <div class="reveal">
-    <div class="form-card">
+    <div class="form-card" id="audit-form-container">
       <div class="form-title f-card-title">Request Your Free Audit</div>
       <div class="form-sub f-body" style="font-size:13px;color:var(--ink-muted);margin-bottom:28px">Delivered via WhatsApp in 24 hours or less.</div>
-      <div class="field"><label class="f-label" for="fName">Your Name</label><input id="fName" type="text" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="Dr. Sharma"/></div>
-      <div class="field"><label class="f-label" for="fClinic">Clinic Name &amp; City</label><input id="fClinic" type="text" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="Smile Dental Clinic, New Delhi"/></div>
-      <div class="field"><label class="f-label" for="fSpec">Specialty</label><select id="fSpec" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)"><option value="">Select your specialty</option><option>Hair Transplant</option><option>Dental &amp; Oral Surgery</option><option>Dermatology</option><option>Fertility &amp; IVF</option><option>Orthopaedics</option><option>Ophthalmology</option><option>Cosmetic Surgery</option><option>ENT</option><option>Other</option></select></div>
-      <div class="field"><label class="f-label" for="fCalls">Approximate calls per day</label><select id="fCalls" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)"><option value="">Select range</option><option>Under 20</option><option>20&ndash;50</option><option>50&ndash;100</option><option>100+</option></select></div>
-      <div class="field"><label class="f-label" for="fPhone">WhatsApp Number</label><input id="fPhone" type="tel" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="+91 98765 43210"/></div>
-      <a href="https://wa.me/917696382250" target="_blank" rel="noopener">
-        <button class="btn btn-primary" type="button" style="width:100%;justify-content:center;margin-top:16px">Send My Audit Request &rarr;</button>
-      </a>
+      <form id="audit-form">
+        <div class="field"><label class="f-label" for="fName">Your Name</label><input id="fName" name="name" type="text" required style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="Dr. Sharma"/></div>
+        <div class="field"><label class="f-label" for="fClinic">Clinic Name &amp; City</label><input id="fClinic" name="clinic" type="text" required style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="Smile Dental Clinic, New Delhi"/></div>
+        <div class="field"><label class="f-label" for="fSpec">Specialty</label><select id="fSpec" name="specialty" required style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)"><option value="">Select your specialty</option><option>Hair Transplant</option><option>Dental &amp; Oral Surgery</option><option>Dermatology</option><option>Fertility &amp; IVF</option><option>Orthopaedics</option><option>Ophthalmology</option><option>Cosmetic Surgery</option><option>ENT</option><option>Other</option></select></div>
+        <div class="field"><label class="f-label" for="fCalls">Approximate calls per day</label><select id="fCalls" name="calls" required style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)"><option value="">Select range</option><option>Under 20</option><option>20&ndash;50</option><option>50&ndash;100</option><option>100+</option></select></div>
+        <div class="field"><label class="f-label" for="fPhone">WhatsApp Number</label><input id="fPhone" name="phone" type="tel" required style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="+91 98765 43210"/></div>
+        <button id="submit-btn" class="btn btn-primary" type="submit" style="width:100%;justify-content:center;margin-top:16px">Send My Audit Request &rarr;</button>
+      </form>
       <p class="form-fine" style="font-family:var(--mono);font-size:11px;color:var(--ink-muted);text-align:center;margin-top:16px;line-height:1.5">By submitting, you&rsquo;ll receive the audit report on WhatsApp within 24 hours. We don&rsquo;t share your data with anyone. No spam.</p>
+    </div>
+    <div class="form-card text-center" id="success-state" style="display:none; text-align:center;">
+       <div style="width:60px; height:60px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:#fff; font-size:24px;">&#x2713;</div>
+       <h3 class="form-title f-card-title">Audit Request Received</h3>
+       <p class="f-body" style="font-size:14px; color:var(--ink-muted); line-height:1.6; margin-bottom:24px;">We've received your data. Our team is analyzing your revenue leakage now. Check your WhatsApp in 24 hours.</p>
+       <a href="https://wa.me/917696382250" class="btn btn-secondary" style="font-size:12px; opacity:0.6;">Contact Founder directly &rarr;</a>
     </div>
     <div class="trust-bar">
       <div class="trust-item"><span style="color:var(--green)">&#x2713;</span> No credit card</div>
@@ -85,4 +84,4 @@
 </div>
 </div>
 </section>
-<footer class="eg-footer"><div class="eg-footer__top"><div class="eg-footer__brand"><span class="eg-footer__logo" style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--parchment)">Engageo</span><p style="margin-top:12px">We answer the calls your clinic misses. Autonomous missed-call recovery for high-ticket Indian specialists.</p><div style="margin-top:24px;display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block"></span><span class="f-label" style="font-size:10px;color:var(--teal)">SYSTEMS OPERATIONAL</span></div></div><div class="eg-footer__links" style="display:flex;gap:40px;flex-wrap:wrap"><div class="eg-footer__col" style="display:flex;flex-direction:column;gap:12px"><strong style="color:var(--parchment)">Platform</strong><a href="/how-it-works.html">How It Works</a><a href="/pricing.html">Pricing</a><a href="/compare.html">Compare</a><a href="/faq.html">FAQ</a></div><div class="eg-footer__col" style="display:flex;flex-direction:column;gap:12px"><strong style="color:var(--parchment)">Clinic Types</strong><span>Hair Transplant</span><span>Dental & Implants</span><span>IVF & Fertility</span><span>Dermatology</span></div><div class="eg-footer__col" style="display:flex;flex-direction:column;gap:12px"><strong style="color:var(--parchment)">Legal</strong><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">DPDP Act Compliance</a></div></div></div><div class="eg-footer__bottom" style="border-top:1px solid rgba(245,240,232,0.1);padding-top:24px;margin-top:40px;display:flex;justify-content:space-between;font-size:12px;color:rgba(245,240,232,0.4)"><span>&copy; <script>document.write(new Date().getFullYear())</script> Engageo. Built for India.</span><span>Strictly No Medical Advice Provided.</span></div></footer><script>(function(){var n=document.getElementById('navPill'),m=document.getElementById('mobileMenu');window.addEventListener('scroll',function(){if(n)n.classList.toggle('scrolled',window.scrollY>20);});var b=document.getElementById('hamburgerBtn'),c=document.getElementById('mobileClose');function op(){m.classList.add('open');document.body.style.overflow='hidden';}function cl(){m.classList.remove('open');document.body.style.overflow='';}if(b)b.addEventListener('click',op);if(c)c.addEventListener('click',cl);if(m)m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',cl);});window.toggleFaq=function(el){el.parentElement.classList.toggle('open');};var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});}());</script></body></html>
+<script>(function(){var n=document.getElementById('navPill'),m=document.getElementById('mobileMenu');window.addEventListener('scroll',function(){if(n)n.classList.toggle('scrolled',window.scrollY>20);});var b=document.getElementById('hamburgerBtn'),c=document.getElementById('mobileClose');function op(){m.classList.add('open');document.body.style.overflow='hidden';}function cl(){m.classList.remove('open');document.body.style.overflow='';}if(b)b.addEventListener('click',op);if(c)c.addEventListener('click',cl);if(m)m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',cl);});window.toggleFaq=function(el){el.parentElement.classList.toggle('open');};var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('active');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});}());</script></body></html>
