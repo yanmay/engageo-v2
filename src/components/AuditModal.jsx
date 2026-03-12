@@ -21,12 +21,24 @@ export default function AuditModal() {
 
   if (!open) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (phoneNumber.length >= 10) {
       setIsSubmitted(true);
-      // Logic for demo call trigger would go here
-      console.log("Demo call requested for:", phoneNumber);
+      
+      try {
+        await fetch("https://primary-production-47c3.up.railway.app/webhook/audit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            phoneNumber,
+            source: "Demo Modal",
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        console.error("Demo webhook submission failed:", err);
+      }
     }
   };
 

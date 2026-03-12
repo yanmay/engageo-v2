@@ -80,5 +80,12 @@ Rules:
 - Verified AuditModal has focus states and success animations.
 - Fixed React mounting logic in home-mount.tsx.
 
+Task 13: /compare Page High-Fidelity Update
+- Integrated `ComparisonTable.jsx` React component into the /compare page.
+- Created `src/compare-mount.tsx` for component mounting.
+- Updated `gen-compare.cjs` with "Why Clinics Switch to Engageo" headline and React mount point.
+- Regenerated `compare.html` to reflect changes.
+- Fixed corruption ("l>" character) and missing script tags in `gen-pricing.cjs` and `pricing.html`.
+
 ----------
 ralph-done-v8rv2

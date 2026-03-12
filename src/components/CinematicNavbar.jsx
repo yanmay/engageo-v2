@@ -92,7 +92,7 @@ export default function CinematicNavbar() {
                         <Link 
                             key={link.name} 
                             to={link.path}
-                            className="text-white text-5xl font-bold tracking-tighter hover:text-[var(--recovery-blue)] transition-colors"
+                            className="text-white text-3xl md:text-5xl font-bold tracking-tighter hover:text-[var(--recovery-blue)] transition-colors"
                             onClick={() => setMobileMenuOpen(false)}
                             style={{ transitionDelay: `${i * 50}ms` }}
                         >

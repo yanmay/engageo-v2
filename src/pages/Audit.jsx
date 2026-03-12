@@ -31,11 +31,27 @@ export default function Audit() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Audit Form Submitted:", formData);
+    
+    // Optimistically show success but keep loading state if needed
+    // For this cinematic UI, we go straight to success view and fire the webhook in background
     setIsSubmitted(true);
-    // Real endpoint connection logic to go here separately
+    
+    try {
+      await fetch("https://primary-production-47c3.up.railway.app/webhook/audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          source: "Audit Page",
+          timestamp: new Date().toISOString()
+        })
+      });
+    } catch (err) {
+      console.error("Webhook submission failed:", err);
+    }
   };
 
   return (

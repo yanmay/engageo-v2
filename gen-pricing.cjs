@@ -192,7 +192,9 @@ ${NAV('pricing')}
 </div>
 </section>
 <style>.faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--ink)!important;}.faq-item.open .faq-answer{max-height:240px!important}.faq-question:hover{color:#1A7A4A!important;}.faq-item.open .faq-question{color:#1A7A4A!important;}</style>
-${FOOT()}${JS()}</body></html>`;
+${FOOT()}${JS()}
+<script type="module" src="/src/pricing-mount.tsx"></script>
+</body></html>`;
 
 fs.writeFileSync(path.join(__dirname, 'pricing.html'), pricing, 'utf8');
 console.log('pricing.html written:', pricing.length, 'bytes');
