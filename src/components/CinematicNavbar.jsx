@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function CinematicNavbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const location = useLocation();
+
+    const handleHomeClick = (e) => {
+        if (location.pathname === '/') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        setMobileMenuOpen(false);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -14,6 +23,7 @@ export default function CinematicNavbar() {
     }, []);
 
     const navLinks = [
+        { name: 'Home', path: '/' },
         { name: 'Features', path: '/#features' },
         { name: 'Pricing', path: '/pricing' },
         { name: 'How It Works', path: '/how-it-works' },
@@ -23,7 +33,7 @@ export default function CinematicNavbar() {
 
     return (
         <nav 
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
+            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
                 scrolled 
                     ? 'bg-[var(--command-black)]/80 backdrop-blur-xl py-4 border-b border-white/5 shadow-2xl' 
                     : 'bg-transparent py-10'
@@ -31,7 +41,7 @@ export default function CinematicNavbar() {
         >
             <div className="max-w-7xl mx-auto px-8 md:px-12 flex items-center justify-between">
                 {/* Logo Mark: Wordmark only */}
-                <Link to="/" className="group flex items-center gap-1">
+                <Link to="/" onClick={handleHomeClick} className="group flex items-center gap-1">
                     <span className="text-white font-bold text-2xl tracking-tighter uppercase transition-colors group-hover:text-[var(--recovery-blue)]">
                         Engageo
                     </span>
@@ -88,8 +98,8 @@ export default function CinematicNavbar() {
                         <Link 
                             key={link.name} 
                             to={link.path}
+                            onClick={handleHomeClick}
                             className="text-white text-3xl md:text-5xl font-bold tracking-tighter hover:text-[var(--recovery-blue)] transition-colors"
-                            onClick={() => setMobileMenuOpen(false)}
                             style={{ transitionDelay: `${i * 50}ms` }}
                         >
                             {link.name}

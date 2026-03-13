@@ -13,7 +13,7 @@ const faqs = [
     },
     {
         q: "Does it integrate with HMS or Practo?",
-        a: "Engageo books directly to Google Calendar, which most specialist clinics already use. Native HMS integration (Practo, Healthplix) is on the roadmap. For clinics using HMS-only, a custom webhook can be configured during onboarding."
+        a: "Engageo books directly to your clinical scheduling system, which most specialist clinics already use. Native integration with popular HMS platforms is on the roadmap. For clinics using proprietary HMS-only, a custom webhook can be configured during onboarding."
     },
     {
         q: "What if the AI can't answer a question?",
@@ -21,7 +21,7 @@ const faqs = [
     },
     {
         q: "How long does it take to go live?",
-        a: "4 business days from payment. Day 1: onboarding. Day 2: AI training. Day 3: Calendar & WhatsApp sync. Day 4: End-to-end testing and go-live. We handle 100% of the technical setup."
+        a: "4 business days from payment. Day 1: onboarding. Day 2: AI training. Day 3: Scheduling & Messaging sync. Day 4: End-to-end testing and go-live. We handle 100% of the technical setup."
     },
     {
         q: "What happens if 15 bookings are not delivered?",

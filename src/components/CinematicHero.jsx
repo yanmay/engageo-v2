@@ -86,7 +86,7 @@ export default function CinematicHero() {
                     </h1>
 
                     <p className="reveal-fade max-w-lg text-white/70 text-lg md:text-xl leading-relaxed mb-14 font-medium italic border-l border-[var(--recovery-blue)] pl-6">
-                        8-second AI callback. Hinglish voice agent. Google Calendar booking. WhatsApp confirmation.
+                        8-second AI callback. Hinglish voice agent. Unified scheduling. Messaging confirmation.
                     </p>
 
                     <div className="reveal-fade flex flex-wrap gap-6 font-data items-center">

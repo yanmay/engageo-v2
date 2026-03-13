@@ -83,7 +83,7 @@ export default function CinematicPricing({ hideLink = false }) {
                         name="Recover"
                         price="₹25K"
                         desc="Missed call recovery. Answered, qualified, and booked in under 8s."
-                        features={["Missed Call Intercept", "AI Localized Voice", "WhatsApp Confirmations", "Google Calendar Sync"]}
+                        features={["Missed Call Intercept", "AI Localized Voice", "WhatsApp Confirmations", "Unified Calendar Sync"]}
                     />
                     <PricingCard
                         ref={el => cardsRef.current[1] = el}

@@ -7,7 +7,7 @@ export default function CinematicFooter() {
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-20 mb-32">
                     <div className="col-span-1 md:col-span-2">
-                        <div className="text-white text-4xl font-bold tracking-tighter mb-8 italic">Engageo</div>
+                        <Link to="/" className="text-white text-4xl font-bold tracking-tighter mb-8 italic block w-fit hover:text-[var(--recovery-blue)] transition-colors">Engageo</Link>
                         <p className="text-white/40 max-w-sm leading-relaxed mb-12 text-lg">
                             We answer the calls your clinic misses. Autonomous missed-call recovery for high-ticket Indian specialists.
                         </p>

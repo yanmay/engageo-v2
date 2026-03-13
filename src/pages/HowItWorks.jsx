@@ -20,14 +20,14 @@ const TIMELINE_STEPS = [
     num: "02",
     phase: "Intercept",
     title: "Intent Identified",
-    desc: "MSG91 detects the missed call within 5 seconds. A webhook fires directly into the Engageo engine, identifying the patient and their billing intent.",
+    desc: "Autonomous sensors detect the missed call within 5 seconds. A signal fires directly into the Engageo engine, identifying the patient and their billing intent.",
     accent: "text-[var(--recovery-blue)]"
   },
   {
     num: "03",
     phase: "Reaction",
     title: "AI Callback (8s)",
-    desc: "Our Vapi-powered AI voice agent initiates an outbound call. In under 8 seconds, the patient's phone rings. Speed is the only factor in recovery.",
+    desc: "Our proprietary AI voice agent initiates an outbound call. In under 8 seconds, the patient's phone rings. Speed is the only factor in recovery.",
     accent: "text-[var(--recovery-blue)]"
   },
   {
@@ -48,7 +48,7 @@ const TIMELINE_STEPS = [
     num: "06",
     phase: "Retention",
     title: "WhatsApp Locking",
-    desc: "WATI triggers a 4-step sequence: Confirmation, 24h reminder, Directions, and No-show recovery. Your patient is locked into the consultation.",
+    desc: "Engageo Intelligence triggers a 4-step sequence: Confirmation, 24h reminder, Directions, and No-show recovery. Your patient is locked into the consultation.",
     accent: "text-[var(--signal-green)]"
   }
 ];
@@ -149,13 +149,13 @@ export default function HowItWorks() {
                     </thead>
                     <tbody className="divide-y divide-[var(--command-black)]/5 text-[var(--command-black)]/70">
                        {[
-                          ["01", "Missed Call Detection", "MSG91 Domestic DID", "5.0s"],
-                          ["02", "Autonomous Intercept", "Vapi Orchestrator", "8.0s"],
-                          ["03", "Natural Language Resolve", "Llama-3 / GPT-4o", "120s"],
-                          ["04", "Calendar Sync (Live)", "Google Calendar API", "< 1.4s"],
-                          ["05", "Booking Creation", "G-Suite Workspace", "< 1.0s"],
-                          ["06", "WhatsApp Confirmation", "Meta Cloud API", "15.0s"],
-                          ["07", "Staff Notification", "WATI Concierge", "30.0s"]
+                          ["01", "Missed Call Detection", "Proprietary Carrier Network", "5.0s"],
+                          ["02", "Autonomous Intercept", "Engageo Orchestrator", "8.0s"],
+                          ["03", "Natural Language Resolve", "Engageo Intelligence Cluster", "120s"],
+                          ["04", "Calendar Sync (Live)", "Unified Scheduling Core", "< 1.4s"],
+                          ["05", "Booking Creation", "Clinical Workspace Sync", "< 1.0s"],
+                          ["06", "WhatsApp Confirmation", "Secure Messaging Layer", "15.0s"],
+                          ["07", "Staff Notification", "Messaging Concierge", "30.0s"]
                        ].map(([step, action, system, sla]) => (
                           <tr key={step} className="hover:bg-[var(--primary)]/[0.02] transition-colors border-b border-[var(--primary)]/5">
                              <td className="py-8 px-10 font-bold text-[var(--recovery-blue)]">{step}</td>
@@ -181,12 +181,12 @@ export default function HowItWorks() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[
-                        { tool: "MSG91", role: "Detection", desc: "Monitors your clinic line via virtual domestic DID. Fires instantly on every ring-out." },
-                        { tool: "Vapi", role: "Voice AI", desc: "The brain of the callback. Natural Hinglish voice with sub-800ms response latency." },
-                        { tool: "n8n", role: "Orchestration", desc: "The central nervous system connecting phones, calendar, and WhatsApp." },
-                        { tool: "WATI", role: "Patient Comms", desc: "High-deliverability WhatsApp API for confirmations, reminders, and directions." },
-                        { tool: "Google Calendar", role: "Inventory", desc: "Universal availability management. Syncs directly with doctor's actual slots." },
-                        { tool: "Razorpay", role: "Billing", desc: "Automated monthly subscription handling for zero administrative friction." }
+                        { tool: "Detection", role: "Signal", desc: "Monitors your clinic line via proprietary virtual network. Fires instantly on every ring-out." },
+                        { tool: "Voice AI", role: "Intelligence", desc: "The brain of the callback. Natural Hinglish voice with sub-800ms response latency." },
+                        { tool: "Orchestrator", role: "Automation", desc: "The central nervous system connecting phones, calendar, and WhatsApp." },
+                        { tool: "Messaging", role: "Engagement", desc: "High-deliverability messaging layer for confirmations, reminders, and directions." },
+                        { tool: "Scheduling", role: "Inventory", desc: "Universal availability management. Syncs directly with doctor's actual slots." },
+                        { tool: "Billing", role: "Finance", desc: "Automated monthly subscription handling for zero administrative friction." }
                     ].map((item, i) => (
                         <div key={i} className="p-10 border border-white/5 bg-white/[0.01] rounded-[2.5rem] hover:border-white/20 transition-all group hover:bg-white/[0.03]">
                             <div className="font-data text-[var(--recovery-blue)] text-xs font-bold mb-4 tracking-[0.2em] uppercase">{item.tool} // {item.role}</div>
@@ -209,7 +209,7 @@ export default function HowItWorks() {
                     {[
                         { q: "Is it legal under medical rules?", a: "Yes. Engageo handles administrative scheduling only. It complies with IT Act, DPDP 2023, and NHM guidelines for non-clinical automation." },
                         { q: "What if it figure out it's AI?", a: "Speed beats skepticism. Most patients are just relieved to have their call answered in under 8 seconds. If asked, the agent identifies as an automated assistant." },
-                        { q: "Does it work with my HMS?", a: "It syncs via Google Calendar — the most universal tool used by Indian specialist clinics. Custom exports are available for EMR updates." }
+                        { q: "Does it work with my HMS?", a: "It syncs via your proprietary scheduling system — the most universal tool used by Indian specialist clinics. Custom exports are available for EMR updates." }
                     ].map((faq, i) => (
                         <div key={i} className="p-10 border border-white/5 rounded-[2.5rem] bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
                             <h3 className="text-white font-bold mb-4 text-xl flex gap-6 items-start leading-tight">

@@ -101,7 +101,7 @@ export default function CinematicProtocol() {
       <ProtocolCard
         step="01"
         title={<>Call<br /><span className="text-[var(--recovery-blue)]">Missed.</span></>}
-        desc="A patient calls, receptionist is busy. In 5 seconds, MSG91 detects the silence and triggers the recovery sequence."
+        desc="A patient calls, receptionist is busy. In 5 seconds, our sensors detect the silence and trigger the recovery sequence."
       >
         <div className="relative w-64 h-64">
            {/* Animated Orbitals */}
@@ -156,7 +156,7 @@ export default function CinematicProtocol() {
       <ProtocolCard
         step="03"
         title={<>Slot<br /><span className="text-[var(--recovery-blue)]">Booked.</span></>}
-        desc="The agent syncs with your Google Calendar, offers available slots, and books the appointment instantly."
+        desc="The agent syncs with your clinical calendar, offers available slots, and books the appointment instantly."
       >
         <div className="bg-white/[0.03] p-8 rounded-2xl border border-white/10 w-full max-w-[320px]">
            <div className="grid grid-cols-7 gap-2 mb-6">

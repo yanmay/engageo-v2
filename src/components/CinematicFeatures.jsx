@@ -13,7 +13,7 @@ const FEATURE_DATA = [
     stat: "VOICE_V4.2"
   },
   {
-    name: "Google Calendar Direct",
+    name: "Proprietary Scheduling",
     desc: "Reads live slots and books confirmed appointments without needing an HMS. No manual staff entry or double-booking errors.",
     stat: "SYNC_ACTIVE"
   },
