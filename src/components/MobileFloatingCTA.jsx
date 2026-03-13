@@ -12,24 +12,8 @@ export default function MobileFloatingCTA() {
     // Only run intersection observer if window exists
     if (!sentinelRef.current) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // If the sentinel (at top: 100vh) is above the bottom of the viewport,
-        // it means we've scrolled past 100vh.
-        // entry.boundingClientRect.top < window.innerHeight
-        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
-      },
-      {
-        // 0 means it triggers as soon as even 1px is visible/hidden
-        threshold: 0,
-        // No root margin
-        rootMargin: '0px'
-      }
-    );
+    // Unused IntersectionObserver removed to resolve lint errors
+    // const observer = new IntersectionObserver(...)
 
     // More precise approach: Just use a scroll listener since we might jump around with anchors
     const handleScroll = () => {

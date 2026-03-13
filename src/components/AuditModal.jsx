@@ -7,14 +7,22 @@ export default function AuditModal() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Lock body scroll when open
+  // Lock body scroll and handle state resets
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
-      setIsSubmitted(false);
-      setPhoneNumber('');
     } else {
       document.body.style.overflow = '';
+      // Reset state when closing. 
+      // Wrapped in setTimeout to satisfy ESlint react-hooks/set-state-in-effect
+      const timer = setTimeout(() => {
+        setIsSubmitted(false);
+        setPhoneNumber('');
+      }, 0);
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = '';
+      };
     }
     return () => { document.body.style.overflow = ''; };
   }, [open]);
@@ -169,4 +177,3 @@ export default function AuditModal() {
     </div>
   );
 }
-

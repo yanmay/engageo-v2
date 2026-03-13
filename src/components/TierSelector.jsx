@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React, { useState, useRef } from 'react';
 
 const TierSelector = () => {
     const [answers, setAnswers] = useState({
@@ -132,4 +131,3 @@ const TierSelector = () => {
 };
 
 export default TierSelector;
-

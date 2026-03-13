@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import gsap from 'gsap';
+import { Link } from 'react-router-dom';
 
 export default function CinematicNavbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -22,8 +20,6 @@ export default function CinematicNavbar() {
         { name: 'Compare', path: '/compare' },
         { name: 'FAQ', path: '/faq' },
     ];
-
-    const isHeroVisible = !scrolled && location.pathname === '/';
 
     return (
         <nav 

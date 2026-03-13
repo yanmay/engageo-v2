@@ -59,7 +59,7 @@ const VerticalTimeline = () => {
     useEffect(() => {
       const ctx = gsap.context(() => {
         const items = gsap.utils.toArray(".timeline-item");
-        items.forEach((item, i) => {
+        items.forEach((item) => {
           gsap.from(item, {
             y: 60,
             opacity: 0,
@@ -251,4 +251,3 @@ export default function HowItWorks() {
     </div>
   );
 }
-
