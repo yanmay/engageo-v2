@@ -85,64 +85,9 @@ ${NAV('pricing')}
 </section>
 <section class="section-sm" style="padding-top:0">
   <div class="container">
-    <div class="pg">
-      <div class="pc reveal">
-        <div class="pc-tier">Tier 1 &mdash; Recover</div>
-        <div class="pc-name">Missed Call Recovery</div>
-        <p class="pc-desc">Every inbound call answered, qualified, and booked. Not one goes to voicemail.</p>
-        <div><span class="pc-price-num">&#x20B9;25K</span><span class="pc-per"> / month</span></div>
-        <hr class="pc-div"/>
-        <ul class="feats">
-          <li><span class="ck">&#x2713;</span>AI voice callback in 8 seconds</li>
-          <li><span class="ck">&#x2713;</span>Google Calendar booking sync</li>
-          <li><span class="ck">&#x2713;</span>WhatsApp confirmation + 24hr reminder</li>
-          <li><span class="ck">&#x2713;</span>No-show rescue &mdash; 3 rescheduling messages</li>
-          <li><span class="ck">&#x2713;</span>Weekly revenue recovery report (WhatsApp)</li>
-          <li><span class="ck">&#x2713;</span>Onboarding &amp; go-live in 4 days</li>
-        </ul>
-        <button class="cta-btn cta-d" onclick="location.href='/free-audit.html'">Start Recovery &rarr;</button>
-      </div>
-
-      <div class="pc feat reveal">
-        <span class="pc-badge" style="background:#1A7A4A;color:var(--ink)">Most Popular</span>
-        <div class="pc-tier">Tier 2 &mdash; Grow</div>
-        <div class="pc-name">Lead Gen + Recovery</div>
-        <p class="pc-desc">We run ads, drive inbound calls, and convert every single one into a booked appointment.</p>
-        <div><span class="pc-price-num">&#x20B9;55K</span><span class="pc-per"> / month</span></div>
-        <p class="pc-note">Plus your ad spend, passed through at cost. No markup.</p>
-        <hr class="pc-div"/>
-        <ul class="feats">
-          <li><span class="ck">&#x2713;</span>Everything in Recover</li>
-          <li><span class="ck">&#x2713;</span>Meta &amp; Google Ads management</li>
-          <li><span class="ck">&#x2713;</span>Google My Business optimisation</li>
-          <li><span class="ck">&#x2713;</span>4-touchpoint WhatsApp patient journey</li>
-          <li><span class="ck">&#x2713;</span>Landing page (we build and host it)</li>
-          <li><span class="ck">&#x2713;</span>Weekly ROI report with ad spend breakdown</li>
-        </ul>
-        <button class="cta-btn cta-f" onclick="location.href='/free-audit.html'">Book Strategy Call &rarr;</button>
-        <p style="font-size:12px;font-style:italic;text-align:center;color:rgba(255,255,255,0.4);font-family:'Fraunces', serif;font-weight:300;margin-top:12px">Clinics on Grow see 40% fewer no-shows within 30 days.</p>
-      </div>
-
-      <div class="pc gld reveal">
-        <span class="pc-badge" style="background:transparent;color:#C8922A;border:1px solid #C8922A">By Application</span>
-        <div class="pc-tier">Tier 3 &mdash; Dominate</div>
-        <div class="pc-name">Full Clinic Growth System</div>
-        <p class="pc-desc">Every patient searching your specialty in your city finds you first. Full-stack digital presence.</p>
-        <div><span class="pc-price-num">&#x20B9;1.2L</span><span class="pc-per"> / month</span></div>
-        <p class="pc-note">Plus ad spend at cost. Website build included at no extra charge.</p>
-        <hr class="pc-div"/>
-        <ul class="feats">
-          <li><span class="ck-gold">&#x2713;</span>Everything in Grow</li>
-          <li><span class="ck-gold">&#x2713;</span>YouTube &amp; Instagram content strategy</li>
-          <li><span class="ck-gold">&#x2713;</span>Video scripting for doctor&rsquo;s personal brand</li>
-          <li><span class="ck-gold">&#x2713;</span>SEO blog content (2 posts/month)</li>
-          <li><span class="ck-gold">&#x2713;</span>Website build or redesign (fully included)</li>
-          <li><span class="ck-gold">&#x2713;</span>Monthly 1:1 strategy session with founder</li>
-        </ul>
-        <button class="cta-btn cta-gld" onclick="location.href='/free-audit.html'">Apply for Dominate &rarr;</button>
-      </div>
-    </div>
-  <p class="guarantee reveal">30-day guarantee on all tiers &mdash; <strong style="color:var(--ink);font-weight:500">15 confirmed bookings or we keep going free.</strong> No refund negotiation. No fine print.</p>
+    <div id="react-pricing-selector" class="reveal"></div>
+  <div id="react-pricing-guarantee" class="reveal"></div>
+  <div id="react-pricing-cards" class="reveal"></div>
 
   <!-- Feature comparison table -->
   <div class="reveal" style="margin-top:80px;text-align:center">

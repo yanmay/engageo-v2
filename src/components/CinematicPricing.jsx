@@ -31,7 +31,7 @@ const PricingCard = React.forwardRef(({ name, price, desc, features, highlighted
     </div>
 ));
 
-export default function CinematicPricing() {
+export default function CinematicPricing({ hideLink = false }) {
     const sectionRef = useRef(null);
     const cardsRef = useRef([]);
 
@@ -106,9 +106,11 @@ export default function CinematicPricing() {
                     <p className="text-[var(--command-black)]/40 text-[10px] font-bold uppercase tracking-widest max-w-md">
                         * The 15-Booking Guarantee: If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend service at zero cost until we hit that number.
                     </p>
-                    <Link to="/pricing" className="text-[var(--primary)] text-xs font-bold tracking-widest uppercase border-b-2 border-transparent hover:border-[var(--primary)] transition-all pb-1">
-                        Full Breakdown & Comparison →
-                    </Link>
+                    {!hideLink && (
+                        <Link to="/pricing" className="text-[var(--primary)] text-xs font-bold tracking-widest uppercase border-b-2 border-transparent hover:border-[var(--primary)] transition-all pb-1">
+                            Full Breakdown & Comparison →
+                        </Link>
+                    )}
                 </div>
             </div>
         </section>
