@@ -54,6 +54,7 @@ export default function CinematicNavbar() {
                         <Link 
                             key={link.name} 
                             to={link.path}
+                            onClick={link.name === 'Home' ? handleHomeClick : undefined}
                             className="text-white/50 hover:text-white text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:tracking-[0.25em]"
                         >
                             {link.name}

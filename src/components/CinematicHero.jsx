@@ -97,12 +97,7 @@ export default function CinematicHero() {
                             <span className="relative z-10">Get Free Audit →</span>
                         </button>
 
-                        <button 
-                            onClick={openModal}
-                            className="px-10 py-6 border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase backdrop-blur-md hover:bg-white/10 hover:border-white/40 transition-all text-center flex items-center justify-center whitespace-nowrap"
-                        >
-                            Test our AI →
-                        </button>
+
 
                         <button 
                             onClick={() => {

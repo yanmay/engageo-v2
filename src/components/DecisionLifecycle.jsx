@@ -40,7 +40,7 @@ const STEPS = [
     num: "05",
     label: "Conversion",
     title: "The Slot Is Filled",
-    desc: "Slot locked to Google Calendar. Patient gets a WhatsApp confirmation in 90 seconds — with their doctor's name, time, and clinic address. A reminder fires 24 hours before. No-shows drop. You just recovered ₹22,000 without lifting a finger.",
+    desc: "Slot locked to your clinical calendar. Patient gets a WhatsApp confirmation in 90 seconds — with their doctor's name, time, and clinic address. A reminder fires 24 hours before. No-shows drop. You just recovered ₹22,000 without lifting a finger.",
     type: "whatsapp",
     text: "Slot Confirmed",
     cardLabel: "Booking locked. No manual action required.",
