@@ -4,6 +4,7 @@ import CinematicFeatures from '../components/CinematicFeatures';
 import Philosophy from '../components/Philosophy';
 import CinematicProtocol from '../components/CinematicProtocol';
 import CinematicPricing from '../components/CinematicPricing';
+import CinematicGuarantee from '../components/CinematicGuarantee';
 import CinematicLogos from '../components/CinematicLogos';
 import CinematicTestimonials from '../components/CinematicTestimonials';
 import CinematicFAQ from '../components/CinematicFAQ';
@@ -38,6 +39,10 @@ export default function Home() {
 
       <div id="pricing">
         <CinematicPricing />
+      </div>
+
+      <div id="guarantee">
+        <CinematicGuarantee />
       </div>
 
       <div id="proof">

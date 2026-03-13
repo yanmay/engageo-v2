@@ -58,9 +58,9 @@ export default function TierComparisonTable() {
                 <div className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--primary)] font-bold">Feature Matrix</div>
               </th>
               {tiers.map((tier) => (
-                <th key={tier.id} className={`py-10 px-6 text-center transition-colors duration-300 ${tier.highlight ? 'bg-[var(--primary)]/[0.02]' : ''}`}>
-                  <div className="font-sans font-bold text-xl text-[var(--command-black)] tracking-tight mb-1">{tier.name}</div>
-                  <div className="font-data text-[11px] text-[var(--command-black)]/40 font-bold uppercase tracking-widest leading-none mt-2">Level {tier.id === 'recover' ? '01' : tier.id === 'grow' ? '02' : '03'}</div>
+                <th key={tier.id} className={`py-10 px-6 text-center transition-colors duration-300 ${tier.highlight ? 'bg-[var(--primary)]/[0.02]' : tier.id === 'dominate' ? 'bg-[var(--sovereign-gold)]/[0.04]' : ''}`}>
+                  <div className={`font-sans font-bold text-xl tracking-tight mb-1 ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--command-black)]'}`}>{tier.name}</div>
+                  <div className={`font-data text-[11px] font-bold uppercase tracking-widest leading-none mt-2 ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]/50' : 'text-[var(--command-black)]/40'}`}>Level {tier.id === 'recover' ? '01' : tier.id === 'grow' ? '02' : '03'}</div>
                 </th>
               ))}
             </tr>
@@ -79,22 +79,23 @@ export default function TierComparisonTable() {
                       {feature.name}
                     </td>
                     {tiers.map((tier) => (
-                      <td key={tier.id} className={`py-6 px-6 text-center ${tier.highlight ? 'bg-[var(--primary)]/[0.02]' : ''}`}>
+                      <td key={tier.id} className={`py-6 px-6 text-center ${tier.highlight ? 'bg-[var(--primary)]/[0.02]' : tier.id === 'dominate' ? 'bg-[var(--sovereign-gold)]/[0.02]' : ''}`}>
                         {feature[tier.id] === true ? (
                           <div className="flex justify-center">
-                            <Check size={18} className="text-[var(--recovered-green)]" strokeWidth={3} />
+                            <Check size={18} className={tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--recovered-green)]'} strokeWidth={3} />
                           </div>
                         ) : feature[tier.id] === false ? (
                           <div className="flex justify-center">
                             <Minus size={18} className="text-[var(--command-black)]/10" strokeWidth={2} />
                           </div>
                         ) : (
-                          <span className="text-xs font-data font-bold text-[var(--command-black)]">{feature[tier.id]}</span>
+                          <span className={`text-xs font-data font-bold ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--command-black)]'}`}>{feature[tier.id]}</span>
                         )}
                       </td>
                     ))}
                   </tr>
                 ))}
+
               </React.Fragment>
             ))}
           </tbody>

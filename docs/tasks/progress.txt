@@ -56,7 +56,7 @@ ralph-done-hl2s0
 ## Task 16: 21st.dev Design Component Integration
 Before building each UI section, visit https://21st.dev and find a 
 matching animation or component for that section. Copy its prompt, 
-paste it into Antigravity, and implement the output into the page.
+pasted it into Antigravity, and implement the output into the page.
 
 Target components to source from 21st.dev:
 - Hero section: cinematic text reveal or particle/mesh animation
@@ -101,6 +101,16 @@ Task 12: /pricing Page High-Fidelity Update
 - Aligned `TierComparisonTable.jsx` with the exact pricing grid, minimum terms, and guarantee rows from PRD section 5.3.
 - Standardized feature groups (Investment, Core Recovery, Growth, Enterprise) for better client decision-making.
 - Verified `TierSelector.jsx` recommendation sequence matches PRD specialty and spend criteria.
+
+Task 7 & 9: Cinematic Refinements (Homepage)
+- Refined CinematicProtocol with section headline and PRD-aligned step titles (Call Missed, AI Callback, Slot Booked, WhatsApp Sent).
+- Implemented CinematicGuarantee as a dedicated dark section with sovereign gold accents and PRD-aligned "No Asterisks" promise.
+- Removed redundant guarantee footnote from CinematicPricing to maintain high-fidelity aesthetic.
+
+Task 12 & 14: Final Pricing & FAQ High-Fidelity Refinements
+- Implemented `PricingFAQTeaser.jsx` with targeted 3-question pricing FAQ as per PRD Task 12.
+- Updated `PricingPage.jsx` to use the new teaser component while keeping full FAQ available on the dedicated /faq page.
+- Refined `TierComparisonTable.jsx` to include `sovereign-gold` accents for the DOMINATE column and optimized typography for credit/tiers.
 
 ----------
 ralph-done-ukn16

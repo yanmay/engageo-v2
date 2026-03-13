@@ -90,10 +90,18 @@ export default function CinematicProtocol() {
         <div ref={spineRef} className="absolute top-0 left-0 w-full bg-[var(--recovery-blue)] shadow-[0_0_15px_var(--recovery-blue)]" />
       </div>
 
+      {/* Section Entry Headline */}
+      <div className="relative z-30 pt-32 pb-12 px-8 md:px-24 max-w-7xl mx-auto">
+        <div className="font-data text-[var(--recovery-blue)] text-xs tracking-[0.4em] uppercase mb-6 font-bold">The Protocol</div>
+        <h2 className="text-4xl md:text-6xl lg:text-8xl text-white font-bold tracking-tighter leading-[0.9] max-w-4xl italic">
+          From Missed Call to Confirmed Booking in <span className="text-[var(--primary)] not-italic">Under 4 Minutes.</span>
+        </h2>
+      </div>
+
       <ProtocolCard
         step="01"
-        title={<>Deep<br /><span className="text-[var(--recovery-blue)]">Integration.</span></>}
-        desc="Connects seamlessly to your clinic's existing phone system and Google Calendar. Zero IT effort required."
+        title={<>Call<br /><span className="text-[var(--recovery-blue)]">Missed.</span></>}
+        desc="A patient calls, receptionist is busy. In 5 seconds, MSG91 detects the silence and triggers the recovery sequence."
       >
         <div className="relative w-64 h-64">
            {/* Animated Orbitals */}
@@ -112,8 +120,8 @@ export default function CinematicProtocol() {
 
       <ProtocolCard
         step="02"
-        title={<>Instant<br /><span className="text-[var(--recovery-blue)]">Recovery.</span></>}
-        desc="8-second callback. Hinglish voice. Captures intent the moment a call is missed."
+        title={<>AI Calls Back <br /><span className="text-[var(--recovery-blue)]">in 8 Seconds.</span></>}
+        desc="Before the patient can dial a competitor, our Hinglish voice agent initiates an outbound call."
       >
         <div className="relative w-full max-w-[300px] aspect-video bg-white/[0.03] rounded-2xl overflow-hidden border border-white/10 p-8">
           <div className="flex items-center justify-between mb-8">
@@ -147,8 +155,8 @@ export default function CinematicProtocol() {
 
       <ProtocolCard
         step="03"
-        title={<>Smart<br /><span className="text-[var(--recovery-blue)]">Scheduling.</span></>}
-        desc="Direct calendar synchronization. Secured slots for high-ticket procedures without human intervention."
+        title={<>Slot<br /><span className="text-[var(--recovery-blue)]">Booked.</span></>}
+        desc="The agent syncs with your Google Calendar, offers available slots, and books the appointment instantly."
       >
         <div className="bg-white/[0.03] p-8 rounded-2xl border border-white/10 w-full max-w-[320px]">
            <div className="grid grid-cols-7 gap-2 mb-6">
@@ -171,8 +179,8 @@ export default function CinematicProtocol() {
 
       <ProtocolCard
         step="04"
-        title={<>Airtight<br /><span className="text-[var(--recovery-blue)]">Retention.</span></>}
-        desc="Automated WhatsApp sequence ensures 0% no-show rates through persistent, clinical follow-ups."
+        title={<>WhatsApp<br /><span className="text-[var(--recovery-blue)]">Sent.</span></>}
+        desc="A 4-step retention sequence is triggered automatically: confirmation, reminders, and directions."
       >
         <div className="flex flex-col gap-4 w-full max-w-[280px]">
            {[

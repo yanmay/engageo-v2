@@ -102,10 +102,7 @@ export default function CinematicPricing({ hideLink = false }) {
                     />
                 </div>
 
-                <div className="mt-20 flex flex-col md:flex-row items-center justify-between gap-10 border-t border-[var(--primary)]/5 pt-12">
-                    <p className="text-[var(--command-black)]/40 text-[10px] font-bold uppercase tracking-widest max-w-md">
-                        * The 15-Booking Guarantee: If your clinic doesn't receive 15 confirmed bookings in the first 30 days, we extend service at zero cost until we hit that number.
-                    </p>
+                <div className="mt-20 flex flex-col md:flex-row items-center justify-end gap-10 border-t border-[var(--primary)]/5 pt-12">
                     {!hideLink && (
                         <Link to="/pricing" className="text-[var(--primary)] text-xs font-bold tracking-widest uppercase border-b-2 border-transparent hover:border-[var(--primary)] transition-all pb-1">
                             Full Breakdown & Comparison →

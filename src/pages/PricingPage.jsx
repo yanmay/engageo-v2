@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import CinematicPricing from '../components/CinematicPricing';
 import TierSelector from '../components/TierSelector';
 import TierComparisonTable from '../components/TierComparisonTable';
-import CinematicFAQ from '../components/CinematicFAQ';
+import PricingFAQTeaser from '../components/PricingFAQTeaser';
 import CinematicNavbar from '../components/CinematicNavbar';
 import CinematicFooter from '../components/CinematicFooter';
 import gsap from 'gsap';
@@ -78,10 +78,11 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* 5) FAQ Section */}
+      {/* 5) FAQ Section (Teaser only as per PRD) */}
       <section className="border-t border-[var(--primary)]/5">
-        <CinematicFAQ />
+        <PricingFAQTeaser />
       </section>
+
 
       {/* 6) Guarantee Banner */}
       <section className="py-40 px-6 bg-[var(--command-black)] text-white relative overflow-hidden">
