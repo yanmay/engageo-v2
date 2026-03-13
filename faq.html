@@ -4,91 +4,11 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FAQ &mdash; Engageo</title>
 <meta name="description" content="Answers to every question Indian specialist clinic owners ask before signing up with Engageo. Legal compliance, pricing, integration, setup time, and more."/>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Outfit:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="engageo.css" />
-<style>.faq-item.open .faq-chevron{transform:rotate(180deg)!important}.faq-item.open .faq-answer{max-height:400px!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="engageo.css"/>
 </head>
 <body>
-<nav class="eg-nav" id="top-nav">
-    <a href="/index.html" class="eg-nav__logo">Engageo</a>
-    <ul class="eg-nav__links">
-        <li><a href="/how-it-works.html">How It Works</a></li>
-        <li><a href="/compare.html">Compare</a></li>
-        <li><a href="/pricing.html">Pricing</a></li>
-        <li><a href="/faq.html" style="color:var(--ink);">FAQ</a></li>
-    </ul>
-    <a href="/free-audit.html" class="eg-nav__cta">Get the Audit</a>
-    <button class="eg-nav__hamburger" id="hamburgerBtn" aria-label="Open menu">
-        <span></span><span></span><span></span>
-    </button>
-</nav>
-<div class="eg-mobile-overlay" id="mobileOverlay"></div>
-<nav class="eg-mobile-menu" id="mobileMenu">
-    <div class="eg-mobile-menu__head">
-        <span class="eg-mobile-menu__logo">Engageo</span>
-        <button class="eg-mobile-menu__close" id="mobileClose" aria-label="Close menu">&times;</button>
-    </div>
-    <ul class="eg-mobile-menu__links">
-        <li><a href="/how-it-works.html">How It Works</a></li>
-        <li><a href="/compare.html">Compare</a></li>
-        <li><a href="/pricing.html">Pricing</a></li>
-        <li><a href="/faq.html">FAQ</a></li>
-    </ul>
-    <a href="/free-audit.html" class="eg-mobile-menu__cta">Get Free Audit &rarr;</a>
-</nav>
-<!-- REACT: Cinematic FAQ Section -->
 <div id="react-faq-root"></div>
-
-<footer class="eg-footer">
-    <div class="eg-footer__top">
-        <div class="eg-footer__brand">
-            <span class="eg-footer__logo" style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--parchment)">Engageo</span>
-            <p style="margin-top:12px">We answer the calls your clinic misses. Autonomous missed-call recovery for high-ticket Indian specialists.</p>
-            <div style="margin-top:24px;display:flex;align-items:center;gap:8px">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block"></span>
-                <span class="f-label" style="font-size:10px;color:var(--teal)">SYSTEMS OPERATIONAL</span>
-            </div>
-        </div>
-        <div class="eg-footer__links" style="display:flex;gap:40px;flex-wrap:wrap">
-            <div class="eg-footer__col" style="display:flex;flex-direction:column;gap:12px">
-                <strong style="color:var(--parchment)">Platform</strong>
-                <a href="/how-it-works.html">How It Works</a>
-                <a href="/pricing.html">Pricing</a>
-                <a href="/compare.html">Compare</a>
-                <a href="/faq.html">FAQ</a>
-            </div>
-            <div class="eg-footer__col" style="display:flex;flex-direction:column;gap:12px">
-                <strong style="color:var(--parchment)">Clinic Types</strong>
-                <span>Hair Transplant</span>
-                <span>Dental & Implants</span>
-                <span>IVF & Fertility</span>
-                <span>Dermatology</span>
-            </div>
-            <div class="eg-footer__col" style="display:flex;flex-direction:column;gap:12px">
-                <strong style="color:var(--parchment)">Legal</strong>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">DPDP Act Compliance</a>
-            </div>
-        </div>
-    </div>
-    <div class="eg-footer__bottom" style="border-top:1px solid rgba(245,240,232,0.1);padding-top:24px;margin-top:40px;display:flex;justify-content:space-between;font-size:12px;color:rgba(245,240,232,0.4)">
-        <span>&copy; <script>document.write(new Date().getFullYear())</script> Engageo. Built for India.</span>
-        <span>Strictly No Medical Advice Provided.</span>
-    </div>
-</footer>
-
 <script type="module" src="/src/faq-mount.tsx"></script>
-<script>
-    (function(){
-        var b=document.getElementById('hamburgerBtn'),m=document.getElementById('mobileMenu'),c=document.getElementById('mobileClose');
-        function op(){m.classList.add('open');document.body.style.overflow='hidden';}
-        function cl(){m.classList.remove('open');document.body.style.overflow='';}
-        if(b)b.addEventListener('click',op);
-        if(c)c.addEventListener('click',cl);
-    }());
-</script>
-</body>
-</html>
+</body></html>

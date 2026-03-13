@@ -1,129 +1,135 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 const TierSelector = () => {
-  const [answers, setAnswers] = useState({
-    volume: '',
-    spend: '',
-    content: ''
-  });
+    const [answers, setAnswers] = useState({
+        volume: '',
+        spend: '',
+        content: ''
+    });
+    const containerRef = useRef(null);
 
-  const questions = [
-    {
-      id: 'volume',
-      label: 'Monthly inbound call volume?',
-      options: [
-        { value: 'low', label: 'Under 50 calls' },
-        { value: 'mid', label: '50–120 calls' },
-        { value: 'high', label: 'Over 120 calls' }
-      ]
-    },
-    {
-      id: 'spend',
-      label: 'Monthly digital ad spend?',
-      options: [
-        { value: 'none', label: 'Under ₹10,000' },
-        { value: 'mid', label: '₹10k – ₹50,000' },
-        { value: 'high', label: 'Over ₹50,000' }
-      ]
-    },
-    {
-      id: 'content',
-      label: 'Ready for video content & branding?',
-      options: [
-        { value: 'no', label: 'No, focus on calls' },
-        { value: 'maybe', label: 'Maybe later' },
-        { value: 'yes', label: 'Yes, I am ready' }
-      ]
-    }
-  ];
-
-  const getRecommendation = () => {
-    if (!answers.volume || !answers.spend || !answers.content) return null;
-    
-    if (answers.content === 'yes' && answers.spend === 'high') {
-      return {
-        id: 'dominate',
-        name: 'Dominate',
-        description: 'The full clinic growth engines. Recommended for specialists scaling to ₹50L+ MRR.'
-      };
-    }
-    
-    if (answers.spend !== 'none' || answers.volume === 'high' || answers.volume === 'mid') {
-      return {
-        id: 'grow',
-        name: 'Grow',
-        description: 'Our most common tier. We drive the leads AND recover the calls.'
-      };
-    }
-    
-    return {
-      id: 'recover',
-      name: 'Recover',
-      description: 'The foundation. High-fidelity missed call recovery for established clinics.'
-    };
-  };
-
-  const recommendation = getRecommendation();
-
-  return (
-    <div style={{ maxWidth: '820px', margin: '0 auto', background: 'var(--surface)', border: '1px solid var(--rule)', borderRadius: '24px', padding: '48px' }}>
-      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-faint)', marginBottom: '16px' }}>Selector</div>
-        <h2 style={{ fontSize: '32px', fontFamily: 'var(--serif)', color: 'var(--ink)', letterSpacing: '-0.02em' }}>Which tier is right for you?</h2>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '32px', marginBottom: '48px' }}>
-        {questions.map((q) => (
-          <div key={q.id}>
-            <p style={{ fontSize: '14px', fontWeight: '600', marginBottom: '16px', color: 'var(--ink)' }}>{q.label}</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {q.options.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setAnswers({ ...answers, [q.id]: opt.value })}
-                  style={{
-                    padding: '12px 16px',
-                    fontSize: '13px',
-                    textAlign: 'left',
-                    borderRadius: '8px',
-                    border: '1px solid',
-                    borderColor: answers[q.id] === opt.value ? 'var(--green)' : 'var(--rule)',
-                    background: answers[q.id] === opt.value ? 'rgba(26, 122, 74, 0.05)' : 'transparent',
-                    color: answers[q.id] === opt.value ? 'var(--green)' : 'var(--ink)',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    fontFamily: 'var(--mono)'
-                  }}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {recommendation ? (
-        <div style={{ background: 'var(--surface-deep)', borderRadius: '16px', padding: '32px', textAlign: 'center', border: '1px solid var(--green)', animation: 'slideUp 0.4s ease-out' }}>
-          <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--green)', fontWeight: '700', textTransform: 'uppercase', marginBottom: '12px', letterSpacing: '0.1em' }}>Recommended Tier</div>
-          <h3 style={{ fontSize: '28px', color: 'var(--ink)', marginBottom: '12px' }}>Tier {recommendation.id === 'dominate' ? '3' : recommendation.id === 'grow' ? '2' : '1'} &mdash; {recommendation.name}</h3>
-          <p style={{ color: 'var(--ink-muted)', fontSize: '15px', maxWidth: '480px', margin: '0 auto 24px', lineHeight: '1.6' }}>{recommendation.description}</p>
-          <a href="/free-audit.html" className="btn btn-hero" style={{ background: 'var(--green)', color: '#fff', padding: '12px 32px', borderRadius: '4px', textDecoration: 'none', fontWeight: '700', fontSize: '14px', display: 'inline-block' }}>Get Started with {recommendation.name} &rarr;</a>
-        </div>
-      ) : (
-        <div style={{ textAlign: 'center', color: 'var(--ink-muted)', fontSize: '14px', fontStyle: 'italic' }}>
-          Answer the questions above to see our recommendation.
-        </div>
-      )}
-
-      <style>{`
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+    const questions = [
+        {
+            id: 'volume',
+            label: 'Monthly inbound call volume?',
+            options: [
+                { value: 'low', label: 'Under 50 calls' },
+                { value: 'mid', label: '50–120 calls' },
+                { value: 'high', label: 'Over 120 calls' }
+            ]
+        },
+        {
+            id: 'spend',
+            label: 'Monthly digital ad spend?',
+            options: [
+                { value: 'none', label: 'Under ₹10,000' },
+                { value: 'mid', label: '₹10k – ₹50,000' },
+                { value: 'high', label: 'Over ₹50,000' }
+            ]
+        },
+        {
+            id: 'content',
+            label: 'Ready for video content & branding?',
+            options: [
+                { value: 'no', label: 'No, focus on calls' },
+                { value: 'maybe', label: 'Maybe later' },
+                { value: 'yes', label: 'Yes, I am ready' }
+            ]
         }
-      `}</style>
-    </div>
-  );
+    ];
+
+    const getRecommendation = () => {
+        if (!answers.volume || !answers.spend || !answers.content) return null;
+
+        if (answers.content === 'yes' && answers.spend === 'high') {
+            return {
+                id: 'dominate',
+                name: 'Dominate',
+                tier: '3',
+                description: 'The full clinic growth engine. Recommended for specialists scaling to ₹50L+ MRR.'
+            };
+        }
+
+        if (answers.spend !== 'none' || answers.volume === 'high' || answers.volume === 'mid') {
+            return {
+                id: 'grow',
+                name: 'Grow',
+                tier: '2',
+                description: 'Our most common tier. We drive the leads AND recover the calls.'
+            };
+        }
+
+        return {
+            id: 'recover',
+            name: 'Recover',
+            tier: '1',
+            description: 'The foundation. High-fidelity missed call recovery for established clinics.'
+        };
+    };
+
+    const recommendation = getRecommendation();
+
+    return (
+        <div ref={containerRef} className="w-full max-w-5xl mx-auto p-10 md:p-16 border border-[var(--primary)]/10 rounded-[3rem] bg-[var(--primary)]/[0.01] backdrop-blur-sm">
+            <div className="text-center mb-16">
+                <div className="font-data text-[10px] uppercase font-bold text-[var(--primary)] tracking-[0.3em] mb-4">Discovery Engine</div>
+                <h2 className="text-3xl md:text-5xl font-bold text-[var(--command-black)] tracking-tighter mb-4 italic">Which tier is <span className="text-[var(--primary)] not-italic">right for you?</span></h2>
+                <p className="text-[var(--command-black)]/40 text-sm font-medium">Answer 3 questions to see our technical recommendation.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20">
+                {questions.map((q) => (
+                    <div key={q.id} className="flex flex-col">
+                        <p className="font-data text-[11px] font-bold text-[var(--command-black)]/60 uppercase tracking-widest mb-6">{q.label}</p>
+                        <div className="flex flex-col gap-3">
+                            {q.options.map((opt) => (
+                                <button
+                                    key={opt.value}
+                                    onClick={() => setAnswers({ ...answers, [q.id]: opt.value })}
+                                    className={`p-5 text-xs text-left rounded-2xl border transition-all duration-300 font-bold tracking-tight ${
+                                        answers[q.id] === opt.value
+                                            ? 'border-[var(--primary)] bg-[var(--primary)]/5 text-[var(--primary)] scale-[1.02] shadow-lg shadow-blue-500/5'
+                                            : 'border-[var(--primary)]/5 bg-white text-[var(--command-black)]/40 hover:border-[var(--primary)]/20 hover:text-[var(--command-black)]/60'
+                                    }`}
+                                >
+                                    {opt.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <div className="min-h-[220px] flex items-center justify-center">
+                {recommendation ? (
+                    <div className="w-full p-10 md:p-12 border-2 border-[var(--primary)]/20 bg-white rounded-[2.5rem] shadow-2xl shadow-blue-500/10 flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+                        <div className="font-data text-[10px] text-[var(--recovered-green)] font-bold uppercase tracking-[0.4em] mb-6">Expert Recommendation</div>
+                        <h3 className="text-3xl md:text-5xl font-bold text-[var(--command-black)] tracking-tighter mb-6">
+                            Tier {recommendation.tier} — <span className="italic text-[var(--primary)]">{recommendation.name}</span>
+                        </h3>
+                        <p className="text-[var(--command-black)]/60 text-lg font-medium max-w-xl mb-12 leading-relaxed">
+                            {recommendation.description}
+                        </p>
+                        <a 
+                            href="/free-audit.html" 
+                            className="px-12 py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-xs tracking-[0.2em] uppercase hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/30 transition-all active:scale-95"
+                        >
+                            Get Started with {recommendation.name} →
+                        </a>
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center gap-4 py-12 px-8 border border-dashed border-[var(--primary)]/20 rounded-[2.5rem]">
+                        <div className="w-2 h-2 rounded-full bg-[var(--primary)]/20 animate-pulse" />
+                        <span className="font-data text-[10px] text-[var(--command-black)]/20 font-bold uppercase tracking-widest text-center">
+                            Awaiting response sequence completion...
+                        </span>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default TierSelector;
+

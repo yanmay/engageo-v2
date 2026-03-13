@@ -41,43 +41,11 @@ const faq = `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="engageo.css"/>
-${FAQ_STYLE}
 </head>
 <body>
-${NAV('faq')}
-<section style="padding:160px 0 0px">
-<div class="container">
-  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;border-bottom:1px solid var(--rule);padding-bottom:48px;margin-bottom:64px;flex-wrap:wrap">
-    <div style="flex:1;min-width:300px">
-      <div class="label" style="padding:0;border:none;margin-bottom:24px;letter-spacing:0.15em">FAQ</div>
-      <h1 class="reveal f-h2" style="font-size:56px;color:var(--ink)">Your questions,<br>answered directly.</h1>
-      <p style="font-size:17px;color:var(--ink);margin-top:16px;max-width:520px" class="reveal">No vague marketing answers. Here&rsquo;s exactly what clinic owners ask before going live. If you don&rsquo;t find your answer, <a href="https://wa.me/917696382250" style="color:var(--blue);text-decoration:underline;text-underline-offset:2px">message us on WhatsApp</a>.</p>
-    </div>
-  </div>
-</div>
-</section>
-<section style="padding:0 0 80px">
-<div class="container">
-<div style="max-width:820px">
-  ${cat('Legal &amp; Compliance')}
-  ${faqData.slice(0, 2).map(faqItem).join('')}
-  ${cat('The Guarantee')}
-  ${faqItem(faqData[2])}
-  ${cat('Technical')}
-  ${faqData.slice(3, 7).map(faqItem).join('')}
-  ${cat('Operations')}
-  ${faqData.slice(7, 10).map(faqItem).join('')}
-  ${cat('Product &amp; Pricing')}
-  ${faqData.slice(10).map(faqItem).join('')}
-  <div style="margin-top:64px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:32px;text-align:center" class="reveal">
-    <h3 style="font-size:24px;margin-bottom:12px">Still have questions?</h3>
-    <p style="color:var(--ink);margin-bottom:24px">Message us directly on WhatsApp. We respond in under 4 hours on weekdays.</p>
-    <a href="https://wa.me/917696382250" target="_blank" class="btn btn-hero">WhatsApp Us &rarr;</a>
-  </div>
-</div>
-</div>
-</section>
-${FOOT()}${JS()}</body></html>`;
+<div id="react-faq-root"></div>
+<script type="module" src="/src/faq-mount.tsx"></script>
+</body></html>`;
 
 fs.writeFileSync(path.join(__dirname, 'faq.html'), faq, 'utf8');
 console.log('faq.html written:', faq.length, 'bytes');
@@ -90,78 +58,13 @@ const audit = `<!DOCTYPE html>
 <title>Free Missed Call Audit &mdash; Engageo</title>
 <meta name="description" content="Get a free missed call audit for your specialist clinic. In 24 hours, we show you exactly how many calls you're missing and what they're worth."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="engageo.css"/>
-<style>
-.audit-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;padding-top:160px;padding-bottom:80px;}
-.audit-left{position:sticky;top:100px;}
-.audit-left h1{font-size:42px;}
-.audit-left p{font-size:17px;color:var(--ink);line-height:1.6;margin:16px 0 32px;}
-.benefit-list{display:flex;flex-direction:column;gap:14px;margin-bottom:32px;}
-.benefit{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--ink);line-height:1.5;}
-.benefit-icon{width:20px;height:20px;border-radius:6px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
-.guarantee-card{background:var(--deep);border-radius:12px;padding:20px 24px;}
-.guarantee-card h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;}
-.guarantee-card p{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;}
-.form-card{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:36px;}
-.form-title{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;}
-.form-sub{font-size:13px;color:var(--ink-muted);margin-bottom:28px;}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-.f-label{font-size:13px;font-weight:600;color:var(--ink);}
-.submit-btn{width:100%;height:52px;background:var(--black);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font);transition:background 0.25s;margin-top:8px;}
-.submit-btn:hover{background:var(--green);}
-.form-fine{font-size:11px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.5;}
-.trust-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:40px;}
-.trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-muted);font-weight:600;}
-@media(max-width:900px){.audit-layout{grid-template-columns:1fr;padding-top:120px;gap:40px;}.audit-left{position:static;}}
-</style>
 </head>
 <body>
-${NAV('')}
-<section>
-<div class="container">
-<div class="audit-layout">
-  <div class="audit-left reveal">
-    <div class="f-label" style="margin-bottom:20px;display:inline-block">Free Audit</div>
-    <h1 class="f-h2" style="font-size:clamp(36px, 4.5vw, 48px);line-height:1.1;letter-spacing:-0.03em;margin-bottom:16px;color:var(--ink)">Find out exactly what you&rsquo;re losing.</h1>
-    <p class="f-body" style="color:var(--ink-muted);margin:16px 0 32px">In 24 hours, we&rsquo;ll tell you how many calls your clinic is missing, what each missed call costs on average, and what your monthly recovery potential is. No commitment. No sales pressure unless you want it.</p>
-    <div class="benefit-list">
-      <div class="benefit"><div class="benefit-icon">&#x2713;</div><div class="f-body"><strong style="color:var(--ink)">Missed call count</strong> &mdash; We review your phone data and estimate how many calls went unanswered in the last 30 days.</div></div>
-      <div class="benefit"><div class="benefit-icon">&#x2713;</div><div class="f-body"><strong style="color:var(--ink)">Revenue at risk</strong> &mdash; Based on your specialty and average procedure value, we calculate what those calls are worth.</div></div>
-      <div class="benefit"><div class="benefit-icon">&#x2713;</div><div class="f-body"><strong style="color:var(--ink)">Recovery plan</strong> &mdash; We show you which tier would cover your volume and what your first-month ROI would look like.</div></div>
-      <div class="benefit"><div class="benefit-icon">&#x2713;</div><div class="f-body"><strong style="color:var(--ink)">No obligation</strong> &mdash; You get the audit report whether or not you decide to use Engageo.</div></div>
-    </div>
-    <div class="guarantee-card">
-      <h4 style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px">The 15-Booking Guarantee</h4>
-      <p style="font-family:var(--mono);font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5">If your clinic doesn&rsquo;t receive 15 confirmed bookings in the first 30 days, we extend the service at zero cost until we hit that number. No negotiation. No invoices.</p>
-    </div>
-  </div>
-  <div class="reveal">
-    <div class="form-card">
-      <div class="form-title f-card-title">Request Your Free Audit</div>
-      <div class="form-sub f-body" style="font-size:13px;color:var(--ink-muted);margin-bottom:28px">Delivered via WhatsApp in 24 hours or less.</div>
-      <div class="field"><label class="f-label" for="fName">Your Name</label><input id="fName" type="text" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="Dr. Sharma"/></div>
-      <div class="field"><label class="f-label" for="fClinic">Clinic Name &amp; City</label><input id="fClinic" type="text" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="Smile Dental Clinic, New Delhi"/></div>
-      <div class="field"><label class="f-label" for="fSpec">Specialty</label><select id="fSpec" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)"><option value="">Select your specialty</option><option>Hair Transplant</option><option>Dental &amp; Oral Surgery</option><option>Dermatology</option><option>Fertility &amp; IVF</option><option>Orthopaedics</option><option>Ophthalmology</option><option>Cosmetic Surgery</option><option>ENT</option><option>Other</option></select></div>
-      <div class="field"><label class="f-label" for="fCalls">Approximate calls per day</label><select id="fCalls" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)"><option value="">Select range</option><option>Under 20</option><option>20&ndash;50</option><option>50&ndash;100</option><option>100+</option></select></div>
-      <div class="field"><label class="f-label" for="fPhone">WhatsApp Number</label><input id="fPhone" type="tel" style="width:100%;height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:8px;background:#fff;font-family:var(--mono);font-size:13px;color:var(--ink)" placeholder="+91 98765 43210"/></div>
-      <a href="https://wa.me/917696382250" target="_blank" rel="noopener">
-        <button class="btn btn-primary" type="button" style="width:100%;justify-content:center;margin-top:16px">Send My Audit Request &rarr;</button>
-      </a>
-      <p class="form-fine" style="font-family:var(--mono);font-size:11px;color:var(--ink-muted);text-align:center;margin-top:16px;line-height:1.5">By submitting, you&rsquo;ll receive the audit report on WhatsApp within 24 hours. We don&rsquo;t share your data with anyone. No spam.</p>
-    </div>
-    <div class="trust-bar">
-      <div class="trust-item"><span style="color:var(--green)">&#x2713;</span> No credit card</div>
-      <div class="trust-item"><span style="color:var(--green)">&#x2713;</span> DPDP Act compliant</div>
-      <div class="trust-item"><span style="color:var(--green)">&#x2713;</span> 24hr response</div>
-      <div class="trust-item"><span style="color:var(--green)">&#x2713;</span> 47+ clinics live</div>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-${FOOT()}${JS()}</body></html>`;
+<div id="react-audit-root"></div>
+<script type="module" src="/src/audit-mount.tsx"></script>
+</body></html>`;
 
 fs.writeFileSync(path.join(__dirname, 'free-audit.html'), audit, 'utf8');
 console.log('free-audit.html written:', audit.length, 'bytes');
