@@ -89,3 +89,18 @@ Task 13: /compare Page High-Fidelity Update
 
 ----------
 ralph-done-v8rv2
+
+Task 14: /faq Page High-Fidelity Update
+- Integrated `CinematicFAQ.jsx` React component into the /faq page.
+- Created `src/faq-mount.tsx` for component mounting.
+- Replaced the static, legacy accordion in `faq.html` with the React mount point and standardized the footer.
+- Ensured consistency with the "Cinematic Command" design system and GSAP animations.
+
+----------
+Task 12: /pricing Page High-Fidelity Update
+- Aligned `TierComparisonTable.jsx` with the exact pricing grid, minimum terms, and guarantee rows from PRD section 5.3.
+- Standardized feature groups (Investment, Core Recovery, Growth, Enterprise) for better client decision-making.
+- Verified `TierSelector.jsx` recommendation sequence matches PRD specialty and spend criteria.
+
+----------
+ralph-done-ukn16
