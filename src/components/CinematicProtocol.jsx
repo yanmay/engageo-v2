@@ -84,7 +84,7 @@ export default function CinematicProtocol() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative bg-[var(--command-black)]">
+    <section id="protocol" ref={containerRef} className="relative bg-[var(--command-black)]">
       {/* The Operational Spine */}
       <div className="absolute left-6 md:left-12 top-0 bottom-0 w-[1px] bg-white/5 z-20 hidden md:block">
         <div ref={spineRef} className="absolute top-0 left-0 w-full bg-[var(--recovery-blue)] shadow-[0_0_15px_var(--recovery-blue)]" />

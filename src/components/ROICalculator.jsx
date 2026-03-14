@@ -287,10 +287,13 @@ export default function ROICalculator() {
               {/* Bottom CTA (PRD Requirement) */}
               <div className="mt-16 pt-8 border-t border-[var(--clinic-silver)]/50">
                 <button 
-                  onClick={openModal}
+                  onClick={() => {
+                    // Navigate to audit page as per PRD Task 8
+                    window.location.href = "/free-audit.html";
+                  }}
                   className="btn-magnetic group w-full py-5 bg-[var(--command-black)] text-white rounded-full font-bold text-[11px] tracking-[0.2em] uppercase relative shadow-2xl overflow-hidden shadow-black/10 hover:bg-[var(--recovery-blue)] transition-colors"
                 >
-                  <span className="relative z-10">Verify Recovery Audit →</span>
+                  <span className="relative z-10">Recover This Revenue →</span>
                   <div className="absolute inset-0 bg-[var(--recovery-blue)] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 </button>
                 <p className="text-center font-data text-[9px] text-[var(--clinic-stone)] uppercase tracking-widest mt-6 font-bold italic">

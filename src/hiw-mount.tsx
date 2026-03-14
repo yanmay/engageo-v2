@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import HowItWorks from './pages/HowItWorks';
 import './index.css';
 
-const root = document.getElementById('react-demo-root');
+const root = document.getElementById('react-hiw-root');
 if (root) {
     createRoot(root).render(
         <StrictMode>

@@ -59,13 +59,7 @@ export default function CinematicHero() {
             {/* Content Container */}
             <div className="relative z-10 h-full flex flex-col justify-center p-8 md:p-24 lg:p-32 max-w-7xl mx-auto">
                 <div ref={contentRef} className="max-w-4xl">
-                    <div className="reveal-fade font-data flex items-center gap-3 text-[var(--recovery-blue)] text-xs tracking-[0.3em] uppercase mb-10">
-                        <div className="relative flex items-center justify-center">
-                            <span className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] relative z-10" />
-                            <span className="live-pulse absolute w-2 h-2 rounded-full bg-[var(--recovery-blue)]" />
-                        </div>
-                        Autonomous Recovery Systems Active
-                    </div>
+
 
                     <h1 className="mb-14">
                         <div className="overflow-hidden mb-2">
@@ -97,7 +91,12 @@ export default function CinematicHero() {
                             <span className="relative z-10">Get Free Audit →</span>
                         </button>
 
-
+                        <button 
+                            onClick={openModal}
+                            className="btn-magnetic group px-12 py-6 border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase relative hover:bg-white/5 transition-colors"
+                        >
+                            <span className="relative z-10">Test our AI →</span>
+                        </button>
 
                         <button 
                             onClick={() => {
@@ -110,21 +109,34 @@ export default function CinematicHero() {
                         </button>
                     </div>
                 </div>
+
+                {/* Floating Stat Cards (PRD Task 3) */}
+                <div className="hidden lg:block absolute right-32 top-1/2 -translate-y-1/2 w-[400px] h-[400px] pointer-events-none">
+                    <div className="relative w-full h-full">
+                        {/* Card 1 */}
+                        <div className="absolute top-0 right-0 reveal-fade bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl shadow-2xl skew-x-[-12deg] hover:skew-x-0 transition-transform duration-700 group hover:bg-white/10" style={{ transitionDelay: '0.1s' }}>
+                            <div className="font-data text-[10px] text-[var(--recovery-blue)] font-bold tracking-widest uppercase mb-2">Response Speed</div>
+                            <div className="text-5xl font-bold text-white tracking-tighter mb-1">8 Seconds</div>
+                            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest">AI calls back immediately</div>
+                        </div>
+
+                        {/* Card 2 */}
+                        <div className="absolute bottom-10 left-0 reveal-fade bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl shadow-2xl skew-x-[12deg] hover:skew-x-0 transition-transform duration-700 group hover:bg-white/10" style={{ transitionDelay: '0.3s' }}>
+                            <div className="font-data text-[10px] text-[var(--signal-green)] font-bold tracking-widest uppercase mb-2">Total Recovered</div>
+                            <div className="text-5xl font-bold text-white tracking-tighter mb-1">₹2.4 Crore</div>
+                            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest">In the last 47 days</div>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="absolute top-1/3 left-1/4 reveal-fade bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-700 group hover:bg-white/10" style={{ transitionDelay: '0.5s' }}>
+                            <div className="font-data text-[10px] text-[var(--sovereign-gold)] font-bold tracking-widest uppercase mb-2">Industry Avg</div>
+                            <div className="text-4xl font-bold text-white tracking-tighter mb-1">23% Miss Rate</div>
+                            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Recovered by Engageo</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {/* Key Metrics Floating */}
-            <div className="absolute bottom-12 right-12 z-10 hidden lg:flex flex-col gap-8 items-end reveal-fade">
-                {[
-                    { label: "AI Response", val: "8 seconds" },
-                    { label: "Industry Avg Recovered", val: "₹2.4 Crore" },
-                    { label: "Clinic Miss Rate", val: "23%" }
-                ].map((stat, i) => (
-                    <div key={i} className="font-data text-right border-r-2 border-[var(--recovery-blue)] pr-6 py-1 bg-white/5 backdrop-blur-sm p-4 rounded-lg lift-on-hover">
-                        <div className="text-white/40 text-[10px] uppercase tracking-widest mb-1">{stat.label}</div>
-                        <div className="text-white text-2xl font-bold">{stat.val}</div>
-                    </div>
-                ))}
-            </div>
 
             {/* Scroll Indicator */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4 opacity-30 reveal-fade">

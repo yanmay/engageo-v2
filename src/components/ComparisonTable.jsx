@@ -181,14 +181,14 @@ export default function ComparisonTable({ showHeaderAndFooter = true }) {
                   {columns.map((col) => (
                     <th key={col.key} className={`p-6 text-left border-r last:border-r-0 border-[var(--command-black)]/10 relative align-top ${col.highlight ? 'bg-white' : ''}`}>
                       {col.highlight && (
-                        <div className="absolute top-0 left-0 right-0 h-[4px] bg-[var(--signal-green)]" />
+                        <div className="absolute top-0 left-0 right-0 h-[4px] bg-[var(--recovery-blue)]" />
                       )}
                       <div className="space-y-1.5 relative z-10">
                         <div className="font-sans font-bold text-[15px] text-[var(--command-black)] uppercase tracking-tight">{col.label}</div>
-                        <div className={`font-data text-[9px] uppercase tracking-wider ${col.highlight ? 'text-[var(--signal-green)] font-bold' : 'text-[var(--clinic-stone)]'}`}>{col.sub}</div>
+                        <div className={`font-data text-[9px] uppercase tracking-wider ${col.highlight ? 'text-[var(--recovery-blue)] font-bold' : 'text-[var(--clinic-stone)]'}`}>{col.sub}</div>
                         {col.highlight && (
                           <div className="pt-2">
-                            <span className="inline-block bg-[var(--signal-green)] text-white rounded-full text-[9px] font-bold font-data px-2.5 py-1 tracking-widest uppercase">
+                            <span className="inline-block bg-[var(--recovery-blue)] text-white rounded-full text-[9px] font-bold font-data px-2.5 py-1 tracking-widest uppercase">
                               Clinic-Ready
                             </span>
                           </div>

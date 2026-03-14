@@ -27,7 +27,7 @@ export default function PricingFAQTeaser() {
                     <h2 className="text-3xl md:text-5xl font-bold text-[var(--command-black)] tracking-tighter italic mb-6">
                         Common <span className="text-[var(--primary)] not-italic">Hesitations.</span>
                     </h2>
-                    <p className="text-[var(--command-black)]/40 text-lg font-medium">Quick answers for those evaluation our investment tiers.</p>
+                    <p className="text-[var(--command-black)]/40 text-lg font-medium">Quick answers for those evaluating our investment tiers.</p>
                 </div>
 
                 <div className="space-y-4">
