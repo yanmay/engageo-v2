@@ -136,5 +136,8 @@ Wave 7: React Standardisation & High-Fidelity Sync (Final Polish)
 - Created FAQPage component to align with site-wide cinematic architecture.
 - Verified mount points and routing consistency across all entry points.
 
-----------
-ralph-done-063vb
+Task 17: CodeRabbit + GitHub CI Integration
+- Created `.github/workflows/pr-check.yml` for build and lint checks.
+- Created `.coderabbit.yaml` with assertive review profile and path filters.
+- Added `.github/pull_request_template.md` with checklist for PRs.
+

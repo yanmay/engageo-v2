@@ -61,26 +61,37 @@ export default function CinematicHero() {
                 <div ref={contentRef} className="max-w-4xl">
 
 
-                    <h1 className="mb-14">
+                    <div className="reveal-fade mb-10 overflow-hidden">
+                        <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] live-pulse" />
+                            <span className="font-data text-[10px] uppercase tracking-[0.4em] text-white/50">Autonomous_Node_Active</span>
+                        </div>
+                    </div>
+
+                    <h1 className="mb-14 relative group">
+                        {/* Cinematic Scanline Effect */}
+                        <div className="absolute -inset-x-8 -inset-y-4 bg-[var(--recovery-blue)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none blur-3xl" />
+                        
                         <div className="overflow-hidden mb-2">
-                            <span className="reveal-line block text-4xl md:text-5xl lg:text-7xl text-white font-bold tracking-tight">
+                            <span className="reveal-line block text-4xl md:text-6xl lg:text-8xl text-white font-bold tracking-tighter leading-[0.9]">
                                 Your clinic loses ₹4–12L
                             </span>
                         </div>
-                        <div className="overflow-hidden mb-6">
-                            <span className="reveal-line block text-4xl md:text-5xl lg:text-6xl text-white/40 font-bold tracking-tight">
+                        <div className="overflow-hidden mb-8">
+                            <span className="reveal-line block text-4xl md:text-6xl lg:text-7xl text-white/40 font-bold tracking-tighter leading-[0.9]">
                                 to missed calls every month.
                             </span>
                         </div>
-                        <div className="overflow-hidden">
-                            <span className="reveal-line font-drama block text-7xl md:text-8xl lg:text-[11rem] text-white leading-[0.85] drop-shadow-2xl">
+                        <div className="overflow-hidden relative">
+                            <span className="reveal-line font-drama block text-7xl md:text-9xl lg:text-[13rem] text-white leading-[0.8] drop-shadow-[0_0_50px_rgba(255,255,255,0.1)]">
                                 We Fix That.
                             </span>
                         </div>
                     </h1>
 
-                    <p className="reveal-fade max-w-lg text-white/70 text-lg md:text-xl leading-relaxed mb-14 font-medium italic border-l border-[var(--recovery-blue)] pl-6">
-                        8-second AI callback. Hinglish voice agent. Unified scheduling. Messaging confirmation.
+                    <p className="reveal-fade max-w-xl text-white/60 text-lg md:text-2xl leading-relaxed mb-16 font-medium italic border-l-2 border-[var(--recovery-blue)] pl-10">
+                        8-second AI callback. Hinglish voice agent. <br className="hidden md:block" />
+                        Unified scheduling. Messaging confirmation.
                     </p>
 
                     <div className="reveal-fade flex flex-wrap gap-6 font-data items-center">
@@ -91,12 +102,14 @@ export default function CinematicHero() {
                             <span className="relative z-10">Get Free Audit →</span>
                         </button>
 
-                        <button 
-                            onClick={openModal}
-                            className="btn-magnetic group px-12 py-6 border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase relative hover:bg-white/5 transition-colors"
+                        <a 
+                            href="https://calendly.com/engageo/demo" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-magnetic group px-12 py-6 border border-white/20 text-white rounded-full font-bold text-sm tracking-widest uppercase relative hover:bg-white/5 transition-colors flex items-center justify-center"
                         >
-                            <span className="relative z-10">Test our AI →</span>
-                        </button>
+                            <span className="relative z-10">Book a Live Demo →</span>
+                        </a>
 
                         <button 
                             onClick={() => {
