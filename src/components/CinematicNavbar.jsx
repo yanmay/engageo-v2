@@ -1,79 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export default function CinematicNavbar() {
-    const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const location = useLocation();
 
+
     const handleHomeClick = (e) => {
+        setMobileMenuOpen(false);
         if (location.pathname === '/') {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        setMobileMenuOpen(false);
     };
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        // Scroll logic removed - status bar is now static black as per Task 20/21 audit
     }, []);
 
     const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Features', path: '/#features' },
-        { name: 'Pricing', path: '/pricing' },
-        { name: 'How It Works', path: '/how-it-works' },
-        { name: 'Compare', path: '/compare' },
-        { name: 'FAQ', path: '/faq' },
+        { name: 'Home', path: 'index.html' },
+        { name: 'Features', path: 'index.html#features' },
+        { name: 'Pricing', path: 'pricing.html' },
+        { name: 'How It Works', path: 'how-it-works.html' },
+        { name: 'Compare', path: 'compare.html' },
+        { name: 'FAQ', path: 'faq.html' },
     ];
+
+    const openAuditModal = (e) => {
+        if (location.pathname === '/' || location.pathname === '/index.html') {
+            e.preventDefault();
+            window.dispatchEvent(new CustomEvent('open-audit-modal'));
+        }
+    };
 
     return (
         <nav 
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-                scrolled 
-                    ? 'bg-[var(--command-black)]/80 backdrop-blur-xl py-4 border-b border-white/5 shadow-2xl' 
-                    : 'bg-transparent py-10'
-            }`}
+            className="fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-out py-5 border-b border-white/5 bg-[var(--command-black)]"
         >
             <div className="max-w-7xl mx-auto px-8 md:px-12 flex items-center justify-between">
                 {/* Logo Mark: Wordmark only */}
-                <Link to="/" onClick={handleHomeClick} className="group flex items-center gap-1">
-                    <span className="text-white font-bold text-2xl tracking-tighter uppercase transition-colors group-hover:text-[var(--recovery-blue)]">
+                <a href="index.html" onClick={handleHomeClick} className="group flex items-center gap-1">
+                    <span className="font-bold text-2xl tracking-tighter transition-colors text-white group-hover:text-[var(--recovery-blue)]">
                         Engageo
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Link>
+                </a>
 
                 {/* Desktop Nav Links */}
                 <div className="hidden lg:flex items-center gap-12 font-data">
                     {navLinks.map((link) => (
-                        <Link 
+                        <a 
                             key={link.name} 
-                            to={link.path}
+                            href={link.path}
                             onClick={link.name === 'Home' ? handleHomeClick : undefined}
-                            className="text-white/50 hover:text-white text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:tracking-[0.25em]"
+                            className="text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:tracking-[0.25em] text-white/50 hover:text-white"
                         >
                             {link.name}
-                        </Link>
+                        </a>
                     ))}
                 </div>
 
                 {/* Right Side: Login + Audit Button */}
                 <div className="hidden lg:flex items-center gap-10">
-                    <button className="text-white/30 hover:text-white text-[11px] font-bold tracking-[0.2em] uppercase transition-colors">
+                    <button className="text-[11px] font-bold tracking-[0.2em] uppercase transition-colors text-white/30 hover:text-white">
                         Login
                     </button>
-                    <Link 
-                        to="/audit"
+                    <a 
+                        href="free-audit.html"
+                        onClick={openAuditModal}
                         className="btn-magnetic group px-8 py-3 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-[10px] tracking-[0.2em] uppercase overflow-hidden relative shadow-lg shadow-blue-500/10 hover:shadow-blue-500/30 transition-all"
                     >
                         <span className="relative z-10">Get Free Audit →</span>
                         <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 bg-white/10 transition-transform duration-500" />
-                    </Link>
+                    </a>
                 </div>
 
                 {/* Mobile Toggle */}
@@ -96,26 +95,26 @@ export default function CinematicNavbar() {
             >
                 <div className="flex flex-col items-center gap-8">
                     {navLinks.map((link, i) => (
-                        <Link 
+                        <a 
                             key={link.name} 
-                            to={link.path}
+                            href={link.path}
                             onClick={handleHomeClick}
                             className="text-white text-3xl md:text-5xl font-bold tracking-tighter hover:text-[var(--recovery-blue)] transition-colors"
                             style={{ transitionDelay: `${i * 50}ms` }}
                         >
                             {link.name}
-                        </Link>
+                        </a>
                     ))}
                 </div>
                 
                 <div className="flex flex-col items-center gap-6 mt-8 w-full px-12 max-w-sm">
-                    <Link 
-                        to="/audit"
+                    <a 
+                        href="free-audit.html"
+                        onClick={openAuditModal}
                         className="w-full text-center px-12 py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-xs tracking-[0.2em] uppercase shadow-2xl"
-                        onClick={() => setMobileMenuOpen(false)}
                     >
                         Get Free Audit →
-                    </Link>
+                    </a>
                     <button className="text-white/40 font-bold tracking-[0.2em] uppercase text-[10px]">
                         Already have an account? Login
                     </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion as Motion, useInView as UseInView } from 'framer-motion';
 import { CheckCircle2, Shield, Lock, Activity, MousePointer2 } from 'lucide-react';
 
 /* 
@@ -11,23 +11,101 @@ import { CheckCircle2, Shield, Lock, Activity, MousePointer2 } from 'lucide-reac
    3. Guarantee Shield
 */
 
-const CardContainer = ({ children, className = "" }) => (
-    <motion.div 
-        whileHover={{ y: -4 }}
-        className={`bg-[var(--command-black)] border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-xl flex flex-col h-full relative overflow-hidden group ${className}`}
-    >
-        {children}
-    </motion.div>
+const useMousePosition = () => {
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        });
+    };
+    return { mousePos, handleMouseMove };
+};
+
+const BorderBeam = ({ duration = 8, size = 150, delay = 0, colorFrom = "transparent", colorTo = "var(--recovery-blue)" }) => (
+    <div className="border-beam-container">
+        <div 
+            className="border-beam" 
+            style={{ 
+                "--duration": `${duration}s`, 
+                "--size": `${size}px`,
+                "--delay": `${delay}s`,
+                "--color-from": colorFrom,
+                "--color-to": colorTo
+            }} 
+        />
+    </div>
 );
 
+const CardContainer = ({ children, className = "", delay = 0, beamColor = "var(--recovery-blue)" }) => {
+    const { mousePos, handleMouseMove } = useMousePosition();
+    const ref = useRef(null);
+    const [rotateX, setRotateX] = useState(0);
+    const [rotateY, setRotateY] = useState(0);
+
+    const handleMouseLeave = () => {
+        setRotateX(0);
+        setRotateY(0);
+    };
+
+    const handleMouseMoveLocal = (e) => {
+        handleMouseMove(e);
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const mouseX = e.clientX - centerX;
+        const mouseY = e.clientY - centerY;
+        const factor = 0.05;
+        setRotateX(-mouseY * factor);
+        setRotateY(mouseX * factor);
+    };
+
+    return (
+        <Motion.div 
+            ref={ref}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ 
+                duration: 1.5, 
+                delay, 
+                ease: [0.22, 1, 0.36, 1] 
+            }}
+            onMouseMove={handleMouseMoveLocal}
+            onMouseLeave={handleMouseLeave}
+            animate={{ rotateX, rotateY }}
+            whileHover={{ y: -12 }}
+            className={`cyber-bento-card bg-black border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl flex flex-col h-full relative overflow-hidden group transition-colors hover:border-[var(--recovery-blue)]/30 ${className}`}
+            style={{
+                "--mouse-x": `${mousePos.x}px`,
+                "--mouse-y": `${mousePos.y}px`,
+                perspective: "1200px"
+            }}
+        >
+            {/* Spotlight Glow Effect */}
+            <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                 style={{
+                     background: `radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(37, 99, 235, 0.1) 0%, transparent 60%)`
+                 }} />
+            
+            {/* Border Beam */}
+            <BorderBeam colorTo={beamColor} duration={8} />
+            
+            {children}
+        </Motion.div>
+    );
+};
+
 const CardHeading = ({ children }) => (
-    <h3 className="text-white text-2xl font-bold font-sans tracking-tight mb-2">
+    <h3 className="text-white text-2xl font-bold font-sans tracking-tight mb-2 relative z-10">
         {children}
     </h3>
 );
 
 const CardDescriptor = ({ children }) => (
-    <p className="text-white/40 text-sm font-sans mb-8 leading-relaxed">
+    <p className="text-white/40 text-sm font-sans mb-8 leading-relaxed relative z-10">
         {children}
     </p>
 );
@@ -56,16 +134,16 @@ const LaunchTracker = () => {
     };
 
     return (
-        <CardContainer>
-            <div className="flex items-center gap-2 mb-4">
+        <CardContainer delay={0}>
+            <div className="flex items-center gap-2 mb-4 relative z-10">
                 <Activity size={14} className="text-[var(--recovery-blue)]" />
                 <span className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--recovery-blue)]">Deployment_Spine</span>
             </div>
             <CardHeading>4-Day Launch Tracker</CardHeading>
             <CardDescriptor>Sub-second deployment architecture for immediate revenue recovery.</CardDescriptor>
             
-            <motion.div 
-                className="flex-1 space-y-6 relative"
+            <Motion.div 
+                className="flex-1 space-y-6 relative z-10"
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -75,7 +153,7 @@ const LaunchTracker = () => {
                 <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-white/5" />
                 
                 {steps.map((step, idx) => (
-                    <motion.div key={idx} variants={itemVariants} className="flex gap-4 items-start relative z-10">
+                    <Motion.div key={idx} variants={itemVariants} className="flex gap-4 items-start relative z-10">
                         <div className="mt-1">
                             {step.status === 'completed' && (
                                 <div className="w-6 h-6 rounded-full bg-[var(--signal-green)]/20 border border-[var(--signal-green)]/40 flex items-center justify-center">
@@ -100,40 +178,41 @@ const LaunchTracker = () => {
                                 {step.label}
                             </div>
                         </div>
-                    </motion.div>
+                    </Motion.div>
                 ))}
-            </motion.div>
+            </Motion.div>
         </CardContainer>
     );
 };
 
+const RECOVERY_MESSAGES = [
+    "CALL RECEIVED",
+    "Patient: Rahul Sharma",
+    "Status: MISSED",
+    "Action: RECOVERED",
+    "WhatsApp: Sent @ 14:32:04",
+    "Booking: CONFIRMED @ 14:35:12",
+    "REVENUE: ₹85,000",
+    "----------------",
+    "CALL RECEIVED",
+    "Patient: Dr. Anjali",
+    "Status: MISSED",
+    "Action: RECOVERED",
+    "WhatsApp: Sent @ 15:40:11",
+    "Booking: CONFIRMED @ 15:44:02",
+    "REVENUE: ₹42,500",
+    "----------------"
+];
+
 // Card 2 — Live Recovery Feed
 const LiveRecoveryFeed = () => {
-    const messages = [
-        "CALL RECEIVED",
-        "Patient: Rahul Sharma",
-        "Status: MISSED",
-        "Action: RECOVERED",
-        "WhatsApp: Sent @ 14:32:04",
-        "Booking: CONFIRMED @ 14:35:12",
-        "REVENUE: ₹85,000",
-        "----------------",
-        "CALL RECEIVED",
-        "Patient: Dr. Anjali",
-        "Status: MISSED",
-        "Action: RECOVERED",
-        "WhatsApp: Sent @ 15:40:11",
-        "Booking: CONFIRMED @ 15:44:02",
-        "REVENUE: ₹42,500",
-        "----------------"
-    ];
 
     const [displayText, setDisplayText] = useState([]);
     const [msgIndex, setMsgIndex] = useState(0);
     const [charIndex, setCharIndex] = useState(0);
 
     useEffect(() => {
-        const fullText = messages[msgIndex];
+        const fullText = RECOVERY_MESSAGES[msgIndex];
         if (charIndex < fullText.length) {
             const timeout = setTimeout(() => {
                 setDisplayText(prev => {
@@ -146,7 +225,7 @@ const LiveRecoveryFeed = () => {
             return () => clearTimeout(timeout);
         } else {
             const timeout = setTimeout(() => {
-                if (msgIndex < messages.length - 1) {
+                if (msgIndex < RECOVERY_MESSAGES.length - 1) {
                     setDisplayText(prev => [...prev, ""]);
                     setMsgIndex(prev => prev + 1);
                     setCharIndex(0);
@@ -164,8 +243,8 @@ const LiveRecoveryFeed = () => {
     }, [charIndex, msgIndex]);
 
     return (
-        <CardContainer>
-            <div className="flex items-center justify-between mb-4">
+        <CardContainer delay={0.2}>
+            <div className="flex items-center justify-between mb-4 relative z-10">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] animate-pulse shadow-[0_0_8px_var(--recovery-blue)]" />
                     <span className="font-data text-[10px] uppercase tracking-widest text-white/50">Live Feed</span>
@@ -175,7 +254,7 @@ const LiveRecoveryFeed = () => {
             <CardHeading>Live Recovery Feed</CardHeading>
             <CardDescriptor>Real-time autonomous interception protocols in action.</CardDescriptor>
             
-            <div className="flex-1 bg-black/40 rounded-xl p-5 font-data text-[11px] leading-relaxed border border-white/5 overflow-y-auto custom-scrollbar">
+            <div className="relative z-10 flex-1 bg-black/40 rounded-xl p-5 font-data text-[11px] leading-relaxed border border-white/5 overflow-y-auto custom-scrollbar">
                 <div className="text-[var(--recovery-blue)] space-y-1">
                     {displayText.map((line, i) => (
                         <div key={i} className={line.includes('REVENUE') ? 'text-[var(--signal-green)] font-bold' : ''}>
@@ -194,7 +273,7 @@ const LiveRecoveryFeed = () => {
 // Card 3 — Guarantee Shield
 const GuaranteeShield = () => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.5 });
+    const isInView = UseInView(ref, { once: true, amount: 0.5 });
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -221,15 +300,15 @@ const GuaranteeShield = () => {
     const circumference = 2 * Math.PI * radius;
 
     return (
-        <CardContainer className="border-[var(--sovereign-gold)]/20">
-            <div className="flex items-center gap-2 mb-4">
+        <CardContainer className="border-[var(--sovereign-gold)]/20" delay={0.4} beamColor="var(--sovereign-gold)">
+            <div className="flex items-center gap-2 mb-4 relative z-10">
                 <Shield size={14} className="text-[var(--sovereign-gold)]" />
                 <span className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--sovereign-gold)]">Fiscal_Assurance</span>
             </div>
             <CardHeading>Guarantee Shield</CardHeading>
             <CardDescriptor>Sovereign-grade conversion security for every clinic partner.</CardDescriptor>
 
-            <div ref={ref} className="flex-1 flex flex-col items-center justify-center py-4">
+            <div ref={ref} className="relative z-10 flex-1 flex flex-col items-center justify-center py-4">
                 {/* Progress Ring */}
                 <div className="relative w-40 h-40 flex items-center justify-center mb-8">
                     <svg width="160" height="160" className="transform -rotate-90">
@@ -241,7 +320,7 @@ const GuaranteeShield = () => {
                             strokeWidth="8"
                             fill="transparent"
                         />
-                        <motion.circle
+                        <Motion.circle
                             cx="80"
                             cy="80"
                             r={radius}
@@ -311,7 +390,7 @@ export default function ThreeCardSection() {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="cyber-bento-grid grid grid-cols-1 md:grid-cols-3 gap-8">
                     <LaunchTracker />
                     <LiveRecoveryFeed />
                     <GuaranteeShield />

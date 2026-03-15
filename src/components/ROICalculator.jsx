@@ -1,47 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion as Motion, useInView as UseInView } from 'framer-motion';
 import { useModal } from '../context/ModalContext';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { NumberTicker } from './ui/NumberTicker';
 
-gsap.registerPlugin(ScrollTrigger);
-
-// ─── Animated number counter (Hinglish/Indian Format) ──────────────────────────
-function AnimatedNumber({ value, prefix = '', suffix = '' }) {
-  const [display, setDisplay] = useState(value);
-  const prevRef = useRef(value);
-  const rafRef = useRef(null);
-
-  useEffect(() => {
-    const start = prevRef.current;
-    const end = value;
-    const duration = 800;
-    const startTime = performance.now();
-
-    const tick = (now) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // ease-out expo
-      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      const current = Math.round(start + (end - start) * eased);
-      setDisplay(current);
-      if (progress < 1) rafRef.current = requestAnimationFrame(tick);
-      else prevRef.current = end;
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [value]);
-
-  return (
-    <span>
-      {prefix}
-      {display.toLocaleString('en-IN')}
-      {suffix}
-    </span>
-  );
-}
-
-// ─── Custom slider (Cinematic Command Aesthetic) ──────────────────────────────
+// ─── Main component ───────────────────────────────────────────────────────────
 function Slider({ value, min, max, step, onChange, label, format }) {
   const pct = ((value - min) / (max - min)) * 100;
 
@@ -89,7 +52,7 @@ function Slider({ value, min, max, step, onChange, label, format }) {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function ROICalculator() {
-  const { openModal } = useModal();
+  useModal();
   const sectionRef = useRef(null);
   const cardRef = useRef(null);
   
@@ -248,7 +211,8 @@ export default function ROICalculator() {
                     Monthly Revenue At Risk
                   </div>
                   <div className="text-6xl md:text-8xl font-bold tracking-tighter text-[var(--command-black)] transition-colors duration-500 group-hover:text-[var(--loss-red)]">
-                    <AnimatedNumber value={monthlyLoss} prefix="₹" />
+                    <span>₹</span>
+                    <NumberTicker value={monthlyLoss} />
                   </div>
                   <div className="mt-4 flex items-center gap-6">
                     <div className="font-data text-[11px] font-bold text-[var(--clinic-stone)] uppercase tracking-widest">
@@ -262,22 +226,23 @@ export default function ROICalculator() {
                 </div>
 
                 {/* Metric 2: Recovery */}
-                <div className="p-8 md:p-10 rounded-[2rem] bg-[var(--recovered-green)]/10 border border-[var(--recovered-green)]/10 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--recovered-green)]/10 blur-3xl rounded-full" />
+                <div className="p-8 md:p-10 rounded-[2rem] bg-[var(--signal-green)]/10 border border-[var(--signal-green)]/10 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--signal-green)]/10 blur-3xl rounded-full" />
                   
                   <div className="relative z-10">
-                    <div className="font-data text-[10px] uppercase tracking-[0.3em] text-[var(--recovered-green)] font-bold mb-4 flex items-center gap-2">
+                    <div className="font-data text-[10px] uppercase tracking-[0.3em] text-[var(--signal-green)] font-bold mb-4 flex items-center gap-2">
                       Engageo Monthly Recovery
                     </div>
-                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--recovered-green)] mb-6">
-                      <AnimatedNumber value={engageoRecovers} prefix="₹" />
+                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--signal-green)] mb-6">
+                      <span>₹</span>
+                      <NumberTicker value={engageoRecovers} />
                     </div>
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                        <div className="text-xs font-bold text-[var(--command-black)]/70 flex items-center gap-2">
                           Net Gain: <span className="text-[var(--command-black)]">₹{netGain.toLocaleString('en-IN')}</span>
                        </div>
-                       <div className="text-xs font-bold text-[var(--recovered-green)] flex items-center gap-2">
-                          ROI Multiple: <span className="bg-[var(--recovered-green)] text-white px-2 py-0.5 rounded text-[10px]">{roiMultiple}x</span>
+                       <div className="text-xs font-bold text-[var(--signal-green)] flex items-center gap-2">
+                          ROI Multiple: <span className="bg-[var(--signal-green)] text-white px-2 py-0.5 rounded text-[10px]">{roiMultiple}x</span>
                        </div>
                     </div>
                   </div>

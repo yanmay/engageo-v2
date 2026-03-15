@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React from 'react';
+import { motion as Motion } from 'framer-motion';
 
 const FEATURE_DATA = [
   {
@@ -35,58 +35,63 @@ const FEATURE_DATA = [
 ];
 
 export default function CinematicFeatures() {
-  const sectionRef = useRef(null);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".reveal-header", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-        }
-      });
-
-      gsap.from(".feature-row", {
-        opacity: 0,
-        y: 20,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".features-container",
-          start: "top 85%",
-        }
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94], // easeOutQuad-like
+      },
+    },
+  };
 
   return (
     <section 
       id="platform" 
-      ref={sectionRef}
       className="py-24 md:py-40 px-6 md:px-24 bg-[var(--background)] relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-24 reveal-header">
-          <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-6 font-bold">Platform Capabilities</div>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl text-[var(--command-black)] mb-8 tracking-tighter max-w-4xl">
+        <Motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="mb-24"
+        >
+          <Motion.div variants={itemVariants} className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-6 font-bold">Platform Capabilities</Motion.div>
+          <Motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-7xl text-[var(--command-black)] mb-8 tracking-tighter max-w-4xl">
             Everything You Need.<br />
             <span className="text-[var(--primary)]">Everything You Didn't Know You Needed.</span>
-          </h2>
-          <p className="max-w-2xl text-[var(--command-black)]/60 text-lg md:text-xl leading-relaxed">
+          </Motion.h2>
+          <Motion.p variants={itemVariants} className="max-w-2xl text-[var(--command-black)]/60 text-lg md:text-xl leading-relaxed">
             Bridge the gap between raw missed calls and confirmed hospital pipeline with a platform designed for clinical precision.
-          </p>
-        </div>
+          </Motion.p>
+        </Motion.div>
 
-        <div className="features-container border-t border-[var(--command-black)]/10">
+        <Motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="features-container border-t border-[var(--command-black)]/10"
+        >
           {FEATURE_DATA.map((f, i) => (
-            <div 
+            <Motion.div 
               key={i} 
+              variants={itemVariants}
               className="feature-row border-b border-[var(--command-black)]/10 py-10 md:py-16 hover:bg-[var(--primary)]/[0.01] transition-colors group"
             >
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
@@ -111,9 +116,9 @@ export default function CinematicFeatures() {
                   </span>
                 </div>
               </div>
-            </div>
+            </Motion.div>
           ))}
-        </div>
+        </Motion.div>
       </div>
     </section>
   );
