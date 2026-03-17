@@ -112,7 +112,6 @@ export default function HowItWorks() {
   return (
     <div className="w-full bg-[var(--command-black)] min-h-screen relative">
       <div className="fixed inset-0 pointer-events-none noise-overlay opacity-20 z-0" />
-      <CinematicNavbar />
       
       <div className="max-w-7xl mx-auto px-8 md:px-24 pt-48 pb-32 relative z-10">
         
@@ -259,7 +258,6 @@ export default function HowItWorks() {
         </div>
 
       </div>
-      <CinematicFooter />
     </div>
   );
 }

@@ -34,16 +34,20 @@ export default function MobileFloatingCTA() {
 
   // Handle padding-bottom on body
   useEffect(() => {
-    // Only apply below 768px and when visible
-    const isMobile = window.innerWidth < 768;
-    if (isVisible && isMobile) {
-      document.body.style.paddingBottom = '60px';
-    } else {
-      document.body.style.paddingBottom = '0px';
-    }
+    const checkMobileAndApplyPadding = () => {
+      const isMobile = window.innerWidth < 768;
+      if (isVisible && isMobile) {
+        document.body.style.paddingBottom = '60px';
+      } else {
+        document.body.style.paddingBottom = '0px';
+      }
+    };
 
-    // Cleanup
+    checkMobileAndApplyPadding();
+    window.addEventListener('resize', checkMobileAndApplyPadding);
+
     return () => {
+      window.removeEventListener('resize', checkMobileAndApplyPadding);
       document.body.style.paddingBottom = '0px';
     };
   }, [isVisible]);
@@ -52,14 +56,6 @@ export default function MobileFloatingCTA() {
 
   return (
     <>
-      {/* Sentinel element placed exactly at 100vh from top of document 
-          (Left here in case we want to revert from scroll listener back to IO) */}
-      <div
-        ref={sentinelRef}
-        className="absolute left-0 w-full h-px pointer-events-none"
-        style={{ top: '100vh' }}
-      />
-
       <Link
         to="/audit"
         className={`md:hidden fixed bottom-0 left-0 w-[100vw] h-[60px] flex flex-col items-center justify-center gap-[2px] z-[1000] transition-transform duration-300 ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}

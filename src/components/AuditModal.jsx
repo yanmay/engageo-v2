@@ -50,6 +50,9 @@ export default function AuditModal() {
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-12"
       onClick={closeModal}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
     >
       <div className="absolute inset-0 bg-[#0a0a0a]/80 backdrop-blur-2xl transition-all duration-500" />
 
@@ -71,7 +74,7 @@ export default function AuditModal() {
               </div>
 
               <div className="mb-10">
-                <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tighter leading-tight italic font-drama">
+                <h2 id="modal-title" className="text-4xl lg:text-5xl font-bold text-white tracking-tighter leading-tight italic font-drama">
                   Experience the <br /> recovery engine.
                 </h2>
               </div>

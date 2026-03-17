@@ -5,8 +5,6 @@ import CinematicPricing from '../components/CinematicPricing';
 import TierSelector from '../components/TierSelector';
 import TierComparisonTable from '../components/TierComparisonTable';
 import PricingFAQTeaser from '../components/PricingFAQTeaser';
-import CinematicNavbar from '../components/CinematicNavbar';
-import CinematicFooter from '../components/CinematicFooter';
 import gsap from 'gsap';
 
 export default function PricingPage() {
@@ -30,7 +28,6 @@ export default function PricingPage() {
 
   return (
     <div ref={containerRef} className="w-full bg-[var(--command-black)] min-h-screen">
-      <CinematicNavbar />
       
       {/* 1) Page Hero */}
       <section 
@@ -105,7 +102,6 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <CinematicFooter />
     </div>
   );
 }
