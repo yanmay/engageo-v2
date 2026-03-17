@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import Audit from './pages/Audit';
+import CinematicFooter from './components/CinematicFooter';
 import { ModalProvider } from './context/ModalContext';
 import AuditModal from './components/AuditModal';
 import './index.css';
@@ -18,4 +19,15 @@ if (rootElement) {
             </BrowserRouter>
         </StrictMode>
     );
+}
+
+const footerRoot = document.getElementById('react-audit-footer');
+if (footerRoot) {
+  createRoot(footerRoot).render(
+    <StrictMode>
+        <BrowserRouter>
+            <CinematicFooter />
+        </BrowserRouter>
+    </StrictMode>
+  );
 }

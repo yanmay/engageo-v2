@@ -32,8 +32,6 @@ function Layout({ children }) {
 
   return (
     <>
-      <CinematicNavbar />
-
       <main className="flex flex-col w-full relative flex-1">
         {children}
       </main>
@@ -92,7 +90,8 @@ function App() {
     <ModalProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="w-full relative bg-[var(--clinic-white)] overflow-x-hidden min-h-screen flex flex-col">
+        <CinematicNavbar />
+        <div className="w-full relative bg-[var(--ethereal-white)] overflow-x-hidden min-h-screen flex flex-col">
           {/* Grain texture overlay — replaces dot grid */}
           <div className="grain-texture" />
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,55 +10,61 @@ const PricingCard = React.forwardRef(({ name, price, desc, features, highlighted
     return (
         <div 
             ref={ref}
-            className={`p-10 rounded-premium border transition-all duration-500 hover:-translate-y-4 flex flex-col h-full relative group ${highlighted
-                ? 'bg-white/[0.05] text-white border-[var(--recovery-blue)]/30 shadow-3xl lg:scale-105 z-10'
-                : 'bg-white/[0.02] text-white border-white/10 shadow-sm hover:border-white/20'
+            className={`p-12 rounded-[3rem] border transition-all duration-700 hover:-translate-y-4 flex flex-col h-full relative group overflow-hidden ${highlighted
+                ? 'bg-white/10 text-white border-[var(--recovery-blue)]/30 shadow-[0_40px_100px_rgba(0,0,0,0.5)] lg:scale-105 z-10'
+                : 'bg-white/5 text-white border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:border-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] glass-premium'
             }`}>
             
+            {/* Inner Glow/Variance */}
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none ${
+                highlighted ? 'bg-gradient-to-br from-[var(--clinical-blue)]/5 to-transparent' : 'bg-gradient-to-br from-[var(--clinical-blue)]/2 to-transparent'
+            }`} />
+
             {badge && (
-                <div className={`absolute top-6 right-6 px-3 py-1 rounded-full text-[9px] font-bold tracking-widest uppercase ${
-                    highlighted ? 'bg-[var(--primary)] text-white' : 'bg-[var(--primary)]/10 text-[var(--primary)]'
+                <div className={`absolute top-8 right-8 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase ${
+                    highlighted ? 'bg-[var(--clinical-blue)] text-white shadow-[0_10px_30px_rgba(0,71,255,0.2)]' : 'bg-black/5 text-[var(--ink-black)]/40 border border-black/5'
                 }`}>
                     {badge}
                 </div>
             )}
 
-            <div className="font-data text-[11px] tracking-[0.3em] uppercase mb-10 text-white/40 font-bold">{name}</div>
+            <div className="font-data text-[10px] tracking-[0.4em] uppercase mb-12 text-white/20 font-bold">{name}</div>
             
-            <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-5xl md:text-6xl font-bold tracking-tighter text-white">{price}</span>
-                <span className="text-base font-medium text-white/30">/mo</span>
+            <div className="flex items-baseline gap-2 mb-4">
+                <span className="text-6xl md:text-7xl font-bold tracking-tighter text-white">{price}</span>
+                <span className="text-lg font-medium text-white/20">/mo</span>
             </div>
 
             {subNote && (
-                <div className="font-data text-[10px] uppercase tracking-widest text-white/40 mb-8 font-bold italic">
+                <div className="font-data text-[9px] uppercase tracking-[0.3em] text-[var(--clinical-blue)] mb-8 font-bold italic">
                     {subNote}
                 </div>
             )}
             
-            <div className="text-sm font-medium text-white/60 mb-12 min-h-[3rem] leading-relaxed tracking-tight">{desc}</div>
+            <div className="text-base font-medium text-white/60 mb-12 min-h-[3rem] leading-relaxed tracking-tight">{desc}</div>
             
-            <div className="space-y-5 mb-16 flex-1">
+            <div className="space-y-6 mb-16 flex-1">
                 {features.map((f, i) => (
-                    <div key={i} className="flex items-start gap-4 text-xs font-semibold tracking-tight group/item">
-                        <div className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-300 group-hover/item:scale-150 ${
+                    <div key={i} className="flex items-start gap-4 text-xs font-bold tracking-tight group/item">
+                        <div className={`mt-1.5 w-1 h-1 rounded-full shrink-0 transition-all duration-500 group-hover/item:scale-[2.5] ${
                             highlighted 
-                                ? 'bg-[var(--recovery-blue)] shadow-[0_0_12px_var(--recovery-blue)]' 
-                                : 'bg-[var(--recovery-blue)]/40 shadow-[0_0_8px_rgba(37,99,235,0.2)]'
+                                ? 'bg-[var(--recovery-blue)] shadow-[0_0_15px_var(--recovery-blue)]' 
+                                : 'bg-white/10'
                         }`} />
-                        <span className="text-white/70">{f}</span>
+                        <span className="text-white/60 group-hover/item:text-white transition-colors duration-300">{f}</span>
                     </div>
                 ))}
             </div>
 
             <button 
                 onClick={openModal}
-                className={`w-full py-5 rounded-full font-bold text-[11px] tracking-[0.2em] uppercase transition-all duration-300 text-center ${highlighted
-                    ? 'bg-[var(--recovery-blue)] text-white hover:bg-white hover:text-black shadow-xl'
-                    : 'bg-white/10 text-white hover:bg-[var(--recovery-blue)]'
+                className={`w-full py-6 rounded-full font-bold text-[10px] tracking-[0.3em] uppercase transition-all duration-500 text-center relative overflow-hidden group/btn ${highlighted
+                    ? 'bg-[var(--recovery-blue)] text-white shadow-[0_20px_40px_rgba(0,71,255,0.2)] hover:shadow-[0_25px_50px_rgba(0,71,255,0.3)]'
+                    : 'bg-white/5 text-white/40 hover:text-white hover:bg-white/10 border border-white/5'
                 }`}
             >
-                Get Started →
+                <span className="relative z-10 font-sans">Get Started →</span>
+                {highlighted && <div className="absolute inset-0 translate-y-full group-hover/btn:translate-y-0 bg-white/10 transition-transform duration-500" />}
             </button>
         </div>
     );
@@ -101,9 +106,10 @@ export default function CinematicPricing({ hideLink = false }) {
     }, []);
 
     return (
-        <section id="pricing" ref={sectionRef} className="py-32 md:py-48 px-6 md:px-24 bg-[var(--command-black)] overflow-hidden relative">
-            {/* Background decorative elements */}
-            <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-blue-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <section id="pricing" ref={sectionRef} className="py-32 md:py-48 px-6 md:px-24 bg-transparent overflow-hidden relative">
+            {/* Subtle Background Elements */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--clinical-blue)]/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--premium-clay)]/5 rounded-full blur-[100px] pointer-events-none" />
             
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="max-w-3xl mb-24 md:mb-32 reveal-pricing-header">
@@ -111,7 +117,7 @@ export default function CinematicPricing({ hideLink = false }) {
                     <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-10 tracking-tighter leading-[0.9]">
                         Transparent Pricing. <span className="text-[var(--recovery-blue)] font-drama italic lowercase">One Guarantee.</span>
                     </h2>
-                    <p className="text-white/60 text-xl md:text-2xl leading-relaxed max-w-xl font-medium">
+                    <p className="text-white/60 text-xl md:text-2xl leading-relaxed max-w-xl font-medium italic">
                         Fixed monthly retainers. No success fees. Scaled for every clinic type.
                     </p>
                 </div>
@@ -143,7 +149,7 @@ export default function CinematicPricing({ hideLink = false }) {
                     />
                 </div>
 
-                <div className="mt-24 flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/5 pt-16">
+                <div className="mt-24 flex flex-col md:flex-row items-center justify-between gap-10 border-t border-black/5 pt-16">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-full bg-[var(--recovery-blue)]/5 flex items-center justify-center">
                             <span className="text-[var(--recovery-blue)] text-xl">🛡️</span>
@@ -155,10 +161,10 @@ export default function CinematicPricing({ hideLink = false }) {
                     </div>
                     
                     {!hideLink && (
-                        <Link to="/pricing" className="group flex items-center gap-3 text-[var(--recovery-blue)] text-[11px] font-bold tracking-[0.3em] uppercase border-b-2 border-transparent hover:border-[var(--recovery-blue)] transition-all pb-1">
+                        <a href="/pricing" className="group flex items-center gap-3 text-[var(--clinical-blue)] text-[11px] font-bold tracking-[0.3em] uppercase border-b-2 border-transparent hover:border-[var(--clinical-blue)] transition-all pb-1">
                             Full Comparison Matrix
                             <span className="transition-transform group-hover:translate-x-2">→</span>
-                        </Link>
+                        </a>
                     )}
                 </div>
             </div>

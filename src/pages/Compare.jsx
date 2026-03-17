@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import ComparisonTable from '../components/ComparisonTable';
-import CinematicNavbar from '../components/CinematicNavbar';
-import CinematicFooter from '../components/CinematicFooter';
 
 export default function Compare() {
   useEffect(() => {
@@ -11,7 +8,6 @@ export default function Compare() {
 
   return (
     <div className="w-full min-h-screen bg-[var(--command-black)] flex flex-col">
-      <CinematicNavbar />
       
       {/* 1) Page Hero */}
       <section
@@ -57,16 +53,14 @@ export default function Compare() {
             >
             Get the <span className="text-[var(--recovery-blue)] italic font-drama">clinic-ready</span> system.
             </h2>
-            <Link
-            to="/audit"
+            <a
+            href="/free-audit"
             className="inline-flex items-center justify-center font-bold tracking-[0.2em] uppercase transition-all hover:scale-105 active:scale-95 bg-[var(--recovery-blue)] text-white rounded-full px-12 py-5 shadow-2xl shadow-blue-500/40 text-xs"
             >
             Free audit →
-            </Link>
+            </a>
         </div>
       </section>
-
-      <CinematicFooter />
     </div>
   );
 }

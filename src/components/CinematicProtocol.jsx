@@ -27,7 +27,7 @@ const ShufflerCard = () => {
     <div className="relative h-[280px] w-full flex items-center justify-center perspective-1000">
       <AnimatePresence mode="popLayout">
         {items.map((item, index) => (
-          <motion.div
+          <Motion.div
             key={item.id}
             layout
             initial={{ opacity: 0, y: 50, scale: 0.8 }}
@@ -60,7 +60,7 @@ const ShufflerCard = () => {
                 item.type === 'active' ? 'text-[var(--recovery-blue)]' :
                   'text-[var(--signal-green)]'
               }`}>{item.status}</p>
-          </motion.div>
+          </Motion.div>
         ))}
       </AnimatePresence>
     </div>
@@ -203,7 +203,7 @@ export default function CinematicProtocol() {
           {/* Scroll-driven SVG Connection Path */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none hidden lg:block z-0">
             <svg width="100%" height="100%" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="none">
-              <motion.path 
+              <Motion.path 
                 d="M 200 150 Q 600 300 1000 150"
                 stroke="var(--recovery-blue)"
                 strokeWidth="2"
@@ -213,7 +213,7 @@ export default function CinematicProtocol() {
                 transition={{ duration: 2, ease: "easeInOut" }}
                 viewport={{ once: true, margin: "-20%" }}
               />
-              <motion.path 
+              <Motion.path 
                 d="M 200 150 Q 600 0 1000 150"
                 stroke="var(--recovery-blue)"
                 strokeWidth="1"
@@ -228,7 +228,7 @@ export default function CinematicProtocol() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 relative z-10">
             {/* Card 1 - Shifted Up */}
-            <motion.div 
+            <Motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -242,10 +242,10 @@ export default function CinematicProtocol() {
                   Autonomous detection engine that identifies silent revenue leaks and initiates recovery protocols in milliseconds.
                 </p>
               </div>
-            </motion.div>
+            </Motion.div>
   
             {/* Card 2 - Centered Baseline */}
-            <motion.div 
+            <Motion.div 
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -259,10 +259,10 @@ export default function CinematicProtocol() {
                   Live monitoring of Hinglish voice sessions, capturing patient intent and emotional cues with high-fidelity accuracy.
                 </p>
               </div>
-            </motion.div>
+            </Motion.div>
   
             {/* Card 3 - Shifted Down & Offset */}
-            <motion.div 
+            <Motion.div 
               initial={{ opacity: 0, y: 80 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -276,7 +276,7 @@ export default function CinematicProtocol() {
                   Intelligent sync logic that maps patients to your best clinical slots without ever needing human intervention.
                 </p>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
         </div>
       </div>

@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
 
 export default function CinematicNavbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [pathname, setPathname] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
+    const pathname = window.location.pathname;
     const { openModal } = useModal();
-
-    useEffect(() => {
-        // Pathname is already initialized, so we don't need a sync setState here
-        // but we might want to listen for popstate if it's a SPA-lite
-        const handleLocationChange = () => setPathname(window.location.pathname);
-        window.addEventListener('popstate', handleLocationChange);
-        return () => window.removeEventListener('popstate', handleLocationChange);
-    }, []);
 
     const handleHomeClick = (e) => {
         setMobileMenuOpen(false);
@@ -47,11 +40,7 @@ export default function CinematicNavbar() {
 
     return (
         <nav 
-            className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-500 ease-out py-4 ${
-                scrolled || !isHomePage
-                ? 'bg-[var(--command-black)]/95 backdrop-blur-md border-b border-white/5 shadow-2xl shadow-black/50' 
-                : 'bg-gradient-to-b from-black/40 to-transparent border-b border-transparent'
-            }`}
+            className="fixed top-0 left-0 w-full z-[10000] transition-all duration-500 ease-out py-4 bg-black/40 backdrop-blur-xl border-b border-white/5"
         >
             <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
                 {/* Logo Mark: Wordmark only */}
@@ -63,17 +52,23 @@ export default function CinematicNavbar() {
 
                 {/* Desktop Nav Links */}
                 <div className="hidden lg:flex items-center gap-10 font-data">
-                    {navLinks.map((link) => (
-                        <a 
-                            key={link.name} 
-                            href={link.path}
-                            className={`text-[10px] font-bold tracking-widest transition-all hover:tracking-widest ${
-                                (pathname === link.path) ? 'text-[var(--recovery-blue)]' : 'text-white/70 hover:text-white'
-                            }`}
-                        >
-                            {link.name}
-                        </a>
-                    ))}
+                    {navLinks.map((link) => {
+                        const isActive = pathname === link.path || (link.path === '/' && (pathname === '/index.html' || pathname === ''));
+                        return (
+                            <a 
+                                key={link.name} 
+                                href={link.path}
+                                className={`text-[10px] font-bold tracking-widest transition-all hover:tracking-widest relative group/link ${
+                                    isActive ? 'text-[var(--recovery-blue)]' : 'text-white/60 hover:text-white'
+                                }`}
+                            >
+                                {link.name}
+                                {isActive && (
+                                    <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-[var(--recovery-blue)]/40 shadow-[0_0_8px_rgba(0,113,255,0.2)]" />
+                                )}
+                            </a>
+                        );
+                    })}
                 </div>
 
                 {/* Right Side: Login + Audit Button */}
@@ -83,7 +78,7 @@ export default function CinematicNavbar() {
                     </button>
                     <button 
                         onClick={openModal}
-                        className="btn-magnetic group px-7 py-2.5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-[9px] tracking-[0.2em] uppercase overflow-hidden relative shadow-lg shadow-blue-500/10 hover:shadow-blue-500/30 transition-all font-sans"
+                        className="btn-magnetic group px-7 py-2.5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-[9px] tracking-[0.2em] uppercase overflow-hidden relative shadow-lg shadow-blue-500/5 hover:shadow-blue-500/20 transition-all font-sans"
                     >
                         <span className="relative z-10">Get free audit →</span>
                         <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 bg-white/10 transition-transform duration-500" />
@@ -122,7 +117,7 @@ export default function CinematicNavbar() {
                     ))}
                 </div>
                 
-                <div className="flex flex-col items-center gap-6 mt-8 w-full px-12 max-w-sm">
+                <div className="flex flex-col items-center gap-6 mt-8 w-full px-12 max-sm:px-6 max-w-sm">
                     <button 
                         onClick={() => {
                             setMobileMenuOpen(false);

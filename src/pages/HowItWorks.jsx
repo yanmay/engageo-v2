@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
 import { Check, ArrowRight, Zap, Shield, Calendar, MessageSquare, Phone } from 'lucide-react';
 import gsap from 'gsap';
@@ -230,9 +229,9 @@ export default function HowItWorks() {
                 </div>
                 
                 <div className="text-center mt-20">
-                    <Link to="/faq" className="text-[var(--recovery-blue)] text-xs font-bold tracking-[0.3em] uppercase hover:underline">
+                    <a href="/faq" className="text-[var(--recovery-blue)] text-xs font-bold tracking-[0.3em] uppercase hover:underline">
                         See all technical FAQs →
-                    </Link>
+                    </a>
                 </div>
             </div>
         </section>
@@ -251,9 +250,9 @@ export default function HowItWorks() {
                 >
                     Get Free Audit →
                 </button>
-                <Link to="/pricing" className="px-16 py-6 border border-white/10 text-white rounded-full font-bold text-xs tracking-[0.3em] uppercase hover:bg-white/5 transition-colors">
+                <a href="/pricing" className="px-16 py-6 border border-white/10 text-white rounded-full font-bold text-xs tracking-[0.3em] uppercase hover:bg-white/5 transition-colors">
                     View Pricing
-                </Link>
+                </a>
             </div>
         </div>
 

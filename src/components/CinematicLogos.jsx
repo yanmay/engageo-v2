@@ -14,11 +14,11 @@ export default function CinematicLogos() {
         <div className="flex flex-col items-center gap-10">
           
           <div className="flex items-center gap-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] shadow-[0_0_8px_var(--recovery-blue)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)]/40 shadow-[0_0_8px_rgba(0,113,255,0.2)]" />
             <span className="font-data text-[10px] font-bold text-white/30 uppercase tracking-[0.3em]">
               Trusted by Leading Indian Clinics
             </span>
-            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] shadow-[0_0_8px_var(--recovery-blue)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)]/40 shadow-[0_0_8px_rgba(0,113,255,0.2)]" />
           </div>
 
           <div className="w-full relative">

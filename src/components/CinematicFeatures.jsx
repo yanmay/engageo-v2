@@ -61,48 +61,34 @@ export default function CinematicFeatures() {
   return (
     <section
       id="platform"
-      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--command-black)] relative overflow-hidden"
+      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--ethereal-white)] relative overflow-hidden"
     >
+      {/* Subtle Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--clinical-blue)]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--premium-clay)]/5 rounded-full blur-[100px] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto relative z-10">
         <Motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="mb-24"
+          className="mb-32"
         >
-          <Motion.div variants={itemVariants} className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest mb-6 font-bold">Platform capabilities</Motion.div>
+          <Motion.div variants={itemVariants} className="font-data text-[var(--clinical-blue)] text-[10px] tracking-widest mb-6 font-bold uppercase">Platform Capabilities</Motion.div>
           <Motion.h2 
             variants={itemVariants} 
-            className="text-4xl md:text-5xl lg:text-7xl text-white mb-8 tracking-tighter max-w-4xl relative"
+            className="text-4xl md:text-5xl lg:text-7xl text-[var(--ink-black)] mb-8 tracking-tighter max-w-4xl relative font-bold"
           >
-            <span className="relative inline-block overflow-hidden">
-                Everything You Need.
-                <Motion.span 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ duration: 1.5, ease: "circOut" }}
-                  viewport={{ once: true }}
-                  className="absolute inset-0 text-[var(--recovery-blue)] select-none whitespace-nowrap overflow-hidden border-r-2 border-[var(--recovery-blue)]"
-                >
-                    Everything You Need.
-                </Motion.span>
+            <span className="relative inline-block">
+                Flawless Execution.
             </span>
             <br />
-            <span className="text-[var(--recovery-blue)]/20 relative inline-block overflow-hidden">
-                Everything You Didn't Know You Needed.
-                <Motion.span 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ duration: 1.5, ease: "circOut", delay: 0.5 }}
-                  viewport={{ once: true }}
-                  className="absolute inset-0 text-[var(--recovery-blue)] select-none whitespace-nowrap overflow-hidden"
-                >
-                    Everything You Didn't Know You Needed.
-                </Motion.span>
+            <span className="text-[var(--clinical-blue)] font-drama font-normal italic">
+                Not Just Chatbots.
             </span>
           </Motion.h2>
-          <Motion.p variants={itemVariants} className="max-w-2xl text-white/60 text-lg md:text-xl leading-relaxed">
+          <Motion.p variants={itemVariants} className="max-w-2xl text-[var(--ink-black)]/60 text-lg md:text-xl leading-relaxed">
             Bridge the gap between raw missed calls and confirmed hospital pipeline with a platform designed for clinical precision.
           </Motion.p>
         </Motion.div>
@@ -112,34 +98,36 @@ export default function CinematicFeatures() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="features-container border-t border-white/10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {FEATURE_DATA.map((f, i) => (
             <Motion.div
               key={i}
               variants={itemVariants}
-              className="feature-row border-b border-white/10 py-10 md:py-16 hover:bg-[var(--recovery-blue)]/[0.01] transition-colors group"
+              className="group glass-premium p-10 rounded-[2.5rem] border border-black/5 hover:border-[var(--clinical-blue)]/20 transition-all duration-500 hover:shadow-[0_30px_60px_rgba(0,0,0,0.04)] relative overflow-hidden flex flex-col h-full"
             >
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                {/* Left: Feature Name */}
-                <div className="md:col-span-4 lg:col-span-3">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tighter group-hover:text-[var(--recovery-blue)] transition-colors">
-                    {f.name}
-                  </h3>
+              {/* Subtle Icon/Marker */}
+              <div className="mb-8 flex justify-between items-start">
+                <div className="w-10 h-10 rounded-xl bg-[var(--clinical-blue)]/5 flex items-center justify-center text-[var(--clinical-blue)] group-hover:bg-[var(--clinical-blue)] group-hover:text-white transition-all duration-500">
+                  <span className="font-data text-xs font-bold">0{i + 1}</span>
                 </div>
+                <span className="font-data text-[10px] text-[var(--ink-black)]/20 font-bold tracking-widest uppercase">
+                  {f.stat}
+                </span>
+              </div>
 
-                {/* Right: Feature Description */}
-                <div className="md:col-span-6 lg:col-span-7">
-                  <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl">
-                    {f.desc}
-                  </p>
-                </div>
+              <h3 className="text-2xl font-bold text-[var(--ink-black)] tracking-tight mb-4 group-hover:text-[var(--clinical-blue)] transition-colors">
+                {f.name}
+              </h3>
 
-                {/* Far Right: Monospace Stat */}
-                <div className="md:col-span-2 text-right hidden md:block">
-                  <span className="font-data text-[10px] text-[var(--recovery-blue)]/[0.3] font-bold tracking-[0.2em] group-hover:text-[var(--recovery-blue)] transition-colors">
-                    {f.stat}
-                  </span>
+              <p className="text-[var(--ink-black)]/60 text-base leading-relaxed mb-8 flex-grow">
+                {f.desc}
+              </p>
+
+              <div className="pt-6 border-t border-black/5 mt-auto">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 rounded-full bg-[var(--clinical-blue)]" />
+                  <span className="font-data text-[9px] text-[var(--ink-black)]/40 font-bold tracking-[0.2em] uppercase">SYSTEM_READY</span>
                 </div>
               </div>
             </Motion.div>

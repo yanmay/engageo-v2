@@ -116,12 +116,12 @@ export default function ROICalculator() {
       ref={sectionRef} 
       className="py-24 md:py-40 px-6 md:px-24 bg-[var(--command-black)] relative overflow-hidden"
     >
-      {/* Dynamic Background Flare using Recovery Blue */}
+      {/* Subtle Background Flare */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] rounded-full pointer-events-none blur-[120px]"
         style={{
-          background: `radial-gradient(ellipse, var(--recovery-blue) 0%, transparent 65%)`,
-          opacity: 0.03 + lossIntensity * 0.04,
+          background: `radial-gradient(ellipse, var(--clinical-blue) 0%, transparent 65%)`,
+          opacity: 0.05 + lossIntensity * 0.05,
           transition: 'background 0.8s ease, opacity 0.8s ease',
         }}
       />
@@ -130,10 +130,10 @@ export default function ROICalculator() {
         
         {/* Header (PRD Tone: "Silent Loss") */}
         <div className="text-center mb-16 md:mb-24 reveal-calc-header">
-          <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest mb-4 font-bold">Revenue leakage diagnostic</div>
-          <h2 className="text-4xl md:text-6xl text-white mb-8 tracking-tighter italic font-drama">
+          <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest mb-4 font-bold uppercase">Revenue Leakage Diagnostic</div>
+          <h2 className="text-4xl md:text-6xl text-white mb-8 tracking-tighter font-bold italic font-drama">
             End the bleed. <br />
-            <span className="text-[var(--loss-red)] not-italic underline decoration-[var(--loss-red)]/30 underline-offset-8">Calculate your recovery.</span>
+            <span className="text-[var(--loss-red)] not-italic underline decoration-[var(--loss-red)]/20 underline-offset-8">Calculate your recovery.</span>
           </h2>
           <p className="max-w-xl mx-auto text-white/40 text-lg font-medium leading-relaxed">
             Adjust the metrics to match your current clinic operations. See why missing 1 in 4 calls is costing you more than your ad spend.
@@ -143,12 +143,12 @@ export default function ROICalculator() {
         {/* Diagnostic Interface */}
         <div 
           ref={cardRef}
-          className="bg-white/[0.03] rounded-premium border border-white/10 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.5)] overflow-hidden"
+          className="bg-white/5 backdrop-blur-3xl rounded-[3rem] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             
             {/* Left: Configuration Panel */}
-            <div className="lg:col-span-5 p-8 md:p-12 space-y-12 bg-white/[0.02] border-b lg:border-b-0 lg:border-r border-white/10">
+            <div className="lg:col-span-5 p-8 md:p-12 space-y-12 bg-white/[0.02] border-b lg:border-b-0 lg:border-r border-white/5">
               
               <div className="space-y-4">
                 <label className="font-data text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">
@@ -161,7 +161,7 @@ export default function ROICalculator() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 font-sans text-sm font-bold text-white focus:outline-none focus:border-[var(--recovery-blue)] transition-all cursor-pointer appearance-none shadow-sm"
                   >
                     {Object.keys(specialtyConfig).map(s => (
-                      <option key={s} value={s} className="bg-[var(--command-black)]">{s}</option>
+                      <option key={s} value={s} className="bg-[var(--command-black)] text-white">{s}</option>
                     ))}
                   </select>
                   <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
@@ -190,7 +190,7 @@ export default function ROICalculator() {
                 format={(v) => `${v}%`}
               />
 
-              <div className="pt-8 border-t border-white/10">
+              <div className="pt-8 border-t border-white/5">
                 <p className="text-[11px] text-white/40 leading-relaxed italic font-medium">
                   Average Procedure Value: <span className="text-white font-bold">₹{avgCaseValue.toLocaleString('en-IN')}</span> <br />
                   Engageo Success Rate: <span className="text-[var(--recovery-blue)] font-bold">68% recovery avg.</span>
@@ -199,9 +199,7 @@ export default function ROICalculator() {
             </div>
 
             {/* Right: Results Dashboard */}
-            <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between overflow-hidden relative">
-              {/* Scanline pattern for diagnostic look */}
-              <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+            <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between overflow-hidden relative bg-transparent">
               
               <div className="space-y-16">
                 {/* Metric 1: Loss */}
@@ -226,14 +224,14 @@ export default function ROICalculator() {
                 </div>
 
                 {/* Metric 2: Recovery */}
-                <div className="p-8 md:p-10 rounded-[2rem] bg-[var(--signal-green)]/10 border border-[var(--signal-green)]/10 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--signal-green)]/10 blur-3xl rounded-full" />
+                <div className="p-8 md:p-10 rounded-[2.5rem] bg-[var(--recovery-blue)]/5 border border-[var(--recovery-blue)]/10 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--recovery-blue)]/10 blur-3xl rounded-full" />
                   
                   <div className="relative z-10">
-                    <div className="font-data text-[10px] tracking-widest text-[var(--signal-green)] font-bold mb-4 flex items-center gap-2">
+                    <div className="font-data text-[10px] tracking-widest text-[var(--recovery-blue)] font-bold mb-4 flex items-center gap-2">
                       Engageo monthly recovery
                     </div>
-                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--signal-green)] mb-6 flex items-baseline tabular-nums">
+                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--recovery-blue)] mb-6 flex items-baseline tabular-nums">
                       <span className="mr-2">₹</span>
                       <NumberTicker value={engageoRecovers} />
                     </div>
@@ -241,8 +239,8 @@ export default function ROICalculator() {
                        <div className="text-xs font-bold text-white/70 flex items-center gap-2">
                           Net Gain: <span className="text-white">₹{netGain.toLocaleString('en-IN')}</span>
                        </div>
-                       <div className="text-xs font-bold text-[var(--signal-green)] flex items-center gap-2">
-                          ROI Multiple: <span className="bg-[var(--signal-green)] text-white px-2 py-0.5 rounded text-[10px]">{roiMultiple}x</span>
+                       <div className="text-xs font-bold text-[var(--recovery-blue)] flex items-center gap-2">
+                          ROI Multiple: <span className="bg-[var(--recovery-blue)] text-white px-2 py-0.5 rounded text-[10px]">{roiMultiple}x</span>
                        </div>
                     </div>
                   </div>
@@ -250,10 +248,10 @@ export default function ROICalculator() {
               </div>
 
               {/* Bottom CTA (PRD Requirement) */}
-              <div className="mt-16 pt-8 border-t border-white/10">
+              <div className="mt-16 pt-8 border-t border-white/5">
                 <button 
-                  onClick={useModal().openModal}
-                  className="btn-magnetic group w-full py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-[11px] tracking-[0.2em] uppercase relative shadow-2xl overflow-hidden shadow-blue-500/10 transition-colors"
+                  onClick={openModal}
+                  className="btn-magnetic group w-full py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-[11px] tracking-[0.2em] uppercase relative shadow-2xl overflow-hidden shadow-blue-500/5 transition-colors"
                 >
                   <span className="relative z-10">Recover This Revenue →</span>
                   <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />

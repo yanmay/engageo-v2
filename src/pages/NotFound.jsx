@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { AlertTriangle, Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
@@ -26,13 +25,13 @@ export default function NotFound() {
         </p>
         
         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-          <Link 
-            to="/" 
+          <a 
+            href="/" 
             className="btn-magnetic group px-10 py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-sm tracking-wide flex items-center gap-3 shadow-2xl shadow-blue-500/20"
           >
             <Home size={18} />
             Return Home
-          </Link>
+          </a>
           <button 
             onClick={() => window.history.back()}
             className="px-10 py-5 border border-white/10 text-white/60 hover:text-white rounded-full font-bold text-sm tracking-wide transition-colors flex items-center gap-3"

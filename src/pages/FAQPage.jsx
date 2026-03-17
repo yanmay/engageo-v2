@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import CinematicFAQ from '../components/CinematicFAQ';
-import CinematicNavbar from '../components/CinematicNavbar';
-import CinematicFooter from '../components/CinematicFooter';
 import gsap from 'gsap';
 
 export default function FAQPage() {
@@ -25,7 +23,6 @@ export default function FAQPage() {
 
   return (
     <div ref={containerRef} className="w-full bg-[var(--command-black)] min-h-screen">
-      <CinematicNavbar />
       
       {/* 1) Page Hero */}
       <section 
@@ -73,8 +70,6 @@ export default function FAQPage() {
             </a>
         </div>
       </section>
-
-      <CinematicFooter />
     </div>
   );
 }

@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import CinematicNavbar from '../components/CinematicNavbar';
 import gsap from 'gsap';
 import { Check } from 'lucide-react';
 
@@ -58,7 +56,6 @@ export default function Audit() {
   return (
     <div ref={containerRef} className="w-full flex-1 flex flex-col items-center bg-[var(--command-black)] min-h-screen">
       
-      <CinematicNavbar />
 
       {/* Main Content Area */}
       <main className="w-full max-w-[1100px] mx-auto px-6 py-[60px] flex flex-col md:flex-row gap-[48px] items-start">
@@ -233,9 +230,9 @@ export default function Audit() {
                <p className="text-[var(--clinic-slate)] text-lg leading-relaxed mb-10 max-w-sm font-medium">
                   We've received your request for <span className="text-[var(--clinic-ink)] font-bold">{formData.clinicName}</span>. Our team will WhatsApp you within 24 hours with your clinic's revenue leakage analysis.
                </p>
-               <Link to="/" className="text-[var(--recovery-blue)] font-bold tracking-widest text-xs uppercase hover:underline">
+               <a href="/" className="text-[var(--recovery-blue)] font-bold tracking-widest text-xs uppercase hover:underline">
                  Return to Home Page
-               </Link>
+               </a>
             </div>
           )}
         </div>

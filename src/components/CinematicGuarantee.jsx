@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useModal } from '../context/ModalContext';
 
@@ -27,20 +26,17 @@ export default function CinematicGuarantee() {
   return (
     <section 
       ref={sectionRef}
-      className="py-32 md:py-48 px-6 bg-[var(--command-black)] text-white relative overflow-hidden border-y border-[var(--sovereign-gold)]/20"
+      className="py-32 md:py-48 px-6 bg-[var(--command-black)] text-white relative overflow-hidden border-y border-white/5"
     >
-      {/* Noise overlay */}
-      <div className="absolute inset-0 noise-overlay opacity-20 pointer-events-none" />
+      {/* Subtle Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--sovereign-gold)]/5 rounded-full blur-[120px] pointer-events-none" />
       
-      {/* Sovereign gold accent glow */}
-      <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 w-[80vw] h-[60vh] bg-[var(--sovereign-gold)]/5 blur-[120px] rounded-full pointer-events-none" />
-
       <div className="max-w-5xl mx-auto text-center relative z-10">
         <div className="reveal-guarantee font-data text-[10px] text-[var(--sovereign-gold)] font-bold tracking-[0.4em] uppercase mb-10">The Performance Shield</div>
         
-        <h2 className="reveal-guarantee text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-12 leading-[1.1]">
+        <h2 className="reveal-guarantee text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-12 leading-[1.1] text-white">
           15 Confirmed Bookings <br className="hidden md:block" />
-          in 30 Days — <span className="text-[var(--sovereign-gold)] italic">or we keep going for free.</span>
+          in 30 Days — <span className="text-[var(--sovereign-gold)] font-drama italic lowercase">or we keep going for free.</span>
         </h2>
         
         <div className="reveal-guarantee flex flex-col items-center justify-center gap-12">
@@ -61,7 +57,7 @@ export default function CinematicGuarantee() {
 
             <button 
                 onClick={openModal}
-                className="px-16 py-6 bg-white text-[var(--command-black)] rounded-full font-bold text-xs tracking-[0.4em] uppercase hover:scale-105 transition-transform active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                className="px-16 py-6 bg-white text-black rounded-full font-bold text-xs tracking-[0.4em] uppercase hover:scale-105 transition-transform active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
             >
                 Secure Your Guarantee →
             </button>

@@ -107,6 +107,7 @@ if (calculatorRoot) {
         <StrictMode>
             <ModalProvider>
                 <ROICalculator />
+                <AuditModal />
             </ModalProvider>
         </StrictMode>
     );
