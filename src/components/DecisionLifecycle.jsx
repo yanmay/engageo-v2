@@ -100,11 +100,11 @@ export default function DecisionLifecycle() {
       ref={sectionRef}
       id="decision-lifecycle"
       className="relative w-full z-10"
-      style={{ background: 'var(--command-surface)' }}
+      style={{ background: 'var(--command-black)' }}
     >
       {/* ── Section Header ── */}
       <div className="py-16 md:py-24 text-center px-4">
-        <span className="section-label" style={{ color: 'var(--green)' }}>Live Demo</span>
+        <span className="section-label" style={{ color: 'var(--signal-green)' }}>Live Demo</span>
         <h2 className="font-sans text-2xl md:text-4xl font-bold text-white tracking-tight mt-4 mb-3 px-4">
           Watch a Real Recovery in 8 Seconds
         </h2>
@@ -124,7 +124,7 @@ export default function DecisionLifecycle() {
         >
           {/* Progress fill */}
           <div
-            className="w-full bg-[var(--green)] transition-all duration-300 ease-out origin-top"
+            className="w-full bg-[var(--signal-green)] transition-all duration-300 ease-out origin-top"
             style={{ height: `${progress * 100}%` }}
           />
         </div>
@@ -164,12 +164,12 @@ export default function DecisionLifecycle() {
                     flex items-center justify-center
                     border-2 transition-all duration-300 z-10
                     ${isActive
-                      ? 'bg-brand border-brand text-white shadow-[0_0_16px_var(--hover-glow)]'
-                      : 'bg-[var(--command-surface)] border-white/20 text-white/30'
+                      ? 'bg-[var(--recovery-blue)] border-[var(--recovery-blue)] text-white shadow-[0_0_16px_var(--recovery-blue)]/20'
+                      : 'bg-[var(--command-black)] border-white/10 text-white/20'
                     }
                   `}
                 >
-                  <span className="font-mono text-xs font-bold">{step.num}</span>
+                  <span className="font-data text-xs font-bold">{step.num}</span>
                 </div>
 
                 {/* ── Content card ── */}
@@ -186,8 +186,8 @@ export default function DecisionLifecycle() {
                   {/* Step label */}
                   <span
                     className={`
-                      inline-block font-mono text-[10px] uppercase tracking-widest mb-2
-                      ${isActive ? 'text-brand' : 'text-white/20'}
+                      inline-block font-data text-[10px] uppercase tracking-widest mb-2
+                      ${isActive ? 'text-[var(--recovery-blue)]' : 'text-white/10'}
                     `}
                   >
                     {step.num} {step.label}
@@ -237,17 +237,17 @@ export default function DecisionLifecycle() {
 
 function StepVisual({ type, label, text, metric }) {
   const cardBase = {
-    background: '#FFFFFF',
-    border: '2px solid var(--command-surface)',
-    boxShadow: '4px 4px 0px 0px var(--hover-glow)',
+    background: 'rgba(255, 255, 255, 0.03)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '1.5rem',
   };
 
   if (type === 'card') {
     return (
       <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
-        <div className="flex items-start gap-3">
-          <CircleDashed size={15} className="text-brand mt-0.5 shrink-0" />
-          <span className="text-xs md:text-sm font-medium text-obsidian leading-relaxed">{text}</span>
+        <div className="flex items-start gap-4">
+          <CircleDashed size={15} className="text-[var(--recovery-blue)] mt-1 shrink-0" />
+          <span className="text-xs md:text-sm font-medium text-white/60 leading-relaxed">{text}</span>
         </div>
       </div>
     );
@@ -255,20 +255,20 @@ function StepVisual({ type, label, text, metric }) {
   if (type === 'text') {
     return (
       <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
-        {label && <span className="text-[10px] text-brand uppercase tracking-wider block mb-2 font-bold">{label}</span>}
-        <span className="text-xs md:text-sm font-medium text-obsidian">{text}</span>
+        {label && <span className="text-[10px] text-[var(--recovery-blue)] uppercase tracking-[0.2em] block mb-2 font-bold">{label}</span>}
+        <span className="text-xs md:text-sm font-medium text-white/80">{text}</span>
       </div>
     );
   }
   if (type === 'metric') {
     return (
       <div className="p-4 md:p-5 inline-flex items-center gap-4 md:gap-5" style={cardBase}>
-        <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--green)]/10 flex items-center justify-center border border-[var(--green)]/20">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg>
+        <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--signal-green)]/10 flex items-center justify-center border border-[var(--signal-green)]/20 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--signal-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg>
         </div>
         <div className="text-left">
-          <div className="text-[10px] text-subtle uppercase tracking-wider mb-1">{label}</div>
-          <div className="text-2xl md:text-3xl font-bold text-obsidian tracking-tight">{metric}</div>
+          <div className="text-[10px] text-white/30 uppercase tracking-[0.2em] mb-1 font-bold">{label}</div>
+          <div className="text-2xl md:text-3xl font-bold text-white tracking-tight">{metric}</div>
         </div>
       </div>
     );
@@ -277,11 +277,11 @@ function StepVisual({ type, label, text, metric }) {
     return (
       <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
         <div className="flex gap-2 mb-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-          <div className="w-2.5 h-2.5 rounded-full bg-white/30 border border-white/20" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[var(--signal-green)]Shadow-[0_0_8px_var(--signal-green)]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[var(--signal-green)]Shadow-[0_0_8px_var(--signal-green)]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
         </div>
-        <span className="text-xs md:text-sm font-medium text-obsidian leading-relaxed">{text}</span>
+        <span className="text-xs md:text-sm font-medium text-white/60 leading-relaxed">{text}</span>
       </div>
     );
   }
@@ -289,25 +289,25 @@ function StepVisual({ type, label, text, metric }) {
     return (
       <div className="flex flex-col items-start md:items-center gap-3">
         <span
-          className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-[var(--green)] text-[var(--parchment)] text-xs md:text-sm font-bold border border-[var(--ink-faint)] rounded-full"
-          style={{ boxShadow: '0 4px 12px rgba(26,122,74,0.2)' }}
+          className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-[var(--signal-green)] text-white text-xs md:text-sm font-bold rounded-full"
+          style={{ boxShadow: '0 4px 12px rgba(16,185,129,0.2)' }}
         >
           <span>{text}</span>
           <Check size={14} strokeWidth={3} />
         </span>
-        {label && <span className="text-[10px] md:text-[11px] text-white/40 font-mono uppercase tracking-widest">{label}</span>}
+        {label && <span className="text-[10px] md:text-[11px] text-white/30 font-data uppercase tracking-widest font-bold">{label}</span>}
       </div>
     );
   }
   if (type === 'whatsapp') {
     return (
-      <div className="flex flex-col items-start gap-2 w-full max-w-sm">
-        <div className="p-4 md:p-5 text-left w-full bg-white border-2 border-obsidian" style={{ boxShadow: '4px 4px 0px 0px var(--hover-glow)' }}>
-          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-obsidian/10">
-            <span className="text-[10px]">🟢</span>
-            <span className="text-xs font-bold text-obsidian tracking-tight">Dr. Mehta's Dental Clinic</span>
+      <div className="flex flex-col items-start gap-3 w-full max-w-sm">
+        <div className="p-5 text-left w-full bg-white/[0.03] border border-white/10 rounded-2xl">
+          <div className="flex items-center gap-2 mb-4 pb-4 border-b border-white/5">
+            <div className="w-2 h-2 rounded-full bg-[var(--signal-green)]" />
+            <span className="text-[10px] font-data font-bold text-white/40 uppercase tracking-widest">Clinic_Automata_v4.2</span>
           </div>
-          <p className="text-[13px] font-medium text-obsidian leading-relaxed whitespace-pre-wrap">
+          <p className="text-[13px] font-medium text-white/60 leading-relaxed whitespace-pre-wrap">
             ✅ Appointment Confirmed!{"\n"}
             Hi Priya, your implant consultation is booked for Saturday, 11 AM.{"\n"}
             📍 Sector 18, Noida{"\n"}
@@ -315,14 +315,14 @@ function StepVisual({ type, label, text, metric }) {
             Reply CONFIRM or call us to reschedule.
           </p>
         </div>
-        {label && <span className="text-[10px] md:text-[11px] text-white/40 font-mono uppercase tracking-widest">{label}</span>}
+        {label && <span className="text-[10px] md:text-[11px] text-white/30 font-data uppercase tracking-widest font-bold">{label}</span>}
       </div>
     );
   }
   if (type === 'hash') {
     return (
       <div className="p-4 md:p-5 text-left w-full max-w-sm" style={cardBase}>
-        <span className="font-mono text-xs md:text-sm text-obsidian whitespace-pre-wrap">{text}</span>
+        <span className="font-data text-xs md:text-sm text-white/40 whitespace-pre-wrap">{text}</span>
       </div>
     );
   }

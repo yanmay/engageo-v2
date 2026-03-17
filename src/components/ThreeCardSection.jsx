@@ -25,15 +25,15 @@ const useMousePosition = () => {
 
 const BorderBeam = ({ duration = 8, size = 150, delay = 0, colorFrom = "transparent", colorTo = "var(--recovery-blue)" }) => (
     <div className="border-beam-container">
-        <div 
-            className="border-beam" 
-            style={{ 
-                "--duration": `${duration}s`, 
+        <div
+            className="border-beam"
+            style={{
+                "--duration": `${duration}s`,
                 "--size": `${size}px`,
                 "--delay": `${delay}s`,
                 "--color-from": colorFrom,
                 "--color-to": colorTo
-            }} 
+            }}
         />
     </div>
 );
@@ -63,15 +63,15 @@ const CardContainer = ({ children, className = "", delay = 0, beamColor = "var(-
     };
 
     return (
-        <Motion.div 
+        <Motion.div
             ref={ref}
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ 
-                duration: 1.5, 
-                delay, 
-                ease: [0.22, 1, 0.36, 1] 
+            transition={{
+                duration: 1.5,
+                delay,
+                ease: [0.22, 1, 0.36, 1]
             }}
             onMouseMove={handleMouseMoveLocal}
             onMouseLeave={handleMouseLeave}
@@ -86,13 +86,13 @@ const CardContainer = ({ children, className = "", delay = 0, beamColor = "var(-
         >
             {/* Spotlight Glow Effect */}
             <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                 style={{
-                     background: `radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(37, 99, 235, 0.1) 0%, transparent 60%)`
-                 }} />
-            
+                style={{
+                    background: `radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(37, 99, 235, 0.1) 0%, transparent 60%)`
+                }} />
+
             {/* Border Beam */}
             <BorderBeam colorTo={beamColor} duration={8} />
-            
+
             {children}
         </Motion.div>
     );
@@ -134,15 +134,15 @@ const LaunchTracker = () => {
     };
 
     return (
-        <CardContainer delay={0}>
+        <CardContainer delay={0} className="md:col-span-1 border-white/10 bg-white/[0.02] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="flex items-center gap-2 mb-4 relative z-10">
                 <Activity size={14} className="text-[var(--recovery-blue)]" />
                 <span className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--recovery-blue)]">Deployment_Spine</span>
             </div>
             <CardHeading>4-Day Launch Tracker</CardHeading>
             <CardDescriptor>Sub-second deployment architecture for immediate revenue recovery.</CardDescriptor>
-            
-            <Motion.div 
+
+            <Motion.div
                 className="flex-1 space-y-6 relative z-10"
                 variants={containerVariants}
                 initial="hidden"
@@ -151,7 +151,7 @@ const LaunchTracker = () => {
             >
                 {/* Connecting Line */}
                 <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-white/5" />
-                
+
                 {steps.map((step, idx) => (
                     <Motion.div key={idx} variants={itemVariants} className="flex gap-4 items-start relative z-10">
                         <div className="mt-1">
@@ -243,7 +243,7 @@ const LiveRecoveryFeed = () => {
     }, [charIndex, msgIndex]);
 
     return (
-        <CardContainer delay={0.2}>
+        <CardContainer delay={0.2} className="md:col-span-2 border-white/10 bg-white/[0.02] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="flex items-center justify-between mb-4 relative z-10">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] animate-pulse shadow-[0_0_8px_var(--recovery-blue)]" />
@@ -253,7 +253,7 @@ const LiveRecoveryFeed = () => {
             </div>
             <CardHeading>Live Recovery Feed</CardHeading>
             <CardDescriptor>Real-time autonomous interception protocols in action.</CardDescriptor>
-            
+
             <div className="relative z-10 flex-1 bg-black/40 rounded-xl p-5 font-data text-[11px] leading-relaxed border border-white/5 overflow-y-auto custom-scrollbar">
                 <div className="text-[var(--recovery-blue)] space-y-1">
                     {displayText.map((line, i) => (
@@ -282,7 +282,7 @@ const GuaranteeShield = () => {
             const end = 10;
             const duration = 2000;
             const increment = end / (duration / 16);
-            
+
             const timer = setInterval(() => {
                 start += increment;
                 if (start >= end) {
@@ -300,7 +300,7 @@ const GuaranteeShield = () => {
     const circumference = 2 * Math.PI * radius;
 
     return (
-        <CardContainer className="border-[var(--sovereign-gold)]/20" delay={0.4} beamColor="var(--sovereign-gold)">
+        <CardContainer className="border-[var(--sovereign-gold)]/20 shadow-[0_8px_32px_rgba(217,119,6,0.1)] md:col-span-1 lg:col-span-1" delay={0.4} beamColor="var(--sovereign-gold)">
             <div className="flex items-center gap-2 mb-4 relative z-10">
                 <Shield size={14} className="text-[var(--sovereign-gold)]" />
                 <span className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--sovereign-gold)]">Fiscal_Assurance</span>
@@ -375,9 +375,9 @@ export default function ThreeCardSection() {
     return (
         <section id="three-cards-restored" className="py-24 md:py-48 bg-[var(--background)] relative overflow-hidden">
             {/* Background Texture */}
-            <div className="absolute inset-0 opacity-[0.02]" 
-                 style={{ backgroundImage: 'radial-gradient(var(--text) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-            
+            <div className="absolute inset-0 opacity-[0.02]"
+                style={{ backgroundImage: 'radial-gradient(var(--text) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
             <div className="max-w-7xl mx-auto px-8 relative z-10">
                 <div className="mb-20">
                     <div className="font-data text-xs text-[var(--clay)] font-bold tracking-[0.4em] uppercase mb-8 flex items-center gap-4">

@@ -50,17 +50,17 @@ const featureGroups = [
 export default function TierComparisonTable() {
   return (
     <div className="w-full overflow-x-auto pb-12">
-      <div className="min-w-[800px] border-t border-[var(--primary)]/10">
+      <div className="min-w-[800px] border-t border-white/10">
         <table className="w-full border-collapse">
           <thead>
             <tr>
               <th className="py-10 px-6 text-left w-1/4">
-                <div className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--primary)] font-bold">Feature Matrix</div>
+                <div className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--recovery-blue)] font-bold">Feature Matrix</div>
               </th>
               {tiers.map((tier) => (
-                <th key={tier.id} className={`py-10 px-6 text-center transition-colors duration-300 ${tier.highlight ? 'bg-[var(--primary)]/[0.02]' : tier.id === 'dominate' ? 'bg-[var(--sovereign-gold)]/[0.04]' : ''}`}>
-                  <div className={`font-sans font-bold text-xl tracking-tight mb-1 ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--command-black)]'}`}>{tier.name}</div>
-                  <div className={`font-data text-[11px] font-bold uppercase tracking-widest leading-none mt-2 ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]/50' : 'text-[var(--command-black)]/40'}`}>Level {tier.id === 'recover' ? '01' : tier.id === 'grow' ? '02' : '03'}</div>
+                <th key={tier.id} className={`py-10 px-6 text-center transition-colors duration-300 ${tier.highlight ? 'bg-white/[0.03]' : tier.id === 'dominate' ? 'bg-[var(--sovereign-gold)]/[0.04]' : ''}`}>
+                  <div className={`font-sans font-bold text-xl tracking-tight mb-1 ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-white'}`}>{tier.name}</div>
+                  <div className={`font-data text-[11px] font-bold uppercase tracking-widest leading-none mt-2 ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]/50' : 'text-white/40'}`}>Level {tier.id === 'recover' ? '01' : tier.id === 'grow' ? '02' : '03'}</div>
                 </th>
               ))}
             </tr>
@@ -68,28 +68,28 @@ export default function TierComparisonTable() {
           <tbody>
             {featureGroups.map((group, groupIdx) => (
               <React.Fragment key={groupIdx}>
-                <tr className="bg-[var(--command-black)]/[0.03]">
+                <tr className="bg-white/[0.02]">
                   <td colSpan={4} className="py-4 px-6">
-                    <div className="font-data text-[9px] uppercase tracking-[0.3em] text-[var(--command-black)]/40 font-bold">{group.group}</div>
+                    <div className="font-data text-[9px] uppercase tracking-[0.3em] text-white/40 font-bold">{group.group}</div>
                   </td>
                 </tr>
                 {group.features.map((feature, idx) => (
-                  <tr key={idx} className="border-b border-[var(--primary)]/5 hover:bg-[var(--primary)]/[0.01] transition-colors">
-                    <td className="py-6 px-6 text-sm font-bold text-[var(--command-black)]/80 tracking-tight">
+                  <tr key={idx} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                    <td className="py-6 px-6 text-sm font-bold text-white/80 tracking-tight">
                       {feature.name}
                     </td>
                     {tiers.map((tier) => (
-                      <td key={tier.id} className={`py-6 px-6 text-center ${tier.highlight ? 'bg-[var(--primary)]/[0.02]' : tier.id === 'dominate' ? 'bg-[var(--sovereign-gold)]/[0.02]' : ''}`}>
+                      <td key={tier.id} className={`py-6 px-6 text-center ${tier.highlight ? 'bg-white/[0.03]' : tier.id === 'dominate' ? 'bg-[var(--sovereign-gold)]/[0.02]' : ''}`}>
                         {feature[tier.id] === true ? (
                           <div className="flex justify-center">
-                            <Check size={18} className={tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--recovered-green)]'} strokeWidth={3} />
+                            <Check size={18} className={tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--signal-green)]'} strokeWidth={3} />
                           </div>
                         ) : feature[tier.id] === false ? (
                           <div className="flex justify-center">
-                            <Minus size={18} className="text-[var(--command-black)]/10" strokeWidth={2} />
+                            <Minus size={18} className="text-white/10" strokeWidth={2} />
                           </div>
                         ) : (
-                          <span className={`text-xs font-data font-bold ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-[var(--command-black)]'}`}>{feature[tier.id]}</span>
+                          <span className={`text-xs font-data font-bold ${tier.id === 'dominate' ? 'text-[var(--sovereign-gold)]' : 'text-white'}`}>{feature[tier.id]}</span>
                         )}
                       </td>
                     ))}

@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import { useModal } from '../context/ModalContext';
 
 export default function CinematicGuarantee() {
   const sectionRef = useRef(null);
+  const { openModal } = useModal();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -57,12 +59,12 @@ export default function CinematicGuarantee() {
                 </div>
             </div>
 
-            <Link 
-                to="/audit" 
+            <button 
+                onClick={openModal}
                 className="px-16 py-6 bg-white text-[var(--command-black)] rounded-full font-bold text-xs tracking-[0.4em] uppercase hover:scale-105 transition-transform active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.1)]"
             >
                 Secure Your Guarantee →
-            </Link>
+            </button>
         </div>
       </div>
 

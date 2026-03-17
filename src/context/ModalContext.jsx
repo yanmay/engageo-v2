@@ -4,6 +4,13 @@ const ModalContext = createContext({ open: false, openModal: () => {}, closeModa
 
 export function ModalProvider({ children }) {
   const [open, setOpen] = useState(false);
+
+  React.useEffect(() => {
+    const handleOpen = () => setOpen(true);
+    window.addEventListener('open-audit-modal', handleOpen);
+    return () => window.removeEventListener('open-audit-modal', handleOpen);
+  }, []);
+
   return (
     <ModalContext.Provider value={{ open, openModal: () => setOpen(true), closeModal: () => setOpen(false) }}>
       {children}

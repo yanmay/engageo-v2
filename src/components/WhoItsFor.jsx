@@ -9,8 +9,8 @@ const audiences = [
     index: '01',
     title: 'Hair Transplant Clinics',
     tagBadge: 'First Close',
-    badgeColor: 'bg-[var(--green)]/10 text-[var(--green)]',
-    badgeBorder: 'border-l-2 border-[var(--green)]',
+    badgeColor: 'bg-[var(--signal-green)]/10 text-[var(--signal-green)]',
+    badgeBorder: 'border-l-2 border-[var(--signal-green)]',
     tagline: '60–120 calls a day. One receptionist. The math doesn’t work.',
     summary:
       "Your Instagram leads call on impulse — they cool off in 4 hours. Your receptionist is mid-consultation. By the time she calls back, that patient has booked the clinic that picked up first. Engageo answers in 8 seconds, qualifies intent, and drops a confirmed slot on your calendar before the lead goes cold.",
@@ -22,7 +22,7 @@ const audiences = [
       { value: '4 days', label: 'days to go live' },
     ],
     ctaSubtext: "Most hair transplant clinics go live in 3 days.",
-    accent: 'var(--green)',
+    accent: 'var(--recovery-blue)',
     visual: 'pulse',
   },
   {
@@ -30,8 +30,8 @@ const audiences = [
     index: '02',
     title: 'Dental & Dermatology Clinics',
     tagBadge: 'Best Fit',
-    badgeColor: 'bg-emerald-500/8 text-emerald-700',
-    badgeBorder: 'border-l-2 border-emerald-500',
+    badgeColor: 'bg-[var(--recovery-blue)]/10 text-[var(--recovery-blue)]',
+    badgeBorder: 'border-l-2 border-[var(--recovery-blue)]',
     tagline: 'You’re paying ₹8,000 per click. Your receptionist is letting those patients go to voicemail.',
     summary:
       "Every Google Ad click that goes unanswered is a double loss — you paid for the patient and you lost them to the competitor who picked up. Engageo sits between your ad spend and your front desk. Every inbound call answered in seconds, procedure qualified, slot confirmed. You see the ROI before the end of Week 1.",
@@ -43,7 +43,7 @@ const audiences = [
       { value: '4 days', label: 'to go live' },
     ],
     ctaSubtext: "ROI visible before end of Week 1.",
-    accent: 'var(--signal-green)',
+    accent: 'var(--recovery-blue)',
     visual: 'bars',
   },
   {
@@ -51,8 +51,8 @@ const audiences = [
     index: '03',
     title: 'Fertility & IVF Clinics',
     tagBadge: 'Month 2+',
-    badgeColor: 'bg-violet-500/8 text-violet-700',
-    badgeBorder: 'border-l-2 border-violet-500',
+    badgeColor: 'bg-[var(--recovery-blue)]/8 text-[var(--recovery-blue)]/80',
+    badgeBorder: 'border-l-2 border-[var(--recovery-blue)]/50',
     tagline: 'IVF patients call three clinics in one evening. The first voice they hear wins the cycle.',
     summary:
       "At ₹1L–₹5L per cycle, one recovered call pays for Engageo for a year. These patients don't leave voicemails — they move on. Engageo answers at 11 PM on a Sunday with the right tone, captures the consultation intent, and schedules it. No patient ever hits your voicemail during the hardest decision of their life.",
@@ -64,7 +64,7 @@ const audiences = [
       { value: '24/7', label: 'always answered' },
     ],
     ctaSubtext: "Setup takes 4 days. Recovery starts the same night.",
-    accent: 'var(--loss-red)',
+    accent: 'var(--recovery-blue)',
     visual: 'wave',
   },
 ];
@@ -105,7 +105,7 @@ function WaveVisual({ active }) {
           className="flex-1 rounded-sm"
           style={{
             height: active ? `${h * 0.85}px` : '3px',
-            background: `rgba(26,122,74,${active ? 0.45 + (h / 21) * 0.55 : 0.12})`,
+            background: `rgba(37,99,235,${active ? 0.45 + (h / 21) * 0.55 : 0.12})`,
             transition: `height 0.5s cubic-bezier(0.25,1,0.5,1) ${i * 35}ms, background 0.4s`,
           }}
         />
@@ -143,37 +143,37 @@ function VisualFor({ type, active }) {
 /* ─── Mobile detail content ─────────────────────────────────── */
 function MobileDetail({ a, openModal }) {
   return (
-    <div className="flex flex-col gap-5 pt-2">
-      <p className="text-sm text-subtle leading-relaxed">{a.summary}</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div className="p-4 border-2 border-red-200" style={{ background: 'var(--loss-tint)' }}>
+    <div className="flex flex-col gap-6 pt-4">
+      <p className="text-sm text-white/50 leading-relaxed font-medium">{a.summary}</p>
+      <div className="grid grid-cols-1 gap-4">
+        <div className="p-5 bg-red-500/5 border border-red-500/10 rounded-2xl">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
-            <span className="font-mono text-[9px] text-red-500 uppercase tracking-widest font-bold">The Reality</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-red-500/40 shrink-0" />
+            <span className="font-data text-[9px] text-red-500/60 uppercase tracking-widest font-bold">The Reality</span>
           </div>
-          <p className="text-[13px] text-charcoal leading-relaxed">{a.pain}</p>
+          <p className="text-[13px] text-white/40 leading-relaxed">{a.pain}</p>
         </div>
-        <div className="p-4 border border-[var(--ink-faint)] bg-[var(--green)]/5 rounded-2xl">
+        <div className="p-5 bg-[var(--recovery-blue)]/5 border border-[var(--recovery-blue)]/10 rounded-2xl">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-[var(--green)] pulse-dot shrink-0" />
-            <span className="font-mono text-[9px] text-brand uppercase tracking-widest font-bold">What Changes</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] shrink-0" />
+            <span className="font-data text-[9px] text-[var(--recovery-blue)] uppercase tracking-widest font-bold">What Changes</span>
           </div>
-          <p className="text-[13px] text-charcoal leading-relaxed">{a.gain}</p>
+          <p className="text-[13px] text-white/80 leading-relaxed">{a.gain}</p>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-5">
-        <div className="flex gap-6 flex-wrap">
+        <div className="flex gap-8 flex-wrap">
           {a.metrics.map((m) => (
             <div key={m.label} className="flex flex-col gap-1">
-              <span className="font-sans text-xl font-bold text-obsidian tracking-tighter leading-none">{m.value}</span>
-              <span className="font-mono text-[9px] text-subtle uppercase tracking-widest">{m.label}</span>
+              <span className="text-2xl font-bold text-white tracking-tighter leading-none">{m.value}</span>
+              <span className="font-data text-[9px] text-white/20 uppercase tracking-widest">{m.label}</span>
             </div>
           ))}
         </div>
         <div className="flex flex-col shrink-0 w-full sm:w-auto mt-4 sm:mt-0">
           <button
             onClick={openModal}
-            className="group bg-[var(--green)] text-[var(--parchment)] text-[13px] font-bold px-8 py-4 border border-[var(--ink-faint)] rounded-full shadow-lg flex items-center justify-center gap-2 hover:scale-[1.03] transition-all duration-200 active:scale-[0.98] whitespace-nowrap w-full sm:w-auto"
+            className="group bg-[var(--recovery-blue)] text-white text-[13px] font-bold px-8 py-4 border border-white/10 rounded-full shadow-2xl shadow-blue-500/20 flex items-center justify-center gap-2 hover:scale-[1.03] transition-all duration-200 active:scale-[0.98] whitespace-nowrap w-full sm:w-auto"
           >
             <span>Get Free Audit</span>
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -215,27 +215,27 @@ export default function WhoItsFor() {
     <section
       ref={sectionRef}
       id="who"
-      className="py-16 md:py-24 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10 bg-[var(--parchment)]"
+      className="py-16 md:py-32 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10 bg-[var(--command-black)]"
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-border to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto">
 
         {/* ── Section Header ── */}
         <div
-          className="mb-10 md:mb-14 max-w-xl"
+          className="mb-10 md:mb-20 max-w-2xl"
           style={{
             opacity: revealed ? 1 : 0,
             transform: revealed ? 'translateY(0)' : 'translateY(24px)',
             transition: 'opacity 0.7s ease, transform 0.7s ease',
           }}
         >
-          <div className="section-label mb-5 text-[var(--ink-muted)]">Honest Fit</div>
-          <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--ink)] tracking-tighter mb-5 leading-[1.05]">
-            Three clinics.
-            <span className="italic block mt-1 text-[var(--green)]">That's the whole list.</span>
+          <div className="section-label mb-5 text-[var(--recovery-blue)]/60 font-data tracking-[0.4em]">Honest Fit</div>
+          <h2 className="font-sans text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tighter mb-8 leading-[1.05]">
+            Three clinics. <br />
+            <span className="italic block mt-2 text-[var(--recovery-blue)] font-drama lowercase">That's the whole list.</span>
           </h2>
-          <p className="text-[var(--ink)] opacity-70 text-base md:text-lg leading-relaxed">
+          <p className="text-white/60 text-lg md:text-2xl leading-relaxed max-w-xl font-medium">
             Engageo works best where the doctor is the decision-maker and every
             missed call has a face attached to it. That narrows the field — intentionally.
           </p>
@@ -243,27 +243,26 @@ export default function WhoItsFor() {
 
         {/* Disqualifier Strip */}
         <div
-          className="flex items-center w-full mb-8"
-          style={{ opacity: revealed ? 1 : 0, transition: 'opacity 0.6s ease 0.15s' }}
+          className="flex items-center w-full mb-16 opacity-30"
+          style={{ opacity: revealed ? 0.3 : 0, transition: 'opacity 0.6s ease 0.15s' }}
         >
-          <div className="flex-1 h-px" style={{ backgroundColor: 'var(--clinic-silver)' }}></div>
+          <div className="flex-1 h-[1px] bg-white/10"></div>
           <p
-            className="px-4 text-center"
-            style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}
+            className="px-8 text-center font-data text-[10px] uppercase tracking-widest text-white/40"
           >
             NOT FOR: General practices under 50 calls/month · Hospital chains · Clinics with full-time call teams · Anyone who wants a chatbot
           </p>
-          <div className="flex-1 h-px" style={{ backgroundColor: 'var(--clinic-silver)' }}></div>
+          <div className="flex-1 h-[1px] bg-white/10"></div>
         </div>
 
         <div
           className="hidden lg:grid lg:grid-cols-3 gap-5 xl:gap-6"
           style={{ opacity: revealed ? 1 : 0, transition: 'opacity 0.6s ease 0.15s' }}
         >
-          {audiences.map((a, i) => (
+            {audiences.map((a, i) => (
             <div
               key={a.id}
-              className="flex flex-col bg-[var(--surface)] border border-[var(--ink-faint)] overflow-hidden rounded-[2rem] shadow-sm"
+              className="flex flex-col bg-white/[0.03] border border-white/10 overflow-hidden rounded-premium shadow-2xl group hover:border-[var(--recovery-blue)]/30 transition-colors"
               style={{
                 opacity: revealed ? 1 : 0,
                 transform: revealed ? 'translateY(0)' : 'translateY(20px)',
@@ -271,70 +270,69 @@ export default function WhoItsFor() {
               }}
             >
               {/* Top accent bar */}
-              <div className="h-[3px] w-full" style={{ background: a.accent }} />
+              <div className="h-[2px] w-full" style={{ background: a.accent }} />
 
-              <div className="p-5 flex flex-col gap-4 flex-1">
+              <div className="p-8 flex flex-col gap-6 flex-1">
                 {/* Header */}
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-mono text-[10px] font-bold text-muted tabular-nums">{a.index}</span>
-                    <span className={`font-mono text-[9px] font-bold uppercase tracking-wider px-1.5 py-px ${a.badgeColor} ${a.badgeBorder}`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="font-data text-[10px] font-bold text-white/20 tabular-nums tracking-widest">{a.index}</span>
+                    <span className={`font-data text-[8px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded-sm ${a.badgeColor} ${a.badgeBorder}`}>
                       {a.tagBadge}
                     </span>
                   </div>
-                  <h3 className="font-sans text-base font-bold text-obsidian tracking-tight mb-1 leading-snug">
+                  <h3 className="text-2xl font-bold text-white tracking-tight mb-2 leading-tight">
                     {a.title}
                   </h3>
-                  <p className="font-sans text-sm font-medium text-charcoal leading-snug">
+                  <p className="text-sm font-medium text-white/60 leading-relaxed mb-4">
                     {a.tagline}
                   </p>
                 </div>
 
-                <p className="text-[13px] text-subtle leading-relaxed border-t border-border pt-3">
+                <p className="text-xs text-white/40 leading-relaxed border-t border-white/5 pt-6">
                   {a.summary}
                 </p>
 
                 {/* Reality / What Changes */}
-                <div className="flex flex-col gap-2">
-                  <div className="px-3 py-2.5 border border-red-200" style={{ background: 'var(--loss-tint)' }}>
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <div className="w-1 h-1 rounded-full bg-red-400 shrink-0" />
-                      <span className="font-mono text-[8px] text-red-500 uppercase tracking-widest font-bold">The Reality</span>
+                <div className="flex flex-col gap-3">
+                  <div className="px-4 py-4 bg-red-500/5 border border-red-500/10 rounded-xl">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-red-500/40 shrink-0" />
+                      <span className="font-data text-[8px] text-red-500/60 uppercase tracking-widest font-bold">The Reality</span>
                     </div>
-                    <p className="text-xs text-charcoal leading-relaxed">{a.pain}</p>
+                    <p className="text-[11px] text-white/40 leading-relaxed">{a.pain}</p>
                   </div>
-                  <div className="px-3 py-2.5 border border-brand/20 bg-brand/[0.03]">
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <div className="w-1 h-1 rounded-full bg-brand shrink-0" />
-                      <span className="font-mono text-[8px] text-brand uppercase tracking-widest font-bold">What Changes</span>
+                  <div className="px-4 py-4 bg-[var(--recovery-blue)]/5 border border-[var(--recovery-blue)]/10 rounded-xl">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] shrink-0 shadow-[0_0_8px_var(--recovery-blue)]" />
+                      <span className="font-data text-[8px] text-[var(--recovery-blue)] uppercase tracking-widest font-bold">What Changes</span>
                     </div>
-                    <p className="text-xs text-charcoal leading-relaxed">{a.gain}</p>
+                    <p className="text-[11px] text-white/80 leading-relaxed">{a.gain}</p>
                   </div>
                 </div>
 
                 {/* Metrics */}
-                <div className="grid grid-cols-3 gap-3 border-t border-border pt-3">
+                <div className="grid grid-cols-3 gap-6 border-t border-white/5 pt-6">
                   {a.metrics.map((m) => (
-                    <div key={m.label} className="flex flex-col gap-0.5">
-                      <span className="font-sans text-lg font-bold text-obsidian tracking-tighter leading-none">{m.value}</span>
-                      <span className="font-mono text-[8px] text-muted uppercase tracking-wide leading-snug">{m.label}</span>
+                    <div key={m.label} className="flex flex-col gap-1">
+                      <span className="text-xl font-bold text-white tracking-tighter leading-none">{m.value}</span>
+                      <span className="font-data text-[8px] text-white/20 uppercase tracking-widest leading-snug">{m.label}</span>
                     </div>
                   ))}
                 </div>
 
                 {/* CTA — pushed to bottom */}
-                <div className="mt-auto pt-2">
+                <div className="mt-auto pt-4">
                   <button
                     onClick={openModal}
-                    className="group w-full bg-[var(--green)] text-[var(--parchment)] text-[12px] font-bold py-3.5 border border-[var(--ink-faint)] rounded-full flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform duration-150 active:scale-[0.98]"
-                    style={{ boxShadow: '3px 3px 0px 0px var(--command-black)' }}
+                    className="group w-full bg-[var(--recovery-blue)] text-white text-[11px] font-bold py-4 rounded-full flex items-center justify-center gap-2 hover:bg-white hover:text-[var(--command-black)] transition-all duration-300 shadow-lg shadow-blue-500/10"
                   >
                     <span>Get Free Audit</span>
-                    <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
-                  <div className="text-center mt-2" style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}>
+                  <div className="text-center mt-3 font-data text-[9px] uppercase tracking-widest text-white/20">
                     {a.ctaSubtext}
                   </div>
                 </div>
@@ -344,18 +342,18 @@ export default function WhoItsFor() {
 
           {/* Not for you — full-width below grid */}
           <div
-            className="col-span-3 bg-white border-2 border-border px-6 py-4 flex items-center justify-between gap-6"
+            className="col-span-3 bg-white/[0.02] border border-white/5 px-10 py-6 flex items-center justify-between gap-10 rounded-2xl"
             style={{ opacity: revealed ? 1 : 0, transition: 'opacity 0.6s ease 0.5s' }}
           >
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 flex items-center justify-center text-muted text-xs font-bold shrink-0">✕</div>
-              <p className="font-sans text-[13px] text-subtle leading-relaxed">
-                <span className="text-obsidian font-semibold">Not for you if:</span>{' '}
-                You run a general practice with under 50 calls/month, a hospital with a procurement committee, or a clinic that already has a full-time call team. Engageo works where the doctor is the decision-maker and every missed call is a lost procedure — not a lost number in a CRM.
+            <div className="flex items-center gap-6">
+              <div className="w-8 h-8 flex items-center justify-center text-white/20 text-xs font-bold shrink-0 border border-white/10 rounded-full">✕</div>
+              <p className="text-[13px] text-white/40 leading-relaxed font-data uppercase tracking-widest">
+                <span className="text-white font-bold italic">Not for you if:</span>{' '}
+                Practice &lt; 50 calls/mo · Hospital Committees · full-time teams · chatbot fans.
               </p>
             </div>
-            <button onClick={openModal} className="font-sans text-xs font-semibold text-brand hover:text-obsidian transition-colors shrink-0 whitespace-nowrap link-underline pb-0.5">
-              Check if you qualify →
+            <button onClick={openModal} className="text-[11px] font-bold text-[var(--recovery-blue)] hover:text-white transition-colors shrink-0 whitespace-nowrap uppercase tracking-[0.2em] border-b border-transparent hover:border-white/20 pb-1">
+              Check Eligibility →
             </button>
           </div>
         </div>
@@ -372,7 +370,7 @@ export default function WhoItsFor() {
             return (
               <div
                 key={a.id}
-                className={`border-2 bg-white overflow-hidden transition-all duration-300 ${isOpen ? 'border-obsidian retro-shadow-amber' : 'border-border hover:border-obsidian/30'}`}
+                className={`border bg-white/[0.03] overflow-hidden transition-all duration-300 ${isOpen ? 'border-[var(--recovery-blue)]/30' : 'border-white/5'}`}
                 style={{
                   opacity: revealed ? 1 : 0,
                   transform: revealed ? 'translateY(0)' : 'translateY(16px)',
@@ -381,26 +379,26 @@ export default function WhoItsFor() {
               >
                 <button
                   onClick={() => toggleMobile(i)}
-                  className="w-full text-left p-4 flex items-center gap-3"
+                  className="w-full text-left p-6 flex items-center gap-4"
                   aria-expanded={isOpen}
                 >
-                  <span className={`font-mono text-xs font-bold tabular-nums shrink-0 ${isOpen ? 'text-brand' : 'text-muted'}`}>{a.index}</span>
+                  <span className={`font-data text-xs font-bold tabular-nums shrink-0 ${isOpen ? 'text-[var(--recovery-blue)]' : 'text-white/20'}`}>{a.index}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                      <span className={`font-sans text-sm font-semibold tracking-tight ${isOpen ? 'text-obsidian' : 'text-charcoal'}`}>{a.title}</span>
-                      <span className={`font-mono text-[9px] font-bold uppercase tracking-wider px-1.5 py-px ${a.badgeColor} ${a.badgeBorder}`}>{a.tagBadge}</span>
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <span className={`text-base font-bold tracking-tight ${isOpen ? 'text-white' : 'text-white/80'}`}>{a.title}</span>
+                      <span className={`font-data text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm ${a.badgeColor} ${a.badgeBorder}`}>{a.tagBadge}</span>
                     </div>
-                    {!isOpen && <p className="text-[11px] text-subtle leading-tight line-clamp-1">{a.tagline}</p>}
+                    {!isOpen && <p className="text-xs text-white/40 leading-relaxed line-clamp-1">{a.tagline}</p>}
                   </div>
                   <svg
-                    className={`w-4 h-4 text-muted shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-brand' : ''}`}
+                    className={`w-5 h-5 text-white/20 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[var(--recovery-blue)]' : ''}`}
                     fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
                   >
                     <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
                 <div style={{ maxHeight: isOpen ? '900px' : '0', overflow: 'hidden', transition: 'max-height 0.45s cubic-bezier(0.25,1,0.5,1)' }}>
-                  <div className="px-4 pb-6 border-t border-border">
+                  <div className="px-6 pb-8 border-t border-white/5">
                     <MobileDetail a={a} openModal={openModal} />
                   </div>
                 </div>
@@ -410,21 +408,21 @@ export default function WhoItsFor() {
 
           {/* Mobile: Not for you bar */}
           <div
-            className="bg-white border-2 border-obsidian retro-shadow px-5 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            className="bg-white/[0.03] border border-white/10 px-6 py-8 flex flex-col items-center text-center gap-6 rounded-3xl"
             style={{ opacity: revealed ? 1 : 0, transition: 'opacity 0.6s ease 0.5s' }}
           >
-            <div className="flex items-start sm:items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-canvas border border-black/8 flex items-center justify-center text-subtle text-sm shrink-0">✕</div>
-              <p className="font-sans text-sm text-subtle leading-relaxed">
-                <span className="text-obsidian font-semibold">Not for you if:</span>{' '}
-                You run a general practice with under 50 calls/month, a hospital with a procurement committee, or a clinic that already has a full-time call team. Engageo works where the doctor is the decision-maker and every missed call is a lost procedure — not a lost number in a CRM.
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 text-sm shrink-0">✕</div>
+              <p className="text-sm text-white/40 leading-relaxed font-data uppercase tracking-widest">
+                <span className="text-white font-bold">Not for you if:</span><br />
+                General Practice &lt; 50 calls/mo · Hospital chains · Clinics with call teams.
               </p>
             </div>
             <button
               onClick={openModal}
-              className="font-sans text-xs font-semibold text-brand hover:text-obsidian transition-colors shrink-0 link-underline pb-0.5 whitespace-nowrap"
+              className="w-full py-4 text-[11px] font-bold text-white bg-[var(--recovery-blue)] rounded-full uppercase tracking-widest shadow-lg shadow-blue-500/10"
             >
-              Check if you qualify →
+              Check Eligibility →
             </button>
           </div>
         </div>

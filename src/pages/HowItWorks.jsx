@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useModal } from '../context/ModalContext';
 import { Check, ArrowRight, Zap, Shield, Calendar, MessageSquare, Phone } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CinematicNavbar from '../components/CinematicNavbar';
 import CinematicFooter from '../components/CinematicFooter';
+import DecisionLifecycle from '../components/DecisionLifecycle';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -129,25 +131,30 @@ export default function HowItWorks() {
         {/* Timeline */}
         <VerticalTimeline />
 
+        {/* Live Demo Section */}
+        <div className="mt-48">
+            <DecisionLifecycle />
+        </div>
+
         {/* Execution Table Section */}
-        <section className="mt-64 bg-white rounded-[4rem] p-12 md:p-24 overflow-hidden shadow-2xl">
+        <section className="mt-64 bg-white/[0.03] border border-white/10 rounded-[4rem] p-12 md:p-24 overflow-hidden shadow-2xl">
            <div className="max-w-5xl mx-auto">
               <div className="mb-20">
                  <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-[0.3em] uppercase mb-4 font-bold">Latency Standards</div>
-                 <h2 className="text-4xl md:text-6xl font-bold text-[var(--command-black)] tracking-tighter italic leading-none">The <span className="text-[var(--primary)] not-italic">Execution Table</span></h2>
-                 <p className="text-[var(--clinic-slate)] mt-6 text-lg font-medium max-w-xl">Sequential step-by-step logic breakdown with sub-second SLA targets.</p>
+                 <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter italic leading-none">The <span className="text-[var(--recovery-blue)] not-italic">Execution Table</span></h2>
+                 <p className="text-white/40 mt-6 text-lg font-medium max-w-xl">Sequential step-by-step logic breakdown with sub-second SLA targets.</p>
               </div>
               <div className="overflow-x-auto pb-6">
                  <table className="w-full text-left font-data text-[11px] border-collapse min-w-[600px]">
                     <thead>
-                       <tr className="bg-[var(--command-black)] text-white uppercase tracking-[0.2em] font-bold">
+                       <tr className="bg-white/5 text-white uppercase tracking-[0.2em] font-bold">
                           <th className="py-6 px-10">Step</th>
                           <th className="py-6 px-10">Action</th>
                           <th className="py-6 px-10">Infrastructure</th>
                           <th className="py-6 px-10">SLA Target</th>
                        </tr>
                     </thead>
-                    <tbody className="divide-y divide-[var(--command-black)]/5 text-[var(--command-black)]/70">
+                    <tbody className="divide-y divide-white/5 text-white/70">
                        {[
                           ["01", "Missed Call Detection", "Proprietary Carrier Network", "5.0s"],
                           ["02", "Autonomous Intercept", "Engageo Orchestrator", "8.0s"],
@@ -157,11 +164,13 @@ export default function HowItWorks() {
                           ["06", "WhatsApp Confirmation", "Secure Messaging Layer", "15.0s"],
                           ["07", "Staff Notification", "Messaging Concierge", "30.0s"]
                        ].map(([step, action, system, sla]) => (
-                          <tr key={step} className="hover:bg-[var(--primary)]/[0.02] transition-colors border-b border-[var(--primary)]/5">
+                          <tr key={step} className="hover:bg-white/[0.02] transition-colors border-b border-white/5">
                              <td className="py-8 px-10 font-bold text-[var(--recovery-blue)]">{step}</td>
-                             <td className="py-8 px-10 text-[var(--command-black)] font-bold text-sm tracking-tight">{action}</td>
-                             <td className="py-8 px-10 font-bold uppercase tracking-wider opacity-60">{system}</td>
-                             <td className="py-8 px-10 text-[var(--recovered-green)] font-bold">{sla}</td>
+                             <td className="py-8 px-10 text-white font-bold text-sm tracking-tight">{action}</td>
+                             <td className="py-8 px-10 font-bold uppercase tracking-wider opacity-60">
+                                <span className="text-white">{system}</span>
+                             </td>
+                             <td className="py-8 px-10 text-[var(--signal-green)] font-bold">{sla}</td>
                           </tr>
                        ))}
                     </tbody>
@@ -175,7 +184,7 @@ export default function HowItWorks() {
             <div className="max-w-5xl mx-auto">
                 <div className="mb-20 text-center">
                     <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-[0.4em] uppercase mb-6 font-bold">Under the hood</div>
-                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter italic">Protocol <span className="not-italic text-[var(--primary)]">Architecture</span></h2>
+                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter italic">Protocol <span className="not-italic text-[var(--recovery-blue)]">Architecture</span></h2>
                     <p className="text-white/40 mt-6 text-lg font-medium max-w-2xl mx-auto">Enterprise-grade tools, woven into one seamless, autonomous recovery engine.</p>
                 </div>
                 
@@ -201,7 +210,7 @@ export default function HowItWorks() {
         <section className="mt-64 pt-32 border-t border-white/10">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-24">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mb-6 italic">Common <span className="text-[var(--primary)] not-italic">Hesitations</span></h2>
+                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter mb-6 italic">Common <span className="text-[var(--recovery-blue)] not-italic">Hesitations</span></h2>
                     <p className="text-white/40 text-lg font-medium">Quick answers for skeptical clinic owners.</p>
                 </div>
 
@@ -213,7 +222,7 @@ export default function HowItWorks() {
                     ].map((faq, i) => (
                         <div key={i} className="p-10 border border-white/5 rounded-[2.5rem] bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
                             <h3 className="text-white font-bold mb-4 text-xl flex gap-6 items-start leading-tight">
-                                <span className="text-[var(--primary)] font-data text-sm mt-1 shrink-0">0{i+1}</span>
+                                <span className="text-[var(--recovery-blue)] font-data text-sm mt-1 shrink-0">0{i+1}</span>
                                 {faq.q}
                             </h3>
                             <p className="text-white/40 text-lg leading-relaxed pl-12">{faq.a}</p>
@@ -222,7 +231,7 @@ export default function HowItWorks() {
                 </div>
                 
                 <div className="text-center mt-20">
-                    <Link to="/faq" className="text-[var(--primary)] text-xs font-bold tracking-[0.3em] uppercase hover:underline">
+                    <Link to="/faq" className="text-[var(--recovery-blue)] text-xs font-bold tracking-[0.3em] uppercase hover:underline">
                         See all technical FAQs →
                     </Link>
                 </div>
@@ -230,16 +239,19 @@ export default function HowItWorks() {
         </section>
 
         {/* Closing CTA */}
-        <div className="mt-64 flex flex-col items-center text-center">
-            <div className="w-16 h-[1px] bg-[var(--primary)]/30 mb-20" />
+        <div className="mt-64 flex flex-col items-center text-center pb-32">
+            <div className="w-16 h-[1px] bg-white/10 mb-20" />
             <h2 className="text-5xl md:text-8xl text-white font-bold tracking-tighter mb-16 leading-[0.9]">
                 Ready to secure <br />
                 <span className="text-white/10">the pipeline?</span>
             </h2>
             <div className="flex flex-col md:flex-row gap-8">
-                <Link to="/audit" className="px-16 py-6 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-xs tracking-[0.3em] uppercase hover:scale-105 transition-transform active:scale-95 shadow-2xl shadow-blue-500/20">
+                <button 
+                  onClick={useModal().openModal}
+                  className="px-16 py-6 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-xs tracking-[0.3em] uppercase hover:scale-105 transition-transform active:scale-95 shadow-2xl shadow-blue-500/20 inline-flex items-center justify-center"
+                >
                     Get Free Audit →
-                </Link>
+                </button>
                 <Link to="/pricing" className="px-16 py-6 border border-white/10 text-white rounded-full font-bold text-xs tracking-[0.3em] uppercase hover:bg-white/5 transition-colors">
                     View Pricing
                 </Link>

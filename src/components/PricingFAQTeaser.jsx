@@ -20,32 +20,32 @@ export default function PricingFAQTeaser() {
     const [openIndex, setOpenIndex] = useState(0);
 
     return (
-        <section className="py-24 md:py-32 px-6 bg-white">
+        <section className="py-24 md:py-32 px-6 bg-[var(--command-black)]">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-16">
-                    <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-4 font-bold">Frequently Asked Questions</div>
-                    <h2 className="text-3xl md:text-5xl font-bold text-[var(--command-black)] tracking-tighter italic mb-6">
-                        Common <span className="text-[var(--primary)] not-italic">Hesitations.</span>
+                    <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-[0.2em] uppercase mb-4 font-bold">Frequently Asked Questions</div>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tighter italic mb-6">
+                        Common <span className="text-[var(--recovery-blue)] not-italic">Hesitations.</span>
                     </h2>
-                    <p className="text-[var(--command-black)]/40 text-lg font-medium">Quick answers for those evaluating our investment tiers.</p>
+                    <p className="text-white/40 text-lg font-medium">Quick answers for those evaluating our investment tiers.</p>
                 </div>
 
                 <div className="space-y-4">
                     {pricingFaqs.map((faq, i) => (
-                        <div key={i} className={`border border-[var(--primary)]/5 rounded-[2rem] overflow-hidden transition-all duration-300 ${openIndex === i ? 'bg-[var(--primary)]/[0.02] border-[var(--primary)]/20 shadow-xl shadow-blue-500/5' : 'bg-white'}`}>
+                        <div key={i} className={`border border-white/5 rounded-[2rem] overflow-hidden transition-all duration-300 ${openIndex === i ? 'bg-white/[0.02] border-white/20 shadow-xl shadow-blue-500/5' : 'bg-transparent'}`}>
                             <button 
                                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                                 className="w-full p-8 md:p-10 flex items-center justify-between text-left group"
                             >
-                                <span className={`text-xl font-bold tracking-tight transition-colors duration-300 ${openIndex === i ? 'text-[var(--primary)]' : 'text-[var(--command-black)]'}`}>
+                                <span className={`text-xl font-bold tracking-tight transition-colors duration-300 ${openIndex === i ? 'text-[var(--recovery-blue)]' : 'text-white'}`}>
                                     {faq.q}
                                 </span>
-                                <div className={`shrink-0 ml-4 transition-all duration-500 ${openIndex === i ? 'rotate-180 text-[var(--primary)]' : 'text-[var(--command-black)]/30'}`}>
+                                <div className={`shrink-0 ml-4 transition-all duration-500 ${openIndex === i ? 'rotate-180 text-[var(--recovery-blue)]' : 'text-white/30'}`}>
                                     {openIndex === i ? <Minus size={20} /> : <Plus size={20} />}
                                 </div>
                             </button>
                             <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === i ? 'max-h-[400px] px-8 md:px-10 pb-8 md:pb-10' : 'max-h-0'}`}>
-                                <p className="text-[var(--command-black)]/60 text-lg leading-relaxed">
+                                <p className="text-white/60 text-lg leading-relaxed">
                                     {faq.a}
                                 </p>
                             </div>
@@ -54,7 +54,7 @@ export default function PricingFAQTeaser() {
                 </div>
 
                 <div className="text-center mt-16">
-                    <a href="/faq.html" className="text-[var(--primary)] text-xs font-bold tracking-[0.3em] uppercase hover:underline">
+                    <a href="/faq" className="text-[var(--recovery-blue)] text-xs font-bold tracking-[0.3em] uppercase hover:underline">
                         View Full Technical FAQ →
                     </a>
                 </div>

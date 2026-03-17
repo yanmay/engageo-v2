@@ -18,7 +18,7 @@ export default {
         'recovery-blue': 'var(--recovery-blue)',
         'command-black': 'var(--command-black)',
         'clinic-white': 'var(--clinic-white)',
-        
+
         // Accents
         'signal-green': 'var(--signal-green)',
         'recovered-green': 'var(--recovered-green)',
@@ -50,6 +50,19 @@ export default {
       animation: {
         'pulse-slow': 'pulse 3s ease-in-out infinite',
       },
+      zIndex: {
+        'hide': '-1',
+        'base': '0',
+        'dropdown': '10',
+        'sticky': '20',
+        'fixed': '30',
+        'modal-backdrop': '40',
+        'modal': '50',
+        'popover': '60',
+        'tooltip': '70',
+        'toast': '80',
+        'highest': '999',
+      }
     }
   },
   plugins: [],

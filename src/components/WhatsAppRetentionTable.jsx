@@ -47,8 +47,7 @@ const ROWS = [
 export default function WhatsAppRetentionTable() {
   return (
     <section
-      className="w-full flex justify-center py-[60px] md:py-[96px]"
-      style={{ backgroundColor: 'var(--parchment)' }}
+      className="w-full flex justify-center py-[60px] md:py-[96px] bg-[var(--command-black)]"
     >
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
@@ -58,7 +57,7 @@ export default function WhatsAppRetentionTable() {
           <div
             className="font-mono uppercase font-bold mb-6"
             style={{
-              color: 'var(--clinic-stone)',
+              color: 'var(--recovery-blue)',
               letterSpacing: '2px',
               fontSize: '11px'
             }}
@@ -68,8 +67,7 @@ export default function WhatsAppRetentionTable() {
 
           {/* Headlines */}
           <h2
-            className="font-sans font-bold leading-none mb-1 text-[28px] md:text-[40px]"
-            style={{ color: 'var(--ink)' }}
+            className="font-sans font-bold leading-none mb-1 text-[28px] md:text-[40px] text-white"
           >
             The call recovers.
           </h2>
@@ -82,9 +80,8 @@ export default function WhatsAppRetentionTable() {
 
           {/* Body Text */}
           <p
-            className="font-sans font-medium mb-10 text-[16px]"
+            className="font-sans font-medium mb-10 text-[16px] text-white/40"
             style={{
-              color: 'var(--clinic-slate)',
               lineHeight: '1.6',
               maxWidth: '320px'
             }}
@@ -95,14 +92,13 @@ export default function WhatsAppRetentionTable() {
           {/* Large Stat */}
           <div className="mb-8">
             <div
-              className="font-sans font-bold leading-none mb-2 text-[72px]"
-              style={{ color: 'var(--green)' }}
+              className="font-sans font-bold leading-none mb-2 text-[72px] text-[var(--signal-green)]"
             >
               40%
             </div>
             <div
-              className="font-sans font-medium text-[13px]"
-              style={{ color: 'var(--clinic-stone)', maxWidth: '200px', lineHeight: '1.4' }}
+              className="font-sans font-medium text-[13px] text-white/20"
+              style={{ maxWidth: '200px', lineHeight: '1.4' }}
             >
               average drop in no-shows within 30 days
             </div>
@@ -124,23 +120,22 @@ export default function WhatsAppRetentionTable() {
         {/* ── RIGHT COLUMN (60%) ── */}
         <div className="lg:col-span-7 flex flex-col w-full">
 
-          {/* Status Bar */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 mb-0" style={{ borderBottom: '1px solid var(--clinic-silver)' }}>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 mb-0 border-b border-white/10">
             <div className="flex items-center gap-2">
               <div
                 className="pulse-dot shrink-0"
                 style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--signal-green)' }}
               />
               <span
-                className="font-mono font-bold uppercase"
-                style={{ color: 'var(--signal-green)', letterSpacing: '0.05em', fontSize: '11px' }}
+                className="font-mono font-bold uppercase text-[var(--signal-green)]"
+                style={{ letterSpacing: '0.05em', fontSize: '11px' }}
               >
                 WHATSAPP SEQUENCE ACTIVE
               </span>
             </div>
             <div
-              className="font-sans font-medium"
-              style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}
+              className="font-sans font-medium text-white/40"
+              style={{ fontSize: '12px' }}
             >
               Smile Dental Clinic · 47 patients in sequence
             </div>
@@ -151,23 +146,14 @@ export default function WhatsAppRetentionTable() {
             {ROWS.map((row) => (
               <div
                 key={row.num}
-                className="flex flex-col sm:flex-row sm:items-center gap-4 py-[16px] w-full relative transition duration-150 hover:bg-[var(--clinic-mist)]"
-                style={{
-                  borderBottom: '1px solid var(--clinic-silver)',
-                  borderLeft: row.active ? '3px solid var(--signal-green)' : '3px solid transparent',
-                  backgroundColor: row.active ? 'var(--signal-green-tint)' : 'transparent',
-                  paddingLeft: row.active ? '13px' : '16px', // Compensate for 3px border to keep alignment
-                  paddingRight: '16px'
-                }}
+                className={`flex flex-col sm:flex-row sm:items-center gap-4 py-[16px] w-full relative transition duration-150 border-b border-white/5 ${row.active ? 'bg-[var(--signal-green)]/5 border-l-[3px] !border-l-[var(--signal-green)] px-[13px]' : 'bg-transparent px-[16px] hover:bg-white/[0.02]'}`}
               >
 
                 {/* Col 1: Step Number */}
                 <div
-                  className="font-mono font-bold leading-none shrink-0"
+                  className="font-mono font-bold leading-none shrink-0 text-white/10"
                   style={{
-                    color: 'var(--clinic-silver)',
                     fontSize: '48px',
-                    opacity: 0.4,
                     minWidth: '48px'
                   }}
                 >
@@ -177,14 +163,14 @@ export default function WhatsAppRetentionTable() {
                 {/* Col 2: Trigger Label + Sub */}
                 <div className="flex flex-col shrink-0 sm:w-[130px] lg:w-[160px]">
                   <span
-                    className="font-mono uppercase font-bold mb-1"
-                    style={{ color: 'var(--clinic-ink)', fontSize: '11px', letterSpacing: '2px' }}
+                    className="font-mono uppercase font-bold mb-1 text-white/80"
+                    style={{ fontSize: '11px', letterSpacing: '2px' }}
                   >
                     {row.trigger}
                   </span>
                   <span
-                    className="font-sans font-medium"
-                    style={{ color: 'var(--clinic-stone)', fontSize: '12px' }}
+                    className="font-sans font-medium text-white/40"
+                    style={{ fontSize: '12px' }}
                   >
                     {row.sub}
                   </span>
@@ -193,8 +179,8 @@ export default function WhatsAppRetentionTable() {
                 {/* Col 3: Description */}
                 <div className="flex-1 min-w-[150px]">
                   <p
-                    className="font-sans font-medium"
-                    style={{ color: 'var(--clinic-slate)', fontSize: '14px', lineHeight: '1.4' }}
+                    className="font-sans font-medium text-white/60"
+                    style={{ fontSize: '14px', lineHeight: '1.4' }}
                   >
                     {row.desc}
                   </p>

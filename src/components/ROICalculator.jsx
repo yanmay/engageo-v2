@@ -11,15 +11,15 @@ function Slider({ value, min, max, step, onChange, label, format }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-baseline">
-        <label className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--clinic-stone)] font-bold">
+        <label className="font-data text-[10px] tracking-widest text-white/40 font-bold">
           {label}
         </label>
-        <span className="font-sans text-xl font-bold text-[var(--command-black)] tracking-tight">
+        <span className="font-sans text-xl font-bold text-white tracking-tight">
           {format(value)}
         </span>
       </div>
 
-      <div className="relative h-1.5 bg-[var(--clinic-silver)] overflow-visible rounded-full">
+      <div className="relative h-1.5 bg-white/10 overflow-visible rounded-full">
         {/* Filled track */}
         <div
           className="absolute top-0 left-0 h-full bg-[var(--recovery-blue)] transition-all duration-300 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]"
@@ -43,8 +43,8 @@ function Slider({ value, min, max, step, onChange, label, format }) {
       </div>
 
       <div className="flex justify-between">
-        <span className="font-data text-[9px] text-[var(--clinic-stone)] font-bold">{format(min)}</span>
-        <span className="font-data text-[9px] text-[var(--clinic-stone)] font-bold">{format(max)}</span>
+        <span className="font-data text-[9px] text-white/20 font-bold">{format(min)}</span>
+        <span className="font-data text-[9px] text-white/20 font-bold">{format(max)}</span>
       </div>
     </div>
   );
@@ -114,7 +114,7 @@ export default function ROICalculator() {
   return (
     <section 
       ref={sectionRef} 
-      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--clinic-white)] relative overflow-hidden"
+      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--command-black)] relative overflow-hidden"
     >
       {/* Dynamic Background Flare using Recovery Blue */}
       <div
@@ -130,12 +130,12 @@ export default function ROICalculator() {
         
         {/* Header (PRD Tone: "Silent Loss") */}
         <div className="text-center mb-16 md:mb-24 reveal-calc-header">
-          <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-[0.3em] uppercase mb-4 font-bold">Revenue Leakage Diagnostic</div>
-          <h2 className="text-4xl md:text-6xl text-[var(--command-black)] mb-8 tracking-tighter">
+          <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest mb-4 font-bold">Revenue leakage diagnostic</div>
+          <h2 className="text-4xl md:text-6xl text-white mb-8 tracking-tighter italic font-drama">
             End the bleed. <br />
-            <span className="text-[var(--loss-red)] font-drama italic">Calculate your recovery.</span>
+            <span className="text-[var(--loss-red)] not-italic underline decoration-[var(--loss-red)]/30 underline-offset-8">Calculate your recovery.</span>
           </h2>
-          <p className="max-w-xl mx-auto text-[var(--clinic-slate)] text-lg font-medium leading-relaxed">
+          <p className="max-w-xl mx-auto text-white/40 text-lg font-medium leading-relaxed">
             Adjust the metrics to match your current clinic operations. See why missing 1 in 4 calls is costing you more than your ad spend.
           </p>
         </div>
@@ -143,28 +143,28 @@ export default function ROICalculator() {
         {/* Diagnostic Interface */}
         <div 
           ref={cardRef}
-          className="bg-white rounded-premium border border-[var(--primary)]/5 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.08)] overflow-hidden"
+          className="bg-white/[0.03] rounded-premium border border-white/10 shadow-[0_32px_80px_-16px_rgba(0,0,0,0.5)] overflow-hidden"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             
             {/* Left: Configuration Panel */}
-            <div className="lg:col-span-5 p-8 md:p-12 space-y-12 bg-[var(--clinic-mist)]/30 border-b lg:border-b-0 lg:border-r border-[var(--clinic-silver)]/50">
+            <div className="lg:col-span-5 p-8 md:p-12 space-y-12 bg-white/[0.02] border-b lg:border-b-0 lg:border-r border-white/10">
               
               <div className="space-y-4">
-                <label className="font-data text-[10px] uppercase tracking-[0.2em] text-[var(--clinic-stone)] font-bold">
+                <label className="font-data text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">
                   Clinical Specialty
                 </label>
                 <div className="relative group">
                   <select 
                     value={specialty}
                     onChange={(e) => setSpecialty(e.target.value)}
-                    className="w-full bg-white border border-[var(--clinic-silver)] rounded-xl px-6 py-4 font-sans text-sm font-bold text-[var(--command-black)] focus:outline-none focus:border-[var(--recovery-blue)] transition-all cursor-pointer appearance-none shadow-sm"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 font-sans text-sm font-bold text-white focus:outline-none focus:border-[var(--recovery-blue)] transition-all cursor-pointer appearance-none shadow-sm"
                   >
                     {Object.keys(specialtyConfig).map(s => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s} className="bg-[var(--command-black)]">{s}</option>
                     ))}
                   </select>
-                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--clinic-stone)]">
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/20">
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5l3 3 3-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </div>
                 </div>
@@ -190,9 +190,9 @@ export default function ROICalculator() {
                 format={(v) => `${v}%`}
               />
 
-              <div className="pt-8 border-t border-[var(--clinic-silver)]/50">
-                <p className="text-[11px] text-[var(--clinic-slate)] leading-relaxed italic font-medium">
-                  Average Procedure Value: <span className="text-[var(--command-black)] font-bold">₹{avgCaseValue.toLocaleString('en-IN')}</span> <br />
+              <div className="pt-8 border-t border-white/10">
+                <p className="text-[11px] text-white/40 leading-relaxed italic font-medium">
+                  Average Procedure Value: <span className="text-white font-bold">₹{avgCaseValue.toLocaleString('en-IN')}</span> <br />
                   Engageo Success Rate: <span className="text-[var(--recovery-blue)] font-bold">68% recovery avg.</span>
                 </p>
               </div>
@@ -201,26 +201,26 @@ export default function ROICalculator() {
             {/* Right: Results Dashboard */}
             <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-between overflow-hidden relative">
               {/* Scanline pattern for diagnostic look */}
-              <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-[var(--clinic-mist)]/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
               
               <div className="space-y-16">
                 {/* Metric 1: Loss */}
                 <div className="group">
-                  <div className="font-data text-[10px] uppercase tracking-[0.3em] text-[var(--clinic-stone)] font-bold mb-4 flex items-center gap-2">
+                  <div className="font-data text-[10px] tracking-widest text-white/40 font-bold mb-4 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--loss-red)] shadow-[0_0_8px_var(--loss-red)]" />
-                    Monthly Revenue At Risk
+                    Monthly revenue at risk
                   </div>
-                  <div className="text-6xl md:text-8xl font-bold tracking-tighter text-[var(--command-black)] transition-colors duration-500 group-hover:text-[var(--loss-red)]">
-                    <span>₹</span>
+                  <div className="text-6xl md:text-8xl font-bold tracking-tighter text-white transition-colors duration-500 group-hover:text-[var(--loss-red)] flex items-baseline tabular-nums">
+                    <span className="mr-2">₹</span>
                     <NumberTicker value={monthlyLoss} />
                   </div>
                   <div className="mt-4 flex items-center gap-6">
-                    <div className="font-data text-[11px] font-bold text-[var(--clinic-stone)] uppercase tracking-widest">
-                      Annual Loss: <span className="text-[var(--command-black)]">₹{(annualLoss/100000).toFixed(1)}L</span>
+                    <div className="font-data text-[11px] font-bold text-white/20 uppercase tracking-widest">
+                      Annual Loss: <span className="text-white">₹{(annualLoss/100000).toFixed(1)}L</span>
                     </div>
-                    <div className="h-4 w-[1px] bg-[var(--clinic-silver)]" />
-                    <div className="font-data text-[11px] font-bold text-[var(--clinic-stone)] uppercase tracking-widest">
-                      Missed Leads: <span className="text-[var(--command-black)]">{monthlyMissed}</span>
+                    <div className="h-4 w-[1px] bg-white/10" />
+                    <div className="font-data text-[11px] font-bold text-white/20 uppercase tracking-widest">
+                      Missed Leads: <span className="text-white">{monthlyMissed}</span>
                     </div>
                   </div>
                 </div>
@@ -230,16 +230,16 @@ export default function ROICalculator() {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--signal-green)]/10 blur-3xl rounded-full" />
                   
                   <div className="relative z-10">
-                    <div className="font-data text-[10px] uppercase tracking-[0.3em] text-[var(--signal-green)] font-bold mb-4 flex items-center gap-2">
-                      Engageo Monthly Recovery
+                    <div className="font-data text-[10px] tracking-widest text-[var(--signal-green)] font-bold mb-4 flex items-center gap-2">
+                      Engageo monthly recovery
                     </div>
-                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--signal-green)] mb-6">
-                      <span>₹</span>
+                    <div className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--signal-green)] mb-6 flex items-baseline tabular-nums">
+                      <span className="mr-2">₹</span>
                       <NumberTicker value={engageoRecovers} />
                     </div>
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
-                       <div className="text-xs font-bold text-[var(--command-black)]/70 flex items-center gap-2">
-                          Net Gain: <span className="text-[var(--command-black)]">₹{netGain.toLocaleString('en-IN')}</span>
+                       <div className="text-xs font-bold text-white/70 flex items-center gap-2">
+                          Net Gain: <span className="text-white">₹{netGain.toLocaleString('en-IN')}</span>
                        </div>
                        <div className="text-xs font-bold text-[var(--signal-green)] flex items-center gap-2">
                           ROI Multiple: <span className="bg-[var(--signal-green)] text-white px-2 py-0.5 rounded text-[10px]">{roiMultiple}x</span>
@@ -250,18 +250,15 @@ export default function ROICalculator() {
               </div>
 
               {/* Bottom CTA (PRD Requirement) */}
-              <div className="mt-16 pt-8 border-t border-[var(--clinic-silver)]/50">
+              <div className="mt-16 pt-8 border-t border-white/10">
                 <button 
-                  onClick={() => {
-                    // Navigate to audit page as per PRD Task 8
-                    window.location.href = "/free-audit.html";
-                  }}
-                  className="btn-magnetic group w-full py-5 bg-[var(--command-black)] text-white rounded-full font-bold text-[11px] tracking-[0.2em] uppercase relative shadow-2xl overflow-hidden shadow-black/10 hover:bg-[var(--recovery-blue)] transition-colors"
+                  onClick={useModal().openModal}
+                  className="btn-magnetic group w-full py-5 bg-[var(--recovery-blue)] text-white rounded-full font-bold text-[11px] tracking-[0.2em] uppercase relative shadow-2xl overflow-hidden shadow-blue-500/10 transition-colors"
                 >
                   <span className="relative z-10">Recover This Revenue →</span>
-                  <div className="absolute inset-0 bg-[var(--recovery-blue)] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 </button>
-                <p className="text-center font-data text-[9px] text-[var(--clinic-stone)] uppercase tracking-widest mt-6 font-bold italic">
+                <p className="text-center font-data text-[9px] text-white/20 uppercase tracking-widest mt-6 font-bold italic">
                   * This is what Engageo recovers for you. No setup fees. No long contracts.
                 </p>
               </div>

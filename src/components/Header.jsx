@@ -100,14 +100,6 @@ export default function Header() {
           <span className="font-sans font-bold text-xl tracking-tight" style={{ color: 'var(--command-black)' }}>
             Engageo
           </span>
-          <span
-            className="rounded-full pulse-dot shrink-0"
-            style={{
-              width: '8px',
-              height: '8px',
-              backgroundColor: 'var(--signal-green)'
-            }}
-          />
         </Link>
 
         {/* Center: Desktop Links (Home ONLY) */}
@@ -197,14 +189,6 @@ export default function Header() {
               <span className="font-sans font-bold text-xl tracking-tight" style={{ color: 'var(--command-black)' }}>
                 Engageo
               </span>
-              <span
-                className="rounded-full pulse-dot shrink-0"
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: 'var(--signal-green)'
-                }}
-              />
             </Link>
             <button
               className="flex items-center justify-end min-w-[44px] min-h-[44px]"

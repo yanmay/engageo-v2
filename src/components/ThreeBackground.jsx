@@ -129,7 +129,7 @@ export default function ThreeBackground() {
 
     let mouseX = 0, mouseY = 0;
     let frameId;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const handleMouseMove = (e) => {
         mouseX = (e.clientX / window.innerWidth) * 2 - 1;
@@ -167,7 +167,7 @@ export default function ThreeBackground() {
     const animate = () => {
         frameId = requestAnimationFrame(animate);
         try {
-            const time = clock.getElapsedTime();
+            const time = (performance.now() - startTime) / 1000;
             
             // Continuous auto-rotation
             objectGroup.rotation.y = time * 0.25;

@@ -3,7 +3,7 @@ import CinematicHero from '../components/CinematicHero';
 import CinematicFeatures from '../components/CinematicFeatures';
 import Philosophy from '../components/Philosophy';
 import CinematicProtocol from '../components/CinematicProtocol';
-import CinematicPricing from '../components/CinematicPricing';
+import ThreeCardSection from '../components/ThreeCardSection';
 import CinematicGuarantee from '../components/CinematicGuarantee';
 import CinematicLogos from '../components/CinematicLogos';
 import CinematicTestimonials from '../components/CinematicTestimonials';
@@ -33,12 +33,12 @@ export default function Home() {
         <CinematicProtocol />
       </div>
 
-      <div id="calculator">
+      <div id="roi-calculator">
         <ROICalculator />
       </div>
 
-      <div id="pricing">
-        <CinematicPricing />
+      <div id="three-cards-restored" className="relative z-10 bg-[var(--clinic-white)]">
+        <ThreeCardSection />
       </div>
 
       <div id="guarantee">

@@ -14,11 +14,11 @@ export default function CinematicLogos() {
         <div className="flex flex-col items-center gap-10">
           
           <div className="flex items-center gap-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_var(--primary)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] shadow-[0_0_8px_var(--recovery-blue)]" />
             <span className="font-data text-[10px] font-bold text-white/30 uppercase tracking-[0.3em]">
               Trusted by Leading Indian Clinics
             </span>
-            <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_var(--primary)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--recovery-blue)] shadow-[0_0_8px_var(--recovery-blue)]" />
           </div>
 
           <div className="w-full relative">
@@ -30,7 +30,7 @@ export default function CinematicLogos() {
               {doubled.map((name, i) => (
                 <span
                   key={i}
-                  className="font-bold text-xl text-white/10 hover:text-[var(--primary)] transition-all duration-500 cursor-default uppercase tracking-tighter"
+                  className="font-bold text-xl text-white/10 hover:text-[var(--recovery-blue)] transition-all duration-500 cursor-default uppercase tracking-tighter"
                 >
                   {name}
                 </span>

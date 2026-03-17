@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import CinematicNavbar from '../components/CinematicNavbar';
 import gsap from 'gsap';
 import { Check } from 'lucide-react';
 
@@ -55,24 +56,9 @@ export default function Audit() {
   };
 
   return (
-    <div ref={containerRef} className="w-full flex-1 flex flex-col items-center" style={{ backgroundColor: 'var(--clinic-white)', minHeight: '100vh' }}>
+    <div ref={containerRef} className="w-full flex-1 flex flex-col items-center bg-[var(--command-black)] min-h-screen">
       
-      {/* Isolated Navbar (Logo Only) */}
-      <header className="w-full flex items-center px-6 md:px-12 lg:px-20 h-[72px]">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-sans font-bold text-xl tracking-tight" style={{ color: 'var(--command-black)' }}>
-            Engageo
-          </span>
-          <div 
-            className="rounded-full pulse-dot shrink-0" 
-            style={{ 
-              width: '8px', 
-              height: '8px', 
-              backgroundColor: 'var(--signal-green)'
-            }}
-          />
-        </Link>
-      </header>
+      <CinematicNavbar />
 
       {/* Main Content Area */}
       <main className="w-full max-w-[1100px] mx-auto px-6 py-[60px] flex flex-col md:flex-row gap-[48px] items-start">
@@ -87,14 +73,7 @@ export default function Audit() {
                 {["✓ No credit card", "✓ 24hr response", "✓ Zero commitment"].map((badge, idx) => (
                   <span 
                     key={idx}
-                    className="font-sans font-medium"
-                    style={{ 
-                      backgroundColor: 'var(--clinic-mist)', 
-                      color: 'var(--clinic-slate)',
-                      borderRadius: '20px',
-                      padding: '6px 14px',
-                      fontSize: '12px'
-                    }}
+                    className="font-sans font-medium bg-white/5 text-white/40 rounded-full px-4 py-1.5 text-xs"
                   >
                     {badge}
                   </span>
@@ -103,15 +82,14 @@ export default function Audit() {
 
               {/* Headlines */}
               <h1 
-                className="font-sans font-bold tracking-tighter mb-4 leading-tight reveal-audit"
-                style={{ color: 'var(--clinic-ink)', fontSize: 'clamp(32px, 5vw, 42px)' }}
+                className="font-sans font-bold tracking-tighter mb-4 leading-tight reveal-audit text-white"
+                style={{ fontSize: 'clamp(32px, 5vw, 42px)' }}
               >
                 See Exactly What <br />
                 <span className="text-[var(--recovery-blue)]">Your Clinic Is Losing.</span>
               </h1>
               <p 
-                className="font-sans font-medium mb-[40px] leading-[1.6] reveal-audit text-lg"
-                style={{ color: 'var(--clinic-slate)' }}
+                className="font-sans font-medium mb-[40px] leading-[1.6] reveal-audit text-lg text-white/40"
               >
                 In 24 hours, we'll show you the exact number of calls your clinic missed this month and what they cost you. No pitch. No pressure. Just the number.
               </p>
@@ -123,8 +101,7 @@ export default function Audit() {
                 <div className="flex flex-col">
                   <label 
                     htmlFor="name" 
-                    className="font-data uppercase tracking-widest" 
-                    style={{ color: 'var(--clinic-slate)', fontSize: '11px', fontWeight: 700, marginBottom: '8px' }}
+                    className="font-data uppercase tracking-widest text-white/30 text-[11px] font-bold mb-2"
                   >
                     Full Name
                   </label>
@@ -144,8 +121,7 @@ export default function Audit() {
                 <div className="flex flex-col">
                   <label 
                     htmlFor="clinicName" 
-                    className="font-data uppercase tracking-widest" 
-                    style={{ color: 'var(--clinic-slate)', fontSize: '11px', fontWeight: 700, marginBottom: '8px' }}
+                    className="font-data uppercase tracking-widest text-white/30 text-[11px] font-bold mb-2"
                   >
                     Clinic Name
                   </label>
@@ -165,8 +141,7 @@ export default function Audit() {
                 <div className="flex flex-col">
                   <label 
                     htmlFor="city" 
-                    className="font-data uppercase tracking-widest" 
-                    style={{ color: 'var(--clinic-slate)', fontSize: '11px', fontWeight: 700, marginBottom: '8px' }}
+                    className="font-data uppercase tracking-widest text-white/30 text-[11px] font-bold mb-2"
                   >
                     City
                   </label>
@@ -186,8 +161,7 @@ export default function Audit() {
                 <div className="flex flex-col">
                   <label 
                     htmlFor="specialty" 
-                    className="font-data uppercase tracking-widest" 
-                    style={{ color: 'var(--clinic-slate)', fontSize: '11px', fontWeight: 700, marginBottom: '8px' }}
+                    className="font-data uppercase tracking-widest text-white/30 text-[11px] font-bold mb-2"
                   >
                     Specialty
                   </label>
@@ -213,8 +187,7 @@ export default function Audit() {
                 <div className="flex flex-col mb-4">
                   <label 
                     htmlFor="whatsapp" 
-                    className="font-data uppercase tracking-widest" 
-                    style={{ color: 'var(--clinic-slate)', fontSize: '11px', fontWeight: 700, marginBottom: '8px' }}
+                    className="font-data uppercase tracking-widest text-white/30 text-[11px] font-bold mb-2"
                   >
                     WhatsApp Number (Indian)
                   </label>
@@ -234,30 +207,12 @@ export default function Audit() {
                 <div className="flex flex-col mt-2">
                   <button 
                     type="submit"
-                    className="group flex items-center justify-center font-sans transition-all cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
-                    style={{
-                      width: '100%',
-                      height: '56px',
-                      backgroundColor: 'var(--recovery-blue)',
-                      color: 'white',
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      borderRadius: '4px',
-                      letterSpacing: '0.05em',
-                      textTransform: 'uppercase'
-                    }}
+                    className="group w-full h-[56px] bg-[var(--recovery-blue)] text-white text-[15px] font-bold rounded-full tracking-[0.05em] uppercase transition-all cursor-pointer hover:scale-[1.01] active:scale-[0.99] shadow-2xl shadow-blue-500/20"
                   >
                     Verify Revenue Leakage →
                   </button>
                   <p 
-                    className="font-sans"
-                    style={{ 
-                      color: 'var(--clinic-stone)', 
-                      fontSize: '12px', 
-                      textAlign: 'center', 
-                      marginTop: '16px',
-                      lineHeight: '1.5'
-                    }}
+                    className="font-sans text-white/20 text-[12px] text-center mt-4 leading-relaxed"
                   >
                     We respond within 24 hours on WhatsApp.<br /> Your data is processed per DPDP Act 2023 residency requirements.
                   </p>
@@ -288,17 +243,11 @@ export default function Audit() {
         {/* ── RIGHT COLUMN: WHAT YOU'LL RECEIVE (Desktop Only) ── */}
         <div className="hidden md:flex flex-col w-full flex-1 reveal-audit">
           <div 
-            className="w-full flex flex-col"
-            style={{ 
-              border: '1px solid var(--clinic-silver)', 
-              borderRadius: '8px', 
-              padding: '24px' 
-            }}
+            className="w-full flex flex-col border border-white/10 rounded-2xl p-6 bg-white/[0.02]"
           >
             {/* Card Label */}
             <div 
-              className="font-mono font-bold mb-6 uppercase"
-              style={{ color: 'var(--clinic-stone)', fontSize: '11px', letterSpacing: '2px' }}
+              className="font-mono font-bold mb-6 uppercase text-white/20 text-[11px] tracking-[2px]"
             >
               WHAT YOU'LL RECEIVE
             </div>
@@ -313,14 +262,12 @@ export default function Audit() {
               }}
             >
               <div 
-                className="font-sans mb-3 flex items-center gap-1.5"
-                style={{ color: 'var(--signal-green)', fontSize: '13px', fontWeight: 600 }}
+                className="font-sans mb-3 flex items-center gap-1.5 text-[var(--signal-green)] text-[13px] font-semibold"
               >
                 🟢 Engageo
               </div>
               <div 
-                className="font-sans whitespace-pre-wrap mb-2"
-                style={{ color: 'var(--clinic-ink)', fontSize: '14px', lineHeight: '1.6' }}
+                className="font-sans whitespace-pre-wrap mb-2 text-white/80 text-[14px] leading-relaxed"
               >
                 {`Hi Dr. Sharma! We've reviewed your clinic's missed call data.
 
@@ -331,8 +278,7 @@ Want to see how we recover this?
 Here's a 12-min slot: [calendly link]`}
               </div>
               <div 
-                className="font-sans font-medium w-full text-right uppercase"
-                style={{ color: 'var(--clinic-stone)', fontSize: '11px' }}
+                className="font-sans font-medium w-full text-right uppercase text-white/20 text-[11px]"
               >
                 Delivered ✓✓
               </div>
@@ -346,8 +292,8 @@ Here's a 12-min slot: [calendly link]`}
                 "No sales call unless you ask for one"
               ].map((bullet, idx) => (
                 <div key={idx} className="flex items-start gap-2">
-                  <span className="shrink-0 mt-0.5" style={{ color: 'var(--recovered-green)' }}>✓</span>
-                  <span className="font-sans font-medium" style={{ color: 'var(--clinic-slate)', fontSize: '14px' }}>
+                  <span className="shrink-0 mt-0.5 text-[var(--signal-green)]">✓</span>
+                  <span className="font-sans font-medium text-white/40 text-[14px]">
                     {bullet}
                   </span>
                 </div>
@@ -364,21 +310,21 @@ Here's a 12-min slot: [calendly link]`}
         .audit-input {
           width: 100%;
           height: 48px;
-          border: 1.5px solid var(--clinic-silver);
+          border: 1.5px solid rgba(255,255,255,0.1);
           border-radius: 4px;
           padding: 0 14px;
           font-size: 16px; 
-          color: var(--clinic-ink);
-          background-color: white;
+          color: white;
+          background-color: rgba(255,255,255,0.05);
           outline: none;
           transition: all 0.2s ease;
         }
         .audit-input:focus {
           border-color: var(--recovery-blue);
-          box-shadow: 0 0 0 3px var(--hover-glow);
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
         .audit-input::placeholder {
-          color: var(--clinic-stone);
+          color: rgba(255,255,255,0.2);
           opacity: 0.6;
         }
       `}</style>

@@ -30,20 +30,20 @@ const faqs = [
 ];
 
 const AccordionItem = React.forwardRef(({ q, a, isOpen, onClick }, ref) => (
-    <div ref={ref} className={`border-b border-[var(--primary)]/10 transition-all duration-500 ${isOpen ? 'bg-[var(--primary)]/[0.02]' : ''}`}>
-        <button 
+    <div ref={ref} className={`border-b border-white/5 transition-all duration-500 ${isOpen ? 'bg-white/[0.02]' : ''}`}>
+        <button
             onClick={onClick}
             className="w-full py-6 md:py-8 flex items-center justify-between text-left group"
         >
-            <span className={`text-lg md:text-xl font-bold tracking-tight transition-colors duration-300 ${isOpen ? 'text-[var(--primary)]' : 'text-[var(--command-black)]'}`}>
+            <span className={`text-lg md:text-xl font-bold tracking-tight transition-colors duration-300 ${isOpen ? 'text-[var(--recovery-blue)]' : 'text-white'}`}>
                 {q}
             </span>
-            <div className={`shrink-0 ml-4 transition-all duration-500 ${isOpen ? 'rotate-180 text-[var(--primary)]' : 'text-[var(--command-black)]/30 group-hover:text-[var(--primary)]'}`}>
+            <div className={`shrink-0 ml-4 transition-all duration-500 ${isOpen ? 'rotate-180 text-[var(--recovery-blue)]' : 'text-white/30 group-hover:text-[var(--recovery-blue)]'}`}>
                 {isOpen ? <Minus size={20} /> : <Plus size={20} />}
             </div>
         </button>
-        <div className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isOpen ? 'max-h-[400px] pb-8 md:pb-10' : 'max-h-0'}`}>
-            <p className="text-[var(--command-black)]/60 text-base md:text-lg leading-relaxed max-w-2xl">
+        <div className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isOpen ? 'max-h-[500px] opacity-100 pb-8 md:pb-10' : 'max-h-0 opacity-0'}`}>
+            <p className="text-white/90 text-base md:text-lg leading-relaxed max-w-2xl font-medium">
                 {a}
             </p>
         </div>
@@ -84,21 +84,21 @@ export default function CinematicFAQ() {
     }, []);
 
     return (
-        <section id="faq" ref={sectionRef} className="py-24 md:py-32 px-6 md:px-24 bg-white overflow-hidden">
+        <section id="faq" ref={sectionRef} className="py-24 md:py-32 px-6 md:px-24 bg-[var(--command-black)] overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
-                    
+
                     {/* Left: Header */}
                     <div className="lg:col-span-4 reveal-faq-header">
                         <div className="lg:sticky lg:top-32">
-                            <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-4 font-bold">Objections</div>
-                            <h2 className="text-4xl md:text-5xl font-bold text-[var(--command-black)] mb-6 md:mb-8 tracking-tighter leading-tight italic">
-                                Your Questions, <span className="text-[var(--primary)] not-italic">Answered Directly.</span>
+                            <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest mb-4 font-bold">Objections</div>
+                            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 tracking-tighter leading-tight italic">
+                                Your Questions, <span className="text-[var(--recovery-blue)] not-italic">Answered Directly.</span>
                             </h2>
-                            <p className="text-[var(--command-black)]/60 text-lg leading-relaxed mb-10">
+                            <p className="text-white/40 text-lg leading-relaxed mb-10">
                                 No vague marketing answers. Here's exactly what clinic owners ask before signing up.
                             </p>
-                            <button className="flex items-center gap-3 text-[var(--primary)] text-[10px] font-bold uppercase tracking-[0.2em] hover:gap-5 transition-all duration-300">
+                             <button className="flex items-center gap-3 text-[var(--recovery-blue)] text-[10px] font-bold tracking-widest hover:gap-5 transition-all duration-300">
                                 Still have questions? WhatsApp us <span className="text-lg">→</span>
                             </button>
                         </div>
@@ -106,14 +106,14 @@ export default function CinematicFAQ() {
 
                     {/* Right: FAQ List */}
                     <div className="lg:col-span-8">
-                        <div className="border-t border-[var(--primary)]/10">
+                        <div className="border-t border-white/10">
                             {faqs.map((faq, i) => (
-                                <AccordionItem 
-                                    key={i} 
+                                <AccordionItem
+                                    key={i}
                                     ref={el => itemsRef.current[i] = el}
-                                    {...faq} 
-                                    isOpen={openIndex === i} 
-                                    onClick={() => setOpenIndex(openIndex === i ? null : i)} 
+                                    {...faq}
+                                    isOpen={openIndex === i}
+                                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
                                 />
                             ))}
                         </div>

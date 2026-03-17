@@ -3,68 +3,86 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════
-   PRESET: "CINEMATIC COMMAND" DESIGN SYSTEM
-   Palette: Recovery Blue (Primary), Command Black (Hero/Dark), Clinic White (Body)
+   PRESET: "ORGANIC TECH" (CLINICAL BOUTIQUE) DESIGN SYSTEM
+   Palette: Moss (Primary), Clay (Accent), Cream (Background), Charcoal (Text)
    Typography: Plus Jakarta Sans, Outfit, Cormorant Garamond, IBM Plex Mono
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Core Brand Tokens */
+  /* Core Organic Tech Tokens */
+  --moss: #2E4036;
+  --clay: #CC5833;
+  --cream: #F2F0E9;
+  --charcoal: #1A1A1A;
+
+  /* Semantic Mapping */
+  --primary: var(--moss);
+  --accent: var(--clay);
+  --background: var(--cream);
+  --text: var(--charcoal);
+
+  /* Functional Colors (Maintained) */
   --recovery-blue: #2563EB;
-  --command-black: #0A0F1E;
-  --clinic-white: #F8F9FB;
-  
-  /* Accent & Functional Tokens */
+  --command-black: #0D0D12;
   --signal-green: #10B981;
-  --recovered-green: #059669;
   --loss-red: #DC2626;
   --sovereign-gold: #D97706;
 
-  /* Derived UI Tokens for subpages */
-  --clinic-ink: var(--command-black);
+  /* Derived UI Tokens */
+  --clinic-ink: var(--charcoal);
+  --clinic-white: var(--cream);
   --clinic-slate: #475569;
   --clinic-stone: #94A3B8;
   --clinic-mist: #F1F5F9;
   --clinic-silver: #E2E8F0;
 
-  /* Semantic Mapping */
-  --primary: var(--recovery-blue);
-  --background: var(--clinic-white);
-  --surface-dark: var(--command-black);
-  --text: var(--command-black);
-  --green: var(--signal-green); /* Fallback for legacy components */
-  
+  /* Additional Feedback Colors */
+  --hover-glow: rgba(37, 99, 235, 0.1);
+  --signal-green-tint: rgba(16, 185, 129, 0.05);
+
   /* Radius System */
   --radius-lg: 2rem;
   --radius-xl: 3rem;
 }
 
+.will-animate {
+  will-change: transform, opacity;
+}
+
+.cinematic-glow {
+  box-shadow: 0 0 20px var(--hover-glow);
+}
+
 @layer base {
   body {
     @apply bg-[var(--background)] text-[var(--text)] antialiased;
-    font-family: 'Outfit', sans-serif; /* Using Outfit for body/UI as per PRD "UI labels" */
+    font-family: 'Outfit', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply tracking-tight font-bold;
-    font-family: 'Plus Jakarta Sans', sans-serif; /* Headings */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-wrap: balance;
   }
 
-  /* Global Noise Overlay - Apply to all dark sections */
-  .noise-overlay {
-    position: relative;
+  p {
+    text-wrap: pretty;
+    @apply max-w-[65ch];
   }
 
-  .noise-overlay::after, .grain-texture {
+  /* Global Noise Overlay */
+  .noise-overlay,
+  body::after {
     content: "";
     @apply fixed inset-0 pointer-events-none z-[9999];
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-    opacity: 0.04;
-  }
-
-  /* Ensure grain texture specifically in App.jsx works */
-  .grain-texture {
-    @apply fixed inset-0 w-full h-full pointer-events-none z-[9999];
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 1;
+    mix-blend-mode: overlay;
   }
 }
 
@@ -75,7 +93,8 @@
 
   /* Magnetic feel buttons */
   .btn-magnetic {
-    @apply relative overflow-hidden transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
+    @apply relative overflow-hidden transition-transform duration-500 hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring Physics */
   }
 
   .btn-magnetic span.bg-layer {
@@ -101,17 +120,31 @@
   }
 
   @keyframes scan {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(200%); }
+    0% {
+      transform: translateY(-100%);
+    }
+
+    100% {
+      transform: translateY(200%);
+    }
   }
+
   .animate-scan {
     animation: scan 4s linear infinite;
   }
 
   @keyframes fade-in {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
+
   .animate-fade-in {
     animation: fade-in 0.4s ease-out forwards;
   }
@@ -120,13 +153,17 @@
   .custom-scrollbar::-webkit-scrollbar {
     width: 2px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(37, 99, 235, 0.2); /* var(--primary) with opacity */
+    background: rgba(37, 99, 235, 0.2);
+    /* var(--primary) with opacity */
     border-radius: 10px;
   }
+
   .custom-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: rgba(37, 99, 235, 0.2) transparent;
@@ -138,9 +175,20 @@
   }
 
   @keyframes pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 0; }
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+
+    50% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
   }
 
   .pulse-dot {
@@ -155,5 +203,67 @@
     background-color: inherit;
     opacity: 0.4;
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Cybernetic Bento Grid styles */
+  .bento-grid {
+    @apply grid grid-cols-1 md:grid-cols-4 gap-4;
+  }
+
+  .bento-item {
+    @apply bg-[var(--command-black)]/50 border border-white/10 rounded-2xl p-6 transition-all duration-300 relative overflow-hidden;
+  }
+
+  .bento-item::before {
+    content: "";
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(37, 99, 235, 0.15) 0%,
+        transparent 50%);
+  }
+
+  .bento-item:hover::before {
+    @apply opacity-100;
+  }
+
+  .bento-item:hover {
+    @apply border-white/30 -translate-y-1 shadow-[0_10px_20px_rgba(0, 0, 0, 0.3)];
+  }
+
+  .cyber-grid-bg {
+    @apply absolute inset-0 opacity-5 pointer-events-none;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* 21st.dev Border Beam Animation */
+  @keyframes border-beam {
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  .border-beam-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .border-beam {
+    position: absolute;
+    aspect-ratio: 1 / 1;
+    width: var(--size, 150px);
+    background: linear-gradient(to left, var(--color-from, transparent), var(--color-to, var(--recovery-blue)), transparent);
+    offset-path: rect(0 auto auto 0 round var(--radius, 2rem));
+    animation: border-beam var(--duration, 8s) linear infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .group:hover .border-beam {
+    opacity: 1;
   }
 }

@@ -103,8 +103,8 @@ const rows = [
   },
 ];
 
-function Cell({ data, isEngageo }) {
-  if (!data) return <span className="text-[var(--clinic-stone)] text-[13px] font-medium">—</span>;
+const Cell = ({ data, isEngageo }) => {
+  if (!data) return <span className="text-white/20 text-[13px] font-medium">—</span>;
 
   const { v, note, warn } = data;
 
@@ -112,27 +112,27 @@ function Cell({ data, isEngageo }) {
     <div className="flex flex-col gap-2">
       {v === true ? (
         <div className="flex items-center gap-3">
-          <div className={`w-6 h-6 border border-[var(--clinic-silver)] rounded-full flex items-center justify-center shrink-0 ${isEngageo ? 'bg-[var(--signal-green)] text-white shadow-sm' : 'bg-[var(--clinic-mist)] text-[var(--recovered-green)]'}`}>
-            <Check size={14} strokeWidth={3} className={isEngageo ? 'text-white' : 'text-[var(--recovered-green)]'} />
+          <div className={`w-6 h-6 border border-white/10 rounded-full flex items-center justify-center shrink-0 ${isEngageo ? 'bg-[var(--recovery-blue)] text-white shadow-sm' : 'bg-white/5 text-[var(--signal-green)]'}`}>
+            <Check size={14} strokeWidth={3} className={isEngageo ? 'text-white' : 'text-[var(--signal-green)]'} />
           </div>
-          {isEngageo && note && <span className="text-xs text-[var(--recovered-green)] font-bold leading-tight whitespace-pre-wrap">{note}</span>}
+          {isEngageo && note && <span className="text-xs text-[var(--signal-green)] font-bold leading-tight whitespace-pre-wrap">{note}</span>}
         </div>
       ) : v === false ? (
-        <div className="w-5 h-5 border-2 border-[var(--command-black)] bg-white flex items-center justify-center shrink-0">
-          <X size={12} strokeWidth={3} className="text-[var(--command-black)]" />
+        <div className="w-5 h-5 border-2 border-white/20 bg-transparent flex items-center justify-center shrink-0">
+          <X size={12} strokeWidth={3} className="text-white/40" />
         </div>
       ) : (
-        <span className={`text-[13px] leading-snug ${isEngageo ? 'font-bold text-[var(--command-black)] text-[14px]' : warn ? 'text-[var(--clinic-slate)]' : 'text-[var(--command-black)] font-medium'}`}>
+        <span className={`text-[13px] leading-snug ${isEngageo ? 'font-bold text-white text-[14px]' : warn ? 'text-white/40' : 'text-white/80 font-medium'}`}>
           {v}
         </span>
       )}
 
       {/* Sub-note */}
       {isEngageo && note && v !== true && (
-        <span className="text-[11px] text-[var(--recovered-green)] font-bold leading-tight mt-0.5">{note}</span>
+        <span className="text-[11px] text-[var(--signal-green)] font-bold leading-tight mt-0.5">{note}</span>
       )}
       {!isEngageo && warn && typeof warn === 'string' && (
-        <span className="text-[11px] text-[var(--clinic-slate)] font-semibold flex items-center gap-1.5 mt-0.5">
+        <span className="text-[11px] text-white/40 font-semibold flex items-center gap-1.5 mt-0.5">
           <AlertTriangle size={10} className="text-[var(--sovereign-gold)] shrink-0" />
           <span className="leading-tight">{warn}</span>
         </span>
@@ -149,18 +149,18 @@ function Cell({ data, isEngageo }) {
 export default function ComparisonTable({ showHeaderAndFooter = true }) {
   const { openModal } = useModal();
   return (
-    <section className="py-20 md:py-32 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10 bg-[var(--clinic-white)] lg:border-t-0 border-[var(--clinic-silver)]">
+    <section className="py-20 md:py-32 px-4 md:px-8 lg:px-16 xl:px-20 relative z-10 bg-[var(--command-black)] lg:border-t-0 border-white/10">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         {showHeaderAndFooter && (
           <div className="text-center mb-16">
-            <div className="font-data text-[10px] tracking-widest uppercase text-[var(--clinic-stone)] mb-6">Direct Comparison</div>
-            <h2 className="font-sans text-4xl md:text-6xl font-bold text-[var(--command-black)] tracking-tighter mb-4">
+            <div className="font-data text-[10px] tracking-widest uppercase text-white/30 mb-6 font-bold">Direct Comparison</div>
+            <h2 className="font-sans text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4">
               Every Alternative. <br />
-              <span className="text-[var(--signal-green)] font-drama italic">Built for Developers. Not Doctors.</span>
+              <span className="text-[var(--recovery-blue)] font-drama italic">Built for Developers. Not Doctors.</span>
             </h2>
-            <p className="text-[var(--clinic-slate)] text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-white/40 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
               Ringg, Bland, Retell, and VAPI are voice AI infrastructure tools.
               Engageo is the only system built from the ground up for an Indian clinic owner.
             </p>
@@ -169,23 +169,23 @@ export default function ComparisonTable({ showHeaderAndFooter = true }) {
 
         {/* ── Table View: Horizontal Scroll on Mobile, Full Width on Desktop ── */}
         <div className="overflow-x-auto pb-6 -mx-4 px-4 lg:mx-0 lg:px-0 lg:pb-0 hide-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
-          <div className="min-w-[1000px] lg:min-w-0 bg-white border border-[var(--command-black)]/10 rounded-2xl overflow-hidden shadow-2xl relative mb-4">
+          <div className="min-w-[1000px] lg:min-w-0 bg-[var(--command-black)] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative mb-4">
             <table className="w-full border-collapse">
 
               {/* Col headers */}
               <thead>
-                <tr className="bg-[var(--clinic-mist)] border-b border-[var(--command-black)]/10 w-full">
-                  <th className="p-6 text-left border-r last:border-r-0 border-[var(--command-black)]/10 w-[24%] align-bottom">
-                    <span className="font-data text-[10px] uppercase tracking-widest text-[var(--clinic-stone)] font-bold">Comparison Factor</span>
+                <tr className="bg-white/5 border-b border-white/10 w-full">
+                  <th className="p-6 text-left border-r last:border-r-0 border-white/10 w-[24%] align-bottom">
+                    <span className="font-data text-[10px] uppercase tracking-widest text-white/30 font-bold">Comparison Factor</span>
                   </th>
                   {columns.map((col) => (
-                    <th key={col.key} className={`p-6 text-left border-r last:border-r-0 border-[var(--command-black)]/10 relative align-top ${col.highlight ? 'bg-white' : ''}`}>
+                    <th key={col.key} className={`p-6 text-left border-r last:border-r-0 border-white/10 relative align-top ${col.highlight ? 'bg-white/[0.03]' : ''}`}>
                       {col.highlight && (
                         <div className="absolute top-0 left-0 right-0 h-[4px] bg-[var(--recovery-blue)]" />
                       )}
                       <div className="space-y-1.5 relative z-10">
-                        <div className="font-sans font-bold text-[15px] text-[var(--command-black)] uppercase tracking-tight">{col.label}</div>
-                        <div className={`font-data text-[9px] uppercase tracking-wider ${col.highlight ? 'text-[var(--recovery-blue)] font-bold' : 'text-[var(--clinic-stone)]'}`}>{col.sub}</div>
+                        <div className="font-sans font-bold text-[15px] text-white uppercase tracking-tight">{col.label}</div>
+                        <div className={`font-data text-[9px] uppercase tracking-wider ${col.highlight ? 'text-[var(--recovery-blue)] font-bold' : 'text-white/30'}`}>{col.sub}</div>
                         {col.highlight && (
                           <div className="pt-2">
                             <span className="inline-block bg-[var(--recovery-blue)] text-white rounded-full text-[9px] font-bold font-data px-2.5 py-1 tracking-widest uppercase">
@@ -204,16 +204,16 @@ export default function ComparisonTable({ showHeaderAndFooter = true }) {
                 {rows.map((row, idx) => (
                   <tr
                     key={idx}
-                    className={`border-b border-[var(--command-black)]/5 last:border-b-0 transition-colors duration-200 hover:bg-[var(--clinic-mist)] ${idx % 2 === 0 ? 'bg-transparent' : 'bg-[var(--clinic-white)]'}`}
+                    className={`border-b border-white/5 last:border-b-0 transition-colors duration-200 hover:bg-white/[0.02] ${idx % 2 === 0 ? 'bg-transparent' : 'bg-white/[0.01]'}`}
                   >
-                    <td className="p-6 border-r border-[var(--command-black)]/5 align-top w-[26%]">
-                      <div className="font-sans text-[13px] md:text-[14px] font-bold text-[var(--command-black)] leading-snug mb-1.5 whitespace-pre-wrap">{row.factor}</div>
+                    <td className="p-6 border-r border-white/5 align-top w-[26%]">
+                      <div className="font-sans text-[13px] md:text-[14px] font-bold text-white/90 leading-snug mb-1.5 whitespace-pre-wrap">{row.factor}</div>
                       {row.factorNote && (
-                        <div className="font-data text-[10px] text-[var(--clinic-stone)] italic leading-relaxed whitespace-pre-wrap">{row.factorNote}</div>
+                        <div className="font-data text-[10px] text-white/20 italic leading-relaxed whitespace-pre-wrap">{row.factorNote}</div>
                       )}
                     </td>
                     {columns.map((col) => (
-                      <td key={col.key} className={`p-6 border-r last:border-r-0 border-[var(--command-black)]/5 align-top ${col.highlight ? 'bg-white' : ''}`}>
+                      <td key={col.key} className={`p-6 border-r last:border-r-0 border-white/5 align-top ${col.highlight ? 'bg-white/[0.03]' : ''}`}>
                         <Cell data={row[col.key]} isEngageo={col.highlight} />
                       </td>
                     ))}
@@ -227,9 +227,9 @@ export default function ComparisonTable({ showHeaderAndFooter = true }) {
         {/* Bottom CTA */}
         {showHeaderAndFooter && (
           <div className="mt-12 text-center space-y-4">
-            <p className="text-sm text-[var(--clinic-slate)] max-w-lg mx-auto font-medium">
+            <p className="text-sm text-white/40 max-w-lg mx-auto font-medium">
               Other tools give you the parts. Engageo gives you the outcome —
-              <span className="font-bold text-[var(--command-black)] font-drama italic"> guaranteed in rupees.</span>
+              <span className="font-bold text-white font-drama italic"> guaranteed in rupees.</span>
             </p>
             <button
               onClick={openModal}
@@ -237,7 +237,7 @@ export default function ComparisonTable({ showHeaderAndFooter = true }) {
             >
               <span>Verified Revenue Audit →</span>
             </button>
-            <p className="text-[10px] font-data text-[var(--clinic-stone)] tracking-widest uppercase">15 bookings guaranteed · No developer needed · 4-day setup</p>
+            <p className="text-[10px] font-data text-white/20 tracking-widest uppercase">15 bookings guaranteed · No developer needed · 4-day setup</p>
           </div>
         )}
 

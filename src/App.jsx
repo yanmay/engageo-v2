@@ -21,6 +21,10 @@ import PricingPage from './pages/PricingPage';
 import Compare from './pages/Compare';
 import FAQPage from './pages/FAQPage';
 import Audit from './pages/Audit';
+import NotFound from './pages/NotFound';
+import CookieConsent from './components/CookieConsent';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function Layout({ children }) {
   const location = useLocation();
@@ -49,15 +53,16 @@ function App() {
     }
 
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Heavy ease-out
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
+      mouseMultiplier: 1.2,
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
+      wheelMultiplier: 0.8, // cinematic friction
     });
 
     lenis.on('scroll', ScrollTrigger.update);
@@ -94,6 +99,9 @@ function App() {
           {/* Modal */}
           <AuditModal />
 
+          {/* Cookie Consent */}
+          <CookieConsent />
+
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -102,6 +110,9 @@ function App() {
               <Route path="/compare" element={<Compare />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/audit" element={<Audit />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
         </div>

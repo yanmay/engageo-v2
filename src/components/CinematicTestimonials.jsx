@@ -19,25 +19,25 @@ const testimonials = [
 ];
 
 const ClinicBadge = ({ city, type }) => (
-    <div className="flex flex-col items-center justify-center p-6 border border-white/10 rounded-2xl bg-white/[0.02]">
-        <div className="font-data text-[10px] text-white/40 uppercase tracking-widest mb-1 font-bold">Verified Clinic</div>
+    <div className="flex flex-col items-center justify-center p-6 border border-white/5 rounded-[2rem] bg-white/[0.02] backdrop-blur-xl shadow-2xl transition-all duration-500 hover:bg-white/[0.05] hover:border-white/10">
+        <div className="font-data text-[10px] text-white/30 tracking-widest mb-2 font-bold">Verified clinic</div>
         <div className="text-white/80 font-bold text-sm tracking-tight">{type}</div>
-        <div className="text-[var(--primary)] text-[10px] font-bold uppercase tracking-wider mt-2">{city}</div>
+        <div className="text-[var(--recovery-blue)] text-[10px] font-bold tracking-widest mt-3 italic">{city}</div>
     </div>
 );
 
 export default function CinematicTestimonials() {
     return (
-        <section id="proof" className="py-24 bg-[var(--surface-dark)] relative overflow-hidden">
+        <section id="proof" className="py-24 bg-[var(--command-black)] relative overflow-hidden">
             {/* Grain Overlay handled by global class */}
             <div className="max-w-7xl mx-auto px-8 md:px-24">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    
+
                     {/* Left: Featured Pull Quote */}
                     <div className="relative">
                         <Quote size={80} className="absolute -top-10 -left-10 text-white/[0.03]" />
-                        <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase mb-8 font-bold">Social Proof</div>
-                        
+                        <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest mb-8 font-bold">Social proof</div>
+
                         <div className="space-y-16">
                             {testimonials.map((t, i) => (
                                 <div key={i} className="group transition-all duration-500">
@@ -45,18 +45,18 @@ export default function CinematicTestimonials() {
                                         "{t.quote}"
                                     </blockquote>
                                     <div className="flex items-center gap-6">
-                                        <div className="w-12 h-12 rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/10 flex items-center justify-center text-white font-bold text-sm">
+                                        <div className="w-12 h-12 rounded-full border border-[var(--recovery-blue)]/30 bg-[var(--recovery-blue)]/10 flex items-center justify-center text-white font-bold text-sm">
                                             {t.name.split(' ').map(n => n[0]).join('')}
                                         </div>
                                         <div>
                                             <div className="text-white font-bold text-lg tracking-tight">{t.name}</div>
-                                            <div className="font-data text-white/40 text-[10px] uppercase tracking-widest font-bold">
+                                            <div className="font-data text-white/30 text-[10px] tracking-widest font-bold">
                                                 {t.specialty} · {t.city}
                                             </div>
                                         </div>
                                         <div className="ml-auto">
-                                            <div className="px-4 py-2 bg-[var(--recovered-green)]/10 border border-[var(--recovered-green)]/20 rounded-full">
-                                                <span className="text-[var(--recovered-green)] text-xs font-bold font-data">{t.value}</span>
+                                            <div className="px-4 py-2 bg-[var(--signal-green)]/10 border border-[var(--signal-green)]/20 rounded-full">
+                                                <span className="text-[var(--signal-green)] text-xs font-bold font-data tabular-nums">{t.value}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -71,10 +71,10 @@ export default function CinematicTestimonials() {
                         <ClinicBadge type="Dental Implants" city="Mumbai" />
                         <ClinicBadge type="IVF Specialist" city="Bangalore" />
                         <ClinicBadge type="Dermatology" city="Pune" />
-                        
-                        <div className="col-span-2 mt-8 p-10 border border-[var(--primary)]/20 bg-[var(--primary)]/5 rounded-premium text-center">
-                            <div className="text-4xl font-bold text-white mb-2 tracking-tighter italic font-drama">₹2.4 Crore</div>
-                            <div className="font-data text-[var(--primary)] text-[10px] tracking-[0.2em] uppercase font-bold">Total Revenue Recovered This Quarter</div>
+
+                        <div className="col-span-2 mt-8 p-10 border border-[var(--recovery-blue)]/20 bg-[var(--recovery-blue)]/5 rounded-premium text-center shadow-2xl backdrop-blur-sm">
+                            <div className="text-4xl font-bold text-white mb-2 tracking-tighter italic font-drama tabular-nums">₹2.4 Crore</div>
+                            <div className="font-data text-[var(--recovery-blue)] text-[10px] tracking-widest font-bold">Total revenue recovered this quarter</div>
                         </div>
                     </div>
 

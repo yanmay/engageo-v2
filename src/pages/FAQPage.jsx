@@ -24,18 +24,17 @@ export default function FAQPage() {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full bg-white min-h-screen">
+    <div ref={containerRef} className="w-full bg-[var(--command-black)] min-h-screen">
       <CinematicNavbar />
       
       {/* 1) Page Hero */}
       <section 
-        className="w-full text-center px-6 md:px-12 relative z-10 pt-[180px] pb-[100px]"
-        style={{ backgroundColor: 'var(--clinic-mist)' }}
+        className="w-full text-center px-6 md:px-12 relative z-10 pt-[180px] pb-[100px] bg-[var(--command-black)]"
       >
         <div className="max-w-5xl mx-auto">
-          <div className="font-data text-[10px] font-bold text-[var(--primary)] tracking-[0.35em] uppercase mb-8 reveal-faq-hero">Information Archive</div>
+          <div className="font-data text-[10px] font-bold text-[var(--recovery-blue)] tracking-[0.35em] uppercase mb-8 reveal-faq-hero">Information Archive</div>
           <h1 
-            className="font-sans font-bold tracking-tighter mb-8 leading-[0.9] mx-auto flex flex-col items-center justify-center gap-1 reveal-faq-hero text-[var(--clinic-ink)]"
+            className="font-sans font-bold tracking-tighter mb-8 leading-[0.9] mx-auto flex flex-col items-center justify-center gap-1 reveal-faq-hero text-white"
             style={{ fontSize: 'clamp(48px, 8vw, 84px)' }}
           >
             <span>Your Questions.</span>
@@ -44,7 +43,7 @@ export default function FAQPage() {
             </span>
           </h1>
           <p 
-            className="font-sans font-medium max-w-2xl mx-auto leading-relaxed mt-4 text-xl text-[var(--clinic-slate)] reveal-faq-hero"
+            className="font-sans font-medium max-w-2xl mx-auto leading-relaxed mt-4 text-xl text-white/60 reveal-faq-hero"
           >
             Everything you need to know about autonomous missed-call recovery, integration, and legal compliance.
           </p>
@@ -63,7 +62,7 @@ export default function FAQPage() {
             <h2
             className="text-4xl md:text-7xl font-bold tracking-tight mb-12 leading-[1.1]"
             >
-            Still have <span className="text-[var(--primary)] italic font-drama">questions?</span>
+            Still have <span className="text-[var(--recovery-blue)] italic font-drama">questions?</span>
             </h2>
             <p className="text-white/40 text-xl font-medium mb-12">Our team is available 24/7 on WhatsApp for clinic owners.</p>
             <a
