@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { Terminal, Calendar, Layers, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
 
@@ -68,24 +68,25 @@ const ShufflerCard = () => {
 };
 
 // ─── Card 2: Telemetry Typewriter ────────────────────────────────────────────
+const MESSAGES = [
+  "> SCANNING_INBOUND_TRUNK...",
+  "> MISSED_CALL_DETECTED: +91 987xx xxxxx",
+  "> TRIGGERING_RECOVERY_V3.2",
+  "> VOICEMAIL_BYPASS_INITIATED",
+  "> VAPI_Hinglish_AGENT: CONNECTED",
+  "> CONVERSATION_INTENT: [Appointment_HT]",
+  "> STATUS: SLOT_RESERVED"
+];
+
 const TypewriterCard = () => {
   const [text, setText] = useState("");
-  const messages = [
-    "> SCANNING_INBOUND_TRUNK...",
-    "> MISSED_CALL_DETECTED: +91 987xx xxxxx",
-    "> TRIGGERING_RECOVERY_V3.2",
-    "> VOICEMAIL_BYPASS_INITIATED",
-    "> VAPI_Hinglish_AGENT: CONNECTED",
-    "> CONVERSATION_INTENT: [Appointment_HT]",
-    "> STATUS: SLOT_RESERVED"
-  ];
   const [msgIndex, setMsgIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
-    if (charIndex < messages[msgIndex].length) {
+    if (charIndex < MESSAGES[msgIndex].length) {
       const timeout = setTimeout(() => {
-        setText(prev => prev + messages[msgIndex][charIndex]);
+        setText(prev => prev + MESSAGES[msgIndex][charIndex]);
         setCharIndex(prev => prev + 1);
       }, 40);
       return () => clearTimeout(timeout);
@@ -93,7 +94,7 @@ const TypewriterCard = () => {
       const timeout = setTimeout(() => {
         setText("");
         setCharIndex(0);
-        setMsgIndex(prev => (prev + 1) % messages.length);
+        setMsgIndex(prev => (prev + 1) % MESSAGES.length);
       }, 2000);
       return () => clearTimeout(timeout);
     }

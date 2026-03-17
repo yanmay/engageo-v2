@@ -20,7 +20,10 @@ if (navbarRoot) {
     createRoot(navbarRoot).render(
         <StrictMode>
             <BrowserRouter>
-                <CinematicNavbar />
+                <ModalProvider>
+                    <CinematicNavbar />
+                    <AuditModal />
+                </ModalProvider>
             </BrowserRouter>
         </StrictMode>
     );
@@ -52,7 +55,10 @@ if (philosophyRoot) {
     createRoot(philosophyRoot).render(
         <StrictMode>
             <BrowserRouter>
-                <Philosophy />
+                <ModalProvider>
+                    <Philosophy />
+                    <AuditModal />
+                </ModalProvider>
             </BrowserRouter>
         </StrictMode>
     );
@@ -111,7 +117,10 @@ if (finalCtaRoot) {
     createRoot(finalCtaRoot).render(
         <StrictMode>
             <BrowserRouter>
-                <FinalCTASection />
+                <ModalProvider>
+                    <FinalCTASection />
+                    <AuditModal />
+                </ModalProvider>
             </BrowserRouter>
         </StrictMode>
     );

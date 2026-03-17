@@ -3,11 +3,15 @@ import { useModal } from '../context/ModalContext';
 
 export default function CinematicNavbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [pathname, setPathname] = useState('/');
+    const [pathname, setPathname] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
     const { openModal } = useModal();
 
     useEffect(() => {
-        setPathname(window.location.pathname);
+        // Pathname is already initialized, so we don't need a sync setState here
+        // but we might want to listen for popstate if it's a SPA-lite
+        const handleLocationChange = () => setPathname(window.location.pathname);
+        window.addEventListener('popstate', handleLocationChange);
+        return () => window.removeEventListener('popstate', handleLocationChange);
     }, []);
 
     const handleHomeClick = (e) => {
