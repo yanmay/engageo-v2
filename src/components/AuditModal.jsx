@@ -79,7 +79,7 @@ export default function AuditModal() {
                 </h2>
               </div>
 
-              <p className="text-white/40 text-sm leading-relaxed mb-10 max-w-sm font-medium">
+              <p className="text-white/60 text-sm leading-relaxed mb-10 max-w-sm font-medium">
                 Scan the code to try our WhatsApp retention flow, or enter your number to receive an <span className="text-white tabular-nums">8-second</span> AI callback.
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function AuditModal() {
                   <span className="font-data text-[10px] font-bold text-[var(--recovery-blue)] tracking-widest text-center px-4">Begin_session</span>
                 </div>
               </div>
-              <span className="font-data text-[10px] text-white/30 tracking-widest font-bold">Node_demo_WA_v4</span>
+               <span className="font-data text-[10px] text-white/50 tracking-widest font-bold uppercase transition-all">Node_demo_WA_v4</span>
             </div>
           </div>
 
@@ -101,7 +101,7 @@ export default function AuditModal() {
           <div className="w-full md:w-7/12 p-10 md:p-14 flex flex-col justify-center relative">
             <button
               onClick={closeModal}
-              className="absolute top-10 right-10 text-white/20 hover:text-white transition-colors"
+               className="absolute top-10 right-10 text-white/40 hover:text-white transition-colors"
             >
               <X size={28} />
             </button>
@@ -152,7 +152,7 @@ export default function AuditModal() {
                     )}
                   </button>
 
-                  <p className="text-[9px] text-white/20 leading-relaxed text-center px-6 font-medium">
+                   <p className="text-[9px] text-white/40 leading-relaxed text-center px-6 font-medium">
                     By submitting, you consent to receive a demo callback and WhatsApp message from Engageo. Your data is handled per DPDP Act 2023. Reply STOP to opt out.
                   </p>
                 </form>
@@ -164,7 +164,7 @@ export default function AuditModal() {
                   <div className="absolute inset-0 rounded-full bg-[var(--signal-green)]/20 animate-ping opacity-30" />
                 </div>
                 <h3 className="text-4xl text-white font-bold tracking-tight mb-6">Connecting Node...</h3>
-                <p className="text-white/40 text-lg leading-relaxed mb-12 font-medium">
+                 <p className="text-white/65 text-xl leading-relaxed mb-12 font-medium">
                   Our system is initiating the callback. Please have your phone ready — it should ring in less than <span className="text-white">8 seconds.</span>
                 </p>
                 <button

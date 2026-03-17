@@ -59,7 +59,7 @@ export default function CinematicNavbar() {
                                 key={link.name} 
                                 href={link.path}
                                 className={`text-[10px] font-bold tracking-widest transition-all hover:tracking-widest relative group/link ${
-                                    isActive ? 'text-[var(--recovery-blue)]' : 'text-white/60 hover:text-white'
+                                    isActive ? 'text-[var(--recovery-blue)]' : 'text-white/80 hover:text-white'
                                 }`}
                             >
                                 {link.name}
@@ -73,7 +73,7 @@ export default function CinematicNavbar() {
 
                 {/* Right Side: Login + Audit Button */}
                 <div className="hidden lg:flex items-center gap-8">
-                    <button className="text-[10px] font-bold tracking-[0.2em] uppercase transition-colors text-white/30 hover:text-white">
+                    <button className="text-[10px] font-bold tracking-[0.2em] uppercase transition-colors text-white/60 hover:text-white">
                         Login
                     </button>
                     <button 
@@ -127,7 +127,7 @@ export default function CinematicNavbar() {
                     >
                         Get Free Audit →
                     </button>
-                    <button className="text-white/40 font-bold tracking-[0.2em] uppercase text-[10px]">
+                    <button className="text-white/60 font-bold tracking-[0.2em] uppercase text-[10px]">
                         Already have an account? Login
                     </button>
                 </div>

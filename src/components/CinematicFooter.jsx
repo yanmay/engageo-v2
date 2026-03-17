@@ -24,41 +24,41 @@ export default function CinematicFooter() {
                         >
                             Engageo
                         </a>
-                        <p className="text-white/40 max-w-sm leading-relaxed mb-12 text-lg">
+                        <p className="text-white/70 max-w-sm leading-relaxed mb-12 text-lg">
                             We answer the calls your clinic misses. Autonomous missed-call recovery for high-ticket Indian specialists.
                         </p>
                     </div>
 
                     <div>
-                        <h4 className="font-data text-[10px] text-white/40 tracking-widest mb-10 font-bold">Platform</h4>
+                        <h4 className="font-data text-[10px] text-white/60 tracking-widest mb-10 font-bold uppercase">Platform</h4>
                         <ul className="space-y-5 text-sm font-semibold tracking-tight">
-                            <li><a href="/how-it-works" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">How it works</a></li>
-                            <li><a href="/pricing" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">Pricing</a></li>
-                            <li><a href="/compare" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">Compare</a></li>
-                            <li><a href="/faq" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">FAQ</a></li>
+                            <li><a href="/how-it-works" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">How it works</a></li>
+                            <li><a href="/pricing" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">Pricing</a></li>
+                            <li><a href="/compare" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">Compare</a></li>
+                            <li><a href="/faq" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">FAQ</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="font-data text-[10px] text-white/40 tracking-widest mb-10 font-bold">Legal</h4>
+                        <h4 className="font-data text-[10px] text-white/60 tracking-widest mb-10 font-bold uppercase">Legal</h4>
                         <ul className="space-y-5 text-sm font-semibold tracking-tight">
-                            <li><a href="/privacy" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">Privacy policy</a></li>
-                            <li><a href="/terms" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">Terms of service</a></li>
-                            <li><a href="/dpdp" className="text-white/60 hover:text-[var(--recovery-blue)] transition-colors">DPDP act 2023</a></li>
+                            <li><a href="/privacy" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">Privacy policy</a></li>
+                            <li><a href="/terms" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">Terms of service</a></li>
+                            <li><a href="/dpdp" className="text-white/80 hover:text-[var(--recovery-blue)] transition-colors">DPDP act 2023</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5 gap-8">
                     <div className="flex items-center gap-8">
-                        <p className="text-white/20 text-[10px] font-bold tracking-widest tabular-nums">
+                        <p className="text-white/40 text-[10px] font-bold tracking-widest tabular-nums">
                             &copy; {new Date().getFullYear()} Engageo.
                         </p>
-                        <p className="text-white/20 text-[10px] font-bold tracking-widest">
+                        <p className="text-white/40 text-[10px] font-bold tracking-widest">
                             Built for Indian specialists.
                         </p>
                     </div>
-                    <div className="text-white/10 text-[9px] font-bold tracking-widest italic font-drama">
+                    <div className="text-white/30 text-[9px] font-bold tracking-widest italic font-drama uppercase">
                         Strictly clinical scheduling protocol. No medical advice.
                     </div>
                 </div>

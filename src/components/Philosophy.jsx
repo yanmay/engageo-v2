@@ -61,8 +61,11 @@ export default function Philosophy() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-40 px-8 md:px-24 bg-[var(--command-black)] noise-overlay overflow-hidden border-t border-white/5"
+      className="relative py-40 px-8 md:px-24 bg-[var(--command-black)] overflow-hidden border-t border-white/5"
     >
+      {/* Local Noise Overlay */}
+      <div className="absolute inset-0 noise-overlay opacity-10 pointer-events-none z-[1]" />
+
       <div className="relative z-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
           
@@ -74,7 +77,7 @@ export default function Philosophy() {
             </div>
             
             <div ref={textRef} className="flex flex-col gap-8">
-              <p className="text-white/40 text-xl md:text-2xl leading-relaxed font-medium italic">
+              <p className="text-white/80 text-lg md:text-xl leading-relaxed font-medium italic reveal-text">
                 "Most clinics focus on acquiring new leads while letting high-intent callers slip away."
               </p>
               <p className="text-white text-3xl md:text-4xl lg:text-5xl leading-[1.1] font-bold tracking-tight">
@@ -92,8 +95,8 @@ export default function Philosophy() {
             </div>
             
             <div className="reveal-drama">
-               <h2 className="text-white/40 text-2xl md:text-3xl font-medium mb-8">Instead, we focus on:</h2>
-               <div className="font-drama text-5xl sm:text-6xl md:text-8xl lg:text-[10rem] text-white leading-[0.8] drop-shadow-2xl">
+               <h2 className="text-white/70 text-2xl md:text-3xl font-medium mb-8">Instead, we focus on:</h2>
+               <div className="font-drama text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] text-white leading-[0.9] drop-shadow-2xl">
                   Recovering <br className="hidden md:block" /> Every Booking.
                </div>
             </div>

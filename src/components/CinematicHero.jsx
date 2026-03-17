@@ -50,7 +50,7 @@ export default function CinematicHero() {
                     <div className="reveal-fade mb-10 overflow-hidden">
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-[var(--recovery-blue)] live-pulse" />
-                            <span className="font-data text-[10px] tracking-widest font-bold text-white/30">AUTONOMOUS NODE ACTIVE // SYSTEM_LIVE</span>
+                            <span className="font-data text-[10px] tracking-widest font-bold text-white/60">AUTONOMOUS NODE ACTIVE // SYSTEM_LIVE</span>
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@ export default function CinematicHero() {
                         <h2 className="reveal-fade text-white font-bold tracking-tighter leading-none mb-4" style={{ fontSize: 'min(70px, 12vw)' }}>
                             Your clinic loses <span className="text-[var(--recovery-blue)]">₹4–12L</span>
                         </h2>
-                        <div className="reveal-fade text-white/60 font-medium tracking-tighter leading-none mb-10" style={{ fontSize: 'min(50px, 8vw)' }}>
+                        <div className="reveal-fade text-white/85 font-medium tracking-tighter leading-none mb-10" style={{ fontSize: 'min(50px, 8vw)' }}>
                             to missed calls every month.
                         </div>
                         <div className="reveal-fade text-white font-bold italic tracking-tighter leading-tight italic" style={{ fontSize: 'min(110px, 16vw)', fontFamily: 'Cormorant Garamond, serif' }}>
@@ -66,7 +66,7 @@ export default function CinematicHero() {
                         </div>
                     </div>
 
-                    <p className="reveal-fade max-w-xl text-white/70 text-lg md:text-2xl leading-relaxed mb-16 font-medium italic border-l-2 border-[var(--recovery-blue)]/20 pl-10">
+                    <p className="reveal-fade max-w-xl text-white/90 text-lg md:text-2xl leading-relaxed mb-16 font-medium italic border-l-2 border-[var(--recovery-blue)]/20 pl-10">
                         8-second AI callback. Hinglish voice agent. <br className="hidden md:block" />
                         Unified scheduling. Messaging confirmation.
                     </p>
@@ -93,7 +93,7 @@ export default function CinematicHero() {
                                 const el = document.getElementById('protocol');
                                 if (el) el.scrollIntoView({ behavior: 'smooth' });
                             }}
-                            className="w-full md:w-auto text-white/30 hover:text-white transition-colors text-[10px] font-bold tracking-widest ml-0 md:ml-4"
+                            className="w-full md:w-auto text-white/60 hover:text-white transition-colors text-[10px] font-bold tracking-widest ml-0 md:ml-4"
                         >
                             See how it works
                         </button>
@@ -107,21 +107,21 @@ export default function CinematicHero() {
                         <div className="absolute top-0 right-0 reveal-fade glass-premium p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] skew-x-[-4deg] hover:skew-x-0 transition-all duration-700 animate-float" style={{ transitionDelay: '0.1s' }}>
                             <div className="font-data text-[10px] text-[var(--recovery-blue)] font-bold tracking-widest mb-3">RESPONSE SPEED</div>
                             <div className="text-5xl font-bold text-white tracking-tighter mb-1 font-data tabular-nums">8 Seconds</div>
-                            <div className="text-[10px] text-white/40 font-medium tracking-wide">AI calls back immediately</div>
+                            <div className="text-[10px] text-white/70 font-medium tracking-wide">AI calls back immediately</div>
                         </div>
 
                         {/* Card 2 */}
                         <div className="absolute bottom-10 left-0 reveal-fade glass-premium p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] skew-x-[4deg] hover:skew-x-0 transition-all duration-700 animate-float" style={{ animationDelay: '1s' }}>
                             <div className="font-data text-[10px] text-[var(--signal-green)] font-bold tracking-widest mb-3">TOTAL RECOVERED</div>
                             <div className="text-5xl font-bold text-white tracking-tighter mb-1 font-data tabular-nums">₹2.4 Crore</div>
-                            <div className="text-[10px] text-white/40 font-medium tracking-wide">In the last 47 days</div>
+                            <div className="text-[10px] text-white/70 font-medium tracking-wide">In the last 47 days</div>
                         </div>
 
                         {/* Card 3 */}
                         <div className="absolute top-1/3 left-1/4 reveal-fade glass-premium p-6 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-float" style={{ animationDelay: '2s' }}>
                             <div className="font-data text-[10px] text-[var(--premium-clay)] font-bold tracking-widest mb-3">INDUSTRY AVG</div>
                             <div className="text-4xl font-bold text-white tracking-tighter mb-1 font-data tabular-nums">23% Miss rate</div>
-                            <div className="text-[10px] text-white/40 font-medium tracking-wide">Recovered by Engageo</div>
+                            <div className="text-[10px] text-white/70 font-medium tracking-wide">Recovered by Engageo</div>
                         </div>
                     </div>
                 </div>

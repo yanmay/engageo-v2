@@ -61,11 +61,11 @@ export default function CinematicFeatures() {
   return (
     <section
       id="platform"
-      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--ethereal-white)] relative overflow-hidden"
+      className="py-24 md:py-40 px-6 md:px-24 bg-[var(--command-black)] relative overflow-hidden border-t border-white/5"
     >
       {/* Subtle Background Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--clinical-blue)]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--premium-clay)]/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--clinical-blue)]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--clinical-blue)]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <Motion.div
@@ -78,7 +78,7 @@ export default function CinematicFeatures() {
           <Motion.div variants={itemVariants} className="font-data text-[var(--clinical-blue)] text-[10px] tracking-widest mb-6 font-bold uppercase">Platform Capabilities</Motion.div>
           <Motion.h2 
             variants={itemVariants} 
-            className="text-4xl md:text-5xl lg:text-7xl text-[var(--ink-black)] mb-8 tracking-tighter max-w-4xl relative font-bold"
+            className="text-4xl md:text-5xl lg:text-7xl text-white mb-8 tracking-tighter max-w-4xl relative font-bold"
           >
             <span className="relative inline-block">
                 Flawless Execution.
@@ -88,7 +88,7 @@ export default function CinematicFeatures() {
                 Not Just Chatbots.
             </span>
           </Motion.h2>
-          <Motion.p variants={itemVariants} className="max-w-2xl text-[var(--ink-black)]/60 text-lg md:text-xl leading-relaxed">
+          <Motion.p variants={itemVariants} className="max-w-2xl text-white/85 text-lg md:text-xl leading-relaxed">
             Bridge the gap between raw missed calls and confirmed hospital pipeline with a platform designed for clinical precision.
           </Motion.p>
         </Motion.div>
@@ -104,30 +104,30 @@ export default function CinematicFeatures() {
             <Motion.div
               key={i}
               variants={itemVariants}
-              className="group glass-premium p-10 rounded-[2.5rem] border border-black/5 hover:border-[var(--clinical-blue)]/20 transition-all duration-500 hover:shadow-[0_30px_60px_rgba(0,0,0,0.04)] relative overflow-hidden flex flex-col h-full"
+              className="group glass-premium p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-[var(--clinical-blue)]/40 transition-all duration-500 hover:shadow-[0_40px_80px_rgba(0,0,0,0.4)] relative overflow-hidden flex flex-col h-full"
             >
               {/* Subtle Icon/Marker */}
               <div className="mb-8 flex justify-between items-start">
                 <div className="w-10 h-10 rounded-xl bg-[var(--clinical-blue)]/5 flex items-center justify-center text-[var(--clinical-blue)] group-hover:bg-[var(--clinical-blue)] group-hover:text-white transition-all duration-500">
                   <span className="font-data text-xs font-bold">0{i + 1}</span>
                 </div>
-                <span className="font-data text-[10px] text-[var(--ink-black)]/20 font-bold tracking-widest uppercase">
+                <span className="font-data text-[10px] text-white/60 font-bold tracking-widest uppercase">
                   {f.stat}
                 </span>
               </div>
 
-              <h3 className="text-2xl font-bold text-[var(--ink-black)] tracking-tight mb-4 group-hover:text-[var(--clinical-blue)] transition-colors">
+              <h3 className="text-2xl font-bold text-white tracking-tight mb-4 group-hover:text-[var(--clinical-blue)] transition-colors">
                 {f.name}
               </h3>
 
-              <p className="text-[var(--ink-black)]/60 text-base leading-relaxed mb-8 flex-grow">
+              <p className="text-white/75 text-base leading-relaxed mb-8 flex-grow">
                 {f.desc}
               </p>
 
-              <div className="pt-6 border-t border-black/5 mt-auto">
+              <div className="pt-6 border-t border-white/5 mt-auto">
                 <div className="flex items-center gap-2">
                   <div className="w-1 h-1 rounded-full bg-[var(--clinical-blue)]" />
-                  <span className="font-data text-[9px] text-[var(--ink-black)]/40 font-bold tracking-[0.2em] uppercase">SYSTEM_READY</span>
+                  <span className="font-data text-[9px] text-white/50 font-bold tracking-[0.2em] uppercase">SYSTEM_READY</span>
                 </div>
               </div>
             </Motion.div>
