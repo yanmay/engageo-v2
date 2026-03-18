@@ -1,106 +1,30 @@
-import React, { useEffect } from 'react';
-import Lenis from 'lenis';
-import 'lenis/dist/lenis.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
 
-import { ModalProvider } from './context/ModalContext';
-import AuditModal from './components/AuditModal';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// Skeleton pages for routing
+const SkeletonPage = ({ title }) => (
+  <div className="min-h-[100dvh] pt-32 px-12 bg-clinic-white text-slate-800 font-sans">
+    <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+  </div>
+);
 
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import ScrollToTop from './components/ScrollToTop';
-
-import CinematicNavbar from './components/CinematicNavbar';
-import CinematicFooter from './components/CinematicFooter';
-
-function Layout({ children }) {
-  const location = useLocation();
-  const isAudit = location.pathname === '/audit';
-
+export default function App() {
   return (
-    <>
-      <CinematicNavbar />
-
-      <main className="flex flex-col w-full relative flex-1">
-        {children}
-      </main>
-
-      {!isAudit && <CinematicFooter />}
-    </>
+    <BrowserRouter>
+      <div className="w-full relative bg-clinic-white overflow-x-hidden min-h-screen flex flex-col font-sans">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<SkeletonPage title="Features" />} />
+          <Route path="/pricing" element={<SkeletonPage title="Pricing" />} />
+          <Route path="/how-it-works" element={<SkeletonPage title="How It Works" />} />
+          <Route path="/compare" element={<SkeletonPage title="Compare" />} />
+          <Route path="/faq" element={<SkeletonPage title="FAQ" />} />
+          <Route path="/audit" element={<SkeletonPage title="Free Audit" />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
-
-function App() {
-  useEffect(() => {
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-    if (isTouchDevice) {
-      window.lenis = null;
-      return;
-    }
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
-
-    window.lenis = lenis;
-
-    window._lenisCleanup = () => {
-      gsap.ticker.remove(lenis.raf);
-      lenis.destroy();
-      window.lenis = null;
-    };
-
-    return () => {
-      if (window._lenisCleanup) {
-        window._lenisCleanup();
-        window._lenisCleanup = null;
-      }
-    };
-  }, []);
-
-  return (
-    <ModalProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <div className="w-full relative bg-canvas overflow-x-hidden min-h-screen flex flex-col">
-          {/* Grain texture overlay — replaces dot grid */}
-          <div className="grain-texture" />
-
-          {/* Modal */}
-          <AuditModal />
-
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/compare" element={<Compare />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/audit" element={<Audit />} />
-            </Routes>
-          </Layout>
-        </div>
-      </BrowserRouter>
-    </ModalProvider>
-  );
-}
-
-export default App;

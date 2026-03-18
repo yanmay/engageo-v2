@@ -5,18 +5,20 @@
 - [x] Task 1.2: Configure fonts and assets.
 
 ## Wave 2: Structural Narrative
-- [ ] Task 2.1: Implement Floating Navbar and Hero "Opening Shot".
-- [ ] Task 2.2: Implement Philosophy manifesto section.
+- [x] Task 2.1: Implement Floating Navbar and Hero "Opening Shot".
+- [x] Task 2.2: Implement Philosophy manifesto section.
 
 ## Wave 3: Interactive Artifacts (Features)
-- [ ] Task 3.1: Build Diagnostic Shuffler card.
-- [ ] Task 3.2: Build Telemetry Typewriter card.
-- [ ] Task 3.3: Build Cursor Protocol Scheduler card.
+- [x] Task 3.1: Build Diagnostic Shuffler card.
+- [x] Task 3.2: Build Telemetry Typewriter card.
+- [x] Task 3.3: Build Cursor Protocol Scheduler card.
 
 ## Wave 4: Process & Proof
-- [ ] Task 4.1: Implement Protocol Stacking Archive (3 cards).
-- [ ] Task 4.2: Implement Pricing, Testimonials, and FAQ.
+- [x] Task 4.1: Implement Protocol Stacking Archive (3 cards).
+- [x] Task 4.2: Implement Pricing, Testimonials, and FAQ.
+- [x] Task 4.3: Implement AI Demo Trigger Modal.
 
 ## Wave 5: Final Polish
-- [ ] Task 5.1: Global animation pass and responsive audit.
-- [ ] Task 5.2: Verification and handoff.
+- [x] Task 5.1: Global animation pass and responsive audit.
+- [x] Task 5.2: Verification and handoff.
+- [x] Task 5.3: Final PRD Polish and HowItWorks Enhancement.

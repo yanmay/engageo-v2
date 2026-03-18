@@ -15,7 +15,14 @@ export default defineConfig([
     ],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        gsap: 'readonly',
+        ScrollTrigger: 'readonly',
+        THREE: 'readonly',
+        init3D: 'readonly',
+        update3DTheme: 'readonly',
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },

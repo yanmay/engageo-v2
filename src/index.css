@@ -1,94 +1,157 @@
+@import '@fontsource/geist-sans';
+@import '@fontsource/geist-mono';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════════════
-   PRESET: "CINEMATIC COMMAND" DESIGN SYSTEM
-   Palette: Recovery Blue (Primary), Command Black (Hero/Dark), Clinic White (Body)
-   Typography: Plus Jakarta Sans, Outfit, Cormorant Garamond, IBM Plex Mono
-   ═══════════════════════════════════════════════════════════════ */
-
-:root {
-  /* Core Brand Tokens */
-  --recovery-blue: #2563EB;
-  --command-black: #0A0F1E;
-  --clinic-white: #F8F9FB;
-  
-  /* Accent & Functional Tokens */
-  --signal-green: #10B981;
-  --recovered-green: #059669;
-  --loss-red: #DC2626;
-  --sovereign-gold: #D97706;
-
-  /* Semantic Mapping */
-  --primary: var(--recovery-blue);
-  --background: var(--clinic-white);
-  --surface-dark: var(--command-black);
-  --text: var(--command-black);
-  
-  /* Radius System */
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
-}
-
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-[var(--background)] text-[var(--text)] antialiased;
-    font-family: 'Outfit', sans-serif; /* Using Outfit for body/UI as per PRD "UI labels" */
+    @apply antialiased text-slate-800 bg-clinic-white;
+    font-feature-settings: "ss01", "ss02", "cv01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-bold;
-    font-family: 'Plus Jakarta Sans', sans-serif; /* Headings */
+  ::selection {
+    background: rgba(36, 87, 217, 0.2);
+    color: #080d1a;
   }
 
-  /* Global Noise Overlay - Apply to all dark sections */
-  .noise-overlay {
-    position: relative;
-  }
-
-  .noise-overlay::after, .grain-texture {
-    content: "";
-    @apply fixed inset-0 pointer-events-none z-[9999];
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-    opacity: 0.04;
-  }
-
-  /* Ensure grain texture specifically in App.jsx works */
-  .grain-texture {
-    @apply fixed inset-0 w-full h-full pointer-events-none z-[9999];
+  * {
+    @apply box-border;
   }
 }
 
 @layer components {
-  .rounded-premium {
-    @apply rounded-[2rem] md:rounded-[3rem];
+  /* ============================================
+     BUTTONS — Tactile with spring physics feel
+  ============================================ */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-sans font-medium text-sm tracking-tight text-white bg-recovery-blue rounded-pill transition-all duration-300;
+    @apply hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(36,87,217,0.3)] hover:bg-recovery-hover;
+    @apply active:scale-[0.97] active:translate-y-0 active:shadow-none;
+    will-change: transform;
   }
 
-  /* Magnetic feel buttons */
-  .btn-magnetic {
-    @apply relative overflow-hidden transition-transform duration-300 ease-[cubic-bezier(0.25, 0.46, 0.45, 0.94)] hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-sans font-medium text-sm tracking-tight text-slate-600 bg-transparent rounded-pill border border-slate-200 transition-all duration-300;
+    @apply hover:-translate-y-[1px] hover:bg-white hover:text-slate-900 hover:border-slate-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)];
+    @apply active:scale-[0.97] active:translate-y-0;
+    will-change: transform;
   }
 
-  .btn-magnetic span.bg-layer {
-    @apply absolute inset-0 -z-10 transition-transform duration-500 ease-out translate-y-full;
+  .btn-ghost-dark {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-sans font-medium text-sm tracking-tight text-slate-300 bg-transparent rounded-pill border border-command-border transition-all duration-300;
+    @apply hover:-translate-y-[1px] hover:bg-white/10 hover:text-white hover:border-white/20;
+    @apply active:scale-[0.97] active:translate-y-0;
+    will-change: transform;
   }
 
-  .btn-magnetic:hover span.bg-layer {
-    @apply translate-y-0;
+  /* ============================================
+     GLASS SURFACES — True liquid glass with edge refraction
+  ============================================ */
+  .liquid-glass-light {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 20px 40px -15px rgba(0,0,0,0.08);
   }
 
-  /* Typography Drama & Data styles */
-  .font-drama {
-    font-family: 'Cormorant Garamond', serif;
-    @apply italic;
+  .liquid-glass-dark {
+    @apply bg-command-surface/60 backdrop-blur-xl border border-command-border;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 40px -15px rgba(0,0,0,0.4);
   }
 
-  .font-data {
-    font-family: 'IBM Plex Mono', monospace;
+  /* ============================================
+     NOISE OVERLAY — Fixed, pointer-events-none, NOT z-50
+     Applied only to dark sections via pseudo-element
+  ============================================ */
+  .noise-grain {
+    @apply fixed inset-0 pointer-events-none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
   }
 
-  .lift-on-hover {
-    @apply transition-transform duration-300 hover:-translate-y-[1px];
+  /* ============================================
+     SPOTLIGHT BORDER CARD — illuminates under cursor
+  ============================================ */
+  .spotlight-card {
+    @apply relative overflow-hidden border border-slate-200 rounded-card bg-white transition-all duration-500;
+    @apply hover:border-recovery-blue/30 hover:shadow-spotlight;
+  }
+
+  .spotlight-card-dark {
+    @apply relative overflow-hidden border border-command-border rounded-card bg-command-surface/50 transition-all duration-500;
+    @apply hover:border-recovery-blue/30 hover:shadow-[0_0_0_1px_rgba(36,87,217,0.3),0_0_30px_rgba(36,87,217,0.08)];
+  }
+
+  /* ============================================
+     SECTION LABEL (monospace badge above headlines)
+  ============================================ */
+  .section-label {
+    @apply font-mono text-[10px] uppercase tracking-widest text-recovery-blue mb-4 block;
+  }
+
+  .section-label-gold {
+    @apply font-mono text-[10px] uppercase tracking-widest text-gold-sovereign mb-4 block;
+  }
+
+  .section-label-muted {
+    @apply font-mono text-[10px] uppercase tracking-widest text-slate-400 mb-4 block;
+  }
+
+  /* ============================================
+     ROW DIVIDER — Feature list rows
+  ============================================ */
+  .feature-row {
+    @apply flex flex-col md:flex-row items-start md:items-center py-7 border-b border-command-border gap-4 md:gap-8 group cursor-default;
+    @apply transition-all duration-300;
+  }
+
+  .feature-row:hover {
+    @apply -translate-x-0;
+  }
+
+  /* ============================================
+     SKIP TO CONTENT — Accessibility
+  ============================================ */
+  .skip-to-content {
+    @apply absolute -translate-y-full focus:translate-y-0 left-0 top-0 z-[100] px-4 py-2 bg-recovery-blue text-white text-sm font-medium transition-transform duration-200;
+  }
+
+  /* ============================================
+     SHIMMER SKELETON
+  ============================================ */
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Hardware-accelerated, uses only transform + opacity */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .pause-on-hover:hover {
+    animation-play-state: paused;
   }
 }

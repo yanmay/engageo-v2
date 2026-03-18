@@ -1,32 +1,26 @@
 import React from 'react';
-import CinematicHero from '../components/CinematicHero';
-import CinematicFeatures from '../components/CinematicFeatures';
-import Philosophy from '../components/Philosophy';
-import ProtocolStack from '../components/ProtocolStack';
-import CinematicPricing from '../components/CinematicPricing';
+import Hero from '../components/Hero';
+import LogoBar from '../components/LogoBar';
+import HowItWorks from '../components/HowItWorks';
+import Calculator from '../components/Calculator';
+import Features from '../components/Features';
+import Testimonials from '../components/Testimonials';
+import WhoItsFor from '../components/WhoItsFor';
+import PricingPreview from '../components/PricingPreview';
+import Footer from '../components/Footer';
 
 export default function Home() {
   return (
-    <div className="flex flex-col w-full relative bg-[var(--cream)]">
-      <div id="hero">
-        <CinematicHero />
-      </div>
-
-      <div id="features">
-        <CinematicFeatures />
-      </div>
-
-      <div id="philosophy">
-        <Philosophy />
-      </div>
-
-      <div id="protocol">
-        <ProtocolStack />
-      </div>
-
-      <div id="pricing">
-        <CinematicPricing />
-      </div>
-    </div>
+    <main id="main-content" className="w-full flex flex-col font-sans">
+      <Hero />
+      <LogoBar />
+      <HowItWorks />
+      <Calculator />
+      <Features />
+      <Testimonials />
+      <WhoItsFor />
+      <PricingPreview />
+      <Footer />
+    </main>
   );
 }

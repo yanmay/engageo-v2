@@ -1,97 +1,111 @@
 import React from 'react';
-import { useModal } from '../context/ModalContext';
-
 import { Link } from 'react-router-dom';
+import { WhatsappLogo } from '@phosphor-icons/react';
+
+const navGroups = [
+  {
+    label: 'Product',
+    links: [
+      { to: '/features', label: 'Features' },
+      { to: '/how-it-works', label: 'How it works' },
+      { to: '/pricing', label: 'Pricing' },
+      { to: '/compare', label: 'Compare' },
+    ],
+  },
+  {
+    label: 'Company',
+    links: [
+      { to: '/faq', label: 'FAQ' },
+      { to: '/audit', label: 'Free audit' },
+    ],
+  },
+  {
+    label: 'Legal',
+    links: [
+      { to: '/privacy', label: 'Privacy policy' },
+      { to: '/terms', label: 'Terms of service' },
+      { to: '/dpdp', label: 'DPDP compliance' },
+    ],
+  },
+];
 
 export default function Footer() {
-  const col1 = [
-    { label: 'Home', path: '/' },
-    { label: 'How It Works', path: '/how-it-works' },
-    { label: 'Compare', path: '/compare' },
-  ];
-
-  const col2 = [
-    { label: 'Pricing', path: '/pricing' },
-    { label: 'FAQ', path: '/faq' },
-    { label: 'Free Audit', path: '/audit' },
-  ];
-
   return (
-    <footer className="bg-white border-t-2 border-obsidian/10 py-16 md:py-20 px-4 md:px-12 lg:px-20 relative z-10">
-      {/* 4-stripe top accent */}
-      <div className="absolute top-0 left-0 right-0 flex h-[3px]">
-        <div style={{ flex: 1, background: 'var(--command-surface)' }} />
-        <div style={{ flex: 1, background: 'var(--green)' }} />
-        <div style={{ flex: 1, background: 'var(--loss-red)' }} />
-        <div style={{ flex: 1, background: '#C97B2A' }} />
-      </div>
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
+    <footer
+      className="w-full bg-command-black"
+      role="contentinfo"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+    >
+      {/* Main body */}
+      <div className="max-w-[1400px] mx-auto px-6 py-16 md:py-20 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
 
-        {/* Brand */}
-        <div className="max-w-xs space-y-5">
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xl font-bold tracking-tighter text-obsidian">Engageo</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] pulse-dot" />
+          {/* Brand — 4 cols */}
+          <div className="md:col-span-4 flex flex-col gap-6">
+            <Link
+              to="/"
+              className="text-white font-sans font-semibold text-xl tracking-tight hover:opacity-75 transition-opacity w-fit"
+              aria-label="Engageo home"
+            >
+              Engageo
+            </Link>
+            <p className="font-sans text-sm text-slate-400 leading-relaxed max-w-[280px] text-pretty">
+              Missed call recovery and AI patient booking for Indian specialist clinics. Live in 47 clinics.
+            </p>
+            <a
+              href="https://wa.me/917696382250"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2.5 w-fit px-4 py-2.5 rounded-pill font-sans font-medium text-sm transition-all duration-200"
+              style={{
+                color: '#25D366',
+                border: '1px solid rgba(37,211,102,0.25)',
+                background: 'rgba(37,211,102,0.08)',
+              }}
+            >
+              <WhatsappLogo size={16} weight="fill" />
+              WhatsApp us directly
+            </a>
           </div>
-          <p className="text-xs text-subtle leading-relaxed">
-            We answer the calls your clinic misses.
-            <br />
-            Every missed call is a patient lost to a competitor.
-          </p>
 
-          {/* Status indicator */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 border-2 border-obsidian/10 bg-emerald-50/50">
-            <span className="w-1.5 h-1.5 bg-emerald-500 pulse-dot" />
-            <span className="font-mono text-[10px] text-emerald-800 font-bold uppercase tracking-widest">System Operational</span>
-          </div>
-        </div>
-
-        {/* Links */}
-        <div className="flex gap-16 md:gap-24">
-          <div className="flex flex-col">
-            <h4 className="font-sans font-bold mb-4" style={{ color: 'var(--clinic-ink)', fontSize: '15px' }}>Pages</h4>
-            <ul className="space-y-3 font-medium flex flex-col items-start text-left">
-              {col1.map(({ label, path }) => (
-                <li key={label}>
-                  <Link
-                    to={path}
-                    className="transition-colors text-left"
-                    style={{ color: 'var(--clinic-stone)', fontSize: '14px', textDecoration: 'none' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.textDecoration = 'underline'; e.currentTarget.style.color = 'var(--clinic-ink)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.textDecoration = 'none'; e.currentTarget.style.color = 'var(--clinic-stone)'; }}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col">
-            <h4 className="font-sans font-bold mb-4" style={{ color: 'var(--clinic-ink)', fontSize: '15px' }}>Get Started</h4>
-            <ul className="space-y-3 font-medium flex flex-col items-start text-left">
-              {col2.map(({ label, path }) => (
-                <li key={label}>
-                  <Link
-                    to={path}
-                    className="transition-colors text-left"
-                    style={{ color: 'var(--clinic-stone)', fontSize: '14px', textDecoration: 'none' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.textDecoration = 'underline'; e.currentTarget.style.color = 'var(--clinic-ink)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.textDecoration = 'none'; e.currentTarget.style.color = 'var(--clinic-stone)'; }}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Nav groups — 8 cols across 3 sub-columns */}
+          <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+            {navGroups.map((group) => (
+              <div key={group.label} className="flex flex-col gap-4">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-slate-600">
+                  {group.label}
+                </span>
+                <nav aria-label={`${group.label} links`}>
+                  <ul className="flex flex-col gap-3">
+                    {group.links.map((link) => (
+                      <li key={link.to}>
+                        <Link
+                          to={link.to}
+                          className="font-sans text-sm text-slate-400 hover:text-white transition-colors duration-200"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Copyright */}
-      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-border/40 flex items-center justify-between flex-wrap gap-4">
-        <span className="font-sans" style={{ color: 'var(--clinic-stone)', fontSize: '13px' }}>
-          © 2025 Engageo · Built for Indian specialist clinics · We answer the calls your clinic misses.
-        </span>
+      {/* Bottom bar */}
+      <div
+        className="max-w-[1400px] mx-auto px-6 py-6 w-full flex flex-col md:flex-row items-center justify-between gap-4"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+      >
+        <p className="font-sans text-xs text-slate-600">
+          &copy; {new Date().getFullYear()} Engageo. All rights reserved. Built for Indian clinics.
+        </p>
+        <p className="font-mono text-[10px] uppercase tracking-widest text-slate-700">
+          DPDP Compliant &mdash; ISO 27001 Infrastructure
+        </p>
       </div>
     </footer>
   );

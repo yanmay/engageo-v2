@@ -1,0 +1,12 @@
+# CodeRabbit Configuration
+# For more information, visit https://docs.coderabbit.ai/configuration/yaml-file
+
+reviews:
+  profile: assertive
+  path_filters:
+    - src/**
+    - components/**
+  auto_summary: true
+  generate_sequence_diagrams: true
+
+language: en

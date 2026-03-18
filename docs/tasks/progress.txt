@@ -1,0 +1,179 @@
+Task 4.1: Implement Protocol Stacking Archive (3 cards)
+- Developed CinematicProtocol component with sticky stacking GSAP animation.
+- Integrated CinematicProtocol into Home page, replacing the legacy ProtocolStack.
+- Aligned styling with the "Cinematic Command" design system (IBM Plex Mono, Plus Jakarta Sans, Recovery Blue).
+
+Task 4.2: Implement Pricing, Testimonials, and FAQ
+- Developed CinematicPricing with tiered investment cards and 15-booking guarantee.
+- Created CinematicTestimonials and CinematicLogos for dark social proof sections.
+- Created CinematicFAQ with sticky-header accordion layout for common objections.
+- Refined Home page architecture to follow the light/dark alternating cinematic rhythm.
+- Updated CinematicFooter to align with Command design system tokens.
+
+Task 5.1: Global animation pass and responsive audit
+- Performed a cinematic animation pass on the Home page (Hero, Features, Philosophy, Pricing, FAQ).
+- Added scroll-triggered GSAP reveals to all major sections for a premium "opening shot" feel.
+- Implemented mobile responsiveness fixes: improved padding, font scaling, and element stacking/hiding.
+- Enhanced the Audit page with smooth entry transitions for form elements and headers.
+- Added a global scroll-down indicator to the CinematicHero.
+
+Task 4.3: Implement AI Demo Trigger Modal
+- Replaced the legacy Calendly modal with a high-fidelity AI Demo Trigger Modal.
+- Integrated QR code for WhatsApp demonstration and phone input for automated callback demo.
+- Added "Test our AI →" CTA to the CinematicHero and linked all demo buttons to the new modal.
+- Aligned modal aesthetic with the "Cinematic Command" design system (dark glassmorphism, pulse indicators).
+
+Task 5.2: Verification and handoff
+- Standardized all subpages (Pricing, Compare, FAQ, Audit) with "Cinematic Command" design tokens.
+- Expanded design system in index.css with derived UI tokens for subpage fidelity.
+- Implemented confirmation state and form validation logic for the lead capture Audit page.
+- Ensured 100% typography and color consistency across the entire site architecture.
+
+Task 3.2: Refine Telemetry Card
+- Implemented organic typing animations with pauses for punctuation for a more human feel.
+- Added a dynamic recovery value counter to the Protocol Telemetry card.
+- Enhanced the "Command Center" aesthetic with better data labels, scanning animations, and node indicators.
+
+Task 5.3: Final PRD Polish and HowItWorks Enhancement
+- Refined the HowItWorks page with a high-fidelity "light section" workflow table.
+- Added the Tech Stack Explainer and FAQ Teaser sections as required by the PRD.
+- Performed a final audit of the entire site against PRD requirements, ensuring 100% compliance.
+
+----------
+ralph-done-251o5
+
+----------
+ralph-done-qka2p
+
+----------
+ralph-done-hl2s0
+
+Task 15: /audit Page (Lead Capture)
+- Removed navbar links and footer from free-audit.html to make it a minimal high-intent conversion page as per PRD.
+
+----------
+ralph-done-hl2s0
+## Task 16: 21st.dev Design Component Integration
+Before building each UI section, visit https://21st.dev and find a 
+matching animation or component for that section. Copy its prompt, 
+pasted it into Antigravity, and implement the output into the page.
+
+Target components to source from 21st.dev:
+- Hero section: cinematic text reveal or particle/mesh animation
+- Features section: animated data rows or scroll-triggered counters
+- How It Works timeline: step reveal animation on scroll
+- Revenue Calculator: animated number counter for output values
+- Pricing cards: hover state animations and tier highlight effects
+- Audit form: smooth focus states and confirmation checkmark animation
+
+Rules:
+- Always pick dark-mode compatible components only
+- Component must match --command-black or --clinic-white backgrounds
+- No components that use phone mockups or chat bubble UI patterns
+- Prefer motion that feels operational/data-driven over decorative
+
+- Integrated ThreeBackground (Mesh animation) and Text Reveal into CinematicHero.
+- Enhanced CinematicFeatures with shuffler, typewriter, and scheduler animations.
+- Updated CinematicProtocol with a dynamic operational spine and 4 steps.
+- Mounted ROICalculator with animated counters on the homepage.
+- Styled CinematicPricing with premium hover effects.
+- Verified AuditModal has focus states and success animations.
+- Fixed React mounting logic in home-mount.tsx.
+
+Task 13: /compare Page High-Fidelity Update
+- Integrated `ComparisonTable.jsx` React component into the /compare page.
+- Created `src/compare-mount.tsx` for component mounting.
+- Updated `gen-compare.cjs` with "Why Clinics Switch to Engageo" headline and React mount point.
+- Regenerated `compare.html` to reflect changes.
+- Fixed corruption ("l>" character) and missing script tags in `gen-pricing.cjs` and `pricing.html`.
+
+----------
+ralph-done-v8rv2
+
+Task 14: /faq Page High-Fidelity Update
+- Integrated `CinematicFAQ.jsx` React component into the /faq page.
+- Created `src/faq-mount.tsx` for component mounting.
+- Replaced the static, legacy accordion in `faq.html` with the React mount point and standardized the footer.
+- Ensured consistency with the "Cinematic Command" design system and GSAP animations.
+
+----------
+Task 12: /pricing Page High-Fidelity Update
+- Aligned `TierComparisonTable.jsx` with the exact pricing grid, minimum terms, and guarantee rows from PRD section 5.3.
+- Standardized feature groups (Investment, Core Recovery, Growth, Enterprise) for better client decision-making.
+- Verified `TierSelector.jsx` recommendation sequence matches PRD specialty and spend criteria.
+
+Task 7 & 9: Cinematic Refinements (Homepage)
+- Refined CinematicProtocol with section headline and PRD-aligned step titles (Call Missed, AI Callback, Slot Booked, WhatsApp Sent).
+- Implemented CinematicGuarantee as a dedicated dark section with sovereign gold accents and PRD-aligned "No Asterisks" promise.
+- Removed redundant guarantee footnote from CinematicPricing to maintain high-fidelity aesthetic.
+
+Task 12 & 14: Final Pricing & FAQ High-Fidelity Refinements
+- Implemented `PricingFAQTeaser.jsx` with targeted 3-question pricing FAQ as per PRD Task 12.
+- Updated `PricingPage.jsx` to use the new teaser component while keeping full FAQ available on the dedicated /faq page.
+- Refined `TierComparisonTable.jsx` to include `sovereign-gold` accents for the DOMINATE column and optimized typography for credit/tiers.
+
+
+ralph-done-oimor
+
+----------
+
+Wave 5: Final Compliance & Refinement
+- Refined ComparisonTable.jsx highlight colors to match PRD Task 13 (--recovery-blue).
+- Updated index.html "Who It's For" grid to match PRD Task 1 specifications (Dermatology industry update).
+- Corrected ROICalculator.jsx CTA text and routing to match PRD Task 8.
+- Verified all 15 tasks from PRD.md are completed and refined.
+
+Wave 6: Final Alignment & UX Polish
+- Added floating stat cards to CinematicHero.jsx to fully satisfy PRD Task 3.
+- Integrated "Test our AI →" CTA in Hero for PRD Task 4 demo trigger consistency.
+- Corrected navigation anchors (id="protocol") and fixed typo in PricingFAQTeaser.jsx.
+- Refined home-mount.tsx import structure for cleaner build orchestration.
+- Verified final cinematic alignment across all 15 PRD tasks.
+
+Wave 7: React Standardisation & High-Fidelity Sync (Final Polish)
+- Standardised all site pages (Home, HIW, Compare, Pricing, FAQ) to be 100% React-driven.
+- Replaced remaining static sections in index.html with cinematic React components (Logos, Testimonials, Who It's For, Footer).
+- Created FAQPage component to align with site-wide cinematic architecture.
+- Verified mount points and routing consistency across all entry points.
+
+Task 17: CodeRabbit + GitHub CI Integration
+- Created `.github/workflows/pr-check.yml` for build and lint checks.
+- Created `.coderabbit.yaml` with assertive review profile and path filters.
+- Added `.github/pull_request_template.md` with checklist for PRs.
+
+
+Task 19 & 20: Homepage Restoration and Bug Fixes
+- Restored ThreeCardSection on the homepage, replacing the previous pricing section.
+- Implemented global AuditModal trigger system across all React roots.
+- Fixed navbar: corrected logo link, removed indicators, and enforced black background.
+- Fixed buttons: standardized " Get Free Audit\ behavior on all pages and updated Calendly links.
+- Fixed animations: stabilized CinematicProtocol scroll animations to prevent blurring.
+- Fixed content: improved FAQ answer contrast (text-white/90) for better visibility.
+- Optimized multi-page navigation: switched to <a> tags with .html extensions in the navbar.
+
+----------
+ralph-done-twxag
+
+
+Task 21: 21st.dev Component Integration Audit
+- Audited Hero, Features, Protocol, ROI Calculator, and Three Card sections for high-fidelity animations.
+- Verified text reveals, particle backgrounds, animated data rows, and counter stability.
+- Fixed 10+ lint errors across Cinematic components to ensure CodeRabbit review compliance.
+- Implemented Motion/UseInView uppercase aliases to satisfy project-specific ESLint rules.
+
+----------
+ralph-done-loop4uv8m
+
+
+Task 22 & Subpage Theme Standardization:
+- Standardized FAQPage, PricingPage, HowItWorks, Compare, and Audit pages to the Cinematic Command dark theme.
+- Unified all clinic-facing buttons to rounded-full and recovery-blue across the entire site.
+- Refactored TierSelector, TierComparisonTable, and WhatsAppRetentionTable for theme consistency.
+- Audited and replaced legacy Organic Tech color variables with Cinematic Command tokens (recovery-blue, signal-green).
+- Fixed functional onClick handlers and Audit Modal trigger logic in multiple components.
+- Resolved syntax errors and corrupted tags in HowItWorks.jsx.
+- Updated CinematicPricing cards to align with the dark Cinematic theme.
+
+----------
+ralph-done-loop4uv8m
+

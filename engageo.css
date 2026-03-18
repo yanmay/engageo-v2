@@ -1,53 +1,36 @@
 /* ═══════════════════════════════════════════════════════════════
-   ENGAGEO — WARM COMMAND DESIGN SYSTEM
-   Fraunces (display) + DM Mono (body)
-   Palette: Warm Parchment / Ink / Recovery Green
-═══════════════════════════════════════════════════════════════ */
+   ENGAGEO — CINEMATIC COMMAND DESIGN SYSTEM
+   Plus Jakarta Sans (Headings) + Outfit (UI) + IBM Plex Mono (Data)
+   Palette: Command Black / Recovery Blue / Clinic White
+   ═══════════════════════════════════════════════════════════════ */
 
 /* ─── CUSTOM PROPERTIES ─────────────────────────────────────── */
 :root {
-    --parchment: #F5F0E8;
-    --surface: #EDE8DF;
-    --surface-deep: #E4DED4;
-    --ink: #1C1916;
-    --ink-muted: rgba(28, 25, 22, 0.45);
-    --ink-faint: rgba(28, 25, 22, 0.12);
-    --deep: #141210;
-    --ink-light: #2E2A26;
+    /* Core Palette */
+    --command-black: #0A0F1E;
+    --command-surface: #111827;
+    --recovery-blue: #2563EB;
+    --clinic-white: #F8F9FB;
+    
+    /* Legacy / Compatibility Mapping */
+    --parchment: var(--clinic-white);
+    --surface: #EDF2F7;
+    --surface-deep: #E2E8F0;
+    --ink: var(--command-black);
+    --ink-muted: #64748B;
+    --ink-faint: #CBD5E1;
+    --deep: var(--command-black);
+    --ink-light: #1E293B;
 
-    --green: #1A7A4A;
-    --red: #B83232;
-    --gold: #C8922A;
-    --blue: #2B5BA8;
-    --teal: #1A7A6E;
-    --orange: #EA580C;
-    --black: #0A0A0A;
+    --green: #10B981;
+    --red: #EF4444;
+    --gold: #F59E0B;
+    --blue: var(--recovery-blue);
+    --teal: #14B8A6;
+    --orange: #F97316;
+    --black: #000000;
     --white: #FFFFFF;
 
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --radius: 0.5rem;
-
-    --rule: 1px solid rgba(28, 25, 22, 0.12);
-
-    --mono: "DM Mono", "Courier New", monospace;
     --serif: "Fraunces", Georgia, serif;
     --sans: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
     --display: "Outfit", "Inter", system-ui, sans-serif;
@@ -111,12 +94,12 @@ input[type=range]:focus {
 
 /* ─── BASE ───────────────────────────────────────────────────── */
 body {
-    background: var(--parchment);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 15px;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--sans);
+    font-size: 16px;
     font-weight: 400;
-    line-height: 1.7;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     position: relative;
 }
@@ -192,29 +175,26 @@ body::after {
 
 /* ─── TYPOGRAPHY ─────────────────────────────────────────────── */
 .f-display {
-    font-family: var(--serif);
-    font-variation-settings: "opsz" 144;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 0.95;
+    font-family: var(--sans);
+    font-weight: 800;
+    letter-spacing: -0.04e m;
+    line-height: 1;
 }
 
 .f-display-lg {
     font-size: clamp(56px, 8vw, 96px);
-    font-family: var(--serif);
-    font-variation-settings: "opsz" 144;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 0.95;
+    font-family: var(--sans);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
 }
 
 .f-h2 {
-    font-family: var(--serif);
-    font-size: clamp(36px, 5vw, 64px);
-    font-variation-settings: "opsz" 72;
+    font-family: var(--sans);
+    font-size: clamp(32px, 5vw, 56px);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.05;
+    line-height: 1.1;
 }
 
 .f-card-title {
@@ -236,9 +216,9 @@ body::after {
 .f-stat {
     font-family: var(--mono);
     font-size: clamp(48px, 8vw, 96px);
-    font-weight: 300;
+    font-weight: 500;
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
 }
 
 .f-label {
@@ -344,6 +324,165 @@ body::after {
     color: var(--green);
     border-color: var(--green);
 }
+
+/* ─── MOBILE HAMBURGER + DRAWER ────────────────────────────── */
+.eg-nav__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+.eg-nav__hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.eg-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 90vw);
+    background: var(--parchment);
+    z-index: 200;
+    flex-direction: column;
+    padding: 28px 32px;
+    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+    border-left: var(--rule);
+}
+
+.eg-mobile-menu.open {
+    transform: translateX(0);
+}
+
+.eg-mobile-menu__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: var(--rule);
+}
+
+.eg-mobile-menu__logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    font-variation-settings: "opsz" 36;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+}
+
+.eg-mobile-menu__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.15s;
+}
+
+.eg-mobile-menu__close:hover {
+    background: var(--surface);
+}
+
+.eg-mobile-menu__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.eg-mobile-menu__links a {
+    display: block;
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--ink-faint);
+    transition: color 0.15s;
+}
+
+.eg-mobile-menu__links a:hover {
+    color: var(--green);
+}
+
+.eg-mobile-menu__cta {
+    margin-top: 32px;
+    display: block;
+    text-align: center;
+    background: var(--ink);
+    color: var(--parchment) !important;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 16px 24px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    border-bottom: none !important;
+}
+
+.eg-mobile-menu__cta:hover {
+    background: var(--green) !important;
+    color: var(--parchment) !important;
+}
+
+.eg-mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 25, 22, 0.4);
+    z-index: 190;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.eg-mobile-overlay.open {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .eg-nav__hamburger {
+        display: flex;
+    }
+
+    .eg-mobile-menu {
+        display: flex;
+    }
+
+    .eg-mobile-overlay {
+        display: block;
+    }
+}
+
+
 
 /* ─── BUTTONS ────────────────────────────────────────────────── */
 .btn {
@@ -1846,6 +1985,10 @@ body::after {
     }
 
     .eg-nav__links {
+        display: none;
+    }
+
+    .eg-nav__cta {
         display: none;
     }
 
