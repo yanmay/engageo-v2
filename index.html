@@ -1,76 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Engageo — We Answer the Calls Your Clinic Misses</title>
-  <meta name="description"
-    content="Engageo serves as an autonomous missed-call recovery engine for high-ticket Indian specialists." />
-  <meta property="og:image" content="/og-image.jpg" />
-  <meta property="og:title" content="Engageo — Autonomous Revenue Recovery" />
-  <meta property="og:type" content="website" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Outfit:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="engageo.css" />
-  <style>
-    /* Any home specific critical CSS */
-    .home-dark-hero {
-      background: var(--deep);
-      color: #fff;
-      position: relative;
-      z-index: 0;
-    }
-
-    .home-dark-hero+section {
-      position: relative;
-      z-index: 1;
-    }
-  </style>
-</head>
-
-<body class="bg-[var(--command-black)] text-white">
-  <!-- Skip to Content Link for Accessibility -->
-  <a href="#main-content"
-    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[var(--recovery-blue)] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold focus:shadow-2xl">
-    Skip to main content
-  </a>
-  <div id="react-home-navbar"></div>
-  <div id="root"></div>
-
-  <!-- REACT 1: Loss Calculator Hero -->
-  <div id="react-home-hero"></div>
-
-  <!-- REACT: Logos Marquee -->
-  <div id="react-home-logos"></div>
-
-  <!-- REACT 3: Philosophy Manifesto -->
-  <div id="react-home-philosophy"></div>
-
-  <!-- REACT 4: Cinematic Features -->
-  <div id="react-home-features"></div>
-
-  <!-- REACT 7: Revenue Calculator -->
-  <div id="react-home-calculator"></div>
-
-  <!-- REACT 5: Protocol Stacking Archive -->
-  <div id="react-home-protocols"></div>
-
-
-  <!-- REACT 2: Defensible Decision (The Guarantee) -->
-  <div id="react-home-guarantee"></div>
-
-  <!-- REACT: Final CTA -->
-  <div id="react-home-final-cta"></div>
-
-  <!-- REACT: Cinematic Footer -->
-  <footer id="react-home-footer"></footer>
-  <script>(function () { var n = document.getElementById('navPill'), m = document.getElementById('mobileMenu'); window.addEventListener('scroll', function () { if (n) n.classList.toggle('scrolled', window.scrollY > 20); }); var b = document.getElementById('hamburgerBtn'), c = document.getElementById('mobileClose'); function op() { m.classList.add('open'); document.body.style.overflow = 'hidden'; } function cl() { m.classList.remove('open'); document.body.style.overflow = ''; } if (b) b.addEventListener('click', op); if (c) c.addEventListener('click', cl); if (m) m.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', cl); }); window.toggleFaq = function (el) { el.parentElement.classList.toggle('open'); }; var obs = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }); document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); }); }());</script>
-  <script type="module" src="/src/home-mount.tsx"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Engageo — We Answer the Calls Your Clinic Misses" />
+    <title>Engageo — Autonomous Revenue Recovery</title>
+  </head>
+  <body class="bg-[#f9fafb] text-[#0a0f1e] antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

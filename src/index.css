@@ -1,304 +1,157 @@
+@import '@fontsource/geist-sans';
+@import '@fontsource/geist-mono';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════════════
-   PRESET: "ORGANIC TECH" (CLINICAL BOUTIQUE) DESIGN SYSTEM
-   Palette: Moss (Primary), Clay (Accent), Cream (Background), Charcoal (Text)
-   Typography: Plus Jakarta Sans, Outfit, Cormorant Garamond, IBM Plex Mono
-   ═══════════════════════════════════════════════════════════════ */
-
-:root {
-  /* ═══════════════════════════════════════════════════════════════
-     CLINICAL ETHEREAL (PREMIUM BOUTIQUE) DESIGN SYSTEM
-     Palette: Bone White (Background), Clinical Blue (Primary), 
-              Organic Moss (Secondary), Clay (Highlight)
-     ═══════════════════════════════════════════════════════════════ */
-
-  /* Core Palette Tokens */
-  --ethereal-white: #FBFBFA;
-  --clinical-blue: #0047FF;
-  --clinical-blue-rgb: 0, 71, 255;
-  --organic-moss: #2E4036;
-  --premium-clay: #CC5833;
-  --ink-black: #0D0D12;
-  --ink-black-rgb: 13, 13, 18;
-  --command-black: var(--ink-black);
-  --glass-border: rgba(13, 13, 18, 0.08);
-
-  /* Semantic Mapping */
-  --primary: var(--clinical-blue);
-  --secondary: var(--organic-moss);
-  --accent: var(--premium-clay);
-  --background: var(--ethereal-white);
-  --text: var(--ink-black);
-
-  /* Functional Colors */
-  --recovery-blue: #0047FF;
-  --signal-green: #10B981;
-  --loss-red: #DC2626;
-  --sovereign-gold: #D97706;
-
-  /* Derived UI Tokens */
-  --clinic-ink: var(--ink-black);
-  --clinic-white: var(--ethereal-white);
-  --clinic-slate: #64748B;
-  --clinic-stone: #94A3B8;
-  --clinic-mist: #F8FAFC;
-  --clinic-silver: #F1F5F9;
-
-  /* Additional Feedback Colors */
-  --hover-glow: rgba(0, 71, 255, 0.05);
-  --glass-reflection: rgba(255, 255, 255, 0.8);
-
-  /* Radius System */
-  --radius-lg: 1.5rem;
-  --radius-xl: 2.5rem;
-}
-
-.will-animate {
-  will-change: transform, opacity;
-}
-
-.cinematic-glow {
-  box-shadow: 0 0 20px var(--hover-glow);
-}
-
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-[var(--background)] text-[var(--text)] antialiased;
-    font-family: 'Outfit', sans-serif;
+    @apply antialiased text-slate-800 bg-clinic-white;
+    font-feature-settings: "ss01", "ss02", "cv01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply tracking-tight font-bold;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    text-wrap: balance;
+  ::selection {
+    background: rgba(36, 87, 217, 0.2);
+    color: #080d1a;
   }
 
-  p {
-    text-wrap: pretty;
-    @apply max-w-[65ch];
-  }
-
-  /* Global Noise Overlay Utility - Use as a child div, not as a class on a main container */
-  .noise-overlay {
-    content: "";
-    @apply absolute inset-0 pointer-events-none;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.1;
-    mix-blend-mode: overlay;
-  }
-
-  body::after {
-    content: "";
-    @apply fixed inset-0 pointer-events-none z-[9999];
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.1;
-    mix-blend-mode: overlay;
+  * {
+    @apply box-border;
   }
 }
 
 @layer components {
-  .rounded-premium {
-    @apply rounded-[2rem] md:rounded-[3rem];
+  /* ============================================
+     BUTTONS — Tactile with spring physics feel
+  ============================================ */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-sans font-medium text-sm tracking-tight text-white bg-recovery-blue rounded-pill transition-all duration-300;
+    @apply hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(36,87,217,0.3)] hover:bg-recovery-hover;
+    @apply active:scale-[0.97] active:translate-y-0 active:shadow-none;
+    will-change: transform;
   }
 
-  /* Magnetic feel buttons */
-  .btn-magnetic {
-    @apply relative overflow-hidden transition-transform duration-500 hover:scale-[1.03] active:scale-[0.98] inline-flex items-center justify-center;
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring Physics */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-sans font-medium text-sm tracking-tight text-slate-600 bg-transparent rounded-pill border border-slate-200 transition-all duration-300;
+    @apply hover:-translate-y-[1px] hover:bg-white hover:text-slate-900 hover:border-slate-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)];
+    @apply active:scale-[0.97] active:translate-y-0;
+    will-change: transform;
   }
 
-  .btn-magnetic span.bg-layer {
-    @apply absolute inset-0 -z-10 transition-transform duration-500 ease-out translate-y-full;
+  .btn-ghost-dark {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-sans font-medium text-sm tracking-tight text-slate-300 bg-transparent rounded-pill border border-command-border transition-all duration-300;
+    @apply hover:-translate-y-[1px] hover:bg-white/10 hover:text-white hover:border-white/20;
+    @apply active:scale-[0.97] active:translate-y-0;
+    will-change: transform;
   }
 
-  .btn-magnetic:hover span.bg-layer {
-    @apply translate-y-0;
+  /* ============================================
+     GLASS SURFACES — True liquid glass with edge refraction
+  ============================================ */
+  .liquid-glass-light {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 20px 40px -15px rgba(0,0,0,0.08);
   }
 
-  /* Typography Drama & Data styles */
-  .font-drama {
-    font-family: 'Cormorant Garamond', serif;
-    @apply italic;
+  .liquid-glass-dark {
+    @apply bg-command-surface/60 backdrop-blur-xl border border-command-border;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 40px -15px rgba(0,0,0,0.4);
   }
 
-  .font-data {
-    font-family: 'IBM Plex Mono', monospace;
+  /* ============================================
+     NOISE OVERLAY — Fixed, pointer-events-none, NOT z-50
+     Applied only to dark sections via pseudo-element
+  ============================================ */
+  .noise-grain {
+    @apply fixed inset-0 pointer-events-none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
   }
 
-  .lift-on-hover {
-    @apply transition-transform duration-300 hover:-translate-y-[1px];
+  /* ============================================
+     SPOTLIGHT BORDER CARD — illuminates under cursor
+  ============================================ */
+  .spotlight-card {
+    @apply relative overflow-hidden border border-slate-200 rounded-card bg-white transition-all duration-500;
+    @apply hover:border-recovery-blue/30 hover:shadow-spotlight;
   }
 
-  .glass-premium {
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid var(--glass-border);
+  .spotlight-card-dark {
+    @apply relative overflow-hidden border border-command-border rounded-card bg-command-surface/50 transition-all duration-500;
+    @apply hover:border-recovery-blue/30 hover:shadow-[0_0_0_1px_rgba(36,87,217,0.3),0_0_30px_rgba(36,87,217,0.08)];
   }
 
-  /* Premium Motion Utilities */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  /* ============================================
+     SECTION LABEL (monospace badge above headlines)
+  ============================================ */
+  .section-label {
+    @apply font-mono text-[10px] uppercase tracking-widest text-recovery-blue mb-4 block;
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .section-label-gold {
+    @apply font-mono text-[10px] uppercase tracking-widest text-gold-sovereign mb-4 block;
   }
 
-  @keyframes scan {
-    0% {
-      transform: translateY(-100%);
-    }
-
-    100% {
-      transform: translateY(200%);
-    }
+  .section-label-muted {
+    @apply font-mono text-[10px] uppercase tracking-widest text-slate-400 mb-4 block;
   }
 
-  .animate-scan {
-    animation: scan 4s linear infinite;
+  /* ============================================
+     ROW DIVIDER — Feature list rows
+  ============================================ */
+  .feature-row {
+    @apply flex flex-col md:flex-row items-start md:items-center py-7 border-b border-command-border gap-4 md:gap-8 group cursor-default;
+    @apply transition-all duration-300;
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(4px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .feature-row:hover {
+    @apply -translate-x-0;
   }
 
-  .animate-fade-in {
-    animation: fade-in 0.4s ease-out forwards;
+  /* ============================================
+     SKIP TO CONTENT — Accessibility
+  ============================================ */
+  .skip-to-content {
+    @apply absolute -translate-y-full focus:translate-y-0 left-0 top-0 z-[100] px-4 py-2 bg-recovery-blue text-white text-sm font-medium transition-transform duration-200;
   }
 
-  /* Custom thin scrollbar for telemetry cards */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 2px;
+  /* ============================================
+     SHIMMER SKELETON
+  ============================================ */
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
+  .text-pretty {
+    text-wrap: pretty;
   }
 
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(37, 99, 235, 0.2);
-    /* var(--primary) with opacity */
-    border-radius: 10px;
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(37, 99, 235, 0.2) transparent;
+  /* Hardware-accelerated, uses only transform + opacity */
+  .will-change-transform {
+    will-change: transform;
   }
 
-  .pulse-dot-green {
-    background-color: var(--signal-green);
-    box-shadow: 0 0 12px var(--signal-green);
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.8;
-    }
-
-    50% {
-      transform: scale(1.5);
-      opacity: 0;
-    }
-
-    100% {
-      transform: scale(1);
-      opacity: 0;
-    }
-  }
-
-  .pulse-dot {
-    position: relative;
-  }
-
-  .pulse-dot::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 9999px;
-    background-color: inherit;
-    opacity: 0.4;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  /* Cybernetic Bento Grid styles */
-  .bento-grid {
-    @apply grid grid-cols-1 md:grid-cols-4 gap-4;
-  }
-
-  .bento-item {
-    @apply bg-[var(--command-black)]/50 border border-white/10 rounded-2xl p-6 transition-all duration-300 relative overflow-hidden;
-  }
-
-  .bento-item::before {
-    content: "";
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(37, 99, 235, 0.15) 0%,
-        transparent 50%);
-  }
-
-  .bento-item:hover::before {
-    @apply opacity-100;
-  }
-
-  .bento-item:hover {
-    @apply border-white/30 -translate-y-1 shadow-[0_10px_20px_rgba(0, 0, 0, 0.3)];
-  }
-
-  .cyber-grid-bg {
-    @apply absolute inset-0 opacity-5 pointer-events-none;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  /* 21st.dev Border Beam Animation */
-  @keyframes border-beam {
-    100% {
-      offset-distance: 100%;
-    }
-  }
-
-  .border-beam-container {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-  }
-
-  .border-beam {
-    position: absolute;
-    aspect-ratio: 1 / 1;
-    width: var(--size, 150px);
-    background: linear-gradient(to left, var(--color-from, transparent), var(--color-to, var(--recovery-blue)), transparent);
-    offset-path: rect(0 auto auto 0 round var(--radius, 2rem));
-    animation: border-beam var(--duration, 8s) linear infinite;
-    animation-delay: var(--delay, 0s);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  .group:hover .border-beam {
-    opacity: 1;
+  .pause-on-hover:hover {
+    animation-play-state: paused;
   }
 }

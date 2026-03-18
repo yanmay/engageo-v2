@@ -1,58 +1,26 @@
 import React from 'react';
-import CinematicHero from '../components/CinematicHero';
-import CinematicFeatures from '../components/CinematicFeatures';
-import Philosophy from '../components/Philosophy';
-import CinematicProtocol from '../components/CinematicProtocol';
-import ThreeCardSection from '../components/ThreeCardSection';
-import CinematicGuarantee from '../components/CinematicGuarantee';
-import CinematicLogos from '../components/CinematicLogos';
-import CinematicTestimonials from '../components/CinematicTestimonials';
-import CinematicFAQ from '../components/CinematicFAQ';
-import ROICalculator from '../components/ROICalculator';
+import Hero from '../components/Hero';
+import LogoBar from '../components/LogoBar';
+import HowItWorks from '../components/HowItWorks';
+import Calculator from '../components/Calculator';
+import Features from '../components/Features';
+import Testimonials from '../components/Testimonials';
+import WhoItsFor from '../components/WhoItsFor';
+import PricingPreview from '../components/PricingPreview';
+import Footer from '../components/Footer';
 
 export default function Home() {
   return (
-    <div className="flex flex-col w-full relative">
-      <div id="hero">
-        <CinematicHero />
-      </div>
-
-      <div id="logos">
-        <CinematicLogos />
-      </div>
-
-      <div id="philosophy">
-        <Philosophy />
-      </div>
-
-      <div id="features">
-        <CinematicFeatures />
-      </div>
-
-      <div id="protocol">
-        <CinematicProtocol />
-      </div>
-
-      <div id="roi-calculator">
-        <ROICalculator />
-      </div>
-
-      <div id="three-cards-restored" className="relative z-10 bg-[var(--clinic-white)]">
-        <ThreeCardSection />
-      </div>
-
-      <div id="guarantee">
-        <CinematicGuarantee />
-      </div>
-
-      <div id="proof">
-        <CinematicTestimonials />
-      </div>
-
-      <div id="faq">
-        <CinematicFAQ />
-      </div>
-    </div>
+    <main id="main-content" className="w-full flex flex-col font-sans">
+      <Hero />
+      <LogoBar />
+      <HowItWorks />
+      <Calculator />
+      <Features />
+      <Testimonials />
+      <WhoItsFor />
+      <PricingPreview />
+      <Footer />
+    </main>
   );
 }
-
